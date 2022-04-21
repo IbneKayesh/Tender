@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tender.App", "Tender.App\Tender.App.csproj", "{2CA16894-68BB-47FE-97CE-49C186EE384D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tender.Models", "Tender.Models\Tender.Models.csproj", "{C4B4B6DD-498F-41E8-8CCE-497FDA70E260}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2CA16894-68BB-47FE-97CE-49C186EE384D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2CA16894-68BB-47FE-97CE-49C186EE384D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2CA16894-68BB-47FE-97CE-49C186EE384D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2CA16894-68BB-47FE-97CE-49C186EE384D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C4B4B6DD-498F-41E8-8CCE-497FDA70E260}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C4B4B6DD-498F-41E8-8CCE-497FDA70E260}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C4B4B6DD-498F-41E8-8CCE-497FDA70E260}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C4B4B6DD-498F-41E8-8CCE-497FDA70E260}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
