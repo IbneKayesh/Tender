@@ -10,6 +10,7 @@ namespace Tender.Models.Models
     {
         public string RFQ_NUMBER { get; set; }
         public string VENDOR_ID { get; set; }
+        public bool SELL_BUY { get; set; }
         public string LOCAL_IMPORT { get; set; }
         public bool RE_BID { get; set; }
         public bool LOWER_RATE { get; set; }

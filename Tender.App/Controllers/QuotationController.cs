@@ -9,7 +9,7 @@ namespace Tender.App.Controllers
 {
     public class QuotationController : Controller
     {
-        // GET: Bid
+        // GET: Bid, For Bidder
         public ActionResult Index()
         {
             return View();
