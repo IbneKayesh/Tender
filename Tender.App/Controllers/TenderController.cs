@@ -17,10 +17,10 @@ namespace Tender.App.Controllers
 
         public ActionResult BidRequest()
         {
-            return View(new RFQ_MASTER());
+            return View();
         }
 
-        public ActionResult BidRequest(RFQ_MASTER obj)
+        public ActionResult BidRequest(string obj)
         {
             return View(obj);
         }

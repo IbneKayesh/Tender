@@ -17,9 +17,9 @@ namespace Tender.App.Controllers
         
         public ActionResult Bid(string id)
         {
-            return View(new RFQ_VENDOR());
+            return View(new RFQ_BIDDING());
         }
-        public ActionResult Bid(RFQ_VENDOR obj)
+        public ActionResult Bid(RFQ_BIDDING obj)
         {
             return View();
         }

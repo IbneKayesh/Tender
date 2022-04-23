@@ -1,31 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Tender.Models.Models
 {
-    public class RFQ_VENDOR
+    public class RFQ_TENDER
     {
         public string RFQ_NUMBER { get; set; }
-        public int RFQ_SL { get; set; }
         public string VENDOR_ID { get; set; }
-
-        [NotMapped]
+        public bool SELL_BUY { get; set; }
         public string LOCAL_IMPORT { get; set; }
-        [NotMapped]
         public bool RE_BID { get; set; }
-        [NotMapped]
         public bool LOWER_RATE { get; set; }
-        [NotMapped]
+
+
         public DateTime START_DATE { get; set; }
-        [NotMapped]
         public DateTime END_DATE { get; set; }
 
-
-        public DateTime SUBMIT_DATE { get; set; }
 
         public string PRODUCTS_ID { get; set; }
         public string PRODUCTS_DESC { get; set; }
@@ -33,21 +26,23 @@ namespace Tender.Models.Models
         public int PRODUCTS_QUANTITY { get; set; }
 
 
-        [NotMapped]
-        public bool PARTIAL_SHIPMENT { get; set; }
-
-        public int SHIPMENT_MODE { get; set; }
+        public DateTime LAST_DELIVERY_DATE { get; set; }
         public int PORT_ID { get; set; }
-
-        [NotMapped]
+        public bool PARTIAL_SHIPMENT { get; set; }
+        public int SHIPMENT_MODE { get; set; }
         public string DELIVERY_ADDRESS { get; set; }
-        [NotMapped]
         public string RECEIVER_NAME { get; set; }
-        [NotMapped]
         public string RECEIVER_DETAILS { get; set; }
 
-        public string LOADING_ADDRESS { get; set; }
-        public string SENDER_NAME { get; set; }
-        public string SENDER_DETAILS { get; set; }
+
+        public bool COST_EX_INC { get; set; }
+        public string INCO_TERMS { get; set; }
+        public string CURRENCY_NAME { get; set; }
+        public decimal CURRENCY_RATE { get; set; }
+
+        public string PAY_A { get; set; }
+        public decimal PAY_AP { get; set; }
+        public string PAY_B { get; set; }
+        public decimal PAY_BP { get; set; }
     }
 }
