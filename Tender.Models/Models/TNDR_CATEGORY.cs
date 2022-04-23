@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Tender.Models.Models
 {
@@ -10,5 +6,10 @@ namespace Tender.Models.Models
     {
         public string CATEGORY_ID { get; set; }
         public string CATEGORY_NAME { get; set; }
+
+        public List<TNDR_CATEGORY> getAll()
+        {
+            return new List<TNDR_CATEGORY> { new TNDR_CATEGORY { CATEGORY_ID = "10", CATEGORY_NAME = "Test Category" } };
+        }
     }
 }
