@@ -2256,10 +2256,9 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Accounts\Registration.cshtml" />
-    <Content Include="Views\Accounts\UpdateProfile.cshtml" />
-    <Content Include="Views\Accounts\ViewProfile.cshtml" />
+    <Content Include="Views\Accounts\UserProfile.cshtml" />
     <Content Include="Views\Accounts\Login.cshtml" />
-    <Content Include="Views\Shared\_LayoutRegistration.cshtml" />
+    <Content Include="Views\Shared\_LayoutRL.cshtml" />
     <Content Include="Views\Shared\_Layout - Copy.cshtml" />
   </ItemGroup>
   <ItemGroup>

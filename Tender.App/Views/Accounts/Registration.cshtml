@@ -2,10 +2,8 @@
 
 @{
     ViewBag.Title = "Registration";
-    Layout = "~/Views/Shared/_LayoutRegistration.cshtml";
+    Layout = "~/Views/Shared/_LayoutRL.cshtml";
 }
-
-
 <div class="register-logo">
     <a href=""><b>Admin</b>LTE</a>
 </div>
@@ -103,20 +101,14 @@
         }
         <div class="social-auth-links text-center">
             <p>- OR -</p>
-            <a href="#" class="btn btn-block btn-primary">
-                <i class="fab fa-facebook mr-2"></i>
-                Sign up using Facebook
-            </a>
-            <a href="#" class="btn btn-block btn-danger">
-                <i class="fab fa-google-plus mr-2"></i>
-                Sign up using Google+
+            <a href="@Url.Action("Login","Accounts")" class="btn btn-block btn-primary">
+                <i class="fab fa-user-circle mr-2"></i>
+                I already have a membership
             </a>
         </div>
-        <a href="@Url.Action("Login","Accounts")" class="text-center">I already have a membership</a>
     </div>
 
 </div>
-@*@section Scripts {
+@section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-
-}*@
+}

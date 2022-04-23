@@ -35,21 +35,15 @@ namespace Tender.App.Controllers
             return View();
         }
         [HttpGet]
-        public ActionResult UpdateProfile(string id)
+        public ActionResult UserProfile(string id)
         {
      
             return View(new VENDOR_DETAILS().getAll());
         }
         [HttpPost]
-        public ActionResult UpdateProfile(VENDOR_DETAILS obj)
+        public ActionResult UserProfile(VENDOR_DETAILS obj)
         {
             return View();
-        }
-
-        public ActionResult ViewProfile(string id)
-        {
-            //var obj = db.VENDOR_DETAILS.Find(id);
-            return View(new VENDOR_DETAILS());
         }
     }
 }

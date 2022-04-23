@@ -2,7 +2,7 @@
 
 @{
     ViewBag.Title = "Login";
-    Layout = "~/Views/Shared/_LayoutRegistration.cshtml";
+    Layout = "~/Views/Shared/_LayoutRL.cshtml";
 }
 
 <div class="card card-outline card-primary">
@@ -47,21 +47,16 @@
             </div>
         }
         <div class="social-auth-links text-center mt-2 mb-3">
-            <a href="#" class="btn btn-block btn-primary">
-                <i class="fab fa-facebook mr-2"></i> Sign in using Facebook
+            <a href="@Url.Action("Registration","Accounts")" class="btn btn-block btn-primary"> Register a new membership
             </a>
             <a href="#" class="btn btn-block btn-danger">
-                <i class="fab fa-google-plus mr-2"></i> Sign in using Google+
+                <i class="fab fa-user-alt mr-2"></i> I forgot my password
             </a>
         </div>
-
-        <p class="mb-1">
-            <a href="forgot-password.html">I forgot my password</a>
-        </p>
-        <p class="mb-0">
-            <a href="@Url.Action("Registration","Accounts")" class="text-center">Register a new membership</a>
-        </p>
     </div>
 
 </div>
 
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
