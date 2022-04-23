@@ -13,7 +13,7 @@ namespace Tender.App.Controllers
         // GET: Setup
         public ActionResult Categories()
         {
-            return View(new TNDR_CATEGORY().getAll());
+            return View();
         }
 
         public ActionResult CreateCategory()

@@ -2,104 +2,121 @@
 
 @{
     ViewBag.Title = "Registration";
+    Layout = "~/Views/Shared/_LayoutRegistration.cshtml";
 }
 
-<h2>Registration</h2>
 
-
-@using (Html.BeginForm()) 
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>VENDOR</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        
-        <div class="form-group">
-            @Html.LabelFor(model => model.VENDOR_EMAIL, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.VENDOR_EMAIL, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.VENDOR_EMAIL, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.VENDOR_PASSWD, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.VENDOR_PASSWD, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.VENDOR_PASSWD, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.ORGANIZATION_NAME, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ORGANIZATION_NAME, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ORGANIZATION_NAME, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.COUNTRY_NAME, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.COUNTRY_NAME, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.COUNTRY_NAME, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.SUPPLIER, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.SUPPLIER)
-                    @Html.ValidationMessageFor(model => model.SUPPLIER, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.PURCHASER, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.PURCHASER)
-                    @Html.ValidationMessageFor(model => model.PURCHASER, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.SUPPLIER_NOTIFY, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.SUPPLIER_NOTIFY)
-                    @Html.ValidationMessageFor(model => model.SUPPLIER_NOTIFY, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.PURCHASER_NOTIFY, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.PURCHASER_NOTIFY)
-                    @Html.ValidationMessageFor(model => model.PURCHASER_NOTIFY, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </div>
-    </div>
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
+<div class="register-logo">
+    <a href=""><b>Admin</b>LTE</a>
 </div>
 
-@section Scripts {
+<div class="card">
+    <div class="card-body register-card-body">
+        <p class="login-box-msg">Register a new membership</p>
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            <div class="input-group mb-3">
+                @Html.EditorFor(model => model.ORGANIZATION_NAME, new { htmlAttributes = new { @class = "form-control", placeholder = "Organization Name" } })
+                <div class="input-group-append">
+                    <div class="input-group-text">
+                        <span class="fa fa-industry"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="input-group mb-3">
+                @Html.EditorFor(model => model.COUNTRY_NAME, new { htmlAttributes = new { @class = "form-control", placeholder = "Country Name" } })
+                <div class="input-group-append">
+                    <div class="input-group-text">
+                        <span class="fas fa-flag"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="input-group mb-3">
+                @Html.EditorFor(model => model.VENDOR_EMAIL, new { htmlAttributes = new { @class = "form-control", placeholder = "Email" } })
+                <div class="input-group-append">
+                    <div class="input-group-text">
+                        <span class="fas fa-envelope"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="input-group mb-3">
+                @Html.EditorFor(model => model.VENDOR_PASSWD, new { htmlAttributes = new { @class = "form-control", placeholder = "Password" } })
+                <div class="input-group-append">
+                    <div class="input-group-text">
+                        <span class="fas fa-lock"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="input-group mb-3">
+                @Html.EditorFor(model => model.VENDOR_PASSWD, new { htmlAttributes = new { @class = "form-control", placeholder = "Retype Password" } })
+                <div class="input-group-append">
+                    <div class="input-group-text">
+                        <span class="fas fa-lock"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <div class="icheck-primary">
+                        @Html.EditorFor(model => model.PURCHASER, new { htmlAttributes = new { id = "Purchaser" } })
+                        <label for="Purchaser">
+                            Purchaser
+                        </label>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="icheck-primary">
+                        @Html.EditorFor(model => model.SUPPLIER, new { htmlAttributes = new { id = "supllier" } })
+                        <label for="supllier">
+                            Supplier
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="icheck-primary">
+                        @Html.EditorFor(model => model.PURCHASER_NOTIFY, new { htmlAttributes = new { id = "purNotify" } })
+                        <label for="purNotify">
+                            Get Purchaser Notification
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="icheck-primary">
+                        @Html.EditorFor(model => model.SUPPLIER_NOTIFY, new { htmlAttributes = new { id = "supNotify" } })
+                        <label for="supNotify">
+                            Get Supplier Notification
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 float-right">
+                    <button type="submit" class="btn btn-primary btn-block btn-sm">Register</button>
+                </div>
+            </div>
+
+        }
+        <div class="social-auth-links text-center">
+            <p>- OR -</p>
+            <a href="#" class="btn btn-block btn-primary">
+                <i class="fab fa-facebook mr-2"></i>
+                Sign up using Facebook
+            </a>
+            <a href="#" class="btn btn-block btn-danger">
+                <i class="fab fa-google-plus mr-2"></i>
+                Sign up using Google+
+            </a>
+        </div>
+        <a href="@Url.Action("Login","Accounts")" class="text-center">I already have a membership</a>
+    </div>
+
+</div>
+@*@section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-}
+
+}*@

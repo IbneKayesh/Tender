@@ -47,6 +47,7 @@
     <Compile Include="Models\TNDR_PRODUCTS.cs" />
     <Compile Include="Models\RFQ_VENDOR.cs" />
     <Compile Include="Models\RFQ_MASTER.cs" />
+    <Compile Include="Models\VENDOR_LOGIN.cs" />
     <Compile Include="Models\VENDOR_DETAILS.cs" />
     <Compile Include="Models\VENDOR.cs" />
     <Compile Include="Models\VENDOR_PRODUCTS.cs" />

@@ -3,16 +3,10 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Tender.Models.Models
 {
-    public class VENDOR
+    public class VENDOR : VENDOR_LOGIN
     {
 
         public string VENDOR_ID { get; set; }
-
-        [Required]
-        public string VENDOR_EMAIL { get; set; }
-
-        [Required]
-        public string VENDOR_PASSWD { get; set; }
 
         [Required]
         public string ORGANIZATION_NAME { get; set; }
