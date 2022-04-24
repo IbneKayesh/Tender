@@ -1,0 +1,21 @@
+﻿@model Tender.Models.Models.VENDOR
+@{
+    Layout = null;
+}
+<title>Registration Successfull</title>
+
+<div class="heading" style="background: #5cb85c;display:flex; align-items: center;justify-content: space-between;margin-left:-20px;margin-right: -20px;box-shadow: 0 5px 10px -5px green;padding-left: 30px;padding-right:30px;">
+    <h1 style="line-height: 50px;padding-left: 10px;color:white">Registration Successfull</h1>
+    <img src="https://techfest.org/2018/logo-main.png" alt="" style="height: 50px;">
+</div>
+
+<p>Thanks for being awesome!</p>
+<p>
+    You have successfully registered for <b>@Model.ORGANIZATION_NAME.</b>
+    <br>
+    Email: <b>@Model.VENDOR_EMAIL</b> You have not received your e-mail with the link? <a href="@Url.Action("SendConfirmEmail")"> Sent again</a><br>
+    In a few moments you will receive an e-mail with a confirmation link for you to complete your registration.<br>
+    Please click on the link within the next 48 hours.<br>
+    Please check whether the e-mail has gone into your spam folder.<br>
+    This can occur, depending on your spam filter settings.<br>
+</p>
