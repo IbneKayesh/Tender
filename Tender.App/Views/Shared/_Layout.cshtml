@@ -42,6 +42,7 @@
                                 <li><a href="@Url.Action("Login","Accounts")" class="dropdown-item">Login</a></li>
                                 <li><a href="@Url.Action("Registration","Accounts")" class="dropdown-item">Registration</a></li>
                                 <li><a href="@Url.Action("UserProfile","Accounts")" class="dropdown-item">User Profile</a></li>
+                                <li><a href="@Url.Action("BidRequest","Tender")" class="dropdown-item">Create Bid</a></li>
 
                                 <li class="dropdown-divider"></li>
 
@@ -121,10 +122,11 @@
             <!-- /.content-header -->
             <!-- Main content -->
             <div class="content">
-                <div class="container">
+                @*<div class="container">
 
-                    @RenderBody()
-                </div><!-- /.container-fluid -->
+
+                </div>*@<!-- /.container-fluid -->
+                @RenderBody()
             </div>
             <!-- /.content -->
         </div>

@@ -21,7 +21,7 @@ namespace Tender.Models.Models
 
         public bool IS_SUBMIT { get; set; }
         public bool IS_APPROVE { get; set; }
-
+        
 
         public virtual List<VENDOR_CATEGORY> VENDOR_CATEGORY { get; set; }
         public virtual List<VENDOR_CERTIFICATE> VENDOR_CERTIFICATE { get; set; }
@@ -32,9 +32,15 @@ namespace Tender.Models.Models
         {
             VENDOR_DETAILS obj = new VENDOR_DETAILS();
             obj.ORGANIZATION_NAME = "My XYZ Con;";
+            obj.VENDOR_USER_ID = "xyz123";
+            obj.CONTACT_NUMBER = "0185861262588";
             obj.VENDOR_EMAIL = "example@ex.com";
             obj.ADDRESS_1 = "Merul Badda, Dit project";
             obj.ADDRESS_2 = "Merul Badda, Dit project";
+            obj.PURCHASER = true;
+            obj.PURCHASER_NOTIFY = true;
+            obj.SUPPLIER = false;
+            obj.SUPPLIER = false;
             obj.VENDOR_CATEGORY = new VENDOR_CATEGORY().getAll();
             obj.VENDOR_CERTIFICATE = new VENDOR_CERTIFICATE().getAll();
             obj.VENDOR_DOCUMENTS = new VENDOR_DOCUMENTS().getAll();

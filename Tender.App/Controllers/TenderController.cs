@@ -10,17 +10,18 @@ namespace Tender.App.Controllers
     public class TenderController : Controller
     {
         // GET: Tender, For Supplier
+
         public ActionResult Index()
         {
             return View();
         }
-
+        [HttpGet]
         public ActionResult BidRequest()
         {
             return View();
         }
-
-        public ActionResult BidRequest(string obj)
+        [HttpPost]
+        public ActionResult BidRequest(RFQ_TENDER obj)
         {
             return View(obj);
         }

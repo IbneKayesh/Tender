@@ -23,7 +23,8 @@
                 </div>
             </div>
             <div class="input-group mb-3">
-                @Html.EditorFor(model => model.COUNTRY_NAME, new { htmlAttributes = new { @class = "form-control", placeholder = "Country Name" } })
+                @*@Html.EditorFor(model => model.COUNTRY_NAME, new { htmlAttributes = new { @class = "form-control", placeholder = "Country Name" } })*@
+                @Html.DropDownList("COUNTRY_NAME", null, "--select country--", new { @class = "form-control form-control-sm select2", placeholder = "Country Name" })
                 <div class="input-group-append">
                     <div class="input-group-text">
                         <span class="fas fa-flag"></span>
@@ -47,7 +48,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-6">
+                <div class="col-12">
                     <div class="icheck-primary">
                         @Html.EditorFor(model => model.PURCHASER, new { htmlAttributes = new { id = "Purchaser" } })
                         <label for="Purchaser">
@@ -55,16 +56,6 @@
                         </label>
                     </div>
                 </div>
-                <div class="col-6">
-                    <div class="icheck-primary">
-                        @Html.EditorFor(model => model.SUPPLIER, new { htmlAttributes = new { id = "supllier" } })
-                        <label for="supllier">
-                            Supplier
-                        </label>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
                 <div class="col-12">
                     <div class="icheck-primary">
                         @Html.EditorFor(model => model.PURCHASER_NOTIFY, new { htmlAttributes = new { id = "purNotify" } })
@@ -75,6 +66,14 @@
                 </div>
             </div>
             <div class="row">
+                <div class="col-12">
+                    <div class="icheck-primary">
+                        @Html.EditorFor(model => model.SUPPLIER, new { htmlAttributes = new { id = "supllier" } })
+                        <label for="supllier">
+                            Supplier
+                        </label>
+                    </div>
+                </div>
                 <div class="col-12">
                     <div class="icheck-primary">
                         @Html.EditorFor(model => model.SUPPLIER_NOTIFY, new { htmlAttributes = new { id = "supNotify" } })
