@@ -70,6 +70,19 @@ namespace Tender.App.Controllers
         }
 
 
+        public ActionResult ForgotPassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult ForgotPassword(VENDOR_LOGIN obj)
+        {
+            return View(obj);
+        }
+
+
+
         [HttpGet]
         public ActionResult UserProfile(string id)
         {

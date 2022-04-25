@@ -2279,6 +2279,7 @@
     <Content Include="Views\Shared\_Layout - Copy.cshtml" />
     <Content Include="Views\Accounts\RegistrationSuccessfull.cshtml" />
     <Content Include="Views\Tender\BidRequest.cshtml" />
+    <Content Include="Views\Accounts\ForgotPassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

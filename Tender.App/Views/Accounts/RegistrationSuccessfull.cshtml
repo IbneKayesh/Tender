@@ -1,21 +1,35 @@
 ﻿@model Tender.Models.Models.VENDOR
 @{
-    Layout = null;
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_LayoutRL.cshtml";
+
+    <style>
+        .button {
+            background-color: #4CAF50; /* Green */
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+        }
+    </style>
 }
 <title>Registration Successfull</title>
 
 <div class="heading" style="background: #5cb85c;display:flex; align-items: center;justify-content: space-between;margin-left:-20px;margin-right: -20px;box-shadow: 0 5px 10px -5px green;padding-left: 30px;padding-right:30px;">
     <h1 style="line-height: 50px;padding-left: 10px;color:white">Registration Successfull</h1>
-    <img src="https://techfest.org/2018/logo-main.png" alt="" style="height: 50px;">
+    <img src="~/App_Asset/img/reg-ok.png" alt="" style="height: 50px;">
 </div>
 
-<p>Thanks for being awesome!</p>
+<h4>Thanks for being awesome!</h4>
+<h5>You have successfully registered for <b>@Model.ORGANIZATION_NAME.</b></h5>
 <p>
-    You have successfully registered for <b>@Model.ORGANIZATION_NAME.</b>
     <br>
-    Email: <b>@Model.VENDOR_EMAIL</b> You have not received your e-mail with the link? <a href="@Url.Action("SendConfirmEmail")"> Sent again</a><br>
+    Email: <b>@Model.VENDOR_EMAIL</b> You have not received your e-mail with the link? <a href="@Url.Action("SendConfirmEmail")"> send again</a><br>
     In a few moments you will receive an e-mail with a confirmation link for you to complete your registration.<br>
     Please click on the link within the next 48 hours.<br>
-    Please check whether the e-mail has gone into your spam folder.<br>
-    This can occur, depending on your spam filter settings.<br>
+    Please check whether the e-mail has gone into your spam folder. This can occur, depending on your spam filter settings.<br>
 </p>
+<a href="@Url.Action("Login","Accounts")" class="button"> Login</a>

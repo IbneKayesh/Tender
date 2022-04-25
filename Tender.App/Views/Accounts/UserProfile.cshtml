@@ -44,6 +44,12 @@
                         <div class="card-header">
                             <h3 class="card-title">About Me</h3>
                         </div>
+                        <span class="ml-3 text-primary">Year of Establishment :&nbsp;  @Model.YEAR_OF_ESTABLISHMENT</span>
+                        <span class="ml-3 text-primary">Yearly Trun Over :&nbsp;  @Model.YEARLY_TRUNOVER</span>
+                        <span class="ml-3 text-primary">Tax Number :&nbsp;  @Model.TAX_NUMBER</span>
+                        <span class="ml-3 text-primary">Trade Number :&nbsp;  @Model.TRADE_NUMBER</span>
+                        <span class="ml-3 text-primary">Contact Person  :&nbsp;  @Model.CONTACT_NAME</span>
+                        <br />
 
                         <div class="card-body mb-0 pb-0">
 
@@ -71,21 +77,9 @@
                                 <span class="badge badge-primary">@CatItem.DOCUMENTS_NAME</span>
                             }
                             <hr />
-                            <strong><i class="fa fa-list-alt mr-1"></i> Products  </strong>
-                            <p>
-                                @foreach (var CatItem in Model.VENDOR_PRODUCTS)
-                                {
-                                    <span> # @CatItem.PRODUCTS_NAME </span>
-
-                                }
-                            </p>
+                       
                         </div>
-                        <span class="ml-3 text-primary">Year of Establishment :&nbsp;  @Model.YEAR_OF_ESTABLISHMENT</span>
-                        <span class="ml-3 text-primary">Yearly Trun Over :&nbsp;  @Model.YEARLY_TRUNOVER</span>
-                        <span class="ml-3 text-primary">Tax Number :&nbsp;  @Model.TAX_NUMBER</span>
-                        <span class="ml-3 text-primary">Trade Number :&nbsp;  @Model.TRADE_NUMBER</span>
-                        <span class="ml-3 text-primary">Contact Person  :&nbsp;  @Model.CONTACT_NAME</span>
-                        <br />
+         
 
                     </div>
 
@@ -95,6 +89,7 @@
                     <div class="card">
                         <div class="card-header p-2">
                             <ul class="nav nav-pills">
+                                <li class="nav-item"><a class="nav-link" href="#follow" data-toggle="tab">Follow</a></li>
                                 <li class="nav-item"><a class="nav-link active" href="#activity" data-toggle="tab">Activity</a></li>
                                 <li class="nav-item"><a class="nav-link" href="#UpdateProfile" data-toggle="tab">Update Profile</a></li>
                                 <li class="nav-item"><a class="nav-link" href="#settings" data-toggle="tab">Change Password</a></li>
@@ -102,6 +97,18 @@
                         </div>
                         <div class="card-body">
                             <div class="tab-content">
+                                <div class="tab-pane" id="follow">
+                                    <strong><i class="fa fa-list-alt mr-1"></i> Products  </strong>
+                                    <p>
+                                        @foreach (var CatItem in Model.VENDOR_PRODUCTS)
+                                        {
+                                            <span> # @CatItem.PRODUCTS_NAME </span>
+
+                                        }
+                                    </p>
+
+                                </div>
+                                
                                 <div class="active tab-pane" id="activity">
                                     @*<ul class="list-group list-group-unbordered mb-3">
                                             <li class="list-group-item">
