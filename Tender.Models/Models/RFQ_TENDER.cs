@@ -27,9 +27,9 @@ namespace Tender.Models.Models
 
 
         public DateTime LAST_DELIVERY_DATE { get; set; }
-        public int PORT_ID { get; set; }
         public bool PARTIAL_SHIPMENT { get; set; }
         public int SHIPMENT_MODE { get; set; }
+        public int PORT_ID { get; set; }
         public string DELIVERY_ADDRESS { get; set; }
         public string RECEIVER_NAME { get; set; }
         public string RECEIVER_DETAILS { get; set; }
