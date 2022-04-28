@@ -210,6 +210,7 @@
     <Content Include="App_Asset\dist\img\credit\visa.png" />
     <Content Include="App_Asset\dist\img\default-150x150.png" />
     <Content Include="App_Asset\dist\img\icons.png" />
+    <Content Include="App_Asset\dist\img\ML_Red_wave__1_.jpg" />
     <Content Include="App_Asset\dist\img\photo1.png" />
     <Content Include="App_Asset\dist\img\photo2.png" />
     <Content Include="App_Asset\dist\img\photo3.jpg" />
@@ -2281,6 +2282,10 @@
     <Content Include="Views\Accounts\RegistrationSuccessfull.cshtml" />
     <Content Include="Views\Tender\BidRequest.cshtml" />
     <Content Include="Views\Accounts\ForgotPassword.cshtml" />
+    <Content Include="Views\Quotation\Bid.cshtml" />
+    <Content Include="Views\Quotation\Index.cshtml" />
+    <Content Include="Views\Quotation\Bid - Copy.cshtml" />
+    <Content Include="Views\Quotation\Bid - Copy %282%29.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

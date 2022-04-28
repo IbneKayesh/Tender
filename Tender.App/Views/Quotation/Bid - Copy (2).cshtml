@@ -1,4 +1,4 @@
-﻿@model Tender.Models.Models.RFQ_TENDER
+﻿@model Tender.Models.Models.RFQ_BIDDING
 
 @{
     ViewBag.Title = "Create Tender";
@@ -39,7 +39,7 @@
 
                         </ul>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body" style="background: #E8E7ED; ">
                         <div class="tab-content" id="custom-tabs-two-tabContent">
 
                             <div class="tab-pane fade show active" id="custom-tabs-two-home" role="tabpanel" aria-labelledby="custom-tabs-two-home-tab">
@@ -60,6 +60,26 @@
                                     </div>
                                     <div class="col-md-3 col-sm-6">
                                         <div class="form-group">
+                                            @Html.LabelFor(Model => Model.RFQ_SL, new { @class = "control-label" })
+                                            @Html.EditorFor(model => model.RFQ_SL, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "Vendor Id" } })
+                                            @Html.ValidationMessageFor(m => m.RFQ_SL, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-sm-6">
+                                        <div class="form-group">
+                                            @Html.LabelFor(Model => Model.LOWER_RATE, new { @class = "control-label" })
+                                            @Html.DropDownList("LOWER_RATE", null, new { @class = "form-control form-control-sm select2", placeholder = "SELL_BUY" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-sm-6">
+                                        <div class="form-group">
+                                            @Html.LabelFor(Model => Model.RE_BID, new { @class = "control-label" })
+                                            @Html.DropDownList("RE_BID", null, new { @class = "form-control form-control-sm select2", placeholder = "SELL_BUY" })
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3 col-sm-6">
+                                        <div class="form-group">
                                             @Html.LabelFor(Model => Model.START_DATE, new { @class = "control-label" })
                                             @Html.EditorFor(model => model.START_DATE, new { htmlAttributes = new { @class = "form-control form-control-sm", type = "date", placeholder = "Tender Number" } })
                                             @Html.ValidationMessageFor(m => m.START_DATE, "", new { @class = "text-danger" })
@@ -75,36 +95,9 @@
                                     </div>
                                     <div class="col-md-3 col-sm-6">
                                         <div class="form-group">
-                                            @Html.LabelFor(Model => Model.SELL_BUY, new { @class = "control-label" })
-                                            @Html.DropDownList("SELL_BUY", null, new { @class = "form-control form-control-sm select2", placeholder = "SELL_BUY" })
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3 col-sm-6">
-                                        <div class="form-group">
-                                            @Html.LabelFor(Model => Model.RE_BID, new { @class = "control-label" })
-                                            @Html.DropDownList("RE_BID", null, new { @class = "form-control form-control-sm select2", placeholder = "SELL_BUY" })
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3 col-sm-6">
-                                        <div class="form-group">
-                                            @Html.LabelFor(Model => Model.LOWER_RATE, new { @class = "control-label" })
-                                            @Html.DropDownList("LOWER_RATE", null, new { @class = "form-control form-control-sm select2", placeholder = "SELL_BUY" })
-                                        </div>
-                                    </div>
-
-
-                                    <div class="col-md-3 col-sm-6">
-                                        <div class="form-group">
-                                            @Html.LabelFor(Model => Model.COST_EX_INC, new { @class = "control-label" })
-                                            @Html.EditorFor(model => model.COST_EX_INC, new { htmlAttributes = new { @class = "form-control form-control-sm", row = "1", placeholder = "Tender Number" } })
-                                            @Html.ValidationMessageFor(m => m.COST_EX_INC, "", new { @class = "text-danger" })
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3 col-sm-6">
-                                        <div class="form-group">
-                                            @Html.LabelFor(Model => Model.INCO_TERMS, new { @class = "control-label" })
-                                            @Html.DropDownList("INCO_TERMS", null, new { @class = "form-control form-control-sm select2", placeholder = "" })
-                                            @Html.ValidationMessageFor(m => m.INCO_TERMS, "", new { @class = "text-danger" })
+                                            @Html.LabelFor(Model => Model.SUBMIT_DATE, new { @class = "control-label" })
+                                            @Html.EditorFor(model => model.SUBMIT_DATE, new { htmlAttributes = new { @class = "form-control form-control-sm", type = "date", placeholder = "Tender Number" } })
+                                            @Html.ValidationMessageFor(m => m.SUBMIT_DATE, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
                                 </div>
@@ -145,13 +138,7 @@
 
                             <div class="tab-pane fade" id="custom-tabs-two-messages" role="tabpanel" aria-labelledby="custom-tabs-two-messages-tab">
                                 <div class="card-body pad row">
-                                    <div class="col-md-3 col-sm-6">
-                                        <div class="form-group">
-                                            @Html.LabelFor(Model => Model.LAST_DELIVERY_DATE, new { @class = "control-label" })
-                                            @Html.EditorFor(model => model.LAST_DELIVERY_DATE, new { htmlAttributes = new { @class = "form-control form-control-sm", type = "date", placeholder = "Tender Number" } })
-                                            @Html.ValidationMessageFor(m => m.LAST_DELIVERY_DATE, "", new { @class = "text-danger" })
-                                        </div>
-                                    </div>
+
                                     <div class="col-md-3 col-sm-6">
                                         <div class="form-group">
                                             @Html.LabelFor(Model => Model.PORT_ID, new { @class = "control-label" })
@@ -187,12 +174,33 @@
                                             @Html.ValidationMessageFor(m => m.RECEIVER_NAME, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
+                                    <div class="col-md-3 col-sm-6">
+                                        <div class="form-group">
+                                            @Html.LabelFor(Model => Model.LOADING_ADDRESS, new { @class = "control-label" })
+                                            @Html.EditorFor(model => model.LOADING_ADDRESS, new { htmlAttributes = new { @class = "form-control form-control-sm", row = "1", placeholder = "Tender Number" } })
+                                            @Html.ValidationMessageFor(m => m.LOADING_ADDRESS, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-sm-6">
+                                        <div class="form-group">
+                                            @Html.LabelFor(Model => Model.SENDER_NAME, new { @class = "control-label" })
+                                            @Html.EditorFor(model => model.SENDER_NAME, new { htmlAttributes = new { @class = "form-control form-control-sm", row = "1", placeholder = "Tender Number" } })
+                                            @Html.ValidationMessageFor(m => m.SENDER_NAME, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-sm-6">
+                                        <div class="form-group">
+                                            @Html.LabelFor(Model => Model.SENDER_DETAILS, new { @class = "control-label" })
+                                            @Html.EditorFor(model => model.SENDER_DETAILS, new { htmlAttributes = new { @class = "form-control form-control-sm", row = "1", placeholder = "Tender Number" } })
+                                            @Html.ValidationMessageFor(m => m.SENDER_DETAILS, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
                             <div class="tab-pane fade" id="custom-tabs-two-settings" role="tabpanel" aria-labelledby="custom-tabs-two-settings-tab">
                                 <div class="card-body pad row">
-                                    <div class="col-md-3 col-sm-6">
+                                    @*<div class="col-md-3 col-sm-6">
                                         <div class="form-group">
                                             @Html.LabelFor(Model => Model.CURRENCY_NAME, new { @class = "control-label" })
                                             @Html.EditorFor(model => model.CURRENCY_NAME, new { htmlAttributes = new { @class = "form-control form-control-sm", row = "1", placeholder = "Tender Number" } })
@@ -233,7 +241,7 @@
                                             @Html.EditorFor(model => model.PAY_BP, new { htmlAttributes = new { @class = "form-control form-control-sm", row = "1", placeholder = "Tender Number" } })
                                             @Html.ValidationMessageFor(m => m.PAY_BP, "", new { @class = "text-danger" })
                                         </div>
-                                    </div>
+                                    </div>*@
                                 </div>
                             </div>
                         </div>
@@ -247,7 +255,7 @@
                 </div>
 
             }
-            </div>
+        </div>
     </div>
 </div>
 
