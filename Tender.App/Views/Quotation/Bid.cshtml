@@ -33,7 +33,7 @@
                         <div class="col">Total Bids : 80 </div>
                     </div>
 
-                    <div class="bg-gray py-2 px-3 mt-4">
+                    <div class="btn-default py-2 px-3 mt-4">
                         <h2 class="mb-0">
                             $80.00
                         </h2>
@@ -44,33 +44,33 @@
                 </div>
             </div>
             <br />
-            <div class="row">
+            <div class="card-footer row">
                 <div class="col-md-3 col-sm-4 mb-2">
-                    <a class="btn btn-lg  btn-outline-primary" id="desc">
+                    <a class="btn btn-block btn-lg btn-outline-primary" id="tndDetails">
                         Tender Information
                         <i class="fa fa-file"></i>
                     </a>
                 </div>
                 <div class="col-md-3 col-sm-4  mb-2">
-                    <a class="btn btn-lg  btn-outline-primary" id="item">
+                    <a class="btn btn-block btn-lg btn-outline-primary" id="tndItem">
                         Item Information
                         <i class="fa fa-list-alt"></i>
                     </a>
                 </div>
                 <div class="col-md-3 col-sm-4 mb-2">
-                    <a class="btn btn-lg  btn-outline-primary" id="shipment">
+                    <a class="btn btn-block btn-lg btn-outline-primary" id="tndShipment">
                         Shipment Details
                         <i class="fas fa-shipping-fast"></i>
                     </a>
                 </div>
                 <div class="col-md-3 col-sm-4 mb-2">
-                    <a class="btn btn-lg  btn-outline-primary" id="submit">
+                    <a class="btn btn-block btn-lg btn-outline-primary" id="tndPayment">
                         Submit Bid
                         <i class="fab fa-first-order"></i>
                     </a>
                 </div>
             </div>
-            <div class="row" id="descDiv">
+            <div class="row" id="detailsBody">
                 <div class="col-md-12">
                     <table class="table table-borderless table-responsive">
                         <tbody>
@@ -95,7 +95,7 @@
                 </div>
             </div>
 
-            <div class="row" id="itemDiv" style="display:none;">
+            <div class="row" id="itemBody" style="display:none;">
                 <div class="col-md-12">
                     <table class="table table-borderless table-responsive">
                         <tbody>
@@ -120,7 +120,7 @@
                 </div>
             </div>
 
-            <div class="row" id="shipmentDiv" style="display:none;">
+            <div class="row" id="shipmentBody" style="display:none;">
                 <div class="col-md-12">
                     <table class="table table-borderless">
                         <tbody>
@@ -153,7 +153,7 @@
                 </div>
             </div>
 
-            <div class="row" id="submitDiv" style="display:none;">
+            <div class="row" id="paymentBody" style="display:none;">
                 <div class="col-md-12">
                     @using (Html.BeginForm("Bid", "Quotation", FormMethod.Post, new { enctype = "multipart/form-data" }))
                     {
@@ -218,33 +218,29 @@
                 $(this).addClass('active')
             })
 
-            $("#desc").click(function () {
-                $("#descDiv").css("display", "block");
-                $("#shipmentDiv").css("display", "none");
-                $("#submitDiv").css("display", "none");
-                $("#itemDiv").css("display", "none");
+            $("#tndDetails").click(function () {
+                $("#detailsBody").css("display", "block");
+                $("#itemBody").css("display", "none");
+                $("#shipmentBody").css("display", "none");
+                $("#paymentBody").css("display", "none");
             });
-            $("#item").click(function () {
-                /*if ($("#itemDiv").css('display') == 'none') {*/
-                $("#itemDiv").css("display", "block");
-                $("#shipmentDiv").css("display", "none");
-                $("#submitDiv").css("display", "none");
-                $("#descDiv").css("display", "none");
-                //}
-                //else
-                //  $("#ItemList").css("display", "none");
+            $("#tndItem").click(function () {
+                $("#detailsBody").css("display", "none");
+                $("#itemBody").css("display", "block");
+                $("#shipmentBody").css("display", "none");
+                $("#paymentBody").css("display", "none");
             });
-            $("#shipment").click(function () {
-                $("#shipmentDiv").css("display", "block");
-                $("#itemDiv").css("display", "none");
-                $("#submitDiv").css("display", "none");
-                $("#descDiv").css("display", "none");
+            $("#tndShipment").click(function () {
+                $("#detailsBody").css("display", "none");
+                $("#itemBody").css("display", "none");
+                $("#shipmentBody").css("display", "block");
+                $("#paymentBody").css("display", "none");
             });
-            $("#submit").click(function () {
-                $("#submitDiv").css("display", "block");
-                $("#itemDiv").css("display", "none");
-                $("#shipmentDiv").css("display", "none");
-                $("#descDiv").css("display", "none");
+            $("#tndPayment").click(function () {
+                $("#detailsBody").css("display", "none");
+                $("#itemBody").css("display", "none");
+                $("#shipmentBody").css("display", "none");
+                $("#paymentBody").css("display", "block");
             });
 
 
