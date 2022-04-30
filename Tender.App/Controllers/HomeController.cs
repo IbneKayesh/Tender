@@ -10,6 +10,7 @@ namespace Tender.App.Controllers
     {
         public ActionResult Index()
         {
+
             return View();
         }
 

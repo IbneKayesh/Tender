@@ -129,9 +129,9 @@
                                                 <div class="col-md-6 col-sm-12">
                                                     <div class="form-group">
                                                         @Html.LabelFor(Model => Model.COUNTRY_NAME, new { @class = "control-label" })
-                                                        @Html.DropDownList("COUNTRY_NAME", null, "--Please select--", new { @class = "form-control form-control-sm select2" })
+                                                        @*@Html.DropDownList("COUNTRY_NAME", null, "--Please select--", new { @class = "form-control form-control-sm select2" })*@
 
-                                                        @*@Html.EditorFor(model => model.COUNTRY_NAME, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "User Id" } })*@
+                                                        @Html.EditorFor(model => model.COUNTRY_NAME, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "User Id" } })
                                                     </div>
                                                 </div>
 
@@ -268,7 +268,7 @@
 
                                             <div class="row float-right">
                                                 <div class="col-12 float-right">
-                                                    <button type="submit" class="btn btn-danger btn-sm">Update</button>
+                                                    <button type="submit" class="btn btn-danger btn-sm">Submit</button>
                                                 </div>
                                             </div>
                                         </div>
