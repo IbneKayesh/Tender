@@ -11,6 +11,10 @@
     <link rel="stylesheet" href="~/App_Asset/plugins/fontawesome-free/css/all.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="~/App_Asset/dist/css/adminlte.min.css">
+
+
+    <link rel="stylesheet" href="~/App_Asset/plugins/bs-stepper/css/bs-stepper.min.css">
+
 </head>
 <body class="hold-transition layout-top-nav">
     <div class="wrapper">
@@ -111,23 +115,23 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link" data-toggle="dropdown" href="#">
                             <i class="fa fa-sign-out-alt" aria-hidden="true"></i>Sign out
-                        </a>                      
+                        </a>
                     </li>
-                    
+
                 </ul>
             </div>
         </nav>
         <!-- /.navbar -->
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
-            
+
             <!-- /.content-header -->
             <!-- Main content -->
             <div class="content">
                 @*<div class="container">
 
 
-                </div>*@<!-- /.container-fluid -->
+                    </div>*@<!-- /.container-fluid -->
                 @RenderBody()
             </div>
             <!-- /.content -->
@@ -157,6 +161,7 @@
     <!-- AdminLTE App -->
     <script src="~/App_Asset/dist/js/adminlte.min.js"></script>
     <!-- AdminLTE for demo purposes -->
+    <script src="~/App_Asset/plugins/bs-stepper/js/bs-stepper.min.js"></script>
     @*<script src="~/App_Asset/dist/js/demo.js"></script>*@
     @RenderSection("scripts", required: false)
 </body>

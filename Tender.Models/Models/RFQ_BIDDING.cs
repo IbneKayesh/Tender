@@ -29,6 +29,8 @@ namespace Tender.Models.Models
 
         public string PRODUCTS_ID { get; set; }
         public string PRODUCTS_DESC { get; set; }
+        [NotMapped]
+        public decimal QUOTATION_PRODUCTS_RATE { get; set; }
         public decimal PRODUCTS_RATE { get; set; }
         public int PRODUCTS_QUANTITY { get; set; }
 
