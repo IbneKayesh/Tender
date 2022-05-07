@@ -84,6 +84,36 @@ namespace Tender.App.Service
                   }, "Value", "Text", 1);
             return DataList;
         }
+        public static SelectList DropDown_CostType()
+        {
+            SelectList DataList = new SelectList(
+                  new List<SelectListItem>
+                  {new SelectListItem{ Text="Include", Value = "1" },
+                   new SelectListItem{ Text="Exclude", Value = "2" }
+                  }, "Value", "Text", 1);
+            return DataList;
+        }
 
+        public static SelectList DropDown_currencyList()
+        {
+            SelectList DataList = new SelectList(
+                  new List<SelectListItem>
+                  {
+                      new SelectListItem{ Text="United States dollar(USD)-$", Value = "1" }
+                  }, "Value", "Text", 1);
+            return DataList;
+        }
+        public static SelectList DropDown_payment()
+        {
+            SelectList DataList = new SelectList(
+                  new List<SelectListItem>
+                  {
+                      new SelectListItem{ Text="Cash/TT", Value = "1" },
+                      new SelectListItem{ Text="Credit", Value = "1" },
+                      new SelectListItem{ Text="Latter Of Credit", Value = "1" },
+                      new SelectListItem{ Text="CAD", Value = "1" },
+                  }, "Value", "Text", 1);
+            return DataList;
+        }
     }
 }

@@ -16,244 +16,253 @@
         </h3>
     </div>
     <div class="card-body">
-        <div class="col-12 col-sm-12">
-            @using (Html.BeginForm("BidRequest", "Tender", FormMethod.Post, new { enctype = "multipart/form-data" }))
-            {
-                @Html.AntiForgeryToken()
-
-                <div class="card card-default card-tabs">
-                    <div class="card-header p-0 pt-1">
-                        <ul class="nav nav-tabs" id="custom-tabs-two-tab" role="tablist">
-                            <li class="nav-item">
-                                <a class="nav-link active" id="custom-tabs-two-home-tab" data-toggle="pill" href="#custom-tabs-two-home" role="tab" aria-controls="custom-tabs-two-home" aria-selected="true">Bidding</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="custom-tabs-two-profile-tab" data-toggle="pill" href="#custom-tabs-two-profile" role="tab" aria-controls="custom-tabs-two-profile" aria-selected="false">Product</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="custom-tabs-two-messages-tab" data-toggle="pill" href="#custom-tabs-two-messages" role="tab" aria-controls="custom-tabs-two-messages" aria-selected="false">Shipping</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="custom-tabs-two-settings-tab" data-toggle="pill" href="#custom-tabs-two-settings" role="tab" aria-controls="custom-tabs-two-settings" aria-selected="false">Payment</a>
-                            </li>
-
-                        </ul>
-                    </div>
-                    <div class="card-body">
-                        <div class="tab-content" id="custom-tabs-two-tabContent">
-                            <div class="tab-pane fade show active" id="custom-tabs-two-home" role="tabpanel" aria-labelledby="custom-tabs-two-home-tab">
-                                <div class="card-body pad row">
-                                    <div class="col-md-3 col-sm-6">
-                                        <div class="form-group">
-                                            @Html.LabelFor(Model => Model.RFQ_NUMBER, new { @class = "control-label" })
-                                            @Html.EditorFor(model => model.RFQ_NUMBER, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "Tender Number" } })
-                                            @Html.ValidationMessageFor(m => m.RFQ_NUMBER, "", new { @class = "text-danger" })
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3 col-sm-6">
-                                        <div class="form-group">
-                                            @Html.LabelFor(Model => Model.VENDOR_ID, new { @class = "control-label" })
-                                            @Html.EditorFor(model => model.VENDOR_ID, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "Vendor Id" } })
-                                            @Html.ValidationMessageFor(m => m.VENDOR_ID, "", new { @class = "text-danger" })
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3 col-sm-6">
-                                        <div class="form-group">
-                                            @Html.LabelFor(Model => Model.START_DATE, new { @class = "control-label" })
-                                            @Html.EditorFor(model => model.START_DATE, new { htmlAttributes = new { @class = "form-control form-control-sm", type = "date", placeholder = "Tender Number" } })
-                                            @Html.ValidationMessageFor(m => m.START_DATE, "", new { @class = "text-danger" })
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-3 col-sm-6">
-                                        <div class="form-group">
-                                            @Html.LabelFor(Model => Model.END_DATE, new { @class = "control-label" })
-                                            @Html.EditorFor(model => model.END_DATE, new { htmlAttributes = new { @class = "form-control form-control-sm", type = "date", placeholder = "Tender Number" } })
-                                            @Html.ValidationMessageFor(m => m.END_DATE, "", new { @class = "text-danger" })
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3 col-sm-6">
-                                        <div class="form-group">
-                                            @Html.LabelFor(Model => Model.SELL_BUY, new { @class = "control-label" })
-                                            @Html.DropDownList("SELL_BUY", null, new { @class = "form-control form-control-sm select2", placeholder = "SELL_BUY" })
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3 col-sm-6">
-                                        <div class="form-group">
-                                            @Html.LabelFor(Model => Model.RE_BID, new { @class = "control-label" })
-                                            @Html.DropDownList("RE_BID", null, new { @class = "form-control form-control-sm select2", placeholder = "SELL_BUY" })
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3 col-sm-6">
-                                        <div class="form-group">
-                                            @Html.LabelFor(Model => Model.LOWER_RATE, new { @class = "control-label" })
-                                            @Html.DropDownList("LOWER_RATE", null, new { @class = "form-control form-control-sm select2", placeholder = "SELL_BUY" })
-                                        </div>
-                                    </div>
-
-
-                                    <div class="col-md-3 col-sm-6">
-                                        <div class="form-group">
-                                            @Html.LabelFor(Model => Model.COST_EX_INC, new { @class = "control-label" })
-                                            @Html.EditorFor(model => model.COST_EX_INC, new { htmlAttributes = new { @class = "form-control form-control-sm", row = "1", placeholder = "Tender Number" } })
-                                            @Html.ValidationMessageFor(m => m.COST_EX_INC, "", new { @class = "text-danger" })
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3 col-sm-6">
-                                        <div class="form-group">
-                                            @Html.LabelFor(Model => Model.INCO_TERMS, new { @class = "control-label" })
-                                            @Html.DropDownList("INCO_TERMS", null, new { @class = "form-control form-control-sm select2", placeholder = "" })
-                                            @Html.ValidationMessageFor(m => m.INCO_TERMS, "", new { @class = "text-danger" })
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="tab-pane fade" id="custom-tabs-two-profile" role="tabpanel" aria-labelledby="custom-tabs-two-profile-tab">
-                                <div class="card-body pad row">
-                                    <div class="col-md-3 col-sm-6">
-                                        <div class="form-group">
-                                            @Html.LabelFor(Model => Model.PRODUCTS_ID, new { @class = "control-label" })
-                                            @Html.DropDownList("PRODUCTS_ID", null, new { @class = "form-control form-control-sm select2", placeholder = "" })
-                                            @Html.ValidationMessageFor(m => m.PRODUCTS_ID, "", new { @class = "text-danger" })
-                                        </div>
-                                    </div>
-                                    <div class="col-md-2 col-sm-6">
-                                        <div class="form-group">
-                                            @Html.LabelFor(Model => Model.PRODUCTS_RATE, new { @class = "control-label" })
-                                            @Html.EditorFor(model => model.PRODUCTS_RATE, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "Tender Number" } })
-                                            @Html.ValidationMessageFor(m => m.PRODUCTS_RATE, "", new { @class = "text-danger" })
-                                        </div>
-                                    </div>
-                                    <div class="col-md-2 col-sm-6">
-                                        <div class="form-group">
-                                            @Html.LabelFor(Model => Model.PRODUCTS_QUANTITY, new { @class = "control-label" })
-                                            @Html.EditorFor(model => model.PRODUCTS_QUANTITY, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "Tender Number" } })
-                                            @Html.ValidationMessageFor(m => m.PRODUCTS_QUANTITY, "", new { @class = "text-danger" })
-                                        </div>
-                                    </div>
-                                    <div class="col-md-5 col-sm-6">
-                                        <div class="form-group">
-                                            @Html.LabelFor(Model => Model.PRODUCTS_DESC, new { @class = "control-label" })
-                                            @Html.EditorFor(model => model.PRODUCTS_DESC, new { htmlAttributes = new { @class = "form-control form-control-sm", row = "1", placeholder = "Tender Number" } })
-                                            @Html.ValidationMessageFor(m => m.PRODUCTS_DESC, "", new { @class = "text-danger" })
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="tab-pane fade" id="custom-tabs-two-messages" role="tabpanel" aria-labelledby="custom-tabs-two-messages-tab">
-                                <div class="card-body pad row">
-                                    <div class="col-md-3 col-sm-6">
-                                        <div class="form-group">
-                                            @Html.LabelFor(Model => Model.LAST_DELIVERY_DATE, new { @class = "control-label" })
-                                            @Html.EditorFor(model => model.LAST_DELIVERY_DATE, new { htmlAttributes = new { @class = "form-control form-control-sm", type = "date", placeholder = "Tender Number" } })
-                                            @Html.ValidationMessageFor(m => m.LAST_DELIVERY_DATE, "", new { @class = "text-danger" })
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3 col-sm-6">
-                                        <div class="form-group">
-                                            @Html.LabelFor(Model => Model.PORT_ID, new { @class = "control-label" })
-                                            @Html.DropDownList("PORT_ID", null, new { @class = "form-control form-control-sm select2", placeholder = "" })
-                                            @Html.ValidationMessageFor(m => m.PORT_ID, "", new { @class = "text-danger" })
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3 col-sm-6">
-                                        <div class="form-group">
-                                            @Html.LabelFor(Model => Model.PARTIAL_SHIPMENT, new { @class = "control-label" })
-                                            @Html.DropDownList("PARTIAL_SHIPMENT", null, new { @class = "form-control form-control-sm select2", placeholder = "" })
-                                            @Html.ValidationMessageFor(m => m.PARTIAL_SHIPMENT, "", new { @class = "text-danger" })
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3 col-sm-6">
-                                        <div class="form-group">
-                                            @Html.LabelFor(Model => Model.SHIPMENT_MODE, new { @class = "control-label" })
-                                            @Html.DropDownList("SHIPMENT_MODE", null, new { @class = "form-control form-control-sm select2", placeholder = "" })
-                                            @Html.ValidationMessageFor(m => m.SHIPMENT_MODE, "", new { @class = "text-danger" })
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 col-sm-6">
-                                        <div class="form-group">
-                                            @Html.LabelFor(Model => Model.DELIVERY_ADDRESS, new { @class = "control-label" })
-                                            @Html.EditorFor(model => model.DELIVERY_ADDRESS, new { htmlAttributes = new { @class = "form-control form-control-sm", row = "1", placeholder = "Tender Number" } })
-                                            @Html.ValidationMessageFor(m => m.DELIVERY_ADDRESS, "", new { @class = "text-danger" })
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3 col-sm-6">
-                                        <div class="form-group">
-                                            @Html.LabelFor(Model => Model.RECEIVER_NAME, new { @class = "control-label" })
-                                            @Html.EditorFor(model => model.RECEIVER_NAME, new { htmlAttributes = new { @class = "form-control form-control-sm", row = "1", placeholder = "Tender Number" } })
-                                            @Html.ValidationMessageFor(m => m.RECEIVER_NAME, "", new { @class = "text-danger" })
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="tab-pane fade" id="custom-tabs-two-settings" role="tabpanel" aria-labelledby="custom-tabs-two-settings-tab">
-                                <div class="card-body pad row">
-                                    <div class="col-md-3 col-sm-6">
-                                        <div class="form-group">
-                                            @Html.LabelFor(Model => Model.CURRENCY_NAME, new { @class = "control-label" })
-                                            @Html.EditorFor(model => model.CURRENCY_NAME, new { htmlAttributes = new { @class = "form-control form-control-sm", row = "1", placeholder = "Tender Number" } })
-                                            @Html.ValidationMessageFor(m => m.CURRENCY_NAME, "", new { @class = "text-danger" })
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3 col-sm-6">
-                                        <div class="form-group">
-                                            @Html.LabelFor(Model => Model.CURRENCY_RATE, new { @class = "control-label" })
-                                            @Html.EditorFor(model => model.CURRENCY_RATE, new { htmlAttributes = new { @class = "form-control form-control-sm", row = "1", placeholder = "Tender Number" } })
-                                            @Html.ValidationMessageFor(m => m.CURRENCY_RATE, "", new { @class = "text-danger" })
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3 col-sm-6">
-                                        <div class="form-group">
-                                            @Html.LabelFor(Model => Model.PAY_A, new { @class = "control-label" })
-                                            @Html.EditorFor(model => model.PAY_A, new { htmlAttributes = new { @class = "form-control form-control-sm", row = "1", placeholder = "Tender Number" } })
-                                            @Html.ValidationMessageFor(m => m.PAY_A, "", new { @class = "text-danger" })
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3 col-sm-6">
-                                        <div class="form-group">
-                                            @Html.LabelFor(Model => Model.PAY_AP, new { @class = "control-label" })
-                                            @Html.EditorFor(model => model.PAY_AP, new { htmlAttributes = new { @class = "form-control form-control-sm", row = "1", placeholder = "Tender Number" } })
-                                            @Html.ValidationMessageFor(m => m.PAY_AP, "", new { @class = "text-danger" })
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3 col-sm-6">
-                                        <div class="form-group">
-                                            @Html.LabelFor(Model => Model.PAY_B, new { @class = "control-label" })
-                                            @Html.EditorFor(model => model.PAY_B, new { htmlAttributes = new { @class = "form-control form-control-sm", row = "1", placeholder = "Tender Number" } })
-                                            @Html.ValidationMessageFor(m => m.PAY_B, "", new { @class = "text-danger" })
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3 col-sm-6">
-                                        <div class="form-group">
-                                            @Html.LabelFor(Model => Model.PAY_BP, new { @class = "control-label" })
-                                            @Html.EditorFor(model => model.PAY_BP, new { htmlAttributes = new { @class = "form-control form-control-sm", row = "1", placeholder = "Tender Number" } })
-                                            @Html.ValidationMessageFor(m => m.PAY_BP, "", new { @class = "text-danger" })
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row float-right">
-                            <div class="col-12 float-right">
-                                <button type="submit" class="btn btn-success btn-sm">Submit</button>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
-            }
+        <div class="card-footer row">
+            <div class="col-md-3 col-sm-4 mb-2">
+                <a class="btn btn-block btn-lg  btn-primary" id="tndDetails">
+                    Tender Information
+                    <i class="fa fa-file"></i>
+                </a>
             </div>
+            <div class="col-md-3 col-sm-4  mb-2">
+                <a class="btn btn-block btn-lg btn-outline-primary" id="tndItem">
+                    Item Information
+                    <i class="fa fa-list-alt"></i>
+                </a>
+            </div>
+            <div class="col-md-3 col-sm-4 mb-2">
+                <a class="btn btn-block btn-lg btn-outline-primary" id="tndShipment">
+                    Shipment Details
+                    <i class="fas fa-shipping-fast"></i>
+                </a>
+            </div>
+            <div class="col-md-3 col-sm-4 mb-2">
+                <a class="btn btn-block btn-lg btn-outline-primary" id="tndPayment">
+                    Payment Details
+                    <i class="fa fa-credit-card"></i>
+                </a>
+            </div>
+        </div>
+        @using (Html.BeginForm("BidRequest", "Tender", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="row" id="detailsBody">
+                <div class="col-md-12">
+                    <div class="card-body pad row">
+                        <div class="col-md-3 col-sm-6">
+                            <div class="form-group">
+                                <label class="control-label">RFQ Number</label>
+                                @Html.EditorFor(model => model.RFQ_NUMBER, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "Tender Number", @readonly = "readonly" } })
+                                @Html.ValidationMessageFor(m => m.RFQ_NUMBER, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <div class="form-group">
+                                <label class="control-label">Company</label>
+                                @Html.EditorFor(model => model.VENDOR_ID, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "Vendor Id" } })
+                                @Html.ValidationMessageFor(m => m.VENDOR_ID, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <div class="form-group">
+                                <label class="control-label">Start Date</label>
+                                @Html.EditorFor(model => model.START_DATE, new { htmlAttributes = new { @class = "form-control form-control-sm", type = "date", placeholder = "Tender Number" } })
+                                @Html.ValidationMessageFor(m => m.START_DATE, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="col-md-3 col-sm-6">
+                            <div class="form-group">
+                                <label class="control-label">End Date</label>
+                                @Html.EditorFor(model => model.END_DATE, new { htmlAttributes = new { @class = "form-control form-control-sm", type = "date", placeholder = "Tender Number" } })
+                                @Html.ValidationMessageFor(m => m.END_DATE, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <div class="form-group">
+                                <label class="control-label">Tender Type</label>
+                                @Html.DropDownList("SELL_BUY", null, new { @class = "form-control form-control-sm select2"})
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <div class="form-group">
+                                <label class="control-label">Submission Type</label>
+                                @Html.DropDownList("RE_BID", null, new { @class = "form-control form-control-sm select2" })
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <div class="form-group">
+                                <label class="control-label">Quotation Rate Range</label>
+                                @Html.DropDownList("LOWER_RATE", null, new { @class = "form-control form-control-sm select2" })
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-3 col-sm-6">
+                            <div class="form-group">
+                                <label class="control-label">Cost Exclude/Include</label>
+                                @Html.DropDownList("COST_EX_INC", null, new { @class = "form-control form-control-sm select2", placeholder = "" })
+                                @Html.ValidationMessageFor(m => m.COST_EX_INC, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <div class="form-group">
+                                <label class="control-label">Incoterms</label>
+                                @Html.DropDownList("INCO_TERMS", null, new { @class = "form-control form-control-sm select2", placeholder = "" })
+                                @Html.ValidationMessageFor(m => m.INCO_TERMS, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" id="itemBody" style="display:none;">
+                <div class="col-md-12">
+                    <div class="card-body pad row">
+                        <div class="col-md-3 col-sm-6">
+                            <div class="form-group">
+                                <label class="control-label">Product</label>
+                                @Html.DropDownList("PRODUCTS_ID", null, new { @class = "form-control form-control-sm select2", placeholder = "" })
+                                @Html.ValidationMessageFor(m => m.PRODUCTS_ID, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-sm-6">
+                            <div class="form-group">
+                                <label class="control-label">Rate</label>
+                                @Html.EditorFor(model => model.PRODUCTS_RATE, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "Rate" } })
+                                @Html.ValidationMessageFor(m => m.PRODUCTS_RATE, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-sm-6">
+                            <div class="form-group">
+                                <label class="control-label">Quantity</label>
+                                @Html.EditorFor(model => model.PRODUCTS_QUANTITY, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "Quantity" } })
+                                @Html.ValidationMessageFor(m => m.PRODUCTS_QUANTITY, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-5 col-sm-6">
+                            <div class="form-group">
+                                <label class="control-label">Product Details</label>
+                                @Html.EditorFor(model => model.PRODUCTS_DESC, new { htmlAttributes = new { @class = "form-control form-control-sm", row = "1", placeholder = "Product Detils" } })
+                                @Html.ValidationMessageFor(m => m.PRODUCTS_DESC, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" id="shipmentBody" style="display:none;">
+                <div class="col-md-12">
+                    <div class="card-body pad row">
+                        <div class="col-md-3 col-sm-6">
+                            <div class="form-group">
+                                <label class="control-label">Product Details</label>
+                                @Html.EditorFor(model => model.LAST_DELIVERY_DATE, new { htmlAttributes = new { @class = "form-control form-control-sm", type = "date", placeholder = "Tender Number" } })
+                                @Html.ValidationMessageFor(m => m.LAST_DELIVERY_DATE, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <div class="form-group">
+                                <label class="control-label">Port Name</label>
+                                @Html.DropDownList("PORT_ID", null, new { @class = "form-control form-control-sm select2", placeholder = "" })
+                                @Html.ValidationMessageFor(m => m.PORT_ID, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <div class="form-group">
+                                <label class="control-label">Partial Shipment</label>
+                                @Html.DropDownList("PARTIAL_SHIPMENT", null, new { @class = "form-control form-control-sm select2", placeholder = "" })
+                                @Html.ValidationMessageFor(m => m.PARTIAL_SHIPMENT, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <div class="form-group">
+                                <label class="control-label">Shipment Mode</label>
+                                @Html.DropDownList("SHIPMENT_MODE", null, new { @class = "form-control form-control-sm select2", placeholder = "" })
+                                @Html.ValidationMessageFor(m => m.SHIPMENT_MODE, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-6">
+                            <div class="form-group">
+                                <label class="control-label">Deliver Address</label>
+                                @Html.EditorFor(model => model.DELIVERY_ADDRESS, new { htmlAttributes = new { @class = "form-control form-control-sm", row = "1", placeholder = "Tender Number" } })
+                                @Html.ValidationMessageFor(m => m.DELIVERY_ADDRESS, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <div class="form-group">
+                                <label class="control-label">Receiver</label>
+                                @Html.EditorFor(model => model.RECEIVER_NAME, new { htmlAttributes = new { @class = "form-control form-control-sm", row = "1", placeholder = "Tender Number" } })
+                                @Html.ValidationMessageFor(m => m.RECEIVER_NAME, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" id="paymentBody" style="display:none;">
+                <div class="col-md-12">
+                    <div class="card-body pad row">
+                        <div class="col-md-3 col-sm-6">
+                            <div class="form-group">
+                                <label class="control-label">Currency</label>
+                                @Html.DropDownList("CURRENCY_NAME", null, new { @class = "form-control form-control-sm select2", placeholder = "" })
+                                @Html.ValidationMessageFor(m => m.CURRENCY_NAME, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <div class="form-group">
+                                <label class="control-label">Receiver</label>
+                                @Html.EditorFor(model => model.CURRENCY_RATE, new { htmlAttributes = new { @class = "form-control form-control-sm", row = "1", placeholder = "Tender Number" } })
+                                @Html.ValidationMessageFor(m => m.CURRENCY_RATE, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <div class="form-group">
+                                <label class="control-label">Pay Mode A</label>
+                                @Html.DropDownList("PAY_A", null, new { @class = "form-control form-control-sm select2", placeholder = "" })
+                                @Html.ValidationMessageFor(m => m.PAY_A, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <div class="form-group">
+                                <label class="control-label">Pay Mode A Percent</label>
+                                @Html.EditorFor(model => model.PAY_AP, new { htmlAttributes = new { @class = "form-control form-control-sm",  placeholder = "Tender Number" } })
+                                @Html.ValidationMessageFor(m => m.PAY_AP, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <div class="form-group">
+                                <label class="control-label">Payment Mode B</label>
+                                @Html.DropDownList("PAY_B", null, new { @class = "form-control form-control-sm select2", placeholder = "" })
+                                @Html.ValidationMessageFor(m => m.PAY_B, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <div class="form-group">
+                                <label class="control-label">Pay Mode B Percent</label>
+                                @Html.EditorFor(model => model.PAY_BP, new { htmlAttributes = new { @class = "form-control form-control-sm",  placeholder = "Tender Number" } })
+                                @Html.ValidationMessageFor(m => m.PAY_BP, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row float-right">
+                <div class="col-12 float-right">
+                    <button type="submit" class="btn btn-success btn-sm">Submit</button>
+                </div>
+            </div>
+
+        }
+
     </div>
 </div>
 
 @section scripts{
     @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/App_Asset/css/bid.js"></script>
     <script>
-
+       
     </script>
 
 }

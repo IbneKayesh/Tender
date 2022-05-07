@@ -163,7 +163,7 @@
                                 <div class="col-md-6 col-lg-3">
                                     <div class="form-group">
                                         <label class="control-label">Loading Address</label>
-                                        @Html.TextAreaFor(m => m.LOADING_ADDRESS, new { @class = "form-control form-control-sm", rows = "1", required= "required", placeholder = "Enter Loding Address" })
+                                        @Html.TextAreaFor(m => m.LOADING_ADDRESS, new { @class = "form-control form-control-sm", rows = "1", required = "required", placeholder = "Enter Loding Address" })
                                         @Html.ValidationMessageFor(m => m.LOADING_ADDRESS, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -189,10 +189,10 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">                                                                
+                            <div class="row">
                                 <div class="col-md-2 col-lg-2">
                                     <div class="form-group">
-                                        <input type="submit" class="btn btn-sm btn-primary" value="Submti Tender" />
+                                        <input type="submit" class="btn btn-sm btn-primary" value="Submit Tender" />
                                     </div>
                                 </div>
                             </div>
@@ -209,42 +209,9 @@
 
 @section scripts{
     @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/App_Asset/css/bid.js"></script>
     <script>
-        $(document).ready(function () {
-            $('.product-image-thumb').on('click', function () {
-                var $image_element = $(this).find('img')
-                $('.product-image').prop('src', $image_element.attr('src'))
-                $('.product-image-thumb.active').removeClass('active')
-                $(this).addClass('active')
-            })
-
-            $("#tndDetails").click(function () {
-                $("#detailsBody").css("display", "block");
-                $("#itemBody").css("display", "none");
-                $("#shipmentBody").css("display", "none");
-                $("#paymentBody").css("display", "none");
-            });
-            $("#tndItem").click(function () {
-                $("#detailsBody").css("display", "none");
-                $("#itemBody").css("display", "block");
-                $("#shipmentBody").css("display", "none");
-                $("#paymentBody").css("display", "none");
-            });
-            $("#tndShipment").click(function () {
-                $("#detailsBody").css("display", "none");
-                $("#itemBody").css("display", "none");
-                $("#shipmentBody").css("display", "block");
-                $("#paymentBody").css("display", "none");
-            });
-            $("#tndPayment").click(function () {
-                $("#detailsBody").css("display", "none");
-                $("#itemBody").css("display", "none");
-                $("#shipmentBody").css("display", "none");
-                $("#paymentBody").css("display", "block");
-            });
-
-
-        })
+            
     </script>
 
 }

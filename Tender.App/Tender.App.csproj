@@ -177,6 +177,7 @@
     <Compile Include="Service\AccountsService.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Asset\css\bid.js" />
     <Content Include="App_Asset\css\style.css" />
     <Content Include="App_Asset\dist\calender\bootstrap-datepicker.min.css" />
     <Content Include="App_Asset\dist\calender\bootstrap-datepicker.min.js" />

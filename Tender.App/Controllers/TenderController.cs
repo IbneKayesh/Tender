@@ -40,6 +40,10 @@ namespace Tender.App.Controllers
             ViewBag.SHIPMENT_MODE = TenderService.DropDown_shipmentMode();
             ViewBag.PORT_ID = TenderService.DropDown_Port();
             ViewBag.INCO_TERMS = TenderService.DropDown_Incoterms();
+            ViewBag.COST_EX_INC = TenderService.DropDown_CostType();
+            ViewBag.CURRENCY_NAME = TenderService.DropDown_currencyList();
+            ViewBag.PAY_A = TenderService.DropDown_payment();
+            ViewBag.PAY_B = TenderService.DropDown_payment();
 
         }
 
