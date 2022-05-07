@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_LayoutRL.cshtml";
 }
 <div class="register-logo">
-    <a href=""><b>Admin</b>LTE</a>
+    <a href="#"><b>RF</b>Q</a>
 </div>
 
 <div class="card">
@@ -13,6 +13,7 @@
         <p class="login-box-msg">Register a new membership</p>
         @using (Html.BeginForm())
         {
+            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
             @Html.AntiForgeryToken()
             <div class="input-group mb-3">
                 @Html.EditorFor(model => model.ORGANIZATION_NAME, new { htmlAttributes = new { @class = "form-control", placeholder = "Organization Name" } })
@@ -23,7 +24,8 @@
                 </div>
             </div>
             <div class="input-group mb-3">
-                @Html.DropDownList("COUNTRY_NAME", null, "--select country--", new { @class = "form-control form-control-sm select2", placeholder = "Country Name" })
+                @*@Html.DropDownList("COUNTRY_NAME", null, "--select country--", new { @class = "form-control form-control-sm select2", placeholder = "Country Name" }*@
+                @Html.DropDownListFor(model => model.COUNTRY_NAME,null, "--select country--", new { @class = "form-control input-sm select2", })
                 <div class="input-group-append">
                     <div class="input-group-text">
                         <span class="fas fa-flag"></span>

@@ -20,9 +20,8 @@ namespace Tender.App.Service
         }
         public static EQResult registration(VENDOR _obj)
         {
-            string id = Guid.NewGuid().ToString();
             sql = $@"insert into VENDOR(VENDOR_ID,VENDOR_EMAIL,VENDOR_PASSWD,ORGANIZATION_NAME,COUNTRY_NAME,SUPPLIER,PURCHASER,SUPPLIER_NOTIFY,PURCHASER_NOTIFY)
-                    values('{id}','{_obj.VENDOR_EMAIL}','{_obj.VENDOR_PASSWD}','{_obj.ORGANIZATION_NAME}','{_obj.COUNTRY_NAME}','{_obj.SUPPLIER}','{_obj.PURCHASER}','{_obj.SUPPLIER_NOTIFY}','{_obj.PURCHASER_NOTIFY}')";
+                    values('{_obj.VENDOR_ID}','{_obj.VENDOR_EMAIL}','{_obj.VENDOR_PASSWD}','{_obj.ORGANIZATION_NAME}','{_obj.COUNTRY_NAME}','{_obj.SUPPLIER}','{_obj.PURCHASER}','{_obj.SUPPLIER_NOTIFY}','{_obj.PURCHASER_NOTIFY}')";
             return DatabaseMSSql.ExecuteSqlCommand(sql);
         }
     }

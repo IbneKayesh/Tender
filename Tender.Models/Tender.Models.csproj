@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\CHANGE_PASWD.cs" />
     <Compile Include="Models\RFQ_TENDER_COST.cs" />
     <Compile Include="Models\TNDR_CATEGORY.cs" />
     <Compile Include="Models\TNDR_DOCUMENTS.cs" />
