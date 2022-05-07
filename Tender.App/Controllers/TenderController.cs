@@ -47,5 +47,14 @@ namespace Tender.App.Controllers
 
         }
 
+        public ActionResult QuotationList()
+        {
+            return View();
+        }
+        public ActionResult QuotationCompare(string id)
+        {
+            List<RFQ_BIDDING> objList = new List<RFQ_BIDDING>();
+            return View(objList);
+        }
     }
 }
