@@ -51,5 +51,23 @@ namespace Tender.Models.Models
         public string LOADING_ADDRESS { get; set; }
         public string SENDER_NAME { get; set; }
         public string SENDER_DETAILS { get; set; }
+
+        public RFQ_BIDDING getAll()
+        {
+            RFQ_BIDDING obj = new RFQ_BIDDING();
+            obj.RFQ_NUMBER = "RFQ01255255555";
+            obj.RFQ_SL = 123;
+            obj.VENDOR_ID = "AK traders";
+            obj.LOCAL_IMPORT = "example@ex.com";
+            //obj.RE_BID = "Merul Badda, Dit project";
+            //obj.LOWER_RATE = "Merul Badda, Dit project";
+            //obj.START_DATE = true;
+            //obj.END_DATE = true;
+            //obj.VENDOR_CATEGORY = new VENDOR_CATEGORY().getAll();
+            //obj.VENDOR_CERTIFICATE = new VENDOR_CERTIFICATE().getAll();
+            //obj.VENDOR_DOCUMENTS = new VENDOR_DOCUMENTS().getAll();
+            //obj.VENDOR_PRODUCTS = new VENDOR_PRODUCTS().getAll();
+            return obj;
+        }
     }
 }
