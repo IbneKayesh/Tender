@@ -1,0 +1,31 @@
+﻿@model IEnumerable<Tender.Models.Models.RFQ_BIDDING>
+
+@{
+    ViewBag.Title = "Quotation Compare";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+</style>
+
+
+<div class="card card-primary card-outline mt-3">
+    <div class="card-header">
+        <h3 class="card-title">
+            <i class="fas fa-tag"></i>
+            @ViewBag.Title  &nbsp;&nbsp; <small>@System.DateTime.Now</small>
+        </h3>
+    </div>
+    <div class="card-body">
+
+
+    </div>
+</div>
+
+@section scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+       
+    </script>
+
+}
+
