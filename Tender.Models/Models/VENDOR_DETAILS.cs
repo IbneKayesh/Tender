@@ -21,7 +21,9 @@ namespace Tender.Models.Models
 
         public bool IS_SUBMIT { get; set; }
         public bool IS_APPROVE { get; set; }
-        
+
+
+        public CHANGE_PASWD CHANGE_PASWD { get; set; }
 
         public virtual List<VENDOR_CATEGORY> VENDOR_CATEGORY { get; set; }
         public virtual List<VENDOR_CERTIFICATE> VENDOR_CERTIFICATE { get; set; }
