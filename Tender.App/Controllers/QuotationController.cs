@@ -18,16 +18,17 @@ namespace Tender.App.Controllers
         }
         
         [HttpGet]
-        public ActionResult Bid(string id)
+        public ActionResult SubmitQuote(string id)
         {
             DropDownFor_Tender();
             return View(new RFQ_BIDDING());
         }
         [HttpPost]
-        public ActionResult Bid(RFQ_BIDDING obj)
+        public ActionResult SubmitQuote(RFQ_BIDDING obj)
         {
             return View();
         }
+
         public void DropDownFor_Tender()
         {
             ViewBag.SELL_BUY = TenderService.DropDownList_Sel_Buy();

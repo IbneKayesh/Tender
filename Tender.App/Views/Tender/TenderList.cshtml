@@ -1,0 +1,73 @@
+﻿@model IEnumerable<Tender.Models.Models.RFQ_TENDER>
+@{
+    ViewBag.Title = "Tender List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+</style>
+
+
+<div class="card card-primary card-outline mt-3">
+    <div class="card-header">
+        <h2 class="card-title text-primary">
+            <i class="fas fa-list"></i>
+            @ViewBag.Title  &nbsp;&nbsp; <small class="text-info">@System.DateTime.Now</small>
+        </h2>
+    </div>
+    <div class="card-body">
+        <table class="table table-bordered table-striped table-hover table-responsive-md">
+            <thead>
+                <tr class="table-danger">
+                    <th>Option</th>
+                    <th>Tender Number</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Rate</th>
+                    <th>Quantity</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null)
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr data-widget="expandable-table" aria-expanded="false" data-toggle="tooltip" data-placement="top" title="Click For Details">
+                            <td>
+                                <a class="btn btn-sm btn-block btn-outline-primary" href="@Url.Action("QuotationCompare","Tender", new { id=@item.RFQ_NUMBER})">
+                                    <img src="~/App_Asset/dist/img/tenderDetails.jpg" height="30" width="30" alt="Details" />
+                                </a>
+                            </td>
+                            <td>@item.RFQ_NUMBER</td>
+                            <td>@item.START_DATE</td>
+                            <td>@item.END_DATE</td>
+                            <td>@item.PRODUCTS_RATE</td>
+                            <td>@item.PRODUCTS_QUANTITY</td>
+                        </tr>
+                        <tr class="expandable-body table-active">
+                            <td colspan="6">
+                                <p>
+                                    <span class="text-bold">Product Details :</span> @item.PRODUCTS_DESC <br />
+                                    <span class="text-bold">Port Name :</span> @item.PORT_ID <br />
+                                    <span class="text-bold">Shipment Mode :</span> @item.SHIPMENT_MODE <br />
+                                    <span class="text-bold">Payment Mode A :</span> @item.PAY_A ( @item.PAY_AP % ) <br />
+                                    <span class="text-bold">Payment Mode B :</span> @item.PAY_B ( @item.PAY_BP %) <br />
+                                    <span class="text-bold">Currency Rate:</span> @item.CURRENCY_NAME @item.CURRENCY_RATE  <br />
+                                </p>
+                            </td>
+                        </tr>
+                    }
+                }
+
+            </tbody>
+        </table>
+
+    </div>
+</div>
+@section scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+
+    </script>
+
+}
+

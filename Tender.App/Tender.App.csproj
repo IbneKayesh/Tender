@@ -178,8 +178,10 @@
     <Compile Include="Service\AccountsService.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Asset\dist\img\compare.png" />
     <Content Include="App_Asset\dist\img\ML_Red_wave__1_.jpg" />
     <Content Include="App_Asset\dist\img\noImage.jpg" />
+    <Content Include="App_Asset\dist\img\tenderDetails.jpg" />
     <Content Include="App_Asset\js\bid.js" />
     <Content Include="App_Asset\css\style.css" />
     <Content Include="App_Asset\dist\calender\bootstrap-datepicker.min.css" />
@@ -2285,15 +2287,18 @@
     <Content Include="Views\Shared\_LayoutRL.cshtml" />
     <Content Include="Views\Shared\_Layout - Copy.cshtml" />
     <Content Include="Views\Accounts\RegistrationSuccessfull.cshtml" />
-    <Content Include="Views\Tender\BidRequest.cshtml" />
+    <Content Include="Views\Tender\SubmitTender.cshtml" />
     <Content Include="Views\Accounts\ForgotPassword.cshtml" />
-    <Content Include="Views\Quotation\Bid.cshtml" />
+    <Content Include="Views\Quotation\SubmitQuote.cshtml" />
     <Content Include="Views\Quotation\Index.cshtml" />
     <Content Include="Views\Quotation\Bid - Copy.cshtml" />
     <Content Include="Views\Quotation\Bid - Copy %282%29.cshtml" />
     <Content Include="Views\Accounts\View.cshtml" />
     <Content Include="Views\Tender\QuotationCompare.cshtml" />
     <Content Include="Views\Accounts\_Changepassword.cshtml" />
+    <Content Include="Views\Tender\QuotationList.cshtml" />
+    <Content Include="Views\Tender\TenderList.cshtml" />
+    <Content Include="Views\Tender\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

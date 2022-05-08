@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<Tender.Models.Models.RFQ_TENDER>
 
 @{
-    ViewBag.Title = "Quotation List";
+    ViewBag.Title = "Bid List";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div class="text-center">
@@ -24,9 +24,11 @@
                 <span class="text-success">Submitted Bids : 30 Bids</span>
             </div>
             <div class="card-footer">
-                <a class="btn btn-outline-danger btn-sm btn-block" href="@Url.Action("SubmitQuote","Quotation")">Submit Quote</a>
+                <a class="btn btn-outline-danger btn-sm btn-block" href="@Url.Action("CompareTender","Tender")">Compare</a>
             </div>
         </div>
     </div>
+   
 </div>
+
 

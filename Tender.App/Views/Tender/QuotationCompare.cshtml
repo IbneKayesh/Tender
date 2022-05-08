@@ -1,5 +1,4 @@
-﻿@model IEnumerable<Tender.Models.Models.RFQ_BIDDING>
-
+﻿@model Tender.Models.Models.RFQ_BIDDING
 @{
     ViewBag.Title = "Quotation Compare";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -19,62 +18,24 @@
         <div class="card-body">
             <table class="table table-bordered table-hover">
                 <thead>
-                    <tr>
-                        <th>Tender Number</th>
-                        <th>Bidders company</th>
-                        <th>Submit Date</th>
-                        <th>Bidding Rate</th>
-                        <th>Bidding Quantity</th>
+                    <tr class="table-success">
+                        <th>Title</th>
+                        <th>Your Org</th>
+                        <th>@Model.VENDOR_ID</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @if (Model != null)
-                    {
-                        foreach (var item in Model)
-                        {
-                            <tr data-widget="expandable-table" aria-expanded="false">
-                                <td>@item.RFQ_NUMBER</td>
-                                <td>@item.VENDOR_ID</td>
-                                <td>@item.SUBMIT_DATE</td>
-                                <td>@item.PRODUCTS_RATE</td>
-                                <td>@item.PRODUCTS_QUANTITY</td>
-                            </tr>
-                            <tr class="expandable-body">
-                                <td colspan="5">
-                                    <p>
-                                            <div class="col-md-6">
-                                                <span>Product Details :</span> @item.PRODUCTS_DESC <br/>
-                                                <span>Port Name :</span> @item.PORT_ID <br/>
-                                                <span>Shipment Mode :</span> @item.SHIPMENT_MODE <br/>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <span>Product Details :</span> @item.LOADING_ADDRESS <br />
-                                                <span>Port Name :</span> @item.SENDER_NAME <br />
-                                                <span>Shipment Mode :</span> @item.SENDER_DETAILS <br />
-                                            </div>
-                                    </p>
-                                </td>
-                            </tr>
-
-                        }
-
-
-                    }
-
-                    <tr data-widget="expandable-table" aria-expanded="false">
-                        <td>183</td>
-                        <td>John Doe</td>
-                        <td>11-7-2014</td>
-                        <td>Approved</td>
-                        <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
+                    <tr>
+                        <td>Tender Rate</td>
+                        <td>@Model.QUOTATION_PRODUCTS_RATE</td>
+                        <td>@Model.PRODUCTS_RATE</td>
                     </tr>
-                    <tr class="expandable-body">
-                        <td colspan="5">
-                            <p>
-                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-                            </p>
-                        </td>
+                    <tr>
+                        <td>Quantity</td>
+                        <td>@Model.QUOTATION_PRODUCTS_RATE</td>
+                        <td>@Model.PRODUCTS_RATE</td>
                     </tr>
+
                 </tbody>
             </table>
 
