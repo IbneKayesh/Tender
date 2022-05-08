@@ -25,7 +25,7 @@
             </div>
             <div class="input-group mb-3">
                 @*@Html.DropDownList("COUNTRY_NAME", null, "--select country--", new { @class = "form-control form-control-sm select2", placeholder = "Country Name" }*@
-                @Html.DropDownListFor(model => model.COUNTRY_NAME,null, "--select country--", new { @class = "form-control input-sm select2", })
+                @Html.DropDownListFor(model => model.COUNTRY_NAME, null, "--select country--", new { @class = "form-control input-sm select2", })
                 <div class="input-group-append">
                     <div class="input-group-text">
                         <span class="fas fa-flag"></span>
@@ -51,17 +51,15 @@
             <div class="row">
                 <div class="col-12">
                     <div class="icheck-primary">
-                        <input type="checkbox" id="PURCHASER" name="PURCHASER"  value="0" />
-                        <label for="PURCHASER">
-                            Purchaser
-                        </label>
+                        <input type="checkbox" id="PURCHASER_X" name="PURCHASER_X" />
+                        <label for="PURCHASER_X"> Purchaser</label>
                     </div>
+
                 </div>
                 <div class="col-12">
                     <div class="icheck-primary">
-                        @*@Html.EditorFor(model => model.PURCHASER_NOTIFY, new { htmlAttributes = new { id = "purNotify" } })*@
-                        <input type="checkbox" id="PURCHASER_NOTIFY" name="PURCHASER_NOTIFY" value="0" />
-                        <label for="PURCHASER_NOTIFY">
+                        <input type="checkbox" id="PURCHASER_NOTIFY_X" name="PURCHASER_NOTIFY_X" />
+                        <label for="PURCHASER_NOTIFY_X">
                             Get Purchaser Notification
                         </label>
                     </div>
@@ -70,16 +68,16 @@
             <div class="row">
                 <div class="col-12">
                     <div class="icheck-primary">
-                        <input type="checkbox" id="SUPPLIER" name="SUPPLIER"  value="0"/>
-                        <label for="SUPPLIER">
+                        <input type="checkbox" id="SUPPLIER_X" name="SUPPLIER_X" />
+                        <label for="SUPPLIER_X">
                             Supplier
                         </label>
                     </div>
                 </div>
                 <div class="col-12">
                     <div class="icheck-primary">
-                        <input type="checkbox" id="SUPPLIER_NOTIFY" name="SUPPLIER_NOTIFY"  value="0"/>
-                        <label for="SUPPLIER_NOTIFY">
+                        <input type="checkbox" id="SUPPLIER_NOTIFY_X" name="SUPPLIER_NOTIFY_X"/>
+                        <label for="SUPPLIER_NOTIFY_X">
                             Get Supplier Notification
                         </label>
                     </div>

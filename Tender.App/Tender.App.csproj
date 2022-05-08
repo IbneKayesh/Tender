@@ -2293,6 +2293,7 @@
     <Content Include="Views\Accounts\View.cshtml" />
     <Content Include="Views\Tender\QuotationCompare.cshtml" />
     <Content Include="Views\Accounts\_Changepassword.cshtml" />
+    <Content Include="Views\Accounts\RegistrationConfirmation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

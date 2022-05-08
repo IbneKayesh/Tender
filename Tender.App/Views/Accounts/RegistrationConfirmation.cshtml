@@ -1,0 +1,44 @@
+﻿@{
+    ViewBag.Title = "Registration Confirmation";
+    Layout = "~/Views/Shared/_LayoutRL.cshtml";
+
+    <style>
+        .button {
+            background-color: #4CAF50; /* Green */
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+        }
+    </style>
+}
+@if (@TempData["regOk"] != null)
+{
+    if ((string)TempData["regOk"] == "OK")
+    {
+        <div class="heading" style="background: #5cb85c;display:flex; align-items: center;justify-content: space-between;margin-left:-20px;margin-right: -20px;box-shadow: 0 5px 10px -5px green;padding-left: 30px;padding-right:30px;">
+            <h1 style="line-height: 50px;padding-left: 10px;color:white">Confirmation Successfull</h1>
+            <img src="~/App_Asset/img/reg-ok.png" alt="" style="height: 50px;">
+        </div>
+
+        <h4>Thanks for being awesome!</h4>
+        <h5>Confirmation Successfull, you can login now</h5>
+    }
+    else
+    {
+        <div class="heading" style="background: #f77872;display:flex; align-items: center;justify-content: space-between;margin-left:-20px;margin-right: -20px;box-shadow: 0 5px 10px -5px green;padding-left: 30px;padding-right:30px;">
+            <h1 style="line-height: 50px;padding-left: 10px;color:white">Confirmation Failed</h1>
+            <img src="~/App_Asset/img/reg-failed.png" alt="" style="height: 50px;">
+        </div>
+
+        <h4>Sorry Link is broken!</h4>
+        <h5>Confirmation Failed, try again</h5>
+    }
+}
+
+
+
+<a href="@Url.Action("Login","Accounts")" class="button"> Login</a>

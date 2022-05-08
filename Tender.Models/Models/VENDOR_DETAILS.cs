@@ -18,8 +18,9 @@ namespace Tender.Models.Models
         public string NO_OF_EMPLOYEES { get; set; }
         public string TAX_NUMBER { get; set; }
         public string TRADE_NUMBER { get; set; }
+        
+        public int IS_CONFIRMED { get; set; }
 
-        public bool IS_SUBMIT { get; set; }
         public bool IS_APPROVE { get; set; }
 
 

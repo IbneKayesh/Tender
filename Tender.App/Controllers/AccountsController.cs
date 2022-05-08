@@ -11,6 +11,7 @@ namespace Tender.App.Controllers
 {
     public class AccountsController : Controller
     {
+        #region Login_Logout
         [HttpGet]
         public ActionResult Login()
         {
@@ -35,6 +36,10 @@ namespace Tender.App.Controllers
         {
             return RedirectToAction("Login");
         }
+        #endregion
+
+
+        #region Registration
         [HttpGet]
         public ActionResult Registration()
         {
@@ -44,29 +49,40 @@ namespace Tender.App.Controllers
         [HttpPost]
         public ActionResult Registration(VENDOR obj)
         {
+            obj.PURCHASER = obj.PURCHASER_X == "on" ? 1 : 0;
+            obj.PURCHASER_NOTIFY = obj.PURCHASER_NOTIFY_X == "on" ? 1 : 0;
+            obj.SUPPLIER = obj.SUPPLIER_X == "on" ? 1 : 0;
+            obj.SUPPLIER_NOTIFY = obj.SUPPLIER_NOTIFY_X == "on" ? 1 : 0;
+
             if (ModelState.IsValid)
             {
-                //if (obj.SUPPLIER ==0 && obj.PURCHASER == 0)
-                //{
-                //    ModelState.AddModelError("", "Select Registration Type Purchaser or Supplier");
-                //}
-                //else
-                //{
-                obj.VENDOR_ID = Guid.NewGuid().ToString();
-                EQResult _tpl = AccountsService.registration(obj);
-                if (_tpl.SUCCESS && _tpl.ROWS == 1)
+                if (obj.SUPPLIER == 0 && obj.PURCHASER == 0)
                 {
-                    TempData["regObj"] = obj;
-                    TempData["regOk"] = _tpl;
-                    return RedirectToAction("RegistrationSuccessfull");
+                    ModelState.AddModelError("", "Select Registration Type Purchaser or Supplier");
                 }
-                //    ModelState.AddModelError("", "Enter valid information");
-                //}
+                else
+                {
+                    obj.VENDOR_ID = Guid.NewGuid().ToString();
+                    EQResult _tpl = AccountsService.registration(obj);
+                    if (_tpl.SUCCESS && _tpl.ROWS == 1)
+                    {
+                        TempData["regObj"] = obj;
+                        TempData["regOk"] = _tpl;
+                        return RedirectToAction("RegistrationSuccessfull");
+                    }
+                    else if (_tpl.ROWS == 99)
+                    {
+                        ModelState.AddModelError("", _tpl.MESSAGES);
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "Something went wrong, try again");
+                    }
+                }
             }
             DropDownFor_Signup();
             return View(obj);
         }
-
 
         public ActionResult RegistrationSuccessfull()
         {
@@ -86,6 +102,20 @@ namespace Tender.App.Controllers
             }
             return View(obj);
         }
+
+        public ActionResult RegistrationConfirmation(string id)
+        {
+            EQResult _tpl = AccountsService.email_confirmation(id);
+            TempData["regOk"] = (_tpl.ROWS) == 1 ? "OK" : "NO";
+            return View();
+        }
+
+        #endregion
+
+
+
+
+
 
         public ActionResult ForgotPassword()
         {
