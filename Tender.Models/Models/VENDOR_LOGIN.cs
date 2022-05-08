@@ -1,5 +1,5 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 
 namespace Tender.Models.Models
 {
@@ -11,7 +11,7 @@ namespace Tender.Models.Models
         [Required(ErrorMessage = "{0} is required")]
         [StringLength(maximumLength: 50, ErrorMessage = "{0} length is between {2} and {1}", MinimumLength = 5)]
         public string VENDOR_EMAIL { get; set; }
-        
+
 
         [Display(Name = "Password")]
         [DataType(DataType.Password)]
