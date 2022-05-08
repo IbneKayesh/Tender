@@ -53,7 +53,15 @@ namespace Tender.App.Controllers
         }
         public ActionResult QuotationCompare(string id)
         {
-            List<RFQ_BIDDING> objList = new List<RFQ_BIDDING>();
+            List<RFQ_BIDDING> objList = new List<RFQ_BIDDING>() {
+            new RFQ_BIDDING(){
+                RFQ_NUMBER="B0125258524452",RFQ_SL=10,VENDOR_ID="Arok Traders",SUBMIT_DATE=DateTime.Now,
+                PRODUCTS_RATE=500,PRODUCTS_QUANTITY=1000,SHIPMENT_MODE=1,PORT_ID=1,LOADING_ADDRESS="Chittagonj Port",
+                SENDER_NAME="Pran Rfl Group",SENDER_DETAILS="must be receive in 30 days",PRODUCTS_DESC="1000 Ton Camical"
+                }
+            };
+
+
             return View(objList);
         }
     }
