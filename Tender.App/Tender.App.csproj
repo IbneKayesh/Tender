@@ -2106,6 +2106,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\docs.txt" />
+    <Content Include="Docs\sqlsOra.txt" />
     <Content Include="Docs\sqls.txt" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />

@@ -46,22 +46,22 @@ namespace Tender.App.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (obj.SUPPLIER == false && obj.PURCHASER == false)
+                //if (obj.SUPPLIER ==0 && obj.PURCHASER == 0)
+                //{
+                //    ModelState.AddModelError("", "Select Registration Type Purchaser or Supplier");
+                //}
+                //else
+                //{
+                obj.VENDOR_ID = Guid.NewGuid().ToString();
+                EQResult _tpl = AccountsService.registration(obj);
+                if (_tpl.SUCCESS && _tpl.ROWS == 1)
                 {
-                    ModelState.AddModelError("", "Select Registration Type Purchaser or Supplier");
+                    TempData["regObj"] = obj;
+                    TempData["regOk"] = _tpl;
+                    return RedirectToAction("RegistrationSuccessfull");
                 }
-                else
-                {
-                    obj.VENDOR_ID = Guid.NewGuid().ToString();
-                    EQResult _tpl = AccountsService.registration(obj);
-                    if (_tpl.SUCCESS && _tpl.ROWS == 1)
-                    {
-                        TempData["regObj"] = obj;
-                        TempData["regOk"] = _tpl;
-                        return RedirectToAction("RegistrationSuccessfull");
-                    }
-                    ModelState.AddModelError("", "Enter valid information");
-                }
+                //    ModelState.AddModelError("", "Enter valid information");
+                //}
             }
             DropDownFor_Signup();
             return View(obj);

@@ -1,6 +1,6 @@
 ﻿@model Tender.Models.Models.VENDOR
 @{
-    ViewBag.Title = "Login";
+    ViewBag.Title = "Registration Successfull";
     Layout = "~/Views/Shared/_LayoutRL.cshtml";
 
     <style>
@@ -26,10 +26,11 @@
 <h4>Thanks for being awesome!</h4>
 <h5>You have successfully registered for <b>@Model.ORGANIZATION_NAME.</b></h5>
 <p>
-    <br>
-    Email: <b>@Model.VENDOR_EMAIL</b> You have not received your e-mail with the link? <a href="@Url.Action("RegistrationSuccessfull")"> send again</a><br>
     In a few moments you will receive an e-mail with a confirmation link for you to complete your registration.<br>
     Please check whether the e-mail has gone into your spam folder. This can occur, depending on your spam filter settings.<br><br>
     Please click on the link within the next 48 hours.<br>
+
+    <br>
+    Email: <b>@Model.VENDOR_EMAIL</b> You have not received your e-mail with the link? <a href="@Url.Action("RegistrationSuccessfull")"> send again</a><br>
 </p>
 <a href="@Url.Action("Login","Accounts")" class="button"> Login</a>
