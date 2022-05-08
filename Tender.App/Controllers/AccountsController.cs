@@ -139,22 +139,38 @@ namespace Tender.App.Controllers
         [HttpPost]
         public ActionResult UserProfile(VENDOR_DETAILS obj, HttpPostedFileBase ProfilePicture)
         {
-
             DropDownFor_Signup();
+            if (ModelState.IsValid)
+            {
+
+            }
             return View(new VENDOR_DETAILS().getAll());
         }
 
-        public ActionResult ChangePassword()
+        public void FollowMe(string catId, string catName)
         {
-            CHANGE_PASWD obj = new CHANGE_PASWD();
-            return PartialView(obj);
+            string id = "";//session user id
         }
+
 
 
         [HttpPost]
         public ActionResult ChangePassword(CHANGE_PASWD obj)
         {
-            return RedirectToAction("Logout");
+            if (ModelState.IsValid)
+            {
+                string id = "";//session user Id
+                EQResult _tpl = AccountsService.change_password(id, obj);
+                if (_tpl.SUCCESS && _tpl.ROWS == 1)
+                {
+                    return RedirectToAction("UserProfile");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Something went wrong, try again");
+                }
+            }
+            return View("UserProfile", new VENDOR_DETAILS().getAll());
         }
 
 

@@ -23,7 +23,7 @@ namespace Tender.Models.Models
 
         [Display(Name = "As Supplier")]
         [Required(ErrorMessage = "{0} is required")]
-        [Range(minimum: 0, maximum: 1, ErrorMessage = "")]
+        [Range(minimum: 0, maximum: 1)]
         public int SUPPLIER { get; set; }
         [NotMapped]
         public string SUPPLIER_X { get; set; }
@@ -32,21 +32,21 @@ namespace Tender.Models.Models
 
         [Display(Name = "As Purchaser")]
         [Required(ErrorMessage = "{0} is required")]
-        [Range(minimum: 0, maximum: 1, ErrorMessage = "")]
+        [Range(minimum: 0, maximum: 1)]
         public int PURCHASER { get; set; }
         [NotMapped]
         public string PURCHASER_X { get; set; }
 
         [Display(Name = "As Supplier Notification")]
         [Required(ErrorMessage = "{0} is required")]
-        [Range(minimum: 0, maximum: 1, ErrorMessage = "")]
+        [Range(minimum: 0, maximum: 1)]
         public int SUPPLIER_NOTIFY { get; set; }
         [NotMapped]
         public string SUPPLIER_NOTIFY_X { get; set; }
 
         [Display(Name = "As Purchaser Notification")]
         [Required(ErrorMessage = "{0} is required")]
-        [Range(minimum: 0, maximum: 1, ErrorMessage = "")]
+        [Range(minimum: 0, maximum: 1)]
         public int PURCHASER_NOTIFY { get; set; }
         [NotMapped]
         public string PURCHASER_NOTIFY_X { get; set; }

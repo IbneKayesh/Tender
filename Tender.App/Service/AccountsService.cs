@@ -38,5 +38,10 @@ namespace Tender.App.Service
             sql = $"update VENDOR set IS_CONFIRMED=1 where VENDOR_ID='{id}'";
             return DatabaseMSSql.ExecuteSqlCommand(sql);
         }
+        public static EQResult change_password(string id, CHANGE_PASWD _obj)
+        {
+            sql = $"update VENDOR set VENDOR_PASSWD='{_obj.NPASWD}' where VENDOR_ID='{id}'";
+            return DatabaseMSSql.ExecuteSqlCommand(sql);
+        }
     }
 }
