@@ -2297,6 +2297,9 @@
     <Content Include="Views\Tender\QuotationCompare.cshtml" />
     <Content Include="Views\Accounts\_Changepassword.cshtml" />
     <Content Include="Views\Accounts\RegistrationConfirmation.cshtml" />
+    <Content Include="Views\Tender\Index.cshtml" />
+    <Content Include="Views\Tender\CompareTender.cshtml" />
+    <Content Include="Views\Tender\TenderList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -10,6 +10,7 @@ namespace Tender.Models.Models
     public class RFQ_BIDDING
     {
         public string RFQ_NUMBER { get; set; }
+        public string QUOTE_NUMBER { get; set; }
         public int RFQ_SL { get; set; }
         public string VENDOR_ID { get; set; }
 
