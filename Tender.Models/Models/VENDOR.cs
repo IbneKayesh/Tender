@@ -20,18 +20,18 @@ namespace Tender.Models.Models
 
         [Display(Name = "As Supplier")]
         [Required(ErrorMessage = "{0} is required")]
-        public bool SUPPLIER { get; set; }
+        public int SUPPLIER { get; set; }
 
         [Display(Name = "As Purchaser")]
         [Required(ErrorMessage = "{0} is required")]
-        public bool PURCHASER { get; set; }
+        public int PURCHASER { get; set; }
 
         [Display(Name = "As Supplier Notification")]
         [Required(ErrorMessage = "{0} is required")]
-        public bool SUPPLIER_NOTIFY { get; set; }
+        public int SUPPLIER_NOTIFY { get; set; }
 
         [Display(Name = "As Purchaser Notification")]
         [Required(ErrorMessage = "{0} is required")]
-        public bool PURCHASER_NOTIFY { get; set; }
+        public int PURCHASER_NOTIFY { get; set; }
     }
 }

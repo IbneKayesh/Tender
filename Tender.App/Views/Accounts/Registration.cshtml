@@ -51,16 +51,17 @@
             <div class="row">
                 <div class="col-12">
                     <div class="icheck-primary">
-                        @Html.EditorFor(model => model.PURCHASER, new { htmlAttributes = new { id = "Purchaser" } })
-                        <label for="Purchaser">
+                        <input type="checkbox" id="PURCHASER" name="PURCHASER"  value="0" />
+                        <label for="PURCHASER">
                             Purchaser
                         </label>
                     </div>
                 </div>
                 <div class="col-12">
                     <div class="icheck-primary">
-                        @Html.EditorFor(model => model.PURCHASER_NOTIFY, new { htmlAttributes = new { id = "purNotify" } })
-                        <label for="purNotify">
+                        @*@Html.EditorFor(model => model.PURCHASER_NOTIFY, new { htmlAttributes = new { id = "purNotify" } })*@
+                        <input type="checkbox" id="PURCHASER_NOTIFY" name="PURCHASER_NOTIFY" value="0" />
+                        <label for="PURCHASER_NOTIFY">
                             Get Purchaser Notification
                         </label>
                     </div>
@@ -69,16 +70,16 @@
             <div class="row">
                 <div class="col-12">
                     <div class="icheck-primary">
-                        @Html.EditorFor(model => model.SUPPLIER, new { htmlAttributes = new { id = "supllier" } })
-                        <label for="supllier">
+                        <input type="checkbox" id="SUPPLIER" name="SUPPLIER"  value="0"/>
+                        <label for="SUPPLIER">
                             Supplier
                         </label>
                     </div>
                 </div>
                 <div class="col-12">
                     <div class="icheck-primary">
-                        @Html.EditorFor(model => model.SUPPLIER_NOTIFY, new { htmlAttributes = new { id = "supNotify" } })
-                        <label for="supNotify">
+                        <input type="checkbox" id="SUPPLIER_NOTIFY" name="SUPPLIER_NOTIFY"  value="0"/>
+                        <label for="SUPPLIER_NOTIFY">
                             Get Supplier Notification
                         </label>
                     </div>
