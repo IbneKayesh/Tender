@@ -24,12 +24,16 @@ namespace Tender.Models.Models
         public DateTime START_DATE { get; set; }
         [NotMapped]
         public DateTime END_DATE { get; set; }
+        [NotMapped]
+        public DateTime LAST_DELIVERY_DATE { get; set; }
 
 
         public DateTime SUBMIT_DATE { get; set; }
 
         public string PRODUCTS_ID { get; set; }
         public string PRODUCTS_DESC { get; set; }
+        [NotMapped]
+        public string TENDER_PRODUCTS_DESC { get; set; }
         [NotMapped]
         public decimal QUOTATION_PRODUCTS_RATE { get; set; }
         public decimal PRODUCTS_RATE { get; set; }
@@ -38,6 +42,10 @@ namespace Tender.Models.Models
 
         [NotMapped]
         public bool PARTIAL_SHIPMENT { get; set; }
+        [NotMapped]
+        public int TENDER_SHIPMENT_MODE { get; set; }
+        [NotMapped]
+        public int TENDER_PORT_ID { get; set; }
 
         public int SHIPMENT_MODE { get; set; }
         public int PORT_ID { get; set; }

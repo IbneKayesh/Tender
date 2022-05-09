@@ -47,7 +47,10 @@ namespace Tender.App.Controllers
             new RFQ_BIDDING(){
                 RFQ_NUMBER="B0125258524452",RFQ_SL=10,VENDOR_ID="Arok Traders",SUBMIT_DATE=DateTime.Now,
                 PRODUCTS_RATE=500,PRODUCTS_QUANTITY=1000,SHIPMENT_MODE=1,PORT_ID=1,LOADING_ADDRESS="Chittagonj Port",
-                SENDER_NAME="Pran Rfl Group",SENDER_DETAILS="must be receive in 30 days",PRODUCTS_DESC="1000 Ton Camical"
+                SENDER_NAME="Pran Rfl Group",SENDER_DETAILS="must be receive in 30 days",PRODUCTS_DESC="1000 Ton Camical",
+                PRODUCTS_ID="Cemical",TENDER_PRODUCTS_DESC="must be single packet",START_DATE=DateTime.Now,END_DATE=DateTime.Now,
+                LAST_DELIVERY_DATE=DateTime.Now,PARTIAL_SHIPMENT=true,TENDER_SHIPMENT_MODE=1,TENDER_PORT_ID=1,
+                DELIVERY_ADDRESS="Mongla Bondor",RECEIVER_NAME="Pran Group",RECEIVER_DETAILS="Badd,Dhaka,Bangladesh"
                 },
              new RFQ_BIDDING(){
                 RFQ_NUMBER="B0125258524452",RFQ_SL=10,VENDOR_ID="Arok Traders",SUBMIT_DATE=DateTime.Now,

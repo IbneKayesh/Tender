@@ -5,67 +5,112 @@
 }
 <style>
 </style>
+<section class="content">
+    <div class="card card-solid">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-12 col-sm-4">
+                    <div class="col-12">
+                        <img src="~/App_Asset/dist/img/noImage.jpg" class="product-image" alt="Product Image" />
+                    </div>
+                </div>
+                <div class="col-12 col-sm-8">
+                    <h4 class="my-3">Tender Number :<span class="text-primary">@Model.Select(c => c.RFQ_NUMBER).FirstOrDefault()</span> </h4>
+                    <h6 class="my-3">Item :<span class="text-success"> @Model.Select(c => c.PRODUCTS_ID).FirstOrDefault()</span></h6>
+                    <p>About Tender : @Model.Select(c => c.TENDER_PRODUCTS_DESC).FirstOrDefault() </p>
+                    <p>Start To End Date : @Model.Select(c => c.START_DATE).FirstOrDefault() To @Model.Select(c => c.END_DATE).FirstOrDefault() </p>
+                    <p>Last Deliver Date : @Model.Select(c => c.LAST_DELIVERY_DATE).FirstOrDefault() </p>
+                    <hr />
+                    <h5>Remaning</h5>
+                    <span class="text-danger">0d  : 7h  : 34m  : 24s</span>
+                    <hr />
+                    <div class="row">
+                        <div class="col">Partial Shipment : @Model.Select(c => c.PARTIAL_SHIPMENT).FirstOrDefault() </div>
+                        <div class="col">Shipment Mode : @Model.Select(c => c.TENDER_SHIPMENT_MODE).FirstOrDefault() </div>
+                        <div class="col">Port : @Model.Select(c => c.TENDER_PORT_ID).FirstOrDefault() </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">Delivery Location : @Model.Select(c => c.DELIVERY_ADDRESS).FirstOrDefault() </div>
+                        <div class="col">Receiver Name : @Model.Select(c => c.RECEIVER_NAME).FirstOrDefault() </div>
+                        <div class="col">Receiver Details : @Model.Select(c => c.RECEIVER_DETAILS).FirstOrDefault() </div>
+                    </div>
+
+                   
+                </div>
+            </div>
+            <br />
+            <div class="card card-primary card-outline mt-3">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <i class="fas fa-list"></i>
+                        @ViewBag.Title  &nbsp;&nbsp; <small>@System.DateTime.Now</small>
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <table class="table table-bordered table-striped table-hover table-responsive-md">
+                        <thead>
+                            <tr class="table-secondary">
+                                <th>Option</th>
+                                <th>Quote Number</th>
+                                <th>Bidders company</th>
+                                <th>Submit Date</th>
+                                <th>Bidding Rate</th>
+                                <th>Bidding Quantity</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model != null)
+                            {
+                                foreach (var item in Model)
+                                {
+                                    <tr data-widget="expandable-table" aria-expanded="false" data-toggle="tooltip" data-placement="top" title="Click For Details">
+                                        <td>
+                                            <a class="btn btn-sm btn-block btn-outline-danger" href="@Url.Action("QuotationCompare","Tender", new { id=@item.RFQ_NUMBER})">
+                                                <img src="~/App_Asset/dist/img/compare.png" height="30" width="30" alt="Compare" />
+                                            </a>
+                                        </td>
+                                        <td>@item.RFQ_NUMBER</td>
+                                        <td>@item.VENDOR_ID</td>
+                                        <td>@item.SUBMIT_DATE</td>
+                                        <td>@item.PRODUCTS_RATE</td>
+                                        <td>@item.PRODUCTS_QUANTITY</td>
+                                    </tr>
+                                    <tr class="expandable-body table-active">
+                                        <td colspan="6">
+                                            <p>
+                                                <span class="text-bold">Product Details :</span> @item.PRODUCTS_DESC <br />
+                                                <span class="text-bold">Port Name :</span> @item.PORT_ID <br />
+                                                <span class="text-bold">Shipment Mode :</span> @item.SHIPMENT_MODE <br />
+                                                <span class="text-bold">Product Details :</span> @item.LOADING_ADDRESS <br />
+                                                <span class="text-bold">Port Name :</span> @item.SENDER_NAME <br />
+                                                <span class="text-bold">Shipment Mode :</span> @item.SENDER_DETAILS <br />
+                                            </p>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
 
 
-<div class="card card-primary card-outline mt-3">
-    <div class="card-header">
-        <h3 class="card-title">
-            <i class="fas fa-list"></i>
-            @ViewBag.Title  &nbsp;&nbsp; <small>@System.DateTime.Now</small>
-        </h3>
+        </div>
+
     </div>
-    <div class="card-body">       
-        <table class="table table-bordered table-striped table-hover table-responsive-md">
-            <thead>
-                <tr class="table-secondary">
-                    <th>Option</th>
-                    <th>Quote Number</th>
-                    <th>Bidders company</th>
-                    <th>Submit Date</th>
-                    <th>Bidding Rate</th>
-                    <th>Bidding Quantity</th>
-                </tr>
-            </thead>
-            <tbody>
-                @if (Model != null)
-                {
-                    foreach (var item in Model)
-                    {
+
+</section>
 
 
-                       
-                        <tr data-widget="expandable-table" aria-expanded="false" data-toggle="tooltip" data-placement="top" title="Click For Details">
-                            <td>
-                                <a class="btn btn-sm btn-block btn-outline-danger" href="@Url.Action("QuotationCompare","Tender", new { id=@item.RFQ_NUMBER})">
-                                    <img src="~/App_Asset/dist/img/compare.png" height="30" width="30" alt="Compare" />
-                                </a>
-                            </td>
-                            <td>@item.RFQ_NUMBER</td>
-                            <td>@item.VENDOR_ID</td>
-                            <td>@item.SUBMIT_DATE</td>
-                            <td>@item.PRODUCTS_RATE</td>
-                            <td>@item.PRODUCTS_QUANTITY</td>
-                        </tr>
-                        <tr class="expandable-body table-active">
-                            <td colspan="6">
-                                <p>
-                                    <span class="text-bold">Product Details :</span> @item.PRODUCTS_DESC <br />
-                                    <span class="text-bold">Port Name :</span> @item.PORT_ID <br />
-                                    <span class="text-bold">Shipment Mode :</span> @item.SHIPMENT_MODE <br />
-                                    <span class="text-bold">Product Details :</span> @item.LOADING_ADDRESS <br />
-                                    <span class="text-bold">Port Name :</span> @item.SENDER_NAME <br />
-                                    <span class="text-bold">Shipment Mode :</span> @item.SENDER_DETAILS <br />
-                                </p>
-                            </td>
-                        </tr>
-                    }
-                }
 
-            </tbody>
-        </table>
 
-    </div>
-</div>
+
+
+
+
+
 @section scripts{
     @Scripts.Render("~/bundles/jqueryval")
     <script>
