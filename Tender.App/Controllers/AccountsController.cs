@@ -134,7 +134,9 @@ namespace Tender.App.Controllers
         public ActionResult UserProfile(string id)
         {
             DropDownFor_Signup();
-            return View(new VENDOR_DETAILS().getAll());
+            var obj = new VENDOR_DETAILS().getAll();
+            obj.VENDOR_CATEGORY = AccountsService.getVENDOR_CATEGORY("1").Item1;
+            return View(obj);
         }
         [HttpPost]
         public ActionResult UserProfile(VENDOR_DETAILS obj, HttpPostedFileBase ProfilePicture)
@@ -147,12 +149,11 @@ namespace Tender.App.Controllers
             return View(new VENDOR_DETAILS().getAll());
         }
 
-        public void FollowMe(string catId, string catName)
+        public void FollowMe(string cId, string cNm)
         {
-            string id = "";//session user id
+            string id = "1";//session user id
+            EQResult _tpl = AccountsService.add_edit_follow_me(id, cId, cNm);
         }
-
-
 
         [HttpPost]
         public ActionResult ChangePassword(CHANGE_PASWD obj)

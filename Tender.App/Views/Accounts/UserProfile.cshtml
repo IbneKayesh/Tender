@@ -74,38 +74,38 @@
                                     <p>
                                         @foreach (var mItem in Model.VENDOR_PRODUCTS)
                                         {
-                                        <label class="m-2 btn btn-sm btn-outline-primary">
-                                            @mItem.PRODUCTS_NAME
-                                            <input class="v-cer" type="checkbox" id="@mItem.PRODUCTS_ID" checked="@mItem.IS_ACTIVE" />
-                                        </label>
+                                            <label class="m-2 btn btn-sm btn-outline-primary">
+                                                @mItem.PRODUCTS_NAME
+                                                <input class="v-pro" type="checkbox" id="@mItem.PRODUCTS_ID" checked="@mItem.IS_ACTIVE" />
+                                            </label>
                                         }
                                     </p>
                                     <hr />
                                     <strong><i class="fas fa-business-time mr-1"></i> Business</strong><br />
                                     @foreach (var mItem in Model.VENDOR_CATEGORY)
                                     {
-                                    <label class="m-2 btn btn-sm btn-outline-primary">
-                                        @mItem.CATEGORY_NAME
-                                        <input class="v-cat" type="checkbox" id="@mItem.CATEGORY_ID" checked="@mItem.IS_ACTIVE" />
-                                    </label>
+                                        <label class="m-2 btn btn-sm btn-outline-primary">
+                                            @mItem.CATEGORY_NAME
+                                            <input class="v-cat" type="checkbox" id="@mItem.CATEGORY_ID" @(mItem.IS_ACTIVE == 1 ? "checked='checked'" : string.Empty)  />
+                                        </label>
                                     }
                                     <hr />
                                     <strong><i class="fa fa-certificate mr-1"></i> Certificate</strong><br />
                                     @foreach (var mItem in Model.VENDOR_CERTIFICATE)
                                     {
-                                    <label class="m-2 btn btn-sm btn-outline-primary">
-                                        @mItem.CERTIFICATE_NAME
-                                        <input class="v-cer" type="checkbox" id="@mItem.CERTIFICATE_ID" checked="@mItem.IS_ACTIVE" />
-                                    </label>
+                                        <label class="m-2 btn btn-sm btn-outline-primary">
+                                            @mItem.CERTIFICATE_NAME
+                                            <input class="v-cer" type="checkbox" id="@mItem.CERTIFICATE_ID" checked="@mItem.IS_ACTIVE" />
+                                        </label>
                                     }
                                     <hr />
                                     <strong><i class="fa fa-file mr-1"></i> Documents</strong><br />
                                     @foreach (var mItem in Model.VENDOR_DOCUMENTS)
                                     {
-                                    <label class="m-2 btn btn-sm btn-outline-primary">
-                                        @mItem.DOCUMENTS_NAME
-                                        <input class="v-cer" type="checkbox" id="@mItem.DOCUMENTS_ID" checked="@mItem.IS_ACTIVE" />
-                                    </label>
+                                        <label class="m-2 btn btn-sm btn-outline-primary">
+                                            @mItem.DOCUMENTS_NAME
+                                            <input class="v-doc" type="checkbox" id="@mItem.DOCUMENTS_ID" checked="@mItem.IS_ACTIVE" />
+                                        </label>
                                     }
                                 </div>
 
@@ -117,7 +117,6 @@
                                         @Html.HiddenFor(model => model.ORGANIZATION_NAME)
                                         @Html.HiddenFor(model => model.COUNTRY_NAME)
                                         @Html.HiddenFor(model => model.VENDOR_EMAIL)
-                                        @Html.HiddenFor(model => model.VENDOR_PASSWD)
 
                                         <div class="form-row">
                                             <div class="col-md-6 col-sm-12">
@@ -171,93 +170,93 @@
                                             </div>
 
                                         </div>
-                                            <div class="form-row">
-                                                <div class="col-md-6 col-sm-12">
-                                                    <div class="form-group">
-                                                        <label for="NO_OF_EMPLOYEES" class="control-label"> Number of Employee</label>
-                                                        @Html.EditorFor(model => model.NO_OF_EMPLOYEES, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "50-100 People" } })
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6 col-sm-12">
-                                                    <div class="form-group">
-                                                        <label for="TAX_NUMBER" class="control-label"> TAX/TIN</label>
-                                                        @Html.EditorFor(model => model.TAX_NUMBER, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "TAX/TIN" } })
-                                                    </div>
+                                        <div class="form-row">
+                                            <div class="col-md-6 col-sm-12">
+                                                <div class="form-group">
+                                                    <label for="NO_OF_EMPLOYEES" class="control-label"> Number of Employee</label>
+                                                    @Html.EditorFor(model => model.NO_OF_EMPLOYEES, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "50-100 People" } })
                                                 </div>
                                             </div>
-                                            <div class="form-row">
-                                                <div class="col-md-6 col-sm-12">
-                                                    <div class="form-group">
-                                                        <label for="TRADE_NUMBER" class="control-label"> Trade Number</label>
-                                                        @Html.EditorFor(model => model.TRADE_NUMBER, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "Trade License Number" } })
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6 col-sm-12">
-                                                    <div class="form-group">
-                                                    </div>
+                                            <div class="col-md-6 col-sm-12">
+                                                <div class="form-group">
+                                                    <label for="TAX_NUMBER" class="control-label"> TAX/TIN</label>
+                                                    @Html.EditorFor(model => model.TAX_NUMBER, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "TAX/TIN" } })
                                                 </div>
                                             </div>
-                                            <div class="form-row">
-                                                <div class="col-md-6 col-sm-12">
-                                                    <div class="form-group">
-                                                        <div class="icheck-primary">
-                                                            <input type="checkbox" id="PURCHASER_X" name="PURCHASER_X" />
-                                                            <label for="PURCHASER_X"> Purchaser</label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-md-6 col-sm-12">
-                                                    <div class="form-group">
-                                                        <div class="icheck-primary">
-                                                            <input type="checkbox" id="PURCHASER_NOTIFY_X" name="PURCHASER_NOTIFY_X" />
-                                                            <label for="PURCHASER_NOTIFY_X">
-                                                                Get Purchaser Notification
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-
-                                            <div class="form-row">
-                                                <div class="col-md-6 col-sm-12">
-                                                    <div class="form-group">
-                                                        <div class="icheck-primary">
-                                                            <input type="checkbox" id="SUPPLIER_X" name="SUPPLIER_X" />
-                                                            <label for="SUPPLIER_X">
-                                                                Supplier
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-md-6 col-sm-12">
-                                                    <div class="form-group">
-                                                        <div class="icheck-primary">
-                                                            <input type="checkbox" id="SUPPLIER_NOTIFY_X" name="SUPPLIER_NOTIFY_X" />
-                                                            <label for="SUPPLIER_NOTIFY_X">
-                                                                Get Supplier Notification
-                                                            </label>
-                                                        </div>
-                                                    </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="col-md-6 col-sm-12">
+                                                <div class="form-group">
+                                                    <label for="TRADE_NUMBER" class="control-label"> Trade Number</label>
+                                                    @Html.EditorFor(model => model.TRADE_NUMBER, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "Trade License Number" } })
                                                 </div>
                                             </div>
-                                            <div class="form-row">
-                                                <div class="col-md-6 col-sm-12">
-                                                    <div class="form-group">
-                                                        @Html.Label("Upload Profile Picture", new { @class = "control-label" })
-                                                        <input type="file" name="ProfilePicture" accept=".png, .jpg, .jpeg" /><br />
-                                                        <span class="text-success">png,jpg,jpeg format only</span>
+                                            <div class="col-md-6 col-sm-12">
+                                                <div class="form-group">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="col-md-6 col-sm-12">
+                                                <div class="form-group">
+                                                    <div class="icheck-primary">
+                                                        <input type="checkbox" id="PURCHASER_X" name="PURCHASER_X" />
+                                                        <label for="PURCHASER_X"> Purchaser</label>
                                                     </div>
                                                 </div>
                                             </div>
 
-                                            <div class="row float-right">
-                                                <div class="col-12 float-right">
-                                                    <button type="submit" class="btn btn-danger btn-sm">Submit</button>
+                                            <div class="col-md-6 col-sm-12">
+                                                <div class="form-group">
+                                                    <div class="icheck-primary">
+                                                        <input type="checkbox" id="PURCHASER_NOTIFY_X" name="PURCHASER_NOTIFY_X" />
+                                                        <label for="PURCHASER_NOTIFY_X">
+                                                            Get Purchaser Notification
+                                                        </label>
+                                                    </div>
                                                 </div>
                                             </div>
+
+                                        </div>
+
+                                        <div class="form-row">
+                                            <div class="col-md-6 col-sm-12">
+                                                <div class="form-group">
+                                                    <div class="icheck-primary">
+                                                        <input type="checkbox" id="SUPPLIER_X" name="SUPPLIER_X" />
+                                                        <label for="SUPPLIER_X">
+                                                            Supplier
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6 col-sm-12">
+                                                <div class="form-group">
+                                                    <div class="icheck-primary">
+                                                        <input type="checkbox" id="SUPPLIER_NOTIFY_X" name="SUPPLIER_NOTIFY_X" />
+                                                        <label for="SUPPLIER_NOTIFY_X">
+                                                            Get Supplier Notification
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="col-md-6 col-sm-12">
+                                                <div class="form-group">
+                                                    @Html.Label("Upload Profile Picture", new { @class = "control-label" })
+                                                    <input type="file" name="ProfilePicture" accept=".png, .jpg, .jpeg" /><br />
+                                                    <span class="text-success">png,jpg,jpeg format only</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row float-right">
+                                            <div class="col-12 float-right">
+                                                <button type="submit" class="btn btn-danger btn-sm">Submit</button>
+                                            </div>
+                                        </div>
                                     }
 
                                 </div>
@@ -279,13 +278,16 @@
     </section>
 </div>
 
-
-
-
-
-
-
-
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        $('input[type=checkbox]').change(function () {
+            var clId = $(this).attr("class");
+            var clNm = $(this).attr('id');
+            if (clId == "v-pro" || clId == "v-cat" || clId == "v-cer" || clId == "v-doc") {
+                $.post("FollowMe", { "cId": clId, "cNm": clNm });
+            }
+        });
+    </script>
 }

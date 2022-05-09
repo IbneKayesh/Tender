@@ -43,5 +43,46 @@ namespace Tender.App.Service
             sql = $"update VENDOR set VENDOR_PASSWD='{_obj.NPASWD}' where VENDOR_ID='{id}'";
             return DatabaseMSSql.ExecuteSqlCommand(sql);
         }
+        public static EQResult add_edit_follow_me(string id, string cID, string cNAME)
+        {
+            if (cID == "v-cat")
+            {
+                sql = $"select VENDOR_ID,CATEGORY_ID,CATEGORY_NAME,IS_ACTIVE from VENDOR_CATEGORY where VENDOR_ID='{id}' and CATEGORY_ID='{cNAME}'";
+                var _tpl = DatabaseMSSql.SqlQuerySingle<VENDOR_CATEGORY>(sql);
+                if (_tpl.Item2.ROWS == 0)
+                {
+                    sql = $"INSERT INTO VENDOR_CATEGORY(VENDOR_ID,CATEGORY_ID,CATEGORY_NAME,IS_ACTIVE)VALUES('{id}','{cNAME}','{cNAME}',1)";
+                    return DatabaseMSSql.ExecuteSqlCommand(sql);
+                }
+                else
+                {
+                    if (_tpl.Item1.IS_ACTIVE == 1)
+                    {
+                        sql = $"update VENDOR_CATEGORY set IS_ACTIVE=0 where VENDOR_ID='{id}' and CATEGORY_ID='{cNAME}'";
+                    }
+                    else
+                    {
+                        sql = $"update VENDOR_CATEGORY set IS_ACTIVE=1 where VENDOR_ID='{id}' and CATEGORY_ID='{cNAME}'";
+                    }
+                    return DatabaseMSSql.ExecuteSqlCommand(sql);
+                }
+            }
+            return new EQResult();
+        }
+        public static Tuple<List<VENDOR_CATEGORY>, EQResult> getVENDOR_CATEGORY(string id)
+        {
+            sql = $@"SELECT T1.CATEGORY_ID,T1.CATEGORY_NAME,
+                    CASE WHEN T2.IS_ACTIVE IS NULL
+                    THEN 0
+                    ELSE
+                    T2.IS_ACTIVE
+                    END IS_ACTIVE
+                    FROM TNDR_CATEGORY T1
+                    LEFT JOIN VENDOR_CATEGORY T2 ON T1.CATEGORY_ID = T2.CATEGORY_ID
+                    AND T2.VENDOR_ID='{id}'";
+            return DatabaseMSSql.SqlQuery<VENDOR_CATEGORY>(sql);
+        }
+
+
     }
 }

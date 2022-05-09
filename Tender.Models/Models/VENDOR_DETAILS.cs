@@ -10,6 +10,7 @@ namespace Tender.Models.Models
         public VENDOR_DETAILS()
         {
             CHANGE_PASWD = new CHANGE_PASWD();
+            VENDOR_CATEGORY = new List<VENDOR_CATEGORY>();
         }
 
 
@@ -45,7 +46,7 @@ namespace Tender.Models.Models
 
         [Display(Name = "Yearly Turnover")]
         [Required(ErrorMessage = "{0} is required")]
-        [Range(minimum: 1000, maximum: 99999999999, ErrorMessage ="{0} range is {2} and {1}")]
+        [Range(minimum: 1000, maximum: 9999999999999, ErrorMessage = "{0} range is {1} and {2}")]
         public Int64 YEARLY_TRUNOVER { get; set; }
 
         [Display(Name = "Number of Employee")]
@@ -64,7 +65,7 @@ namespace Tender.Models.Models
         public string TRADE_NUMBER { get; set; }
 
 
-        
+
         public int IS_CONFIRMED { get; set; }
 
         public bool IS_APPROVE { get; set; }
@@ -90,7 +91,6 @@ namespace Tender.Models.Models
             //obj.PURCHASER_NOTIFY = 1;
             //obj.SUPPLIER = 0;
             //obj.SUPPLIER = 0;
-            obj.VENDOR_CATEGORY = new VENDOR_CATEGORY().getAll();
             obj.VENDOR_CERTIFICATE = new VENDOR_CERTIFICATE().getAll();
             obj.VENDOR_DOCUMENTS = new VENDOR_DOCUMENTS().getAll();
             obj.VENDOR_PRODUCTS = new VENDOR_PRODUCTS().getAll();
