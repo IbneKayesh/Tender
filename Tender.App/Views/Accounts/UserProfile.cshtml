@@ -48,12 +48,10 @@
 
                             <strong><i class="fas fa-map-marker-alt mr-1"></i> Location</strong>
                             <p class="text-muted">
-                                Address : @Model.ADDRESS_1
-                                <br /> @Model.ADDRESS_2
+                                First Address  : @Model.ADDRESS_1<br/>
+                                Second Address : @Model.ADDRESS_2
                             </p>
                         </div>
-
-
                     </div>
 
                 </div>
@@ -117,15 +115,23 @@
                                         @Html.HiddenFor(model => model.ORGANIZATION_NAME)
                                         @Html.HiddenFor(model => model.COUNTRY_NAME)
                                         @Html.HiddenFor(model => model.VENDOR_EMAIL)
+                                        @Html.HiddenFor(model => model.VENDOR_ID)
+                                        @Html.HiddenFor(model => model.VENDOR_PASSWD)
 
-                                        <div class="form-row">
-                                            <div class="col-md-6 col-sm-12">
-                                                <div class="form-group">
-                                                    <label for="VENDOR_USER_ID" class="control-label"> User Id</label>
-                                                    @Html.EditorFor(model => model.VENDOR_USER_ID, new { htmlAttributes = new { @class = "form-control form-control-sm", @readonly = true } })
-                                                </div>
+                                    <div class="form-row">
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="VENDOR_USER_ID" class="control-label"> User Id</label>
+                                                @Html.EditorFor(model => model.VENDOR_USER_ID, new { htmlAttributes = new { @class = "form-control form-control-sm", @readonly = false } })
                                             </div>
                                         </div>
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="VENDOR_USER_ID" class="control-label"> Country</label>
+                                                @Html.EditorFor(model => model.COUNTRY_NAME, new { htmlAttributes = new { @class = "form-control form-control-sm", @readonly = true } })
+                                            </div>
+                                        </div>
+                                    </div>
                                         <div class="form-row">
                                             <div class="col-md-6 col-sm-12">
                                                 <div class="form-group">
@@ -200,7 +206,7 @@
                                             <div class="col-md-6 col-sm-12">
                                                 <div class="form-group">
                                                     <div class="icheck-primary">
-                                                        <input type="checkbox" id="PURCHASER_X" name="PURCHASER_X" />
+                                                        <input type="checkbox" id="PURCHASER_X" name="PURCHASER_X" @(Model.PURCHASER == 1 ? "checked" :"unchecked") />
                                                         <label for="PURCHASER_X"> Purchaser</label>
                                                     </div>
                                                 </div>
@@ -209,7 +215,7 @@
                                             <div class="col-md-6 col-sm-12">
                                                 <div class="form-group">
                                                     <div class="icheck-primary">
-                                                        <input type="checkbox" id="PURCHASER_NOTIFY_X" name="PURCHASER_NOTIFY_X" />
+                                                        <input type="checkbox" id="PURCHASER_NOTIFY_X" name="PURCHASER_NOTIFY_X" @(Model.PURCHASER_NOTIFY == 1 ? "checked" :"unchecked") />
                                                         <label for="PURCHASER_NOTIFY_X">
                                                             Get Purchaser Notification
                                                         </label>
@@ -223,7 +229,7 @@
                                             <div class="col-md-6 col-sm-12">
                                                 <div class="form-group">
                                                     <div class="icheck-primary">
-                                                        <input type="checkbox" id="SUPPLIER_X" name="SUPPLIER_X" />
+                                                        <input type="checkbox" id="SUPPLIER_X" name="SUPPLIER_X" @(Model.SUPPLIER == 1 ? "checked" :"unchecked") />
                                                         <label for="SUPPLIER_X">
                                                             Supplier
                                                         </label>
@@ -234,7 +240,7 @@
                                             <div class="col-md-6 col-sm-12">
                                                 <div class="form-group">
                                                     <div class="icheck-primary">
-                                                        <input type="checkbox" id="SUPPLIER_NOTIFY_X" name="SUPPLIER_NOTIFY_X" />
+                                                        <input type="checkbox" id="SUPPLIER_NOTIFY_X" name="SUPPLIER_NOTIFY_X" @(Model.SUPPLIER_NOTIFY == 1 ? "checked" :"unchecked") />
                                                         <label for="SUPPLIER_NOTIFY_X">
                                                             Get Supplier Notification
                                                         </label>
@@ -280,7 +286,6 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-
     <script>
         $('input[type=checkbox]').change(function () {
             var clId = $(this).attr("class");

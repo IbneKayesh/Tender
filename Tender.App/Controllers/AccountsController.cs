@@ -11,6 +11,7 @@ namespace Tender.App.Controllers
 {
     public class AccountsController : Controller
     {
+        string userId = "c0919d47-94d1-49a7-b351-1fa448081ed0";
         #region Login_Logout
         [HttpGet]
         public ActionResult Login()
@@ -112,11 +113,6 @@ namespace Tender.App.Controllers
 
         #endregion
 
-
-
-
-
-
         public ActionResult ForgotPassword()
         {
             return View();
@@ -134,9 +130,17 @@ namespace Tender.App.Controllers
         public ActionResult UserProfile(string id)
         {
             DropDownFor_Signup();
-            var obj = new VENDOR_DETAILS().getAll();
-            obj.VENDOR_CATEGORY = AccountsService.getVENDOR_CATEGORY("1").Item1;
-            return View(obj);
+            Tuple<VENDOR_DETAILS, EQResult> _tpl = AccountsService.getProfile(userId);
+            if (_tpl.Item2.SUCCESS && _tpl.Item2.ROWS == 1)
+            {
+                _tpl.Item1.VENDOR_CATEGORY = AccountsService.getVENDOR_CATEGORY(userId).Item1;
+                _tpl.Item1.VENDOR_CERTIFICATE = AccountsService.getVENDOR_CERTIFICATE(userId).Item1;
+                _tpl.Item1.VENDOR_DOCUMENTS = AccountsService.getVENDOR_DOCUMENTS(userId).Item1;
+                _tpl.Item1.VENDOR_PRODUCTS = AccountsService.getVENDOR_PRODUCTS(userId).Item1;
+                return View(_tpl.Item1);
+                
+            }
+            return RedirectToAction("Index", "Home");
         }
         [HttpPost]
         public ActionResult UserProfile(VENDOR_DETAILS obj, HttpPostedFileBase ProfilePicture)
@@ -144,15 +148,19 @@ namespace Tender.App.Controllers
             DropDownFor_Signup();
             if (ModelState.IsValid)
             {
+                obj.PURCHASER = obj.PURCHASER_X == "on" ? 1 : 0;
+                obj.PURCHASER_NOTIFY = obj.PURCHASER_NOTIFY_X == "on" ? 1 : 0;
+                obj.SUPPLIER = obj.SUPPLIER_X == "on" ? 1 : 0;
+                obj.SUPPLIER_NOTIFY = obj.SUPPLIER_NOTIFY_X == "on" ? 1 : 0;
 
+                AccountsService.profileUpdate(obj);
             }
-            return View(new VENDOR_DETAILS().getAll());
+            return RedirectToAction("UserProfile", "Accounts");
         }
 
         public void FollowMe(string cId, string cNm)
         {
-            string id = "1";//session user id
-            EQResult _tpl = AccountsService.add_edit_follow_me(id, cId, cNm);
+            EQResult _tpl = AccountsService.add_edit_follow_me(userId, cId, cNm);
         }
 
         [HttpPost]
@@ -160,8 +168,7 @@ namespace Tender.App.Controllers
         {
             if (ModelState.IsValid)
             {
-                string id = "";//session user Id
-                EQResult _tpl = AccountsService.change_password(id, obj);
+                EQResult _tpl = AccountsService.change_password(userId, obj);
                 if (_tpl.SUCCESS && _tpl.ROWS == 1)
                 {
                     return RedirectToAction("UserProfile");

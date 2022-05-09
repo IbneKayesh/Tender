@@ -11,8 +11,10 @@ namespace Tender.Models.Models
         {
             CHANGE_PASWD = new CHANGE_PASWD();
             VENDOR_CATEGORY = new List<VENDOR_CATEGORY>();
+            VENDOR_CERTIFICATE = new List<VENDOR_CERTIFICATE>();
+            VENDOR_DOCUMENTS = new List<VENDOR_DOCUMENTS>();
+            VENDOR_PRODUCTS = new List<VENDOR_PRODUCTS>();
         }
-
 
         [Display(Name = "Login User Name")]
         [Required(ErrorMessage = "{0} is required")]
@@ -42,12 +44,12 @@ namespace Tender.Models.Models
 
         [Display(Name = "Establishment Year")]
         [Required(ErrorMessage = "{0} is required")]
-        public int YEAR_OF_ESTABLISHMENT { get; set; }
+        public Nullable<int> YEAR_OF_ESTABLISHMENT { get; set; }
 
         [Display(Name = "Yearly Turnover")]
         [Required(ErrorMessage = "{0} is required")]
         [Range(minimum: 1000, maximum: 9999999999999, ErrorMessage = "{0} range is {1} and {2}")]
-        public Int64 YEARLY_TRUNOVER { get; set; }
+        public Nullable<Int64> YEARLY_TRUNOVER { get; set; }
 
         [Display(Name = "Number of Employee")]
         [Required(ErrorMessage = "{0} is required")]
@@ -91,9 +93,9 @@ namespace Tender.Models.Models
             //obj.PURCHASER_NOTIFY = 1;
             //obj.SUPPLIER = 0;
             //obj.SUPPLIER = 0;
-            obj.VENDOR_CERTIFICATE = new VENDOR_CERTIFICATE().getAll();
-            obj.VENDOR_DOCUMENTS = new VENDOR_DOCUMENTS().getAll();
-            obj.VENDOR_PRODUCTS = new VENDOR_PRODUCTS().getAll();
+          
+           // obj.VENDOR_DOCUMENTS = new VENDOR_DOCUMENTS().getAll();
+          //  obj.VENDOR_PRODUCTS = new VENDOR_PRODUCTS().getAll();
             return obj;
         }
 
