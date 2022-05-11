@@ -118,11 +118,12 @@
                                         @Html.HiddenFor(model => model.VENDOR_ID)
                                         @Html.HiddenFor(model => model.VENDOR_PASSWD)
 
+                                    <span class="text-danger"> @ViewBag.ExistUserId</span>
                                     <div class="form-row">
                                         <div class="col-md-6 col-sm-12">
                                             <div class="form-group">
                                                 <label for="VENDOR_USER_ID" class="control-label"> User Id</label>
-                                                @Html.EditorFor(model => model.VENDOR_USER_ID, new { htmlAttributes = new { @class = "form-control form-control-sm", @readonly = false } })
+                                                @Html.EditorFor(model => model.VENDOR_USER_ID, new { htmlAttributes = new { @class = "form-control form-control-sm"} })
                                             </div>
                                         </div>
                                         <div class="col-md-6 col-sm-12">

@@ -42,7 +42,7 @@
                 </a>
             </div>
         </div>
-        @using (Html.BeginForm("BidRequest", "Tender", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        @using (Html.BeginForm("SubmitTender", "Tender", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
             @Html.AntiForgeryToken()
             <div class="row" id="detailsBody">
@@ -58,14 +58,15 @@
                         <div class="col-md-3 col-sm-6">
                             <div class="form-group">
                                 <label class="control-label">Company</label>
-                                @Html.EditorFor(model => model.VENDOR_ID, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "Vendor Id" } })
+                                @*@Html.EditorFor(model => model.VENDOR_ID, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "Vendor Id" } })*@
+                                @Html.DropDownList("VENDOR_ID", null, new { @class = "form-control form-control-sm select2" })
                                 @Html.ValidationMessageFor(m => m.VENDOR_ID, "", new { @class = "text-danger" })
                             </div>
                         </div>
                         <div class="col-md-3 col-sm-6">
                             <div class="form-group">
                                 <label class="control-label">Start Date</label>
-                                @Html.EditorFor(model => model.START_DATE, new { htmlAttributes = new { @class = "form-control form-control-sm", type = "date", placeholder = "Tender Number" } })
+                                @Html.EditorFor(model => model.START_DATE, new { htmlAttributes = new { @class = "form-control form-control-sm", type = "date", placeholder = "Start Date" } })
                                 @Html.ValidationMessageFor(m => m.START_DATE, "", new { @class = "text-danger" })
                             </div>
                         </div>
@@ -73,26 +74,36 @@
                         <div class="col-md-3 col-sm-6">
                             <div class="form-group">
                                 <label class="control-label">End Date</label>
-                                @Html.EditorFor(model => model.END_DATE, new { htmlAttributes = new { @class = "form-control form-control-sm", type = "date", placeholder = "Tender Number" } })
+                                @Html.EditorFor(model => model.END_DATE, new { htmlAttributes = new { @class = "form-control form-control-sm", type = "date", placeholder = "End Date" } })
                                 @Html.ValidationMessageFor(m => m.END_DATE, "", new { @class = "text-danger" })
                             </div>
                         </div>
                         <div class="col-md-3 col-sm-6">
                             <div class="form-group">
+                                <label class="control-label">Local/Importer</label>
+                                @Html.DropDownList("LOCAL_IMPORT", null, new { @class = "form-control form-control-sm select2" })
+                                @Html.ValidationMessageFor(m => m.LOCAL_IMPORT, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <div class="form-group">
                                 <label class="control-label">Tender Type</label>
-                                @Html.DropDownList("SELL_BUY", null, new { @class = "form-control form-control-sm select2"})
+                                @Html.DropDownList("SELL_BUY", null, new { @class = "form-control form-control-sm select2" })
+                                @Html.ValidationMessageFor(m => m.SELL_BUY, "", new { @class = "text-danger" })
                             </div>
                         </div>
                         <div class="col-md-3 col-sm-6">
                             <div class="form-group">
                                 <label class="control-label">Submission Type</label>
                                 @Html.DropDownList("RE_BID", null, new { @class = "form-control form-control-sm select2" })
+                                @Html.ValidationMessageFor(m => m.RE_BID, "", new { @class = "text-danger" })
                             </div>
                         </div>
                         <div class="col-md-3 col-sm-6">
                             <div class="form-group">
                                 <label class="control-label">Quotation Rate Range</label>
                                 @Html.DropDownList("LOWER_RATE", null, new { @class = "form-control form-control-sm select2" })
+                                @Html.ValidationMessageFor(m => m.LOWER_RATE, "", new { @class = "text-danger" })
                             </div>
                         </div>
 
@@ -155,8 +166,8 @@
                     <div class="card-body pad row">
                         <div class="col-md-3 col-sm-6">
                             <div class="form-group">
-                                <label class="control-label">Product Details</label>
-                                @Html.EditorFor(model => model.LAST_DELIVERY_DATE, new { htmlAttributes = new { @class = "form-control form-control-sm", type = "date", placeholder = "Tender Number" } })
+                                <label class="control-label">Last Delivery Date</label>
+                                @Html.EditorFor(model => model.LAST_DELIVERY_DATE, new { htmlAttributes = new { @class = "form-control form-control-sm", type = "date", placeholder = "last Delivery Date" } })
                                 @Html.ValidationMessageFor(m => m.LAST_DELIVERY_DATE, "", new { @class = "text-danger" })
                             </div>
                         </div>
@@ -184,14 +195,21 @@
                         <div class="col-md-6 col-sm-6">
                             <div class="form-group">
                                 <label class="control-label">Deliver Address</label>
-                                @Html.EditorFor(model => model.DELIVERY_ADDRESS, new { htmlAttributes = new { @class = "form-control form-control-sm", row = "1", placeholder = "Tender Number" } })
+                                @Html.EditorFor(model => model.DELIVERY_ADDRESS, new { htmlAttributes = new { @class = "form-control form-control-sm", row = "1", placeholder = "Delivery Address" } })
                                 @Html.ValidationMessageFor(m => m.DELIVERY_ADDRESS, "", new { @class = "text-danger" })
                             </div>
                         </div>
                         <div class="col-md-3 col-sm-6">
                             <div class="form-group">
                                 <label class="control-label">Receiver</label>
-                                @Html.EditorFor(model => model.RECEIVER_NAME, new { htmlAttributes = new { @class = "form-control form-control-sm", row = "1", placeholder = "Tender Number" } })
+                                @Html.EditorFor(model => model.RECEIVER_NAME, new { htmlAttributes = new { @class = "form-control form-control-sm", row = "1", placeholder = "Receiver Name" } })
+                                @Html.ValidationMessageFor(m => m.RECEIVER_NAME, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <div class="form-group">
+                                <label class="control-label">Receiver Details</label>
+                                @Html.EditorFor(model => model.RECEIVER_DETAILS, new { htmlAttributes = new { @class = "form-control form-control-sm", row = "1", placeholder = "Receiver Details" } })
                                 @Html.ValidationMessageFor(m => m.RECEIVER_NAME, "", new { @class = "text-danger" })
                             </div>
                         </div>
@@ -211,8 +229,8 @@
                         </div>
                         <div class="col-md-3 col-sm-6">
                             <div class="form-group">
-                                <label class="control-label">Receiver</label>
-                                @Html.EditorFor(model => model.CURRENCY_RATE, new { htmlAttributes = new { @class = "form-control form-control-sm", row = "1", placeholder = "Tender Number" } })
+                                <label class="control-label">Currency Rate</label>
+                                @Html.EditorFor(model => model.CURRENCY_RATE, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "currency Rate" } })
                                 @Html.ValidationMessageFor(m => m.CURRENCY_RATE, "", new { @class = "text-danger" })
                             </div>
                         </div>
@@ -226,7 +244,7 @@
                         <div class="col-md-3 col-sm-6">
                             <div class="form-group">
                                 <label class="control-label">Pay Mode A Percent</label>
-                                @Html.EditorFor(model => model.PAY_AP, new { htmlAttributes = new { @class = "form-control form-control-sm",  placeholder = "Tender Number" } })
+                                @Html.EditorFor(model => model.PAY_AP, new { htmlAttributes = new { @class = "form-control form-control-sm",  placeholder = "Payment Mode A (%)" } })
                                 @Html.ValidationMessageFor(m => m.PAY_AP, "", new { @class = "text-danger" })
                             </div>
                         </div>
@@ -240,7 +258,7 @@
                         <div class="col-md-3 col-sm-6">
                             <div class="form-group">
                                 <label class="control-label">Pay Mode B Percent</label>
-                                @Html.EditorFor(model => model.PAY_BP, new { htmlAttributes = new { @class = "form-control form-control-sm",  placeholder = "Tender Number" } })
+                                @Html.EditorFor(model => model.PAY_BP, new { htmlAttributes = new { @class = "form-control form-control-sm",  placeholder = "Payment Mode B (%)" } })
                                 @Html.ValidationMessageFor(m => m.PAY_BP, "", new { @class = "text-danger" })
                             </div>
                         </div>

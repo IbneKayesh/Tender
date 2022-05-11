@@ -152,8 +152,15 @@ namespace Tender.App.Controllers
                 obj.PURCHASER_NOTIFY = obj.PURCHASER_NOTIFY_X == "on" ? 1 : 0;
                 obj.SUPPLIER = obj.SUPPLIER_X == "on" ? 1 : 0;
                 obj.SUPPLIER_NOTIFY = obj.SUPPLIER_NOTIFY_X == "on" ? 1 : 0;
-
-                AccountsService.profileUpdate(obj);
+                if (AccountsService.checkUserId(obj.VENDOR_USER_ID,userId).Item1.VENDOR_USER_ID != null)
+                {
+                    ModelState.AddModelError("", "This User Id Already Exist");
+                    return View(obj);
+                }
+                else {
+                    AccountsService.profileUpdate(obj);
+                }
+               
             }
             return RedirectToAction("UserProfile", "Accounts");
         }

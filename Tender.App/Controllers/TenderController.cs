@@ -11,7 +11,7 @@ namespace Tender.App.Controllers
     public class TenderController : Controller
     {
         // GET: Tender, For Supplier
-
+        string userId = "c0919d47-94d1-49a7-b351-1fa448081ed0";
         public ActionResult Index()
         {
             List<RFQ_TENDER> objList = new List<RFQ_TENDER>() {
@@ -31,14 +31,24 @@ namespace Tender.App.Controllers
         [HttpGet]
         public ActionResult SubmitTender()
         {
+            RFQ_TENDER obj = new RFQ_TENDER();
+            obj.VENDOR_ID = userId;
             DropDownFor_Tender();
-            return View();
+            return View(obj);
         }
         [HttpPost]
         public ActionResult SubmitTender(RFQ_TENDER obj)
         {
-
+            obj.RFQ_NUMBER = CommonService.getTenderNumber("RFQ_TENDER");
             DropDownFor_Tender();
+            if (ModelState.IsValid)
+            {
+                TenderService.SaveData(obj);
+            }
+            else
+            {
+                return View(obj);
+            }
             return View(obj);
         }
         public ActionResult CompareTender()
@@ -79,6 +89,9 @@ namespace Tender.App.Controllers
             ViewBag.CURRENCY_NAME = TenderService.DropDown_currencyList();
             ViewBag.PAY_A = TenderService.DropDown_payment();
             ViewBag.PAY_B = TenderService.DropDown_payment();
+            ViewBag.LOCAL_IMPORT = TenderService.DropDown_importer();
+
+            ViewBag.VENDOR_ID = new SelectList(CommonService.GetVendor(userId).Item1.ToList(), "VENDOR_ID", "ORGANIZATION_NAME");
 
         }
        

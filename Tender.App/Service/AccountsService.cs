@@ -194,7 +194,7 @@ namespace Tender.App.Service
         public static EQResult profileUpdate(VENDOR_DETAILS _obj)
         {
                 sql = $@"update VENDOR set VENDOR_USER_ID='{_obj.VENDOR_USER_ID}',CONTACT_NAME='{_obj.CONTACT_NAME}',
-                CONTACT_NUMBER='{_obj.CONTACT_NAME}',ADDRESS_1='{_obj.ADDRESS_1}',ADDRESS_2='{_obj.ADDRESS_2}',YEAR_OF_ESTABLISHMENT='{_obj.YEAR_OF_ESTABLISHMENT}',
+                CONTACT_NUMBER='{_obj.CONTACT_NUMBER}',ADDRESS_1='{_obj.ADDRESS_1}',ADDRESS_2='{_obj.ADDRESS_2}',YEAR_OF_ESTABLISHMENT='{_obj.YEAR_OF_ESTABLISHMENT}',
                 YEARLY_TRUNOVER='{_obj.YEARLY_TRUNOVER}',TAX_NUMBER='{_obj.TAX_NUMBER}',TRADE_NUMBER='{_obj.TRADE_NUMBER}',
                 PURCHASER='{_obj.PURCHASER}',PURCHASER_NOTIFY='{_obj.PURCHASER_NOTIFY}',SUPPLIER='{_obj.SUPPLIER}',SUPPLIER_NOTIFY='{_obj.SUPPLIER_NOTIFY}'
                 where VENDOR_ID='{_obj.VENDOR_ID}'";
@@ -206,7 +206,12 @@ namespace Tender.App.Service
             Tuple<VENDOR_DETAILS, EQResult> _tpl = DatabaseMSSql.SqlQuerySingle<VENDOR_DETAILS>(sql);
             return _tpl;
         }
-
+        public static Tuple<VENDOR_DETAILS, EQResult> checkUserId(string userId,string vendorId)
+        {
+            sql = $"select * from VENDOR  where LOWER( VENDOR_USER_ID ) ='{userId.ToLower()}' and VENDOR_ID <>('{vendorId}')";
+            Tuple<VENDOR_DETAILS, EQResult> _tpl = DatabaseMSSql.SqlQuerySingle<VENDOR_DETAILS>(sql);
+            return _tpl;
+        }
 
     }
 }
