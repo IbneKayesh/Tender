@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
@@ -13,70 +14,83 @@ namespace Tender.Models.Models
         public string QUOTE_NUMBER { get; set; }
         public int RFQ_SL { get; set; }
         public string VENDOR_ID { get; set; }
+        public DateTime SUBMIT_DATE { get; set; }
+        public string PRODUCTS_ID { get; set; }
+        public string PRODUCTS_DESC { get; set; }
+        [Required(ErrorMessage = "{0} is required")]
+        public decimal PRODUCTS_RATE { get; set; }
+        [Required(ErrorMessage = "{0} is required")]
+        public decimal PRODUCTS_QUANTITY { get; set; }
+        [Required(ErrorMessage = "{0} is required")]
+        public int SHIPMENT_MODE { get; set; }
+        [Required(ErrorMessage = "{0} is required")]
+        public int PORT_ID { get; set; }
+        [Required(ErrorMessage = "{0} is required")]
+        public string LOADING_ADDRESS { get; set; }
+        [Required(ErrorMessage = "{0} is required")]
+        [StringLength(maximumLength: 50, ErrorMessage = "{0} length is between {2} and {1}", MinimumLength = 3)]
+        public string SENDER_NAME { get; set; }
+        [Required(ErrorMessage = "{0} is required")]
+        [StringLength(maximumLength: 50, ErrorMessage = "{0} length is between {2} and {1}", MinimumLength = 5)]
+        public string SENDER_DETAILS { get; set; }
 
+        [NotMapped]
+        public string TND_VENDOR_ID { get; set; }
+        [NotMapped]
+        public string SELL_BUY { get; set; }
         [NotMapped]
         public string LOCAL_IMPORT { get; set; }
         [NotMapped]
-        public bool RE_BID { get; set; }
+        public string RE_BID { get; set; }
         [NotMapped]
-        public bool LOWER_RATE { get; set; }
+        public string LOWER_RATE { get; set; }
         [NotMapped]
         public DateTime START_DATE { get; set; }
         [NotMapped]
         public DateTime END_DATE { get; set; }
         [NotMapped]
         public DateTime LAST_DELIVERY_DATE { get; set; }
-
-
-        public DateTime SUBMIT_DATE { get; set; }
-
-        public string PRODUCTS_ID { get; set; }
-        public string PRODUCTS_DESC { get; set; }
         [NotMapped]
-        public string TENDER_PRODUCTS_DESC { get; set; }
+        public string TND_PRODUCTS_NAME { get; set; }
         [NotMapped]
-        public decimal QUOTATION_PRODUCTS_RATE { get; set; }
-        public decimal PRODUCTS_RATE { get; set; }
-        public int PRODUCTS_QUANTITY { get; set; }
-
-
+        public string UNIT { get; set; }
         [NotMapped]
-        public bool PARTIAL_SHIPMENT { get; set; }
+        public string TND_PRODUCTS_DESC { get; set; }
         [NotMapped]
-        public int TENDER_SHIPMENT_MODE { get; set; }
+        public decimal TND_PRODUCTS_RATE { get; set; }
         [NotMapped]
-        public int TENDER_PORT_ID { get; set; }
-
-        public int SHIPMENT_MODE { get; set; }
-        public int PORT_ID { get; set; }
-
+        public decimal TND_PRODUCTS_QTY { get; set; }
+        [NotMapped]
+        public string PARTIAL_SHIPMENT { get; set; }
+        [NotMapped]
+        public string TENDER_SHIPMENT_MODE { get; set; }
+        [NotMapped]
+        public string TENDER_PORT_ID { get; set; }
         [NotMapped]
         public string DELIVERY_ADDRESS { get; set; }
         [NotMapped]
         public string RECEIVER_NAME { get; set; }
         [NotMapped]
         public string RECEIVER_DETAILS { get; set; }
+        [NotMapped]
+        public string COST_EX_INC { get; set; }
+        [NotMapped]
+        public string INCO_TERMS_NAME { get; set; }
+        [NotMapped]
+        public string CURRENCY_NAME { get; set; }
+        [NotMapped]
+        public string CURRENCY_RATE { get; set; }
+        [NotMapped]
+        public string PAY_A { get; set; }
+        [NotMapped]
+        public int PAY_AP { get; set; }
+        [NotMapped]
+        public string PAY_B { get; set; }
+        [NotMapped]
+        public int PAY_BP { get; set; }
+        [NotMapped]
+        public int TOTAL_BIDDING { get; set; } = 0; 
 
-        public string LOADING_ADDRESS { get; set; }
-        public string SENDER_NAME { get; set; }
-        public string SENDER_DETAILS { get; set; }
 
-        public RFQ_BIDDING getAll()
-        {
-            RFQ_BIDDING obj = new RFQ_BIDDING();
-            obj.RFQ_NUMBER = "RFQ01255255555";
-            obj.RFQ_SL = 123;
-            obj.VENDOR_ID = "AK traders";
-            obj.LOCAL_IMPORT = "example@ex.com";
-            //obj.RE_BID = "Merul Badda, Dit project";
-            //obj.LOWER_RATE = "Merul Badda, Dit project";
-            //obj.START_DATE = true;
-            //obj.END_DATE = true;
-            //obj.VENDOR_CATEGORY = new VENDOR_CATEGORY().getAll();
-            //obj.VENDOR_CERTIFICATE = new VENDOR_CERTIFICATE().getAll();
-            //obj.VENDOR_DOCUMENTS = new VENDOR_DOCUMENTS().getAll();
-            //obj.VENDOR_PRODUCTS = new VENDOR_PRODUCTS().getAll();
-            return obj;
-        }
     }
 }

@@ -152,5 +152,36 @@ namespace Tender.App.Service
                   }, "Value", "Text", 1);
             return DataList;
         }
+
+        public static Tuple<List<TNDR_PRODUCTS>, EQResult> GetVendorWiseItem(string vendorId)
+        {
+            string sql = $"SELECT TP.PRODUCTS_ID,TP.PRODUCTS_NAME ||'- ('||TP.UNIT||')' PRODUCTS_NAME FROM TNDR_PRODUCTS TP INNER JOIN VENDOR_PRODUCTS VP ON TP.PRODUCTS_ID=VP.PRODUCTS_ID WHERE VP.IS_ACTIVE=1 AND  VP.VENDOR_ID='{vendorId}'";
+            return DatabaseMSSql.SqlQuery<TNDR_PRODUCTS>(sql);
+        }
+        public static Tuple<List<TNDR_SHIPMENT_MODE>, EQResult> getShipmentMode()
+        {
+            string sql = $" SELECT * FROM TNDR_SHIPMENT_MODE";
+            return DatabaseMSSql.SqlQuery<TNDR_SHIPMENT_MODE>(sql);
+        }
+        public static Tuple<List<TNDR_PORT>, EQResult> getPort()
+        {
+            string sql = $" SELECT * FROM TNDR_PORT";
+            return DatabaseMSSql.SqlQuery<TNDR_PORT>(sql);
+        }
+        public static Tuple<List<TNDR_INCO_TERMS>, EQResult> getIncoterms()
+        {
+            string sql = $" SELECT * FROM TNDR_INCO_TERMS";
+            return DatabaseMSSql.SqlQuery<TNDR_INCO_TERMS>(sql);
+        }
+        public static Tuple<List<TNDR_PAYMENT_MODE>, EQResult> getPaymentMode()
+        {
+            string sql = $" SELECT * FROM TNDR_PAYMENT_MODE";
+            return DatabaseMSSql.SqlQuery<TNDR_PAYMENT_MODE>(sql);
+        }
+        public static Tuple<List<TNDR_CURRENCY>, EQResult> getCurrency()
+        {
+            string sql = $" SELECT * FROM TNDR_CURRENCY";
+            return DatabaseMSSql.SqlQuery<TNDR_CURRENCY>(sql);
+        }
     }
 }

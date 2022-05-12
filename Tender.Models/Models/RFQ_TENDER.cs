@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -68,5 +69,11 @@ namespace Tender.Models.Models
         public string PAY_B { get; set; }
         [Required(ErrorMessage = "{0} is required")]
         public int PAY_BP { get; set; }
+
+
+
+
+       
+
     }
 }

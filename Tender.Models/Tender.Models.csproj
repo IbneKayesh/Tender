@@ -70,11 +70,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\CHANGE_PASWD.cs" />
+    <Compile Include="Models\RFQ_TenderView.cs" />
     <Compile Include="Models\RFQ_TENDER_COST.cs" />
     <Compile Include="Models\TABLE_MAX_ID.cs" />
     <Compile Include="Models\TNDR_CATEGORY.cs" />
     <Compile Include="Models\TNDR_DOCUMENTS.cs" />
     <Compile Include="Models\TNDR_CERTIFICATE.cs" />
+    <Compile Include="Models\TNDR_PAYMENT_MODE.cs" />
+    <Compile Include="Models\TNDR_CURRENCY.cs" />
+    <Compile Include="Models\TNDR_PORT.cs" />
+    <Compile Include="Models\TNDR_INCO_TERMS.cs" />
+    <Compile Include="Models\TNDR_SHIPMENT_MODE.cs" />
     <Compile Include="Models\TNDR_PRODUCTS.cs" />
     <Compile Include="Models\RFQ_BIDDING.cs" />
     <Compile Include="Models\RFQ_TENDER.cs" />

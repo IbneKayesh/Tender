@@ -58,8 +58,8 @@ namespace Tender.App.Controllers
                 RFQ_NUMBER="B0125258524452",RFQ_SL=10,VENDOR_ID="Arok Traders",SUBMIT_DATE=DateTime.Now,
                 PRODUCTS_RATE=500,PRODUCTS_QUANTITY=1000,SHIPMENT_MODE=1,PORT_ID=1,LOADING_ADDRESS="Chittagonj Port",
                 SENDER_NAME="Pran Rfl Group",SENDER_DETAILS="must be receive in 30 days",PRODUCTS_DESC="1000 Ton Camical",
-                PRODUCTS_ID="Cemical",TENDER_PRODUCTS_DESC="must be single packet",START_DATE=DateTime.Now,END_DATE=DateTime.Now,
-                LAST_DELIVERY_DATE=DateTime.Now,PARTIAL_SHIPMENT=true,TENDER_SHIPMENT_MODE=1,TENDER_PORT_ID=1,
+                PRODUCTS_ID="Cemical",TND_PRODUCTS_DESC="must be single packet",START_DATE=DateTime.Now,END_DATE=DateTime.Now,
+                LAST_DELIVERY_DATE=DateTime.Now,PARTIAL_SHIPMENT="allow",TENDER_SHIPMENT_MODE="sea",TENDER_PORT_ID="cp",
                 DELIVERY_ADDRESS="Mongla Bondor",RECEIVER_NAME="Pran Group",RECEIVER_DETAILS="Badd,Dhaka,Bangladesh"
                 },
              new RFQ_BIDDING(){
@@ -80,18 +80,23 @@ namespace Tender.App.Controllers
             ViewBag.SELL_BUY = TenderService.DropDownList_Sel_Buy();
             ViewBag.RE_BID = TenderService.getReBidding();
             ViewBag.LOWER_RATE = TenderService.getAnyRate();
-            ViewBag.PRODUCTS_ID = TenderService.DropDownList_item();
             ViewBag.PARTIAL_SHIPMENT = TenderService.DropDown_partialshipment();
-            ViewBag.SHIPMENT_MODE = TenderService.DropDown_shipmentMode();
-            ViewBag.PORT_ID = TenderService.DropDown_Port();
-            ViewBag.INCO_TERMS = TenderService.DropDown_Incoterms();
+           // ViewBag.PORT_ID = TenderService.DropDown_Port();
+            //ViewBag.INCO_TERMS = TenderService.DropDown_Incoterms();
             ViewBag.COST_EX_INC = TenderService.DropDown_CostType();
-            ViewBag.CURRENCY_NAME = TenderService.DropDown_currencyList();
-            ViewBag.PAY_A = TenderService.DropDown_payment();
-            ViewBag.PAY_B = TenderService.DropDown_payment();
+            //ViewBag.CURRENCY_NAME = TenderService.DropDown_currencyList();
+            //ViewBag.PAY_A = TenderService.DropDown_payment();
+            //ViewBag.PAY_B = TenderService.DropDown_payment();
             ViewBag.LOCAL_IMPORT = TenderService.DropDown_importer();
 
             ViewBag.VENDOR_ID = new SelectList(CommonService.GetVendor(userId).Item1.ToList(), "VENDOR_ID", "ORGANIZATION_NAME");
+            ViewBag.PRODUCTS_ID = new SelectList(TenderService.GetVendorWiseItem(userId).Item1.ToList(), "PRODUCTS_ID", "PRODUCTS_NAME");
+            ViewBag.SHIPMENT_MODE = new SelectList(TenderService.getShipmentMode().Item1.ToList(), "SHIPMENT_MODE_ID", "SHIPMENT_MODE_NAME");
+            ViewBag.PORT_ID = new SelectList(TenderService.getPort().Item1.ToList(), "PORT_ID", "PORT_NAME");
+            ViewBag.INCO_TERMS = new SelectList(TenderService.getIncoterms().Item1.ToList(), "INCO_TERMS_ID", "INCO_TERMS_NAME");
+            ViewBag.PAY_A = new SelectList(TenderService.getPaymentMode().Item1.ToList(), "PAYMENT_MODE_ID", "PAYMENT_MODE_NAME");
+            ViewBag.PAY_B = new SelectList(TenderService.getPaymentMode().Item1.ToList(), "PAYMENT_MODE_ID", "PAYMENT_MODE_NAME");
+            ViewBag.CURRENCY_NAME = new SelectList(TenderService.getCurrency().Item1.ToList(), "CURRENCY_NAME", "CURRENCY_NAME");
 
         }
        
