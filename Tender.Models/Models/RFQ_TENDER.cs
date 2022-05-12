@@ -71,9 +71,9 @@ namespace Tender.Models.Models
         public int PAY_BP { get; set; }
 
 
+        public virtual List<RFQ_TNDR_DOCUMENTS> RFQ_TNDR_DOCUMENTS { get; set; }
 
 
-       
 
     }
 }

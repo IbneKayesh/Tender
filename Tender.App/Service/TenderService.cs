@@ -165,7 +165,7 @@ namespace Tender.App.Service
         }
         public static Tuple<List<TNDR_PORT>, EQResult> getPort()
         {
-            string sql = $" SELECT * FROM TNDR_PORT";
+            string sql = $"SELECT * FROM TNDR_PORT";
             return DatabaseMSSql.SqlQuery<TNDR_PORT>(sql);
         }
         public static Tuple<List<TNDR_INCO_TERMS>, EQResult> getIncoterms()
@@ -182,6 +182,11 @@ namespace Tender.App.Service
         {
             string sql = $" SELECT * FROM TNDR_CURRENCY";
             return DatabaseMSSql.SqlQuery<TNDR_CURRENCY>(sql);
+        }
+        public static Tuple<List<TNDR_DOCUMENTS>, EQResult> getTnderDoc()
+        {
+            string sql = $" SELECT * FROM TNDR_DOCUMENTS WHERE DOCUMENTS_TYPE ='TENDER'";
+            return DatabaseMSSql.SqlQuery<TNDR_DOCUMENTS>(sql);
         }
     }
 }

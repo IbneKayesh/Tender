@@ -173,7 +173,7 @@ namespace Tender.App.Service
                     END IS_ACTIVE
                     FROM TNDR_DOCUMENTS T1
                     LEFT JOIN VENDOR_DOCUMENTS T2 ON T1.DOCUMENTS_ID = T2.DOCUMENTS_ID
-                    AND T2.VENDOR_ID='{id}'";
+                    AND T2.VENDOR_ID='{id}' AND T1.DOCUMENTS_TYPE='USER'";
             return DatabaseMSSql.SqlQuery<VENDOR_DOCUMENTS>(sql);
         }
 

@@ -6,10 +6,14 @@ using System.Threading.Tasks;
 
 namespace Tender.Models.Models
 {
-    public class TNDR_DOCUMENTS
+
+    public class RFQ_TNDR_DOCUMENTS
     {
+        public string RFQ_NUMBER { get; set; }
         public string DOCUMENTS_ID { get; set; }
         public string DOCUMENTS_NAME { get; set; }
-        public string DOCUMENTS_TYPE { get; set; }
+        public bool IS_ACTIVE { get; set; }
+        
     }
+
 }
