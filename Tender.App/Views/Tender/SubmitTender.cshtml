@@ -122,6 +122,10 @@
                                 @Html.ValidationMessageFor(m => m.INCO_TERMS, "", new { @class = "text-danger" })
                             </div>
                         </div>
+
+                    </div>
+                    <div class="float-right">
+                        <button type="button" id="nxtTndr" class="btn btn-success">Next</button>
                     </div>
                 </div>
             </div>
@@ -157,6 +161,10 @@
                                 @Html.ValidationMessageFor(m => m.PRODUCTS_DESC, "", new { @class = "text-danger" })
                             </div>
                         </div>
+                    </div>
+                    <div class="float-right">
+                        <button type="button" id="prvItem" class="btn btn-secondary">Previous</button>
+                        <button type="button" id="nxtItem" class="btn btn-success">Next</button>
                     </div>
                 </div>
             </div>
@@ -215,6 +223,10 @@
                         </div>
                     </div>
                 </div>
+                <div class="float-right">
+                    <button type="button" id="prvShpmt" class="btn btn-secondary">Previous</button>
+                    <button type="button" id="nxtShpmt" class="btn btn-success">Next</button>
+                </div>
             </div>
 
             <div class="row" id="paymentBody" style="display:none;">
@@ -244,7 +256,7 @@
                         <div class="col-md-3 col-sm-6">
                             <div class="form-group">
                                 <label class="control-label">Pay Mode A Percent</label>
-                                @Html.EditorFor(model => model.PAY_AP, new { htmlAttributes = new { @class = "form-control form-control-sm",  placeholder = "Payment Mode A (%)" } })
+                                @Html.EditorFor(model => model.PAY_AP, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "Payment Mode A (%)" } })
                                 @Html.ValidationMessageFor(m => m.PAY_AP, "", new { @class = "text-danger" })
                             </div>
                         </div>
@@ -258,18 +270,19 @@
                         <div class="col-md-3 col-sm-6">
                             <div class="form-group">
                                 <label class="control-label">Pay Mode B Percent</label>
-                                @Html.EditorFor(model => model.PAY_BP, new { htmlAttributes = new { @class = "form-control form-control-sm",  placeholder = "Payment Mode B (%)" } })
+                                @Html.EditorFor(model => model.PAY_BP, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "Payment Mode B (%)" } })
                                 @Html.ValidationMessageFor(m => m.PAY_BP, "", new { @class = "text-danger" })
                             </div>
                         </div>
                     </div>
+
+                    <div class="float-right">
+                        <button type="button" id="prvPymt" class="btn btn-secondary">Previous</button>
+                        <button type="submit" class="btn btn-danger">Submit Tender</button>
+                    </div>
                 </div>
             </div>
-            <div class="row float-right">
-                <div class="col-12 float-right">
-                    <button type="submit" class="btn btn-success btn-sm">Submit</button>
-                </div>
-            </div>
+
 
         }
 
@@ -278,10 +291,109 @@
 
 @section scripts{
     @Scripts.Render("~/bundles/jqueryval")
-    <script src="~/App_Asset/js/bid.js"></script>
     <script>
-       
-    </script>
+        $(document).ready(function () {
 
+            $("#tndDetails").click(function () {
+                divActTender();
+            });
+            $("#tndItem").click(function () {
+                divActItem();
+            });
+            $("#tndShipment").click(function () {
+                divActShipment();
+            });
+            $("#tndPayment").click(function () {
+                divActShipment();
+            });
+
+
+
+            $("#nxtTndr").click(function () {
+                divActItem();
+            });
+            $("#prvItem").click(function () {
+                divActTender();
+            });
+            $("#nxtItem").click(function () {
+                divActShipment();
+            });
+            $("#prvShpmt").click(function () {
+                divActItem();
+            });
+            $("#nxtShpmt").click(function () {
+                divActPayment();
+            });
+            $("#prvPymt").click(function () {
+                divActShipment();
+            });
+
+        });
+
+
+        function divActTender() {
+            $("#detailsBody").css("display", "block");
+            $("#itemBody").css("display", "none");
+            $("#shipmentBody").css("display", "none");
+            $("#paymentBody").css("display", "none");
+
+            $("#tndDetails").removeClass("btn-outline-primary");
+            $("#tndDetails").addClass("btn-primary");
+            $("#tndItem").removeClass("btn-primary");
+            $("#tndItem").addClass("btn-outline-primary");
+            $("#tndShipment").removeClass("btn-primary");
+            $("#tndShipment").addClass("btn-outline-primary");
+            $("#tndPayment").removeClass("btn-primary");
+            $("#tndPayment").addClass("btn-outline-primary");
+        }
+
+        function divActItem() {
+            $("#detailsBody").css("display", "none");
+            $("#itemBody").css("display", "block");
+            $("#shipmentBody").css("display", "none");
+            $("#paymentBody").css("display", "none");
+
+            $("#tndItem").removeClass("btn-outline-primary");
+            $("#tndItem").addClass("btn-primary");
+            $("#tndDetails").removeClass("btn-primary");
+            $("#tndDetails").addClass("btn-outline-primary");
+            $("#tndShipment").removeClass("btn-primary");
+            $("#tndShipment").addClass("btn-outline-primary");
+            $("#tndPayment").removeClass("btn-primary");
+            $("#tndPayment").addClass("btn-outline-primary");
+        }
+
+        function divActShipment() {
+            $("#detailsBody").css("display", "none");
+            $("#itemBody").css("display", "none");
+            $("#shipmentBody").css("display", "block");
+            $("#paymentBody").css("display", "none");
+
+            $("#tndShipment").removeClass("btn-outline-primary");
+            $("#tndShipment").addClass("btn-primary");
+            $("#tndDetails").removeClass("btn-primary");
+            $("#tndDetails").addClass("btn-outline-primary");
+            $("#tndItem").removeClass("btn-primary");
+            $("#tndItem").addClass("btn-outline-primary");
+            $("#tndPayment").removeClass("btn-primary");
+            $("#tndPayment").addClass("btn-outline-primary");
+        }
+
+        function divActPayment() {
+            $("#detailsBody").css("display", "none");
+            $("#itemBody").css("display", "none");
+            $("#shipmentBody").css("display", "none");
+            $("#paymentBody").css("display", "block");
+
+            $("#tndDetails").removeClass("btn-primary");
+            $("#tndDetails").addClass("btn-outline-primary");
+            $("#tndItem").removeClass("btn-primary");
+            $("#tndItem").addClass("btn-outline-primary");
+            $("#tndShipment").removeClass("btn-primary");
+            $("#tndShipment").addClass("btn-outline-primary");
+            $("#tndPayment").removeClass("btn-outline-primary");
+            $("#tndPayment").addClass("btn-primary");
+        }
+    </script>
 }
 
