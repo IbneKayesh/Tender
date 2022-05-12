@@ -42,7 +42,7 @@
                 </a>
             </div>
         </div>
-        @using (Html.BeginForm("SubmitTender", "Tender", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        @using (Html.BeginForm("SubmitTender", "Tender", FormMethod.Post, new { @id = "formPost", enctype = "multipart/form-data" }))
         {
             @Html.AntiForgeryToken()
             <div class="row" id="detailsBody">
@@ -161,6 +161,30 @@
                                 @Html.ValidationMessageFor(m => m.PRODUCTS_DESC, "", new { @class = "text-danger" })
                             </div>
                         </div>
+                        <div class="col-md-3 col-sm-6">
+                            <div class="form-group">
+                                <label class="control-label">Select Documents</label>
+                                @Html.DropDownList("TENDER_DOC", null, "-Select-", new { @class = "form-control form-control-sm select2",id= "DOCUMENTS_LIST_ID", placeholder = "" })
+                                @Html.ValidationMessageFor(m => m.PRODUCTS_DESC, "", new { @class = "text-danger" })
+
+                            </div>
+                            <span><button type="button" id="addDocItem" class="btn btn-info btn-sm">Add!</button></span>
+                        </div>
+                        <div class="col-md-4 col-sm-6" style="display:none;" id="docDiv"> 
+                            <div class="form-group mt-3">
+                                <div class="table-responsive">
+                                    <table id="rdocuments" class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Document List</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>                       
+                        </div>
                     </div>
                     <div class="float-right">
                         <button type="button" id="prvItem" class="btn btn-secondary">Previous</button>
@@ -278,7 +302,7 @@
 
                     <div class="float-right">
                         <button type="button" id="prvPymt" class="btn btn-secondary">Previous</button>
-                        <button type="submit" class="btn btn-danger">Submit Tender</button>
+                        <button type="submit" class="btn btn-danger" id="save2db">Submit Tender</button>
                     </div>
                 </div>
             </div>
@@ -293,6 +317,8 @@
     @Scripts.Render("~/bundles/jqueryval")
     <script>
         $(document).ready(function () {
+
+
 
             $("#tndDetails").click(function () {
                 divActTender();
@@ -328,6 +354,51 @@
                 divActShipment();
             });
 
+
+
+
+            $("#addDocItem").click(function (e) {
+                e.preventDefault();
+               
+
+                var docId = $.trim($("#DOCUMENTS_LIST_ID :selected").val()),
+                    docName = $.trim($("#DOCUMENTS_LIST_ID :selected").text()),
+                    rdocumentsBody = $("#rdocuments tbody");
+
+                if (docId == "" || docName == "") {
+                    Swal.fire('warning', 'Select a valid documents', 'warning');
+                    return;
+                };
+                $("#docDiv").css("display", "block");
+                var rdocumentsItem = '<tr><td><select><option value="' + docId + '">' + docName + '</option></select></td><td><a data-itemId="0" href="#" class="deleteItem btn btn-danger btn-xs">Delete</a></td></tr>';
+                rdocumentsBody.append(rdocumentsItem);
+                clearItem();
+            });
+            //After Add A New Order In The List, Clear Clean The Form For Add More Order.
+            function clearItem() {
+                $("#DOCUMENTS_LIST_ID :selected").remove();
+            }
+
+
+            $("#save2db").on("click", function () {
+                debugger;
+
+                var listName = "RFQ_TNDR_DOCUMENTS";
+                var qtd = 0;
+                $("#rdocuments > tbody > tr").each(function () {
+                    var docId = $(this).find('td:eq(0)').find('select').val(); //DOCUMENTS_ID
+                    var docName = $(this).find('td:eq(0)').find('select').text(); //DOCUMENTS_NAME
+
+                    if (docId == "") {
+                      //  Swal.fire('warning', 'enter a valid documents', 'warning');
+
+                        return;
+                    }
+                    $("#formPost").prepend("<input type='hidden' name='" + listName + "[" + qtd + "].DOCUMENTS_ID' value='" + docId + "'>");
+                    $("#formPost").prepend("<input type='hidden' name='" + listName + "[" + qtd + "].DOCUMENTS_NAME' value='" + docName + "'>");
+                    qtd += 1;
+                });
+            });
         });
 
 

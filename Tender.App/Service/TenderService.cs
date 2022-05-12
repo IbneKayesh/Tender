@@ -165,7 +165,7 @@ namespace Tender.App.Service
         }
         public static Tuple<List<TNDR_PORT>, EQResult> getPort()
         {
-            string sql = $" SELECT * FROM TNDR_PORT";
+            string sql = $"SELECT * FROM TNDR_PORT";
             return DatabaseMSSql.SqlQuery<TNDR_PORT>(sql);
         }
         public static Tuple<List<TNDR_INCO_TERMS>, EQResult> getIncoterms()
