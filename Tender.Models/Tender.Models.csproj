@@ -84,6 +84,7 @@
     <Compile Include="Models\TNDR_PRODUCTS.cs" />
     <Compile Include="Models\RFQ_BIDDING.cs" />
     <Compile Include="Models\RFQ_TENDER.cs" />
+    <Compile Include="Models\VENDER_SESSION.cs" />
     <Compile Include="Models\VENDOR_LOGIN.cs" />
     <Compile Include="Models\VENDOR_DETAILS.cs" />
     <Compile Include="Models\VENDOR.cs" />

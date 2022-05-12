@@ -8,10 +8,10 @@ namespace Tender.App.Service
     public class AccountsService
     {
         static string sql = "";
-        public static Tuple<VENDOR_LOGIN, EQResult> UserLogin(VENDOR_LOGIN _obj)
+        public static Tuple<VENDER_SESSION, EQResult> UserLogin(VENDOR_LOGIN _obj)
         {
-            sql = $"select VENDOR_EMAIL,VENDOR_PASSWD from VENDOR t where t.VENDOR_EMAIL='{_obj.VENDOR_EMAIL}' and VENDOR_PASSWD='{_obj.VENDOR_PASSWD}'";
-            return DatabaseMSSql.SqlQuerySingle<VENDOR_LOGIN>(sql);
+            sql = $"select VENDOR_EMAIL,VENDOR_ID,ORGANIZATION_NAME,COUNTRY_NAME,SUPPLIER,PURCHASER,VENDOR_USER_ID from VENDOR t where t.VENDOR_EMAIL='{_obj.VENDOR_EMAIL}' and VENDOR_PASSWD='{_obj.VENDOR_PASSWD}'";
+            return DatabaseMSSql.SqlQuerySingle<VENDER_SESSION>(sql);
         }
         public static Tuple<List<VENDOR_LOGIN>, EQResult> getItemMaster()
         {
@@ -193,20 +193,20 @@ namespace Tender.App.Service
 
         public static EQResult profileUpdate(VENDOR_DETAILS _obj)
         {
-                sql = $@"update VENDOR set VENDOR_USER_ID='{_obj.VENDOR_USER_ID}',CONTACT_NAME='{_obj.CONTACT_NAME}',
+            sql = $@"update VENDOR set VENDOR_USER_ID='{_obj.VENDOR_USER_ID}',CONTACT_NAME='{_obj.CONTACT_NAME}',
                 CONTACT_NUMBER='{_obj.CONTACT_NUMBER}',ADDRESS_1='{_obj.ADDRESS_1}',ADDRESS_2='{_obj.ADDRESS_2}',YEAR_OF_ESTABLISHMENT='{_obj.YEAR_OF_ESTABLISHMENT}',
                 YEARLY_TRUNOVER='{_obj.YEARLY_TRUNOVER}',TAX_NUMBER='{_obj.TAX_NUMBER}',TRADE_NUMBER='{_obj.TRADE_NUMBER}',
                 PURCHASER='{_obj.PURCHASER}',PURCHASER_NOTIFY='{_obj.PURCHASER_NOTIFY}',SUPPLIER='{_obj.SUPPLIER}',SUPPLIER_NOTIFY='{_obj.SUPPLIER_NOTIFY}'
                 where VENDOR_ID='{_obj.VENDOR_ID}'";
-                return DatabaseMSSql.ExecuteSqlCommand(sql);
+            return DatabaseMSSql.ExecuteSqlCommand(sql);
         }
-        public static Tuple<VENDOR_DETAILS, EQResult> getProfile( string id)
+        public static Tuple<VENDOR_DETAILS, EQResult> getProfile(string id)
         {
             sql = $"select t.* from VENDOR t where t.VENDOR_ID='{id}'";
             Tuple<VENDOR_DETAILS, EQResult> _tpl = DatabaseMSSql.SqlQuerySingle<VENDOR_DETAILS>(sql);
             return _tpl;
         }
-        public static Tuple<VENDOR_DETAILS, EQResult> checkUserId(string userId,string vendorId)
+        public static Tuple<VENDOR_DETAILS, EQResult> checkUserId(string userId, string vendorId)
         {
             sql = $"select * from VENDOR  where LOWER( VENDOR_USER_ID ) ='{userId.ToLower()}' and VENDOR_ID <>('{vendorId}')";
             Tuple<VENDOR_DETAILS, EQResult> _tpl = DatabaseMSSql.SqlQuerySingle<VENDOR_DETAILS>(sql);

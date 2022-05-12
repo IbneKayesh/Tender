@@ -11,7 +11,6 @@ namespace Tender.App.Controllers
 {
     public class AccountsController : Controller
     {
-        string userId = "c0919d47-94d1-49a7-b351-1fa448081ed0";
         #region Login_Logout
         [HttpGet]
         public ActionResult Login()
@@ -23,9 +22,10 @@ namespace Tender.App.Controllers
         {
             if (ModelState.IsValid)
             {
-                Tuple<VENDOR_LOGIN, EQResult> _tpl = AccountsService.UserLogin(obj);
+                Tuple<VENDER_SESSION, EQResult> _tpl = AccountsService.UserLogin(obj);
                 if (_tpl.Item2.SUCCESS && _tpl.Item2.ROWS == 1)
                 {
+                    Session["ssUser"] = _tpl.Item1;
                     return RedirectToAction("Index", "Home");
                 }
                 //ModelState.AddModelError("", _tpl.Item2.MESSAGES);
@@ -35,7 +35,9 @@ namespace Tender.App.Controllers
         }
         public ActionResult Logout()
         {
-            return RedirectToAction("Login");
+            Session.Abandon();
+            Session.Clear();
+            return Redirect("Login");
         }
         #endregion
 
@@ -126,25 +128,32 @@ namespace Tender.App.Controllers
 
 
 
+        [UserSessionCheck]
         [HttpGet]
         public ActionResult UserProfile(string id)
         {
+            VENDER_SESSION snObj = (VENDER_SESSION)Session["ssUser"];
+
             DropDownFor_Signup();
-            Tuple<VENDOR_DETAILS, EQResult> _tpl = AccountsService.getProfile(userId);
+            Tuple<VENDOR_DETAILS, EQResult> _tpl = AccountsService.getProfile(snObj.VENDOR_ID);
             if (_tpl.Item2.SUCCESS && _tpl.Item2.ROWS == 1)
             {
-                _tpl.Item1.VENDOR_CATEGORY = AccountsService.getVENDOR_CATEGORY(userId).Item1;
-                _tpl.Item1.VENDOR_CERTIFICATE = AccountsService.getVENDOR_CERTIFICATE(userId).Item1;
-                _tpl.Item1.VENDOR_DOCUMENTS = AccountsService.getVENDOR_DOCUMENTS(userId).Item1;
-                _tpl.Item1.VENDOR_PRODUCTS = AccountsService.getVENDOR_PRODUCTS(userId).Item1;
+                _tpl.Item1.VENDOR_CATEGORY = AccountsService.getVENDOR_CATEGORY(snObj.VENDOR_ID).Item1;
+                _tpl.Item1.VENDOR_CERTIFICATE = AccountsService.getVENDOR_CERTIFICATE(snObj.VENDOR_ID).Item1;
+                _tpl.Item1.VENDOR_DOCUMENTS = AccountsService.getVENDOR_DOCUMENTS(snObj.VENDOR_ID).Item1;
+                _tpl.Item1.VENDOR_PRODUCTS = AccountsService.getVENDOR_PRODUCTS(snObj.VENDOR_ID).Item1;
                 return View(_tpl.Item1);
-                
+
             }
             return RedirectToAction("Index", "Home");
         }
+
+        [UserSessionCheck]
         [HttpPost]
         public ActionResult UserProfile(VENDOR_DETAILS obj, HttpPostedFileBase ProfilePicture)
         {
+            VENDER_SESSION snObj = (VENDER_SESSION)Session["ssUser"];
+
             DropDownFor_Signup();
             if (ModelState.IsValid)
             {
@@ -152,30 +161,35 @@ namespace Tender.App.Controllers
                 obj.PURCHASER_NOTIFY = obj.PURCHASER_NOTIFY_X == "on" ? 1 : 0;
                 obj.SUPPLIER = obj.SUPPLIER_X == "on" ? 1 : 0;
                 obj.SUPPLIER_NOTIFY = obj.SUPPLIER_NOTIFY_X == "on" ? 1 : 0;
-                if (AccountsService.checkUserId(obj.VENDOR_USER_ID,userId).Item1.VENDOR_USER_ID != null)
+                if (AccountsService.checkUserId(obj.VENDOR_USER_ID, snObj.VENDOR_ID).Item1.VENDOR_USER_ID != null)
                 {
                     ModelState.AddModelError("", "This User Id Already Exist");
                     return View(obj);
                 }
-                else {
+                else
+                {
                     AccountsService.profileUpdate(obj);
                 }
-               
+
             }
             return RedirectToAction("UserProfile", "Accounts");
         }
 
+        [UserSessionCheck]
         public void FollowMe(string cId, string cNm)
         {
-            EQResult _tpl = AccountsService.add_edit_follow_me(userId, cId, cNm);
+            VENDER_SESSION snObj = (VENDER_SESSION)Session["ssUser"];
+            EQResult _tpl = AccountsService.add_edit_follow_me(snObj.VENDOR_ID, cId, cNm);
         }
 
+        [UserSessionCheck]
         [HttpPost]
         public ActionResult ChangePassword(CHANGE_PASWD obj)
         {
             if (ModelState.IsValid)
             {
-                EQResult _tpl = AccountsService.change_password(userId, obj);
+                VENDER_SESSION snObj = (VENDER_SESSION)Session["ssUser"];
+                EQResult _tpl = AccountsService.change_password(snObj.VENDOR_ID, obj);
                 if (_tpl.SUCCESS && _tpl.ROWS == 1)
                 {
                     return RedirectToAction("UserProfile");

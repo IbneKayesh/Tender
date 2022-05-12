@@ -43,10 +43,6 @@
                         <li class="nav-item dropdown">
                             <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">Pages</a>
                             <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
-                                <li><a href="@Url.Action("Login","Accounts")" class="dropdown-item">Login</a></li>
-                                <li><a href="@Url.Action("Registration","Accounts")" class="dropdown-item">Registration</a></li>
-                                <li><a href="@Url.Action("UserProfile","Accounts")" class="dropdown-item">User Profile</a></li>
-                                <li class="dropdown-divider"></li>
                                 <li><a href="@Url.Action("SubmitTender","Tender")" class="dropdown-item">Submit Tender</a></li>
                                 <li><a href="@Url.Action("Index","Tender")" class="dropdown-item"> Tender List</a></li>
                                 <li class="dropdown-divider"></li>
@@ -86,13 +82,31 @@
                             </a>
                         </div>
                     </li>*@
-
                     <li class="nav-item dropdown">
                         <a class="nav-link" data-toggle="dropdown" href="#">
-                            <i class="fa fa-sign-out-alt" aria-hidden="true"></i>Sign out
+                            <i class="far fa-user"></i>
                         </a>
+                        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                            <span class="dropdown-header">
+                                <i class="far fa-user">Your Id</i>
+                            </span>
+                            <div class="dropdown-divider"></div>
+                            <a href="@Url.Action("UserProfile","Accounts")" class="dropdown-item">
+                                <i class="fas fa-user mr-2"></i>
+                                Profile
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a href="@Url.Action("UserProfile","Accounts")" class="dropdown-item">
+                                <i class="fas fa-key mr-2"></i>
+                                Change Password
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a href="@Url.Action("Logout","Accounts")" class="dropdown-item">
+                                <i class="fas fa-power-off mr-2"></i>
+                                Logout
+                            </a>
+                        </div>
                     </li>
-
                 </ul>
             </div>
         </nav>
