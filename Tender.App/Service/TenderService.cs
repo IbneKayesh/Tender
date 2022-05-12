@@ -183,5 +183,10 @@ namespace Tender.App.Service
             string sql = $" SELECT * FROM TNDR_CURRENCY";
             return DatabaseMSSql.SqlQuery<TNDR_CURRENCY>(sql);
         }
+        public static Tuple<List<TNDR_DOCUMENTS>, EQResult> getTnderDoc()
+        {
+            string sql = $" SELECT * FROM TNDR_DOCUMENTS WHERE DOCUMENTS_TYPE ='TENDER'";
+            return DatabaseMSSql.SqlQuery<TNDR_DOCUMENTS>(sql);
+        }
     }
 }

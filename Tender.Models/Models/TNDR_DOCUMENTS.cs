@@ -10,5 +10,6 @@ namespace Tender.Models.Models
     {
         public string DOCUMENTS_ID { get; set; }
         public string DOCUMENTS_NAME { get; set; }
+        public string DOCUMENTS_TYPE { get; set; }
     }
 }

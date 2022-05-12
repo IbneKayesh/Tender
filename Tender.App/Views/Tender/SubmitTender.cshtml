@@ -157,6 +157,39 @@
                                 @Html.ValidationMessageFor(m => m.PRODUCTS_DESC, "", new { @class = "text-danger" })
                             </div>
                         </div>
+
+                        <div class="col-md-3 col-sm-6">
+                            <div class="form-group">
+                                <label class="control-label">Product Details</label>
+                                @Html.DropDownList("TENDER_DOC", null, "--select--", new { @class = "form-control form-control-sm select2", id= "DOCUMENTS_LIST_ID", placeholder = "" })
+                                @Html.ValidationMessageFor(m => m.PRODUCTS_DESC, "", new { @class = "text-danger" })
+                                
+                            </div>
+                        </div>
+                        <div class="col-md-1 col-sm-6">
+                            <div class="form-group">
+                                <label class="control-label"></label>
+                                <span><button type="button" id="addDocItem" class="btn btn-success btn-sm mt-4">Add </button></span>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <div class="form-group">
+                                <label class="control-label"></label>
+                                <div class="table-responsive">
+                                    <table id="rdocuments" class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Document Name</th>
+                                                <th>#</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+
                     </div>
                 </div>
             </div>
@@ -280,7 +313,25 @@
     @Scripts.Render("~/bundles/jqueryval")
     <script src="~/App_Asset/js/bid.js"></script>
     <script>
-       
+        $("#addDocItem").click(function (e) {
+            e.preventDefault();
+            var docId = $.trim($("#DOCUMENTS_LIST_ID :selected").val()),
+                docName = $.trim($("#DOCUMENTS_LIST_ID :selected").text()),
+                rdocumentsBody = $("#rdocuments tbody");
+
+            if (docId == "" || docName == "") {
+                Swal.fire('warning', 'Select a valid documents', 'warning');
+                return;
+            };
+
+            var rdocumentsItem = '<tr><td><select><option value="' + docId + '">' + docName + '</option></select></td><td><a data-itemId="0" href="#" class="deleteItem btn btn-danger btn-xs">Delete</a></td></tr>';
+            rdocumentsBody.append(rdocumentsItem);
+            clearItem();
+        });
+        //After Add A New Order In The List, Clear Clean The Form For Add More Order.
+        function clearItem() {
+            $("#DOCUMENTS_LIST_ID :selected").remove();
+        }
     </script>
 
 }
