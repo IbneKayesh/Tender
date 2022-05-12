@@ -68,23 +68,27 @@
                 <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-auto">
                     <!-- Messages Dropdown Menu -->
                     @*<li class="nav-item dropdown">
-                        <a class="nav-link" data-toggle="dropdown" href="#">
-                            <i class="fas fa-comments"></i>
-                            <span class="badge badge-danger navbar-badge">3</span>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                            <a href="#" class="dropdown-item">
-                                <!-- Message Start -->
-                                <div class="media">
-
-                                </div>
-                                <!-- Message End -->
+                            <a class="nav-link" data-toggle="dropdown" href="#">
+                                <i class="fas fa-comments"></i>
+                                <span class="badge badge-danger navbar-badge">3</span>
                             </a>
-                        </div>
-                    </li>*@
+                            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                                <a href="#" class="dropdown-item">
+                                    <!-- Message Start -->
+                                    <div class="media">
+
+                                    </div>
+                                    <!-- Message End -->
+                                </a>
+                            </div>
+                        </li>*@
                     <li class="nav-item dropdown">
                         <a class="nav-link" data-toggle="dropdown" href="#">
                             <i class="far fa-user"></i>
+                            @if (Session["ssUser"] == null)
+                            { <span>Login</span> }
+                            else
+                            {<span>My Profile</span>}
                         </a>
                         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                             <span class="dropdown-header">
@@ -96,7 +100,7 @@
                                 Profile
                             </a>
                             <div class="dropdown-divider"></div>
-                            <a href="@Url.Action("UserProfile","Accounts")" class="dropdown-item">
+                            <a href="@Url.Action("UserProfile", "Accounts")#settings" class="dropdown-item">
                                 <i class="fas fa-key mr-2"></i>
                                 Change Password
                             </a>
