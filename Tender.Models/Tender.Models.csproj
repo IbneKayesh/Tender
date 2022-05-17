@@ -71,6 +71,7 @@
   <ItemGroup>
     <Compile Include="Models\CHANGE_PASWD.cs" />
     <Compile Include="Models\RFQ_TenderView.cs" />
+    <Compile Include="Models\RFQ_TENDER_APPROVAL.cs" />
     <Compile Include="Models\RFQ_TENDER_COST.cs" />
     <Compile Include="Models\TABLE_MAX_ID.cs" />
     <Compile Include="Models\TNDR_CATEGORY.cs" />

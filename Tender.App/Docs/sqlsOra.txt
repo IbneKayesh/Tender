@@ -191,3 +191,13 @@ CREATE TABLE RFQ_TNDR_DOCUMENTS
     IS_ACTIVE INTEGER DEFAULT 1,
     constraint RFQ_TNDR_DOCUMENTS_pk primary key (RFQ_NUMBER,DOCUMENTS_ID)
 )TABLESPACE DATA01
+
+
+CREATE TABLE RFQ_TENDER_APPROVAL(
+                            APPROVAL_ID        NVARCHAR2(50) PRIMARY KEY,
+                            RFQ_NUMBER         NVARCHAR2(50) NOT NULL UNIQUE,
+                            QUOTE_NUMBER       NVARCHAR2(50) NOT NULL,
+                            VENDOR_ID          NVARCHAR2(50) NOT NULL,
+                            APPROVAL_DATE      DATE DEFAULT SYSDATE,
+                            APPROVAL_NOTE      NVARCHAR2(100)
+                            )TABLESPACE DATA01

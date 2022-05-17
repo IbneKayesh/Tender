@@ -39,11 +39,10 @@ namespace Tender.Models.Models
 
         [Required(ErrorMessage = "{0} is required")]
         public DateTime LAST_DELIVERY_DATE { get; set; }
-        [Required(ErrorMessage = "{0} is required")]
-        public int PARTIAL_SHIPMENT { get; set; }
-        [Required(ErrorMessage = "{0} is required")]
-        public int SHIPMENT_MODE { get; set; }
-        public int PORT_ID { get; set; }
+
+        public int  PARTIAL_SHIPMENT { get; set; }
+        public int SHIPMENT_MODE { get; set; } = 0;
+        public int PORT_ID { get; set; } = 0;
         [Required(ErrorMessage = "{0} is required")]
         [StringLength(maximumLength: 90, ErrorMessage = "{0} length is between {2} and {1}", MinimumLength = 3)]
         public string DELIVERY_ADDRESS { get; set; }
@@ -54,7 +53,6 @@ namespace Tender.Models.Models
         [StringLength(maximumLength: 90, ErrorMessage = "{0} length is between {2} and {1}", MinimumLength = 3)]
         public string RECEIVER_DETAILS { get; set; }
 
-        [Required(ErrorMessage = "{0} is required")]
         public int COST_EX_INC { get; set; }
         public string INCO_TERMS { get; set; }
         [Required(ErrorMessage = "{0} is required")]

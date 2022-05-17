@@ -1,7 +1,7 @@
-﻿@model IEnumerable<Tender.Models.Models.RFQ_TENDER>
+﻿@model IEnumerable<Tender.Models.Models.RFQ_TenderView>
 
 @{
-    ViewBag.Title = "Bid List";
+    ViewBag.Title = "Quotation List";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div class="text-center">
@@ -9,26 +9,64 @@
 </div>
 
 <div class="row">
-    <div class="col-sm-6 col-md-3">
-        <div class="card card-info card-outline">
-            <div class="card-header">
-                <h2 class="card-title">Tender Code #20210102574852</h2>
+    @if (Model != null)
+    {
+        foreach (var item in Model)
+        {
+
+            TimeSpan diffTime = item.END_DATE - DateTime.Now;
+            <div class="col-sm-6 col-md-3 tndDiv">
+                <div class="card card-info card-outline">
+                    <div class="card-header">
+                        <h2 class="card-title">Tender Code <span class="text-bold"># @item.RFQ_NUMBER</span></h2>
+                    </div>
+                    <div class="card-body">
+                        <input type="hidden" value="@item.END_DATE.ToString("yyyy-MM-dd")" class="endDate" />
+                        <p>@item.PRODUCTS_NAME</p>
+                        <p>Rate : @item.PRODUCTS_RATE</p>
+                        <p>Quantity : @item.PRODUCTS_QUANTITY (@item.UNIT)</p>
+                        <p>Tender Type : @item.SELL_BUY</p>
+                        <span class="diffDateValue text-danger">
+                        </span>
+                        <br />
+                        <span class="text-success">Submitted Bids : @item.SUBMITED_BIDS</span>
+                    </div>
+                    <div class="card-footer">
+                        <a class="btn btn-outline-danger btn-sm btn-block" href="@Url.Action("CompareTender","Tender",new { id = item.RFQ_NUMBER })">Compare Quotation</a>
+                    </div>
+                </div>
             </div>
-            <div class="card-body">
-                <p>VSN GD Chest Freezer RE-150L Maple Leaf Red Wave</p>
-                <p>Rate : 500 $</p>
-                <p>Tender Type : Saler/Buyer</p>
-                <br />
-                <span class="text-danger">0d  : 7h  : 34m  : 24s</span>
-                <br />
-                <span class="text-success">Submitted Bids : 30 Bids</span>
-            </div>
-            <div class="card-footer">
-                <a class="btn btn-outline-danger btn-sm btn-block" href="@Url.Action("CompareTender","Tender")">Compare</a>
-            </div>
-        </div>
-    </div>
-   
+        }
+
+    }
+
 </div>
 
+
+@section scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(document).ready(function () {
+            setInterval("dateimeFunction()", 1000);
+        })
+        function dateimeFunction() {
+            $(".tndDiv").each(function () {
+                var endDateTime = $(this).find(".endDate").val();
+                let diffTime = Math.abs(new Date().valueOf() - new Date(endDateTime).valueOf());
+                let days = diffTime / (24 * 60 * 60 * 1000);
+                let hours = (days % 1) * 24;
+                let minutes = (hours % 1) * 60;
+                let secs = (minutes % 1) * 60;
+                [days, hours, minutes, secs] = [Math.floor(days), Math.floor(hours), Math.floor(minutes), Math.floor(secs)]
+             //   console.log(days + ' days', hours + ' hours', minutes + ' minutes', secs + ' secs');
+
+                $(this).children('div.card').children('div.card-body').children('span.diffDateValue').text("" + days + "d   " + hours + "h   " + minutes + "m   " + secs + "s");
+
+            });
+        }
+
+
+    </script>
+
+}
 

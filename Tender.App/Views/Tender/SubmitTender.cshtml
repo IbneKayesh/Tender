@@ -4,8 +4,6 @@
     ViewBag.Title = "Submit Tender";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<style>
-</style>
 
 
 <div class="card card-primary card-outline mt-3">
@@ -58,14 +56,13 @@
                         <div class="col-md-3 col-sm-6">
                             <div class="form-group">
                                 <label class="control-label">Company</label>
-                                @*@Html.EditorFor(model => model.VENDOR_ID, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "Vendor Id" } })*@
-                                @Html.DropDownList("VENDOR_ID", null, new { @class = "form-control form-control-sm select2" })
+                                @Html.DropDownList("VENDOR_ID", null, new { @class = "form-control form-control-sm select2", @readonly = "readonly", style = "width:100%" })
                                 @Html.ValidationMessageFor(m => m.VENDOR_ID, "", new { @class = "text-danger" })
                             </div>
                         </div>
                         <div class="col-md-3 col-sm-6">
                             <div class="form-group">
-                                <label class="control-label">Start Date</label>
+                                <label class="control-label">Start Date</label> <span class="text-danger">*</span>
                                 @Html.EditorFor(model => model.START_DATE, new { htmlAttributes = new { @class = "form-control form-control-sm", type = "date", placeholder = "Start Date" } })
                                 @Html.ValidationMessageFor(m => m.START_DATE, "", new { @class = "text-danger" })
                             </div>
@@ -73,53 +70,54 @@
 
                         <div class="col-md-3 col-sm-6">
                             <div class="form-group">
-                                <label class="control-label">End Date</label>
+                                <label class="control-label">End Date</label> <span class="text-danger">*</span>
                                 @Html.EditorFor(model => model.END_DATE, new { htmlAttributes = new { @class = "form-control form-control-sm", type = "date", placeholder = "End Date" } })
                                 @Html.ValidationMessageFor(m => m.END_DATE, "", new { @class = "text-danger" })
                             </div>
                         </div>
                         <div class="col-md-3 col-sm-6">
                             <div class="form-group">
-                                <label class="control-label">Local/Importer</label>
-                                @Html.DropDownList("LOCAL_IMPORT", null, new { @class = "form-control form-control-sm select2" })
+                                <label class="control-label">Local/Importer</label> <span class="text-danger">*</span>
+                                @Html.DropDownList("LOCAL_IMPORT", ViewBag.LOCAL_IMPORT as List<SelectListItem>, "-Select-",new { @class = "form-control form-control-sm select2", style = "width:100%", @onchange = "importertype();" })
                                 @Html.ValidationMessageFor(m => m.LOCAL_IMPORT, "", new { @class = "text-danger" })
                             </div>
                         </div>
                         <div class="col-md-3 col-sm-6">
                             <div class="form-group">
-                                <label class="control-label">Tender Type</label>
-                                @Html.DropDownList("SELL_BUY", null, new { @class = "form-control form-control-sm select2" })
+                                <label class="control-label">Tender Type</label> <span class="text-danger">*</span>
+                                @Html.DropDownList("SELL_BUY", null, new { @class = "form-control form-control-sm select2", style = "width:100%" })
                                 @Html.ValidationMessageFor(m => m.SELL_BUY, "", new { @class = "text-danger" })
                             </div>
                         </div>
                         <div class="col-md-3 col-sm-6">
                             <div class="form-group">
-                                <label class="control-label">Submission Type</label>
-                                @Html.DropDownList("RE_BID", null, new { @class = "form-control form-control-sm select2" })
+                                <label class="control-label">Submission Type</label> <span class="text-danger">*</span>
+                                @Html.DropDownList("RE_BID", null, new { @class = "form-control form-control-sm select2", style = "width:100%" })
                                 @Html.ValidationMessageFor(m => m.RE_BID, "", new { @class = "text-danger" })
                             </div>
                         </div>
                         <div class="col-md-3 col-sm-6">
                             <div class="form-group">
-                                <label class="control-label">Quotation Rate Range</label>
-                                @Html.DropDownList("LOWER_RATE", null, new { @class = "form-control form-control-sm select2" })
+                                <label class="control-label">Quotation Rate Range</label> <span class="text-danger">*</span>
+                                @Html.DropDownList("LOWER_RATE", null, new { @class = "form-control form-control-sm select2", style = "width:100%" })
                                 @Html.ValidationMessageFor(m => m.LOWER_RATE, "", new { @class = "text-danger" })
                             </div>
                         </div>
 
 
-                        <div class="col-md-3 col-sm-6">
+
+                        <div class="col-md-3 col-sm-6 forImpoter">
                             <div class="form-group">
-                                <label class="control-label">Cost Exclude/Include</label>
-                                @Html.DropDownList("COST_EX_INC", null, new { @class = "form-control form-control-sm select2", placeholder = "" })
-                                @Html.ValidationMessageFor(m => m.COST_EX_INC, "", new { @class = "text-danger" })
+                                <label class="control-label">Incoterms</label>
+                                @Html.DropDownList("INCO_TERMS", null, new { @class = "form-control form-control-sm select2", placeholder = "", style = "width:100%" })
+                                @Html.ValidationMessageFor(m => m.INCO_TERMS, "", new { @class = "text-danger" })
                             </div>
                         </div>
                         <div class="col-md-3 col-sm-6">
                             <div class="form-group">
-                                <label class="control-label">Incoterms</label>
-                                @Html.DropDownList("INCO_TERMS", null, new { @class = "form-control form-control-sm select2", placeholder = "" })
-                                @Html.ValidationMessageFor(m => m.INCO_TERMS, "", new { @class = "text-danger" })
+                                <label class="control-label">Cost Exclude/Include</label> <span class="text-danger">*</span>
+                                @Html.DropDownList("COST_EX_INC", null, new { @class = "form-control form-control-sm select2", id = "COST_EX_INC", placeholder = "", style = "width:100%" })
+                                @Html.ValidationMessageFor(m => m.COST_EX_INC, "", new { @class = "text-danger" })
                             </div>
                         </div>
 
@@ -135,21 +133,21 @@
                     <div class="card-body pad row">
                         <div class="col-md-3 col-sm-6">
                             <div class="form-group">
-                                <label class="control-label">Product</label>
-                                @Html.DropDownList("PRODUCTS_ID", null, new { @class = "form-control form-control-sm select2", placeholder = "" })
+                                <label class="control-label">Product</label> <span class="text-danger">*</span>
+                                @Html.DropDownList("PRODUCTS_ID", null, new { @class = "form-control form-control-sm select2", placeholder = "", style = "width:100%" })
                                 @Html.ValidationMessageFor(m => m.PRODUCTS_ID, "", new { @class = "text-danger" })
                             </div>
                         </div>
                         <div class="col-md-2 col-sm-6">
                             <div class="form-group">
-                                <label class="control-label">Rate</label>
+                                <label class="control-label">Rate</label> <span class="text-danger">*</span>
                                 @Html.EditorFor(model => model.PRODUCTS_RATE, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "Rate" } })
                                 @Html.ValidationMessageFor(m => m.PRODUCTS_RATE, "", new { @class = "text-danger" })
                             </div>
                         </div>
                         <div class="col-md-2 col-sm-6">
                             <div class="form-group">
-                                <label class="control-label">Quantity</label>
+                                <label class="control-label">Quantity</label> <span class="text-danger">*</span>
                                 @Html.EditorFor(model => model.PRODUCTS_QUANTITY, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "Quantity" } })
                                 @Html.ValidationMessageFor(m => m.PRODUCTS_QUANTITY, "", new { @class = "text-danger" })
                             </div>
@@ -163,14 +161,14 @@
                         </div>
                         <div class="col-md-3 col-sm-6">
                             <div class="form-group">
-                                <label class="control-label">Select Documents</label>
-                                @Html.DropDownList("TENDER_DOC", null, "-Select-", new { @class = "form-control form-control-sm select2",id= "DOCUMENTS_LIST_ID", placeholder = "" })
+                                <label class="control-label">Select Documents</label> <span class="text-danger">*</span>
+                                @Html.DropDownList("TENDER_DOC", null, "-Select-", new { @class = "form-control form-control-sm select2", id = "DOCUMENTS_LIST_ID", placeholder = "", style = "width:100%" })
                                 @Html.ValidationMessageFor(m => m.PRODUCTS_DESC, "", new { @class = "text-danger" })
 
                             </div>
                             <span><button type="button" id="addDocItem" class="btn btn-info btn-sm">Add!</button></span>
                         </div>
-                        <div class="col-md-4 col-sm-6" style="display:none;" id="docDiv"> 
+                        <div class="col-md-4 col-sm-6" style="display:none;" id="docDiv">
                             <div class="form-group mt-3">
                                 <div class="table-responsive">
                                     <table id="rdocuments" class="table">
@@ -183,7 +181,7 @@
                                         <tbody></tbody>
                                     </table>
                                 </div>
-                            </div>                       
+                            </div>
                         </div>
                     </div>
                     <div class="float-right">
@@ -198,49 +196,49 @@
                     <div class="card-body pad row">
                         <div class="col-md-3 col-sm-6">
                             <div class="form-group">
-                                <label class="control-label">Last Delivery Date</label>
+                                <label class="control-label">Last Delivery Date</label> <span class="text-danger">*</span>
                                 @Html.EditorFor(model => model.LAST_DELIVERY_DATE, new { htmlAttributes = new { @class = "form-control form-control-sm", type = "date", placeholder = "last Delivery Date" } })
                                 @Html.ValidationMessageFor(m => m.LAST_DELIVERY_DATE, "", new { @class = "text-danger" })
                             </div>
                         </div>
-                        <div class="col-md-3 col-sm-6">
+                        <div class="col-md-3 col-sm-6 forImpoter">
                             <div class="form-group">
-                                <label class="control-label">Port Name</label>
-                                @Html.DropDownList("PORT_ID", null, new { @class = "form-control form-control-sm select2", placeholder = "" })
+                                <label class="control-label">Port Name</label> <span class="text-danger">*</span>
+                                @Html.DropDownList("PORT_ID", ViewBag.PORT_ID as List<SelectListItem>, "-Select-", new { @class = "form-control form-control-sm select2", id = "PORT_ID", placeholder = "", style = "width:100%" })
                                 @Html.ValidationMessageFor(m => m.PORT_ID, "", new { @class = "text-danger" })
                             </div>
                         </div>
-                        <div class="col-md-3 col-sm-6">
+                        <div class="col-md-3 col-sm-6 forImpoter">
                             <div class="form-group">
-                                <label class="control-label">Partial Shipment</label>
-                                @Html.DropDownList("PARTIAL_SHIPMENT", null, new { @class = "form-control form-control-sm select2", placeholder = "" })
+                                <label class="control-label">Partial Shipment</label> <span class="text-danger">*</span>
+                                @Html.DropDownList("PARTIAL_SHIPMENT", null, new { @class = "form-control form-control-sm select2", id = "PARTIAL_SHIPMENT", placeholder = "", style = "width:100%" })
                                 @Html.ValidationMessageFor(m => m.PARTIAL_SHIPMENT, "", new { @class = "text-danger" })
                             </div>
                         </div>
-                        <div class="col-md-3 col-sm-6">
+                        <div class="col-md-3 col-sm-6 forImpoter">
                             <div class="form-group">
-                                <label class="control-label">Shipment Mode</label>
-                                @Html.DropDownList("SHIPMENT_MODE", null, new { @class = "form-control form-control-sm select2", placeholder = "" })
+                                <label class="control-label">Shipment Mode</label> <span class="text-danger">*</span>
+                                @Html.DropDownList("SHIPMENT_MODE", ViewBag.SHIPMENT_MODE as List<SelectListItem>, "-Select-", new { @class = "form-control form-control-sm select2", id = "SHIPMENT_MODE", placeholder = "", style = "width:100%" })
                                 @Html.ValidationMessageFor(m => m.SHIPMENT_MODE, "", new { @class = "text-danger" })
                             </div>
                         </div>
                         <div class="col-md-6 col-sm-6">
                             <div class="form-group">
-                                <label class="control-label">Deliver Address</label>
+                                <label class="control-label">Deliver Address</label> <span class="text-danger">*</span>
                                 @Html.EditorFor(model => model.DELIVERY_ADDRESS, new { htmlAttributes = new { @class = "form-control form-control-sm", row = "1", placeholder = "Delivery Address" } })
                                 @Html.ValidationMessageFor(m => m.DELIVERY_ADDRESS, "", new { @class = "text-danger" })
                             </div>
                         </div>
                         <div class="col-md-3 col-sm-6">
                             <div class="form-group">
-                                <label class="control-label">Receiver</label>
+                                <label class="control-label">Receiver</label> <span class="text-danger">*</span>
                                 @Html.EditorFor(model => model.RECEIVER_NAME, new { htmlAttributes = new { @class = "form-control form-control-sm", row = "1", placeholder = "Receiver Name" } })
                                 @Html.ValidationMessageFor(m => m.RECEIVER_NAME, "", new { @class = "text-danger" })
                             </div>
                         </div>
                         <div class="col-md-3 col-sm-6">
                             <div class="form-group">
-                                <label class="control-label">Receiver Details</label>
+                                <label class="control-label">Receiver Details</label> <span class="text-danger">*</span>
                                 @Html.EditorFor(model => model.RECEIVER_DETAILS, new { htmlAttributes = new { @class = "form-control form-control-sm", row = "1", placeholder = "Receiver Details" } })
                                 @Html.ValidationMessageFor(m => m.RECEIVER_NAME, "", new { @class = "text-danger" })
                             </div>
@@ -258,8 +256,8 @@
                     <div class="card-body pad row">
                         <div class="col-md-3 col-sm-6">
                             <div class="form-group">
-                                <label class="control-label">Currency</label>
-                                @Html.DropDownList("CURRENCY_NAME", null, new { @class = "form-control form-control-sm select2", placeholder = "" })
+                                <label class="control-label">Currency</label> <span class="text-danger">*</span>
+                                @Html.DropDownList("CURRENCY_NAME", null, new { @class = "form-control form-control-sm select2", placeholder = "", style = "width:100%" })
                                 @Html.ValidationMessageFor(m => m.CURRENCY_NAME, "", new { @class = "text-danger" })
                             </div>
                         </div>
@@ -272,28 +270,28 @@
                         </div>
                         <div class="col-md-3 col-sm-6">
                             <div class="form-group">
-                                <label class="control-label">Pay Mode A</label>
-                                @Html.DropDownList("PAY_A", null, new { @class = "form-control form-control-sm select2", placeholder = "" })
+                                <label class="control-label">Pay Mode A</label> <span class="text-danger">*</span>
+                                @Html.DropDownList("PAY_A", null, new { @class = "form-control form-control-sm select2", placeholder = "", style = "width:100%" })
                                 @Html.ValidationMessageFor(m => m.PAY_A, "", new { @class = "text-danger" })
                             </div>
                         </div>
                         <div class="col-md-3 col-sm-6">
                             <div class="form-group">
-                                <label class="control-label">Pay Mode A Percent</label>
+                                <label class="control-label">Pay Mode A Percent</label> <span class="text-danger">*</span>
                                 @Html.EditorFor(model => model.PAY_AP, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "Payment Mode A (%)" } })
                                 @Html.ValidationMessageFor(m => m.PAY_AP, "", new { @class = "text-danger" })
                             </div>
                         </div>
                         <div class="col-md-3 col-sm-6">
                             <div class="form-group">
-                                <label class="control-label">Payment Mode B</label>
-                                @Html.DropDownList("PAY_B", null, new { @class = "form-control form-control-sm select2", placeholder = "" })
+                                <label class="control-label">Payment Mode B</label> <span class="text-danger">*</span>
+                                @Html.DropDownList("PAY_B", null, new { @class = "form-control form-control-sm select2", placeholder = "", style = "width:100%" })
                                 @Html.ValidationMessageFor(m => m.PAY_B, "", new { @class = "text-danger" })
                             </div>
                         </div>
                         <div class="col-md-3 col-sm-6">
                             <div class="form-group">
-                                <label class="control-label">Pay Mode B Percent</label>
+                                <label class="control-label">Pay Mode B Percent</label> <span class="text-danger">*</span>
                                 @Html.EditorFor(model => model.PAY_BP, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "Payment Mode B (%)" } })
                                 @Html.ValidationMessageFor(m => m.PAY_BP, "", new { @class = "text-danger" })
                             </div>
@@ -319,6 +317,7 @@
         $(document).ready(function () {
 
 
+            $(".forImpoter").css("display", "none")
 
             $("#tndDetails").click(function () {
                 divActTender();
@@ -359,7 +358,7 @@
 
             $("#addDocItem").click(function (e) {
                 e.preventDefault();
-               
+
 
                 var docId = $.trim($("#DOCUMENTS_LIST_ID :selected").val()),
                     docName = $.trim($("#DOCUMENTS_LIST_ID :selected").text()),
@@ -374,24 +373,30 @@
                 rdocumentsBody.append(rdocumentsItem);
                 clearItem();
             });
-            //After Add A New Order In The List, Clear Clean The Form For Add More Order.
+
             function clearItem() {
                 $("#DOCUMENTS_LIST_ID :selected").remove();
             }
+            $('#rdocuments tbody').on('click', 'tr .deleteItem', function (e) {
+                e.preventDefault();
+                $(this).closest('tr').fadeOut("slow", function () {
+                    var dataId = $(this).find('td:eq(0)').find('select').val();
+                    var dataName = $(this).find('td:eq(0)').find('select').text();
+                    $("#DOCUMENTS_LIST_ID").append(new Option(dataName, dataId));
+                    $(this).remove();
+                })
+            });
 
 
             $("#save2db").on("click", function () {
-                debugger;
-
                 var listName = "RFQ_TNDR_DOCUMENTS";
                 var qtd = 0;
                 $("#rdocuments > tbody > tr").each(function () {
                     var docId = $(this).find('td:eq(0)').find('select').val(); //DOCUMENTS_ID
-                    var docName = $(this).find('td:eq(0)').find('select').text(); //DOCUMENTS_NAME
+                    var docName = $(this).find('td:eq(1)').find('select').text(); //DOCUMENTS_NAME
 
                     if (docId == "") {
-                      //  Swal.fire('warning', 'enter a valid documents', 'warning');
-
+                        //  Swal.fire('warning', 'enter a valid documents', 'warning');
                         return;
                     }
                     $("#formPost").prepend("<input type='hidden' name='" + listName + "[" + qtd + "].DOCUMENTS_ID' value='" + docId + "'>");
@@ -401,6 +406,39 @@
             });
         });
 
+        function importertype() {
+            var LOCAL_IMPORT = $("#LOCAL_IMPORT").val();
+            if (LOCAL_IMPORT == 2) {
+                $(".forImpoter").css("display", "block");
+            }
+            else if (LOCAL_IMPORT == 1) {
+                // $(".forImpoter").css("display", "none");
+               // $("#SHIPMENT_MODE").val(0);
+                $("#PARTIAL_SHIPMENT").val("");
+               // $("#PORT_ID").val("");
+            }
+            var url = 'DropDownFor_Port';
+            var LOCAL_IMPORT = $('#LOCAL_IMPORT').val();
+            var PORT_ID = $('#PORT_ID');
+            PORT_ID.empty();
+          //  PORT_ID.append($("<option></option>").attr("value", '').text('--Select--'));
+            $.getJSON(url, { portno: LOCAL_IMPORT }, function (response) {
+                $.each(response, function (index, item) {
+                    PORT_ID.append($("<option></option>").attr("value", item.Value).text(item.Text));
+                });
+            });
+            debugger
+            var url1 = 'DropDownFor_shipmentMode';
+            var LOCAL_IMPORT = $('#LOCAL_IMPORT').val();
+            var SHIPMENT_MODE = $('#SHIPMENT_MODE');
+            SHIPMENT_MODE.empty();
+            $.getJSON(url1, { portno: LOCAL_IMPORT }, function (response) {
+                $.each(response, function (index, item) {
+                    SHIPMENT_MODE.append($("<option></option>").attr("value", item.Value).text(item.Text));
+                });
+            });
+
+        }
 
         function divActTender() {
             $("#detailsBody").css("display", "block");

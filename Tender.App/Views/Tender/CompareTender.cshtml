@@ -15,14 +15,15 @@
                     </div>
                 </div>
                 <div class="col-12 col-sm-8">
-                    <h4 class="my-3">Tender Number :<span class="text-primary">@Model.Select(c => c.RFQ_NUMBER).FirstOrDefault()</span> </h4>
+                    <h4 class="my-3">Tender Number :<span class="text-primary"> # @Model.Select(c => c.RFQ_NUMBER).FirstOrDefault()</span> </h4>
                     <h6 class="my-3">Item :<span class="text-success"> @Model.Select(c => c.PRODUCTS_ID).FirstOrDefault()</span></h6>
-                    <p>About Tender : @Model.Select(c => c.TENDER_PRODUCTS_DESC).FirstOrDefault() </p>
-                    <p>Start To End Date : @Model.Select(c => c.START_DATE).FirstOrDefault() To @Model.Select(c => c.END_DATE).FirstOrDefault() </p>
-                    <p>Last Deliver Date : @Model.Select(c => c.LAST_DELIVERY_DATE).FirstOrDefault() </p>
+                    <p>About Tender : @Model.Select(c => c.PRODUCTS_DESC).FirstOrDefault() </p>
+                    <p>Start To End Date : @Model.Select(c => c.START_DATE).FirstOrDefault().ToString("yyyy-MM-dd") To @Model.Select(c => c.END_DATE).FirstOrDefault().ToString("yyyy-MM-dd") </p>
+                    <p>Last Deliver Date : @Model.Select(c => c.LAST_DELIVERY_DATE).FirstOrDefault().ToString("yyyy-MM-dd") </p>
                     <hr />
                     <h5>Remaning</h5>
-                    <span class="text-danger">0d  : 7h  : 34m  : 24s</span>
+                    <input type="hidden" value="@Model.Select(c => c.END_DATE).FirstOrDefault().ToString("yyyy-MM-dd")" class="endDate" />
+                    <span class="text-danger text-bold" id="auc_end"></span>
                     <hr />
                     <div class="row">
                         <div class="col">Partial Shipment : @Model.Select(c => c.PARTIAL_SHIPMENT).FirstOrDefault() </div>
@@ -35,7 +36,7 @@
                         <div class="col">Receiver Details : @Model.Select(c => c.RECEIVER_DETAILS).FirstOrDefault() </div>
                     </div>
 
-                   
+
                 </div>
             </div>
             <br />
@@ -50,12 +51,13 @@
                     <table class="table table-bordered table-striped table-hover table-responsive-md">
                         <thead>
                             <tr class="table-secondary">
-                                <th>Option</th>
+                                <th>Details</th>
                                 <th>Quote Number</th>
                                 <th>Bidders company</th>
                                 <th>Submit Date</th>
                                 <th>Bidding Rate</th>
                                 <th>Bidding Quantity</th>
+                                <th>Confirm</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -63,28 +65,43 @@
                             {
                                 foreach (var item in Model)
                                 {
-                                    <tr data-widget="expandable-table" aria-expanded="false" data-toggle="tooltip" data-placement="top" title="Click For Details">
-                                        <td>
-                                            <a class="btn btn-sm btn-block btn-outline-danger" href="@Url.Action("QuotationCompare","Tender", new { id=@item.RFQ_NUMBER})">
-                                                <img src="~/App_Asset/dist/img/compare.png" height="30" width="30" alt="Compare" />
-                                            </a>
-                                        </td>
-                                        <td>@item.RFQ_NUMBER</td>
-                                        <td>@item.VENDOR_ID</td>
-                                        <td>@item.SUBMIT_DATE</td>
-                                        <td>@item.PRODUCTS_RATE</td>
-                                        <td>@item.PRODUCTS_QUANTITY</td>
-                                    </tr>
+                            <tr data-widget="expandable-table" aria-expanded="false" data-toggle="tooltip" data-placement="top" title="Click For Details">
+                                <td><a class="btn btn-sm  btn-outline-success">View Details</a></td>
+                                <td>@item.QUOTE_NUMBER</td>
+                                <td>@item.VENDOR_NAME</td>
+                                <td>@item.SUBMIT_DATE.ToString("yyyy-MM-dd")</td>
+                                <td>@item.PRODUCTS_RATE</td>
+                                <td>@item.PRODUCTS_QUANTITY</td>
+                                <td>
+                                    <a class="btn btn-sm  btn-outline-danger" href="@Url.Action("ApproveTender","Tender", new { rfqNumber=item.RFQ_NUMBER,quotNumber=item.QUOTE_NUMBER,vendorId=item.VENDOR_ID})">
+                                        Confirm
+                                    </a>
+                                </td>
+                            </tr>
                                     <tr class="expandable-body table-active">
-                                        <td colspan="6">
-                                            <p>
-                                                <span class="text-bold">Product Details :</span> @item.PRODUCTS_DESC <br />
-                                                <span class="text-bold">Port Name :</span> @item.PORT_ID <br />
-                                                <span class="text-bold">Shipment Mode :</span> @item.SHIPMENT_MODE <br />
-                                                <span class="text-bold">Product Details :</span> @item.LOADING_ADDRESS <br />
-                                                <span class="text-bold">Port Name :</span> @item.SENDER_NAME <br />
-                                                <span class="text-bold">Shipment Mode :</span> @item.SENDER_DETAILS <br />
-                                            </p>
+                                        <td colspan="7">                                            
+                                                <div class="row ">
+                                                    <div class="col-md-6 ">
+                                                        <span class="text-bold">Tender Product Details :</span> @item.TND_PRODUCTS_DESC <br />
+                                                        <span class="text-bold">Tender Port Name :</span> @item.TENDER_PORT_ID <br />
+                                                        <span class="text-bold">Tender Shipment Mode :</span> @item.TENDER_SHIPMENT_MODE <br />
+                                                        <span class="text-bold">Loading Address :</span> @item.LOADING_ADDRESS <br />
+                                                        <span class="text-bold">Receiver Name :</span> @item.RECEIVER_NAME <br />
+                                                        <span class="text-bold">Shipment Mode :</span> @item.RECEIVER_DETAILS <br />
+                                                        <hr />
+                                                    </div>
+                                                   
+                                                    <div class="col-md-6 ">
+                                                        <span class="text-bold">Quot Product Details :</span> @item.PRODUCTS_DESC <br />
+                                                        <span class="text-bold">Quot Port Name :</span> @item.Q_PORT_NAME <br />
+                                                        <span class="text-bold">Quot Shipment Mode :</span> @item.Q_SHIPMENT_MODE <br />
+                                                        <span class="text-bold"> Delivery Address :</span> @item.DELIVERY_ADDRESS <br />
+                                                        <span class="text-bold"> Sender Name :</span> @item.SENDER_NAME <br />
+                                                        <span class="text-bold"> Sender Details :</span> @item.SENDER_DETAILS <br />
+                                                        <hr />
+                                                    </div>
+                                                    
+                                                </div>                                            
                                         </td>
                                     </tr>
                                 }
@@ -113,9 +130,20 @@
 
 @section scripts{
     @Scripts.Render("~/bundles/jqueryval")
-    <script>
-
-    </script>
+<script>
+    $(document).ready(function () {
+        setInterval("dateimeFunction()", 1000);
+    })
+    function dateimeFunction() {
+        var endDateTime = $('.endDate').val();
+        var diffTime = Math.abs(new Date().valueOf() - new Date(endDateTime).valueOf());
+        var days = diffTime / (24 * 60 * 60 * 1000);
+        var hours = (days % 1) * 24;
+        var minutes = (hours % 1) * 60;
+        var secs = (minutes % 1) * 60;
+        [days, hours, minutes, secs] = [Math.floor(days), Math.floor(hours), Math.floor(minutes), Math.floor(secs)]
+        $('#auc_end').text("" + days + "d   " + hours + "h   " + minutes + "m   " + secs + "s");
+    }
+</script>
 
 }
-

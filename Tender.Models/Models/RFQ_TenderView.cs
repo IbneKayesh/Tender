@@ -71,5 +71,7 @@ namespace Tender.Models.Models
         public string UNIT { get; set; }
         public int IS_APPROVE { get; set; }
 
+        public int SUBMITED_BIDS { get; set; } = 0;
+
     }
 }

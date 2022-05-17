@@ -1,6 +1,7 @@
 ﻿using Aio.Db.MSSqlEF;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 using Tender.Models.Models;
 
@@ -30,6 +31,11 @@ namespace Tender.App.Service
                                 {_obj.SHIPMENT_MODE},{_obj.PORT_ID} ,'{_obj.DELIVERY_ADDRESS}' ,'{_obj.RECEIVER_NAME}' ,'{_obj.RECEIVER_DETAILS}' ,
                                 {_obj.COST_EX_INC} ,'{_obj.INCO_TERMS}'
                                 ,'{_obj.CURRENCY_NAME}' ,{_obj.CURRENCY_RATE} ,'{_obj.PAY_A}' ,{_obj.PAY_AP} ,'{_obj.PAY_B}' ,{_obj.PAY_BP} )");
+            if (_obj.RFQ_TNDR_DOCUMENTS.Count() > 0) {
+                foreach (var item in _obj.RFQ_TNDR_DOCUMENTS) {
+                    sqlList.Add($@"INSERT INTO TND.RFQ_TNDR_DOCUMENTS ( RFQ_NUMBER, DOCUMENTS_ID) VALUES ( '{tenderNumber}','{item.DOCUMENTS_ID}')");
+                }
+            }
             sqlList.Add($@"UPDATE TABLE_MAX_ID SET MAX_ID=MAX_ID+1 WHERE TABLE_NAME='RFQ_TENDER'");
            
             return DatabaseMSSql.ExecuteSqlCommand(sqlList);
@@ -39,15 +45,15 @@ namespace Tender.App.Service
         {
             SelectList DataList = new SelectList(
                   new List<SelectListItem>
-                  {new SelectListItem{ Text="Buy", Value = "0" },new SelectListItem{ Text="Sales", Value = "1" }}, "Value", "Text", 1);
+                  {new SelectListItem{ Text="Buy", Value = "1" },new SelectListItem{ Text="Sales", Value = "2" }}, "Value", "Text", 1);
             return DataList;
         }
         public static List<SelectListItem> getAnyRate()
         {
             var objList = new List<SelectListItem>
               {
-                new SelectListItem { Selected = true, Text = "Lower Rate Only", Value ="0"},
-                new SelectListItem { Selected = false, Text = "Any Rate", Value = "1"},
+                new SelectListItem { Selected = true, Text = "Lower Rate Only", Value ="1"},
+                new SelectListItem { Selected = false, Text = "Any Rate", Value = "2"},
               };
             return objList;
         }
@@ -55,8 +61,8 @@ namespace Tender.App.Service
         {
             var objList = new List<SelectListItem>
               {
-                new SelectListItem { Selected = true, Text = "Submit Once", Value ="0"},
-                new SelectListItem { Selected = false, Text = "Submit Multiple", Value = "1"},
+                new SelectListItem { Selected = true, Text = "Submit Once", Value ="1"},
+                new SelectListItem { Selected = false, Text = "Submit Multiple", Value = "2"},
             };
             return objList;
         }
@@ -76,8 +82,9 @@ namespace Tender.App.Service
         {
             SelectList DataList = new SelectList(
                   new List<SelectListItem>
-                  {new SelectListItem{ Text="Allow", Value = "1" },
-                   new SelectListItem{ Text="Not Allow", Value = "0" }
+                  {   
+                      new SelectListItem{ Text="Not Allow", Value = "1" },
+                      new SelectListItem{ Text="Allow", Value = "2" },                   
                   }, "Value", "Text", 1);
             return DataList;
         }
@@ -85,7 +92,8 @@ namespace Tender.App.Service
         {
             SelectList DataList = new SelectList(
                   new List<SelectListItem>
-                  {new SelectListItem{ Text="Sea", Value = "1" },
+                  {
+                   new SelectListItem{ Text="Sea", Value = "1" },
                    new SelectListItem{ Text="Road", Value = "2" },
                    new SelectListItem{ Text="Air", Value = "3" }
                   }, "Value", "Text", 1);
@@ -115,7 +123,9 @@ namespace Tender.App.Service
         {
             SelectList DataList = new SelectList(
                   new List<SelectListItem>
-                  {new SelectListItem{ Text="Include", Value = "1" },
+
+                  {
+                   new SelectListItem{ Text="Include", Value = "1" },
                    new SelectListItem{ Text="Exclude", Value = "2" }
                   }, "Value", "Text", 1);
             return DataList;
@@ -149,7 +159,7 @@ namespace Tender.App.Service
                   {
                       new SelectListItem{ Text="Local", Value = "1" },
                       new SelectListItem{ Text="Importer", Value = "2" }
-                  }, "Value", "Text", 1);
+                  }, "Value", "Text", null);
             return DataList;
         }
 

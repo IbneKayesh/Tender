@@ -15,7 +15,12 @@
 
     <link rel="stylesheet" href="~/App_Asset/plugins/bs-stepper/css/bs-stepper.min.css">
 
+
+    <link rel="stylesheet" href="~/App_Asset/plugins/select2/css/select2.min.css">
+    <link rel="stylesheet" href="~/App_Asset/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+
 </head>
+
 <body class="hold-transition layout-top-nav">
     <div class="wrapper">
 
@@ -86,7 +91,7 @@
                         <a class="nav-link" data-toggle="dropdown" href="#">
                             <i class="far fa-user"></i>
                             @if (Session["ssUser"] == null)
-                            { <span>Login</span> }
+                            {<span>Login</span> }
                             else
                             {<span>My Profile</span>}
                         </a>
@@ -156,6 +161,12 @@
     <!-- AdminLTE for demo purposes -->
     <script src="~/App_Asset/plugins/bs-stepper/js/bs-stepper.min.js"></script>
     @*<script src="~/App_Asset/dist/js/demo.js"></script>*@
+
+    <script src="~/App_Asset/plugins/select2/js/select2.full.min.js"></script>
+
     @RenderSection("scripts", required: false)
+    <script>
+        $('.select2').select2()
+    </script>
 </body>
 </html>

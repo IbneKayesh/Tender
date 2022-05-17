@@ -38,6 +38,19 @@ namespace Tender.App.Service
                 return "Q" + dt.ToString("yy") + dt.ToString("MM") +rfqNumber.Substring(rfqNumber.Length-5)+ _maxId.ToString().PadLeft(5, '0');
             }
         }
+        public static int getQutationSL(string rfqNumber)
+        {
+            string sql = $"SELECT RFQ_SL FROM RFQ_BIDDING WHERE RFQ_NUMBER='{rfqNumber}'";
+            Tuple<RFQ_BIDDING, EQResult> _tpl = DatabaseMSSql.SqlQuerySingle<RFQ_BIDDING>(sql);
+            if (_tpl.Item2.ROWS == 0)
+            {
+                return 0;
+            }
+            else
+            {               
+                return _tpl.Item1.RFQ_SL;
+            }
+        }
         public static Tuple<List<VENDOR>, EQResult> GetVendor(string vendorId)
         {
             string sql = $"SELECT V.VENDOR_ID,ORGANIZATION_NAME FROM VENDOR V WHERE V.VENDOR_ID='{vendorId}'";

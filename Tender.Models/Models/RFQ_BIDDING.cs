@@ -21,9 +21,7 @@ namespace Tender.Models.Models
         public decimal PRODUCTS_RATE { get; set; }
         [Required(ErrorMessage = "{0} is required")]
         public decimal PRODUCTS_QUANTITY { get; set; }
-        [Required(ErrorMessage = "{0} is required")]
         public int SHIPMENT_MODE { get; set; }
-        [Required(ErrorMessage = "{0} is required")]
         public int PORT_ID { get; set; }
         [Required(ErrorMessage = "{0} is required")]
         public string LOADING_ADDRESS { get; set; }
@@ -89,7 +87,16 @@ namespace Tender.Models.Models
         [NotMapped]
         public int PAY_BP { get; set; }
         [NotMapped]
-        public int TOTAL_BIDDING { get; set; } = 0; 
+        public int TOTAL_BIDDING { get; set; } = 0;
+
+        //FOR QUTATION SHIPMENT
+
+        [NotMapped]
+        public string Q_SHIPMENT_MODE { get; set; }
+        [NotMapped]
+        public string Q_PORT_NAME { get; set; }
+        [NotMapped]
+        public string VENDOR_NAME { get; set; }
 
 
     }
