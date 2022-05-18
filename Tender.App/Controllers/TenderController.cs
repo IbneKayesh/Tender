@@ -11,19 +11,38 @@ namespace Tender.App.Controllers
 {
     public class TenderController : Controller
     {
-        // GET: Tender, For Supplier
-        string userId = "c0919d47-94d1-49a7-b351-1fa448081ed0";
         public ActionResult Index()
         {
-            List<RFQ_TenderView> obj = QuotationService.getAllTender().Item1;
+            List<RFQ_TenderView> obj = QuotationService.getAllTender((string)Session["vendorId"]).Item1;
 
             return View(obj);
+        }
+        [HttpGet]
+        public ActionResult ViewAllTender()
+        {
+            List<RFQ_TenderView> obj = QuotationService.getAllTender((string)Session["vendorId"]).Item1;
+            return View(obj);
+        }
+        [HttpGet]
+        public ActionResult TenderDetails(string id)
+        {
+            DropDownFor_Tender();
+            RFQ_BIDDING obj = new RFQ_BIDDING();
+
+            Tuple<RFQ_BIDDING, EQResult> _tpl = QuotationService.getTenderById(id);
+            if (_tpl.Item2.SUCCESS && _tpl.Item2.ROWS == 1)
+            {
+                return View(_tpl.Item1);
+            }
+            return View(obj);
+
+            //return View(new RFQ_BIDDING());
         }
         [HttpGet]
         public ActionResult SubmitTender()
         {
             RFQ_TENDER obj = new RFQ_TENDER();
-            obj.VENDOR_ID = userId;
+            obj.VENDOR_ID =  (string)Session["vendorId"];
             DropDownFor_Tender();
             return View(obj);
         }
@@ -37,7 +56,11 @@ namespace Tender.App.Controllers
             DropDownFor_Tender();
             if (ModelState.IsValid)
             {
-                TenderService.SaveData(obj);
+               var  _tpl=TenderService.SaveData(obj);
+                if (_tpl.SUCCESS ==true)
+                {
+                    TempData["msg"] = AlertService.SaveSuccess();
+                }
             }
             else
             {
@@ -45,7 +68,7 @@ namespace Tender.App.Controllers
                 ModelState.AddModelError("Err", "Invalid Data");
                 return View(obj);
             }
-            return View(obj);
+            return RedirectToAction("Index");
         }
         public ActionResult CompareTender(string id)
         {
@@ -59,7 +82,11 @@ namespace Tender.App.Controllers
             obj.RFQ_NUMBER = rfqNumber;
             obj.QUOTE_NUMBER = quotNumber;
             obj.VENDOR_ID = vendorId;
-            QuotationService.ApproveQuotation(obj);
+           var _tpl= QuotationService.ApproveQuotation(obj);
+            if (_tpl.SUCCESS == true)
+            {
+                TempData["msg"] = AlertService.SaveSuccessOK("Approve Successfully");
+            }
             return RedirectToAction("Index", "Tender");
         }
         public void DropDownFor_Tender()
@@ -76,8 +103,8 @@ namespace Tender.App.Controllers
             //ViewBag.PAY_B = TenderService.DropDown_payment();
             ViewBag.LOCAL_IMPORT = TenderService.DropDown_importer();
 
-            ViewBag.VENDOR_ID = new SelectList(CommonService.GetVendor(userId).Item1.ToList(), "VENDOR_ID", "ORGANIZATION_NAME");
-            ViewBag.PRODUCTS_ID = new SelectList(TenderService.GetVendorWiseItem(userId).Item1.ToList(), "PRODUCTS_ID", "PRODUCTS_NAME");
+            ViewBag.VENDOR_ID = new SelectList(CommonService.GetVendor((string)Session["vendorId"]).Item1.ToList(), "VENDOR_ID", "ORGANIZATION_NAME");
+            ViewBag.PRODUCTS_ID = new SelectList(TenderService.GetVendorWiseItem((string)Session["vendorId"]).Item1.ToList(), "PRODUCTS_ID", "PRODUCTS_NAME");
             //ViewBag.SHIPMENT_MODE = new SelectList(TenderService.getShipmentMode().Item1.ToList(), "SHIPMENT_MODE_ID", "SHIPMENT_MODE_NAME");
             ViewBag.SHIPMENT_MODE = new SelectList(Enumerable.Empty<SelectListItem>());
             ViewBag.PORT_ID = new SelectList(Enumerable.Empty<SelectListItem>());

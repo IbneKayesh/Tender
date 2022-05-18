@@ -58,6 +58,7 @@
                                 <th>Bidding Rate</th>
                                 <th>Bidding Quantity</th>
                                 <th>Confirm</th>
+                                <th>View Profile</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -65,32 +66,34 @@
                             {
                                 foreach (var item in Model)
                                 {
-                                    <tr data-widget="expandable-table" aria-expanded="false" data-toggle="tooltip" data-placement="top" title="Click For Details">
-                                        <td><a class="btn btn-sm  btn-outline-success">View Details</a></td>
-                                        <td>@item.QUOTE_NUMBER</td>
-                                        <td>@item.VENDOR_NAME</td>
-                                        <td>@item.SUBMIT_DATE.ToString("yyyy-MM-dd")</td>
-                                        <td>@item.PRODUCTS_RATE</td>
-                                        <td>@item.PRODUCTS_QUANTITY</td>
-                                        <td>
-                                            @if (item.APPROVAL_ID == "0")
-                                            {
-                                                <a class="btn btn-sm  btn-outline-danger" href="@Url.Action("ApproveTender", "Tender", new { rfqNumber = item.RFQ_NUMBER, quotNumber = item.QUOTE_NUMBER, vendorId = item.VENDOR_ID })">
-                                                    Confirm
-                                                </a>
-                                            }
-                                            else
-                                            {
-                                                <a class="btn btn-sm  btn-outline-danger">
-                                                    Lock
-                                                </a>
-                                            }
+                            <tr data-widget="expandable-table" aria-expanded="false" data-toggle="tooltip" data-placement="top" title="Click For Details">
+                                <td><a class="btn btn-sm  btn-outline-success">View Details</a></td>
+                                <td>@item.QUOTE_NUMBER</td>
+                                <td>@item.VENDOR_NAME</td>
+                                <td>@item.SUBMIT_DATE.ToString("yyyy-MM-dd")</td>
+                                <td>@item.PRODUCTS_RATE</td>
+                                <td>@item.PRODUCTS_QUANTITY</td>
+                                <td>
+                                    @if (item.APPROVAL_ID == "0")
+                                    {
+                                        <a class="btn btn-sm  btn-outline-danger" href="@Url.Action("ApproveTender", "Tender", new { rfqNumber = item.RFQ_NUMBER, quotNumber = item.QUOTE_NUMBER, vendorId = item.VENDOR_ID })">
+                                            Confirm
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <a class="btn btn-sm  btn-outline-danger">
+                                            Lock
+                                        </a>
+                                    }
 
 
-                                        </td>
-                                    </tr>
+                                </td>
+                                <td><a class="btn btn-sm  btn-outline-primary"href="@Url.Action("supplierProfile", "Accounts", new {id = item.VENDOR_ID })" >View Profile</a></td>
+
+                            </tr>
                                     <tr class="expandable-body table-active">
-                                        <td colspan="7">
+                                        <td colspan="8">
                                             <div class="row ">
                                                 <div class="col-md-6 ">
                                                     <span class="text-bold">Tender Product Details :</span> @item.TND_PRODUCTS_DESC <br />

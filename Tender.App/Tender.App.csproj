@@ -175,6 +175,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service\AlertService.cs" />
     <Compile Include="Service\CommonService.cs" />
     <Compile Include="Service\QuotationService.cs" />
     <Compile Include="Service\TenderService.cs" />
@@ -184,6 +185,7 @@
     <Content Include="App_Asset\dist\img\compare.png" />
     <Content Include="App_Asset\dist\img\ML_Red_wave__1_.jpg" />
     <Content Include="App_Asset\dist\img\noImage.jpg" />
+    <Content Include="App_Asset\dist\img\rfqHomePage.jpg" />
     <Content Include="App_Asset\dist\img\tenderDetails.jpg" />
     <Content Include="App_Asset\js\bid.js" />
     <Content Include="App_Asset\css\style.css" />
@@ -2303,6 +2305,10 @@
     <Content Include="Views\Tender\Index.cshtml" />
     <Content Include="Views\Tender\CompareTender.cshtml" />
     <Content Include="Views\Tender\TenderList.cshtml" />
+    <Content Include="Views\Tender\ViewAllTender.cshtml" />
+    <Content Include="Views\Tender\TenderDetails.cshtml" />
+    <Content Include="Views\Quotation\WiningsBid.cshtml" />
+    <Content Include="Views\Accounts\supplierProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

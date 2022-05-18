@@ -26,6 +26,13 @@ namespace Tender.App.Controllers
                 if (_tpl.Item2.SUCCESS && _tpl.Item2.ROWS == 1)
                 {
                     Session["ssUser"] = _tpl.Item1;
+                    Session["_vendorUserId"] = _tpl.Item1.VENDOR_USER_ID;
+                    Session["_vendorEmail"] = _tpl.Item1.VENDOR_EMAIL;
+                    Session["_orgName"] = _tpl.Item1.ORGANIZATION_NAME;
+                    Session["vendorId"] = _tpl.Item1.VENDOR_ID;
+                    Session["_supplierStatus"] = _tpl.Item1.SUPPLIER;
+                    Session["_purcherserStatus"] = _tpl.Item1.PURCHASER;
+                   
                     return RedirectToAction("Index", "Home");
                 }
                 //ModelState.AddModelError("", _tpl.Item2.MESSAGES);
@@ -148,6 +155,7 @@ namespace Tender.App.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+
         [UserSessionCheck]
         [HttpPost]
         public ActionResult UserProfile(VENDOR_DETAILS obj, HttpPostedFileBase ProfilePicture)
@@ -173,6 +181,24 @@ namespace Tender.App.Controllers
 
             }
             return RedirectToAction("UserProfile", "Accounts");
+        }
+        [UserSessionCheck]
+        [HttpGet]
+        public ActionResult supplierProfile(string id)
+        {
+            VENDER_SESSION snObj = (VENDER_SESSION)Session["ssUser"];
+            DropDownFor_Signup();
+            Tuple<VENDOR_DETAILS, EQResult> _tpl = AccountsService.getProfile(id);
+            if (_tpl.Item2.SUCCESS && _tpl.Item2.ROWS == 1)
+            {
+                _tpl.Item1.VENDOR_CATEGORY = AccountsService.getVENDOR_CATEGORY(id).Item1;
+                _tpl.Item1.VENDOR_CERTIFICATE = AccountsService.getVENDOR_CERTIFICATE(id).Item1;
+                _tpl.Item1.VENDOR_DOCUMENTS = AccountsService.getVENDOR_DOCUMENTS(id).Item1;
+                _tpl.Item1.VENDOR_PRODUCTS = AccountsService.getVENDOR_PRODUCTS(id).Item1;
+                return View(_tpl.Item1);
+
+            }
+            return RedirectToAction("Index", "Home");
         }
 
         [UserSessionCheck]

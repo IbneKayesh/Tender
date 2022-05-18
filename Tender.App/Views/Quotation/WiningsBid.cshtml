@@ -1,0 +1,80 @@
+﻿@model IEnumerable<Tender.Models.Models.RFQ_BIDDING>
+@{
+    ViewBag.Title = "Winings Bids";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+</style>
+<section class="content">
+    <div class="card card-solid">
+        <div class="card-body">
+            
+            <div class="card card-primary card-outline mt-3">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <i class="fas fa-list"></i>
+                        @ViewBag.Title  &nbsp;&nbsp; <small>@System.DateTime.Now</small>
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <table class="table table-bordered table-striped table-hover table-responsive-md">
+                        <thead>
+                            <tr class="table-secondary">
+                                <th>RFQ Number</th>
+                                <th>Quote Number</th>
+                                <th>Product Name</th>
+                                <th>Submit Date</th>
+                                <th>Bidding Rate</th>
+                                <th>Bidding Quantity</th>
+                                <th>Approve Date</th>
+                                <th>Approve Note</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model != null)
+                            {
+                                foreach (var item in Model)
+                                {
+                                    <tr data-widget="expandable-table" aria-expanded="false" data-toggle="tooltip" data-placement="top" title="Click For Details">
+                                        
+                                        <td>@item.RFQ_NUMBER</td>
+                                        <td>@item.QUOTE_NUMBER</td>
+                                        <td>@item.TND_PRODUCTS_NAME</td>
+                                        <td>@item.SUBMIT_DATE.ToString("yyyy-MM-dd")</td>
+                                        <td>@item.PRODUCTS_RATE</td>
+                                        <td>@item.PRODUCTS_QUANTITY</td>                                       
+                                        <td>@item.APPROVAL_DATE.ToString("yyyy-MM-dd")</td>                                       
+                                        <td>@item.APPROVAL_NOTE</td>                                       
+                                    </tr>
+                                   
+                                }
+                            }
+
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+
+
+
+
+
+
+@section scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+       
+    </script>
+
+}

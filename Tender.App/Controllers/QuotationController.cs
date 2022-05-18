@@ -14,7 +14,7 @@ namespace Tender.App.Controllers
         // GET: Bid, For Bidder
         public ActionResult Index()
         {
-            List<RFQ_TenderView> obj = QuotationService.getAllTender().Item1;
+            List<RFQ_TenderView> obj = QuotationService.getAllTender((string)Session["vendorId"]).Item1;
 
             return View(obj);
         }
@@ -37,11 +37,15 @@ namespace Tender.App.Controllers
         [HttpPost]
         public ActionResult SubmitQuote(RFQ_BIDDING obj)
         {
-            obj.SUBMIT_DATE = DateTime.Now;
-            obj.VENDOR_ID = "ddfa9637-3214-4318-b65b-f88e6f4a881b";
+            obj.SUBMIT_DATE = DateTime.Now;            
+            obj.VENDOR_ID = (string)Session["vendorId"];
             if (ModelState.IsValid)
             {
-                QuotationService.SaveQuotationData(obj);
+               var _tpl= QuotationService.SaveQuotationData(obj);
+                if (_tpl.SUCCESS == true)
+                {
+                    TempData["msg"] = AlertService.SaveSuccessOK();
+                }
             }
             else
             {
@@ -49,9 +53,14 @@ namespace Tender.App.Controllers
                 return View(obj);
             }
             DropDownFor_Tender();
+            return RedirectToAction("Index");
+        }
+        public ActionResult WiningsBid()
+        {
+            List<RFQ_BIDDING> obj = QuotationService.winingsBid((string)Session["vendorId"]).Item1;
             return View(obj);
         }
-
+      
         public void DropDownFor_Tender()
         {
             ViewBag.SHIPMENT_MODE = new SelectList(TenderService.getShipmentMode().Item1.ToList(), "SHIPMENT_MODE_ID", "SHIPMENT_MODE_NAME");

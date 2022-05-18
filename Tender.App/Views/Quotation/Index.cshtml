@@ -15,28 +15,36 @@
         {
             if (item.APPROVAL_ID == "0")
             {
-                TimeSpan diffTime = item.END_DATE - DateTime.Now;
-                <div class="col-sm-6 col-md-3 tndDiv">
-                    <div class="card card-info card-outline">
-                        <div class="card-header">
-                            <h2 class="card-title">Tender Code <span class="text-bold"># @item.RFQ_NUMBER</span></h2>
-                        </div>
-                        <div class="card-body">
-                            <input type="hidden" value="@item.END_DATE.ToString("yyyy-MM-dd")" class="endDate" />
-                            <p>@item.PRODUCTS_NAME</p>
-                            <p>Rate : @item.PRODUCTS_RATE</p>
-                            <p>Quantity : @item.PRODUCTS_QUANTITY (@item.UNIT)</p>
-                            <p>Tender Type : @item.SELL_BUY</p>
-                            <span class="diffDateValue text-danger">
-                            </span>
-                            <br />
-                            <span class="text-success">Submitted Bids : @item.SUBMITED_BIDS</span>
-                        </div>
-                        <div class="card-footer">
-                            <a class="btn btn-outline-danger btn-sm btn-block" href="@Url.Action("SubmitQuote","Quotation",new { id = item.RFQ_NUMBER })">Submit Quote</a>
+                if (item.RE_BID == "Submit Once" && item.VSUBMIT_STATUS == "Y")
+                {
+
+                }
+                else
+                {
+                    TimeSpan diffTime = item.END_DATE - DateTime.Now;
+                    <div class="col-sm-6 col-md-3 tndDiv">
+                        <div class="card card-info card-outline">
+                            <div class="card-header">
+                                <h2 class="card-title">Tender Code <span class="text-bold"># @item.RFQ_NUMBER</span></h2>
+                            </div>
+                            <div class="card-body">
+                                <input type="hidden" value="@item.END_DATE.ToString("yyyy-MM-dd")" class="endDate" />
+                                <p>@item.PRODUCTS_NAME</p>
+                                <p>Rate : @item.PRODUCTS_RATE</p>
+                                <p>Quantity : @item.PRODUCTS_QUANTITY (@item.UNIT)</p>
+                                <p>Tender Type : @item.SELL_BUY</p>
+                                <span class="diffDateValue text-danger">
+                                </span><br />
+                                <span>@item.RE_BID</span>
+                                <br />
+                                <span class="text-success">Submitted Bids : @item.SUBMITED_BIDS</span>
+                            </div>
+                            <div class="card-footer">
+                                <a class="btn btn-outline-danger btn-sm btn-block" href="@Url.Action("SubmitQuote","Quotation",new { id = item.RFQ_NUMBER })">Submit Quote</a>
+                            </div>
                         </div>
                     </div>
-                </div>
+                }
             }
 
         }
@@ -61,13 +69,13 @@
                 let minutes = (hours % 1) * 60;
                 let secs = (minutes % 1) * 60;
                 [days, hours, minutes, secs] = [Math.floor(days), Math.floor(hours), Math.floor(minutes), Math.floor(secs)]
-             //   console.log(days + ' days', hours + ' hours', minutes + ' minutes', secs + ' secs');
+                //   console.log(days + ' days', hours + ' hours', minutes + ' minutes', secs + ' secs');
 
                 $(this).children('div.card').children('div.card-body').children('span.diffDateValue').text("" + days + "d   " + hours + "h   " + minutes + "m   " + secs + "s");
 
             });
         }
-        
+
 
     </script>
 

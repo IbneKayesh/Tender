@@ -1,11 +1,11 @@
 ﻿@model IEnumerable<Tender.Models.Models.RFQ_TenderView>
 
 @{
-    ViewBag.Title = "Compare List";
+    ViewBag.Title = "View All";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div class="text-center">
-    <h2>Compare List</h2>
+    <h2>We arrange for you</h2>
 </div>
 
 <div class="row">
@@ -13,8 +13,7 @@
     {
         foreach (var item in Model)
         {
-            if (item.SUBMITED_BIDS != 0)
-            {
+           
                 TimeSpan diffTime = item.END_DATE - DateTime.Now;
                 <div class="col-sm-6 col-md-3 tndDiv">
                     <div class="card card-info card-outline">
@@ -33,15 +32,15 @@
                             <span class="text-success">Submitted Bids : @item.SUBMITED_BIDS</span>
                         </div>
                         <div class="card-footer">
-                            <a class="btn btn-outline-danger btn-sm btn-block" href="@Url.Action("CompareTender","Tender",new { id = item.RFQ_NUMBER })">Compare Quotation</a>
+                            <a class="btn btn-outline-danger btn-sm btn-block" href="@Url.Action("TenderDetails","Tender",new { id = item.RFQ_NUMBER })">View Details</a>
                         </div>
                     </div>
                 </div>
-            }
 
         }
 
     }
+
 </div>
 
 

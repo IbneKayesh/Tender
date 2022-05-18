@@ -13,9 +13,9 @@ namespace Tender.App.Service
             string sql = $"SELECT V.VENDOR_ID,ORGANIZATION_NAME FROM VENDOR V WHERE V.VENDOR_ID='{vendorId}'";
             return DatabaseMSSql.SqlQuery<VENDOR>(sql);
         }       
-        public static Tuple<List<RFQ_TenderView>, EQResult> getAllTender()
+        public static Tuple<List<RFQ_TenderView>, EQResult> getAllTender(string vendorId)
         {
-            string sql = $@"SELECT R.RFQ_NUMBER, R.VENDOR_ID TND_VENDOR_ID,
+            string sql = $@" SELECT R.RFQ_NUMBER, R.VENDOR_ID TND_VENDOR_ID,
                             CASE WHEN  R.SELL_BUY=0 THEN 'Buyer' ELSE 'Seller ' END SELL_BUY, 
                             CASE WHEN    R.LOCAL_IMPORT=1 THEN 'Local' ELSE 'Importer' END  LOCAL_IMPORT,
                             CASE WHEN     R.RE_BID=1 THEN 'Submit Once' ELSE 'Submit Multiple' END RE_BID,
@@ -28,7 +28,7 @@ namespace Tender.App.Service
                                R.RECEIVER_DETAILS, CASE WHEN  R.COST_EX_INC=1 THEN 'Include' ELSE 'Exclude' END COST_EX_INC, INCO.INCO_TERMS_NAME, 
                                R.CURRENCY_NAME, R.CURRENCY_RATE, TPM.PAYMENT_MODE_NAME PAY_A, 
                                R.PAY_AP, TPM.PAYMENT_MODE_NAME PAY_B, R.PAY_BP, 
-                               R.IS_APPROVE,R.PRODUCTS_ID,NVL(BIDDERS.SUBMITED_BIDS,0) SUBMITED_BIDS ,NVL(APP.APPROVAL_ID,0)  APPROVAL_ID
+                               R.IS_APPROVE,R.PRODUCTS_ID,NVL(BIDDERS.SUBMITED_BIDS,0) SUBMITED_BIDS ,NVL(APP.APPROVAL_ID,0)  APPROVAL_ID,NVL2(T1.RFQ_NUMBER,'Y','N')VSUBMIT_STATUS
                             FROM TND.RFQ_TENDER R
                             INNER JOIN TNDR_PRODUCTS TP ON TP.PRODUCTS_ID=R.PRODUCTS_ID
                             LEFT JOIN TNDR_SHIPMENT_MODE SM ON SM.SHIPMENT_MODE_ID=R.SHIPMENT_MODE
@@ -38,6 +38,9 @@ namespace Tender.App.Service
                             INNER JOIN TNDR_PAYMENT_MODE TPB ON TPB.PAYMENT_MODE_ID=R.PAY_B
                             LEFT JOIN ( SELECT RFQ_NUMBER,MAX(RFQ_SL)SUBMITED_BIDS  FROM RFQ_BIDDING GROUP BY RFQ_NUMBER ) BIDDERS ON BIDDERS.RFQ_NUMBER=R.RFQ_NUMBER
                             LEFT JOIN RFQ_TENDER_APPROVAL APP ON APP.RFQ_NUMBER=R.RFQ_NUMBER
+                             LEFT JOIN (
+                            SELECT DISTINCT RFQ_NUMBER, VENDOR_ID FROM RFQ_BIDDING WHERE VENDOR_ID='{vendorId}' 
+                            ) T1 ON T1.RFQ_NUMBER=R.RFQ_NUMBER                 
                             ORDER BY R.RFQ_NUMBER ASC
                             ";
             var objList = DatabaseMSSql.SqlQuery<RFQ_TenderView>(sql);
@@ -104,6 +107,18 @@ namespace Tender.App.Service
                             INNER JOIN VENDOR VN ON VN.VENDOR_ID=RB.VENDOR_ID
                             LEFT JOIN RFQ_TENDER_APPROVAL APP ON APP.RFQ_NUMBER=R.RFQ_NUMBER
                             WHERE R.RFQ_NUMBER='{rfqNumber}'
+                            ";
+            var objList = DatabaseMSSql.SqlQuery<RFQ_BIDDING>(sql);
+            return objList;
+        }
+
+        public static Tuple<List<RFQ_BIDDING>, EQResult> winingsBid(string vendorId)
+        {
+            string sql = $@"SELECT RB.RFQ_NUMBER, RB.QUOTE_NUMBER,TP.PRODUCTS_NAME TND_PRODUCTS_NAME, RB.PRODUCTS_RATE,RB.PRODUCTS_QUANTITY,TP.UNIT,RB.SUBMIT_DATE,APP.APPROVAL_DATE,APP.APPROVAL_NOTE
+                            FROM RFQ_BIDDING RB
+                            INNER JOIN TNDR_PRODUCTS TP ON TP.PRODUCTS_ID=RB.PRODUCTS_ID
+                            INNER JOIN RFQ_TENDER_APPROVAL APP ON APP.RFQ_NUMBER=RB.RFQ_NUMBER  AND APP.VENDOR_ID=RB.VENDOR_ID AND APP.QUOTE_NUMBER=RB.QUOTE_NUMBER                        
+                            WHERE RB.VENDOR_ID='{vendorId}'
                             ";
             var objList = DatabaseMSSql.SqlQuery<RFQ_BIDDING>(sql);
             return objList;

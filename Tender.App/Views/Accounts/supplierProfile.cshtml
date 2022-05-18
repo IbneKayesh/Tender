@@ -1,7 +1,7 @@
 ﻿@model Tender.Models.Models.VENDOR_DETAILS
 
 @{
-    ViewBag.Title = "User Profile";
+    ViewBag.Title = "Supplier Profile";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div class="container">
@@ -48,7 +48,7 @@
 
                             <strong><i class="fas fa-map-marker-alt mr-1"></i> Location</strong>
                             <p class="text-muted">
-                                Present Address  : @Model.ADDRESS_1<br/>
+                                Present Address  : @Model.ADDRESS_1<br />
                                 Secondery Address : @Model.ADDRESS_2
                             </p>
                         </div>
@@ -60,9 +60,8 @@
                     <div class="card">
                         <div class="card-header p-2">
                             <ul class="nav nav-pills">
-                                <li class="nav-item"><a class="nav-link active" href="#follow" data-toggle="tab">Following</a></li>
+                                <li class="nav-item"><a class="nav-link active" href="#follow" data-toggle="tab">Follow</a></li>
                                 <li class="nav-item"><a class="nav-link" href="#UpdateProfile" data-toggle="tab">Update Profile</a></li>
-                                <li class="nav-item"><a class="nav-link" href="#settings" data-toggle="tab">Change Password</a></li>
                             </ul>
                         </div>
                         <div class="card-body">
@@ -72,38 +71,39 @@
                                     <p>
                                         @foreach (var mItem in Model.VENDOR_PRODUCTS)
                                         {
-                                            <label class="m-2 btn btn-sm btn-outline-primary">
-                                                @mItem.PRODUCTS_NAME
-                                                <input class="v-pro" type="checkbox" id="@mItem.PRODUCTS_ID" checked="@mItem.IS_ACTIVE" />
-                                            </label>
+                                            if (mItem.IS_ACTIVE == true)
+                                            {
+                                                <span class="badge badge-primary"> @mItem.PRODUCTS_NAME</span>
+                                            }
+
                                         }
                                     </p>
                                     <hr />
                                     <strong><i class="fas fa-business-time mr-1"></i> Business</strong><br />
                                     @foreach (var mItem in Model.VENDOR_CATEGORY)
                                     {
-                                        <label class="m-2 btn btn-sm btn-outline-primary">
-                                            @mItem.CATEGORY_NAME
-                                            <input class="v-cat" type="checkbox" id="@mItem.CATEGORY_ID" @(mItem.IS_ACTIVE == 1 ? "checked='checked'" : string.Empty)  />
-                                        </label>
+                                        if (mItem.IS_ACTIVE == 1)
+                                        {
+                                            <span class="badge badge-success"> @mItem.CATEGORY_NAME</span>
+                                        }
                                     }
                                     <hr />
                                     <strong><i class="fa fa-certificate mr-1"></i> Certificate</strong><br />
                                     @foreach (var mItem in Model.VENDOR_CERTIFICATE)
                                     {
-                                        <label class="m-2 btn btn-sm btn-outline-primary">
-                                            @mItem.CERTIFICATE_NAME
-                                            <input class="v-cer" type="checkbox" id="@mItem.CERTIFICATE_ID" checked="@mItem.IS_ACTIVE" />
-                                        </label>
+                                        if (mItem.IS_ACTIVE == true)
+                                        {
+                                            <span class="badge badge-info"> @mItem.CERTIFICATE_NAME</span>
+                                        }
                                     }
                                     <hr />
                                     <strong><i class="fa fa-file mr-1"></i> Documents</strong><br />
                                     @foreach (var mItem in Model.VENDOR_DOCUMENTS)
                                     {
-                                        <label class="m-2 btn btn-sm btn-outline-primary">
-                                            @mItem.DOCUMENTS_NAME
-                                            <input class="v-doc" type="checkbox" id="@mItem.DOCUMENTS_ID" checked="@mItem.IS_ACTIVE" />
-                                        </label>
+                                        if (mItem.IS_ACTIVE == true)
+                                        {
+                                            <span class="badge badge-warning"> @mItem.DOCUMENTS_NAME</span>
+                                        }
                                     }
                                 </div>
 
@@ -118,33 +118,33 @@
                                         @Html.HiddenFor(model => model.VENDOR_ID)
                                         @Html.HiddenFor(model => model.VENDOR_PASSWD)
 
-                                    <span class="text-danger"> @ViewBag.ExistUserId</span>
-                                    <div class="form-row">
-                                        <div class="col-md-6 col-sm-12">
-                                            <div class="form-group">
-                                                <label for="VENDOR_USER_ID" class="control-label"> User Id</label>
-                                                @Html.EditorFor(model => model.VENDOR_USER_ID, new { htmlAttributes = new { @class = "form-control form-control-sm"} })
+                                        <span class="text-danger"> @ViewBag.ExistUserId</span>
+                                        <div class="form-row">
+                                            <div class="col-md-6 col-sm-12">
+                                                <div class="form-group">
+                                                    <label for="VENDOR_USER_ID" class="control-label"> User Id</label>
+                                                    @Html.EditorFor(model => model.VENDOR_USER_ID, new { htmlAttributes = new { @class = "form-control form-control-sm" , @readonly = true } })
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-sm-12">
+                                                <div class="form-group">
+                                                    <label for="VENDOR_USER_ID" class="control-label"> Country</label>
+                                                    @Html.EditorFor(model => model.COUNTRY_NAME, new { htmlAttributes = new { @class = "form-control form-control-sm", @readonly = true } })
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-6 col-sm-12">
-                                            <div class="form-group">
-                                                <label for="VENDOR_USER_ID" class="control-label"> Country</label>
-                                                @Html.EditorFor(model => model.COUNTRY_NAME, new { htmlAttributes = new { @class = "form-control form-control-sm", @readonly = true } })
-                                            </div>
-                                        </div>
-                                    </div>
                                         <div class="form-row">
                                             <div class="col-md-6 col-sm-12">
                                                 <div class="form-group">
                                                     <label for="CONTACT_NAME" class="control-label"> Contact</label>
-                                                    @Html.EditorFor(model => model.CONTACT_NAME, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "Contact Person" } })
+                                                    @Html.EditorFor(model => model.CONTACT_NAME, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "Contact Person" , @readonly = true } })
                                                 </div>
                                             </div>
 
                                             <div class="col-md-6 col-sm-12">
                                                 <div class="form-group">
                                                     <label for="CONTACT_NUMBER" class="control-label"> Contact Number</label>
-                                                    @Html.EditorFor(model => model.CONTACT_NUMBER, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "Contact Number" } })
+                                                    @Html.EditorFor(model => model.CONTACT_NUMBER, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "Contact Number" , @readonly = true } })
                                                 </div>
                                             </div>
                                         </div>
@@ -152,13 +152,13 @@
                                             <div class="col-md-6 col-sm-12">
                                                 <div class="form-group">
                                                     <label for="ADDRESS_1" class="control-label"> Present Address</label>
-                                                    @Html.EditorFor(model => model.ADDRESS_1, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "Present Address" } })
+                                                    @Html.EditorFor(model => model.ADDRESS_1, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "Present Address" ,  @readonly = true } })
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12">
                                                 <div class="form-group">
                                                     <label for="ADDRESS_2" class="control-label"> Permanent Address</label>
-                                                    @Html.EditorFor(model => model.ADDRESS_2, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "Permanent Address" } })
+                                                    @Html.EditorFor(model => model.ADDRESS_2, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "Permanent Address" ,  @readonly = true } })
                                                 </div>
                                             </div>
                                         </div>
@@ -166,13 +166,13 @@
                                             <div class="col-md-6 col-sm-12">
                                                 <div class="form-group">
                                                     <label for="YEAR_OF_ESTABLISHMENT" class="control-label"> Establishment Year</label>
-                                                    @Html.EditorFor(model => model.YEAR_OF_ESTABLISHMENT, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "Establishment Year" } })
+                                                    @Html.EditorFor(model => model.YEAR_OF_ESTABLISHMENT, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "Establishment Year",  @readonly = true } })
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12">
                                                 <div class="form-group">
                                                     <label for="YEARLY_TRUNOVER" class="control-label"> Yearly Turnover</label>
-                                                    @Html.EditorFor(model => model.YEARLY_TRUNOVER, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "Yearly Turnover" } })
+                                                    @Html.EditorFor(model => model.YEARLY_TRUNOVER, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "Yearly Turnover" , @readonly = true } })
                                                 </div>
                                             </div>
 
@@ -181,13 +181,13 @@
                                             <div class="col-md-6 col-sm-12">
                                                 <div class="form-group">
                                                     <label for="NO_OF_EMPLOYEES" class="control-label"> Number of Employee</label>
-                                                    @Html.EditorFor(model => model.NO_OF_EMPLOYEES, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "50-100 People" } })
+                                                    @Html.EditorFor(model => model.NO_OF_EMPLOYEES, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "50-100 People",  @readonly = true } })
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12">
                                                 <div class="form-group">
                                                     <label for="TAX_NUMBER" class="control-label"> TAX/TIN</label>
-                                                    @Html.EditorFor(model => model.TAX_NUMBER, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "TAX/TIN" } })
+                                                    @Html.EditorFor(model => model.TAX_NUMBER, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "TAX/TIN",  @readonly = true } })
                                                 </div>
                                             </div>
                                         </div>
@@ -195,7 +195,7 @@
                                             <div class="col-md-6 col-sm-12">
                                                 <div class="form-group">
                                                     <label for="TRADE_NUMBER" class="control-label"> Trade Number</label>
-                                                    @Html.EditorFor(model => model.TRADE_NUMBER, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "Trade License Number" } })
+                                                    @Html.EditorFor(model => model.TRADE_NUMBER, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "Trade License Number",  @readonly = true } })
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12">
@@ -207,7 +207,7 @@
                                             <div class="col-md-6 col-sm-12">
                                                 <div class="form-group">
                                                     <div class="icheck-primary">
-                                                        <input type="checkbox" id="PURCHASER_X" name="PURCHASER_X" @(Model.PURCHASER == 1 ? "checked" :"unchecked") />
+                                                        <input type="checkbox" id="PURCHASER_X" name="PURCHASER_X" @(Model.PURCHASER == 1 ? "checked" : "unchecked") />
                                                         <label for="PURCHASER_X"> Purchaser</label>
                                                     </div>
                                                 </div>
@@ -216,7 +216,7 @@
                                             <div class="col-md-6 col-sm-12">
                                                 <div class="form-group">
                                                     <div class="icheck-primary">
-                                                        <input type="checkbox" id="PURCHASER_NOTIFY_X" name="PURCHASER_NOTIFY_X" @(Model.PURCHASER_NOTIFY == 1 ? "checked" :"unchecked") />
+                                                        <input type="checkbox" id="PURCHASER_NOTIFY_X" name="PURCHASER_NOTIFY_X" @(Model.PURCHASER_NOTIFY == 1 ? "checked" : "unchecked") />
                                                         <label for="PURCHASER_NOTIFY_X">
                                                             Get Purchaser Notification
                                                         </label>
@@ -230,7 +230,7 @@
                                             <div class="col-md-6 col-sm-12">
                                                 <div class="form-group">
                                                     <div class="icheck-primary">
-                                                        <input type="checkbox" id="SUPPLIER_X" name="SUPPLIER_X" @(Model.SUPPLIER == 1 ? "checked" :"unchecked") />
+                                                        <input type="checkbox" id="SUPPLIER_X" name="SUPPLIER_X" @(Model.SUPPLIER == 1 ? "checked" : "unchecked") />
                                                         <label for="SUPPLIER_X">
                                                             Supplier
                                                         </label>
@@ -241,36 +241,19 @@
                                             <div class="col-md-6 col-sm-12">
                                                 <div class="form-group">
                                                     <div class="icheck-primary">
-                                                        <input type="checkbox" id="SUPPLIER_NOTIFY_X" name="SUPPLIER_NOTIFY_X" @(Model.SUPPLIER_NOTIFY == 1 ? "checked" :"unchecked") />
+                                                        <input type="checkbox" id="SUPPLIER_NOTIFY_X" name="SUPPLIER_NOTIFY_X" @(Model.SUPPLIER_NOTIFY == 1 ? "checked" : "unchecked") />
                                                         <label for="SUPPLIER_NOTIFY_X">
                                                             Get Supplier Notification
                                                         </label>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="form-row">
-                                            <div class="col-md-6 col-sm-12">
-                                                <div class="form-group">
-                                                    @Html.Label("Upload Profile Picture", new { @class = "control-label" })
-                                                    <input type="file" name="ProfilePicture" accept=".png, .jpg, .jpeg" /><br />
-                                                    <span class="text-success">png,jpg,jpeg format only</span>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="row float-right">
-                                            <div class="col-12 float-right">
-                                                <button type="submit" class="btn btn-danger btn-sm">Submit</button>
-                                            </div>
-                                        </div>
+                                        </div>                                                                        
                                     }
 
                                 </div>
 
-                                <div class="tab-pane" id="settings">
-                                    @Html.Partial("_Changepassword", Model.CHANGE_PASWD)
-                                </div>
+                               
 
                             </div>
 

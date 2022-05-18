@@ -73,6 +73,8 @@ namespace Tender.Models.Models
 
         public int SUBMITED_BIDS { get; set; } = 0;
         public string APPROVAL_ID { get; set; }
+        public string VSUBMIT_STATUS { get; set; }
+
 
     }
 }
