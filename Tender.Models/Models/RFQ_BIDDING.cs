@@ -26,10 +26,10 @@ namespace Tender.Models.Models
         [Required(ErrorMessage = "{0} is required")]
         public string LOADING_ADDRESS { get; set; }
         [Required(ErrorMessage = "{0} is required")]
-        [StringLength(maximumLength: 50, ErrorMessage = "{0} length is between {2} and {1}", MinimumLength = 3)]
+        [StringLength(maximumLength: 100, ErrorMessage = "{0} length is between {2} and {1}", MinimumLength = 3)]
         public string SENDER_NAME { get; set; }
         [Required(ErrorMessage = "{0} is required")]
-        [StringLength(maximumLength: 50, ErrorMessage = "{0} length is between {2} and {1}", MinimumLength = 5)]
+        [StringLength(maximumLength: 100, ErrorMessage = "{0} length is between {2} and {1}", MinimumLength = 5)]
         public string SENDER_DETAILS { get; set; }
 
         [NotMapped]
@@ -97,6 +97,8 @@ namespace Tender.Models.Models
         public string Q_PORT_NAME { get; set; }
         [NotMapped]
         public string VENDOR_NAME { get; set; }
+        public string APPROVAL_ID { get; set; }
+
 
 
     }

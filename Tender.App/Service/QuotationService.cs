@@ -28,7 +28,7 @@ namespace Tender.App.Service
                                R.RECEIVER_DETAILS, CASE WHEN  R.COST_EX_INC=1 THEN 'Include' ELSE 'Exclude' END COST_EX_INC, INCO.INCO_TERMS_NAME, 
                                R.CURRENCY_NAME, R.CURRENCY_RATE, TPM.PAYMENT_MODE_NAME PAY_A, 
                                R.PAY_AP, TPM.PAYMENT_MODE_NAME PAY_B, R.PAY_BP, 
-                               R.IS_APPROVE,R.PRODUCTS_ID,NVL(BIDDERS.SUBMITED_BIDS,0) SUBMITED_BIDS
+                               R.IS_APPROVE,R.PRODUCTS_ID,NVL(BIDDERS.SUBMITED_BIDS,0) SUBMITED_BIDS ,NVL(APP.APPROVAL_ID,0)  APPROVAL_ID
                             FROM TND.RFQ_TENDER R
                             INNER JOIN TNDR_PRODUCTS TP ON TP.PRODUCTS_ID=R.PRODUCTS_ID
                             LEFT JOIN TNDR_SHIPMENT_MODE SM ON SM.SHIPMENT_MODE_ID=R.SHIPMENT_MODE
@@ -37,6 +37,7 @@ namespace Tender.App.Service
                             INNER JOIN TNDR_PAYMENT_MODE TPM ON TPM.PAYMENT_MODE_ID=R.PAY_A
                             INNER JOIN TNDR_PAYMENT_MODE TPB ON TPB.PAYMENT_MODE_ID=R.PAY_B
                             LEFT JOIN ( SELECT RFQ_NUMBER,MAX(RFQ_SL)SUBMITED_BIDS  FROM RFQ_BIDDING GROUP BY RFQ_NUMBER ) BIDDERS ON BIDDERS.RFQ_NUMBER=R.RFQ_NUMBER
+                            LEFT JOIN RFQ_TENDER_APPROVAL APP ON APP.RFQ_NUMBER=R.RFQ_NUMBER
                             ORDER BY R.RFQ_NUMBER ASC
                             ";
             var objList = DatabaseMSSql.SqlQuery<RFQ_TenderView>(sql);
@@ -74,7 +75,7 @@ namespace Tender.App.Service
 
         public static Tuple<List<RFQ_BIDDING>, EQResult> getTenderListForCompare(string rfqNumber)
         {
-            string sql = $@"    SELECT RB.QUOTE_NUMBER, R.RFQ_NUMBER, R.VENDOR_ID TND_VENDOR_ID, VN.ORGANIZATION_NAME VENDOR_NAME,RB.VENDOR_ID ,
+            string sql = $@"SELECT RB.QUOTE_NUMBER, R.RFQ_NUMBER, R.VENDOR_ID TND_VENDOR_ID, VN.ORGANIZATION_NAME VENDOR_NAME,RB.VENDOR_ID ,
                             CASE WHEN  R.SELL_BUY=0 THEN 'Buyer' ELSE 'Seller ' END SELL_BUY, 
                             CASE WHEN    R.LOCAL_IMPORT=1 THEN 'Local' ELSE 'Importer' END  LOCAL_IMPORT,
                             CASE WHEN     R.RE_BID=1 THEN 'Submit Once' ELSE 'Submit Multiple' END RE_BID,
@@ -89,7 +90,7 @@ namespace Tender.App.Service
                                R.PAY_AP, TPM.PAYMENT_MODE_NAME PAY_B, R.PAY_BP, 
                                R.IS_APPROVE,R.PRODUCTS_ID,
                                RB.PRODUCTS_DESC , RB.PRODUCTS_QUANTITY, RB.PRODUCTS_RATE ,RB.SENDER_NAME,RB.SENDER_DETAILS,RB.LOADING_ADDRESS, QSM.SHIPMENT_MODE_NAME Q_SHIPMENT_MODE,
-                               QP.PORT_NAME Q_PORT_NAME,RB.SUBMIT_DATE
+                               QP.PORT_NAME Q_PORT_NAME,RB.SUBMIT_DATE ,NVL(APP.APPROVAL_ID,0)  APPROVAL_ID
                             FROM RFQ_BIDDING RB 
                             INNER  JOIN RFQ_TENDER R ON R.RFQ_NUMBER=RB.RFQ_NUMBER
                             INNER JOIN TNDR_PRODUCTS TP ON TP.PRODUCTS_ID=R.PRODUCTS_ID
@@ -101,6 +102,7 @@ namespace Tender.App.Service
                             LEFT JOIN TNDR_SHIPMENT_MODE QSM ON QSM.SHIPMENT_MODE_ID=RB.SHIPMENT_MODE
                             LEFT JOIN TNDR_PORT QP ON QP.PORT_ID=RB.PORT_ID
                             INNER JOIN VENDOR VN ON VN.VENDOR_ID=RB.VENDOR_ID
+                            LEFT JOIN RFQ_TENDER_APPROVAL APP ON APP.RFQ_NUMBER=R.RFQ_NUMBER
                             WHERE R.RFQ_NUMBER='{rfqNumber}'
                             ";
             var objList = DatabaseMSSql.SqlQuery<RFQ_BIDDING>(sql);

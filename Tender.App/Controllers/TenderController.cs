@@ -14,7 +14,8 @@ namespace Tender.App.Controllers
         // GET: Tender, For Supplier
         string userId = "c0919d47-94d1-49a7-b351-1fa448081ed0";
         public ActionResult Index()
-        {List<RFQ_TenderView> obj = QuotationService.getAllTender().Item1;
+        {
+            List<RFQ_TenderView> obj = QuotationService.getAllTender().Item1;
 
             return View(obj);
         }
