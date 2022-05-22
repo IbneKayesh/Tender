@@ -21,15 +21,31 @@ namespace Tender.Models.Models
         [StringLength(maximumLength: 50, ErrorMessage = "{0} length is between {2} and {1}", MinimumLength = 3)]
         public string VENDOR_USER_ID { get; set; }
 
-        [Display(Name = "Contact Person Name")]
+        [Display(Name = "1st Contact Person Name")]
         [Required(ErrorMessage = "{0} is required")]
         [StringLength(maximumLength: 50, ErrorMessage = "{0} length is between {2} and {1}", MinimumLength = 3)]
         public string CONTACT_NAME { get; set; }
 
-        [Display(Name = "Contact Number")]
+        [Display(Name = "1st Contact Number")]
         [Required(ErrorMessage = "{0} is required")]
         [StringLength(maximumLength: 50, ErrorMessage = "{0} length is between {2} and {1}", MinimumLength = 3)]
         public string CONTACT_NUMBER { get; set; }
+
+        [Display(Name = "2nd Contact Person Name")]
+        [StringLength(maximumLength: 50, ErrorMessage = "{0} length is between {2} and {1}", MinimumLength = 3)]
+        public string CONTACT_NAME2 { get; set; }
+
+        [Display(Name = "2nd Contact Number")]
+        [StringLength(maximumLength: 50, ErrorMessage = "{0} length is between {2} and {1}", MinimumLength = 3)]
+        public string CONTACT_NUMBER2 { get; set; }
+
+        [Display(Name = "3rd Contact Person Name")]
+        [StringLength(maximumLength: 50, ErrorMessage = "{0} length is between {2} and {1}", MinimumLength = 3)]
+        public string CONTACT_NAME3 { get; set; }
+
+        [Display(Name = "3rd Contact Number")]
+        [StringLength(maximumLength: 50, ErrorMessage = "{0} length is between {2} and {1}", MinimumLength = 3)]
+        public string CONTACT_NUMBER3 { get; set; }
 
 
         [Display(Name = "Present Address")]
@@ -38,7 +54,6 @@ namespace Tender.Models.Models
         public string ADDRESS_1 { get; set; }
 
         [Display(Name = "Permanent Address")]
-        [Required(ErrorMessage = "{0} is required")]
         [StringLength(maximumLength: 50, ErrorMessage = "{0} length is between {2} and {1}", MinimumLength = 3)]
         public string ADDRESS_2 { get; set; }
 
@@ -66,7 +81,7 @@ namespace Tender.Models.Models
         [StringLength(maximumLength: 50, ErrorMessage = "{0} length is between {2} and {1}", MinimumLength = 3)]
         public string TRADE_NUMBER { get; set; }
 
-
+        public string PROFILE_IMAGE { get; set; }
 
         public int IS_CONFIRMED { get; set; }
 

@@ -1,6 +1,7 @@
 ﻿using Aio.Db.MSSqlEF;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -11,6 +12,7 @@ namespace Tender.App.Controllers
 {
     public class AccountsController : Controller
     {
+        private object _he;
         #region Login_Logout
         [HttpGet]
         public ActionResult Login()
@@ -32,7 +34,7 @@ namespace Tender.App.Controllers
                     Session["vendorId"] = _tpl.Item1.VENDOR_ID;
                     Session["_supplierStatus"] = _tpl.Item1.SUPPLIER;
                     Session["_purcherserStatus"] = _tpl.Item1.PURCHASER;
-                   
+
                     return RedirectToAction("Index", "Home");
                 }
                 //ModelState.AddModelError("", _tpl.Item2.MESSAGES);
@@ -69,6 +71,9 @@ namespace Tender.App.Controllers
                 if (obj.SUPPLIER == 0 && obj.PURCHASER == 0)
                 {
                     ModelState.AddModelError("", "Select Registration Type Purchaser or Supplier");
+                }
+                else if (obj.SUPPLIER==1 && obj.PURCHASER==1) { 
+                ModelState.AddModelError("", "Select Registration Type Purchaser or Supplier any one");
                 }
                 else
                 {
@@ -176,7 +181,55 @@ namespace Tender.App.Controllers
                 }
                 else
                 {
-                    AccountsService.profileUpdate(obj);
+                    if (ProfilePicture != null)
+                    {
+                        if (ProfilePicture.ContentLength <= 102400)
+                        {
+                            string pic = System.IO.Path.GetFileName(ProfilePicture.FileName);
+                            string path = System.IO.Path.Combine(
+                                                   Server.MapPath("~/App_Asset/dist/img/profileImage"), pic);
+                            var extension = Path.GetExtension(ProfilePicture.FileName);
+                            if (extension.ToLower() == ".jpg" || extension.ToLower() == ".png" || extension.ToLower() == "jpeg")
+                            {
+                                ProfilePicture.SaveAs(path);
+                                obj.PROFILE_IMAGE = "App_Asset/dist/img/profileImage/" + pic;
+                                var _tpl = AccountsService.profileUpdate(obj);
+                                using (MemoryStream ms = new MemoryStream())
+                                {
+                                    ProfilePicture.InputStream.CopyTo(ms);
+                                    byte[] array = ms.GetBuffer();
+                                }
+                                if (_tpl.SUCCESS == true)
+                                {
+                                    TempData["msg"] = AlertService.SaveSuccess("Profile Update Successfully");
+                                }
+                                else if (_tpl.SUCCESS == false)
+                                {
+                                    TempData["msg"] = AlertService.SaveSuccess(_tpl.MESSAGES);
+                                }
+                                return RedirectToAction("UserProfile", "Accounts");
+                            }
+                            else {
+                                TempData["msg"] = AlertService.SaveWarningOK("Image format must be jpg, jpeg,png");
+                                return View(obj);
+                            }
+                            
+                        }
+                        else {
+                            TempData["msg"] = AlertService.SaveWarningOK("Image size less then 100 KB");
+                            return View(obj);
+                        }
+                       
+                    }
+                    var _tpl1 = AccountsService.profileUpdate(obj);
+                    if (_tpl1.SUCCESS == true)
+                    {
+                        TempData["msg"] = AlertService.SaveSuccess("Profile Update Successfully");
+                    }
+                    else if (_tpl1.SUCCESS == false) {
+                        TempData["msg"] = AlertService.SaveSuccess(_tpl1.MESSAGES);
+                    }
+
                 }
 
             }

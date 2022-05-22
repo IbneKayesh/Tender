@@ -1,0 +1,126 @@
+﻿@model Tender.Models.Models.TNDR_PRODUCTS
+
+@{
+    ViewBag.Title = "Create Item";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="col-md-12 mt-3">
+
+    <div class="card card-primary">
+        <div class="card-header">
+            <h5 class="card-title">Create Item</h5>
+        </div>
+
+
+        @using (Html.BeginForm("CreateTenderProduct", "Setup", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+            @Html.AntiForgeryToken()
+            <div class="card-body">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Product Name</label>
+                    @Html.EditorFor(model => model.PRODUCTS_NAME, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "Product Name" } })
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Unit</label>
+                    @Html.EditorFor(model => model.UNIT, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "Product Name" } })
+                </div>
+
+                <div class="form-group">
+                    @Html.Label("Upload Product Picture", new { @class = "control-label" })
+                    <input type="file" name="ProductPicture" accept=".png, .jpg, .jpeg" />
+                    <br />
+
+                    <span class="text-success">png,jpg,jpeg format only</span>
+                    <span class="text-primary">Maximun Size 100KB</span><br />
+                    <span class="text-danger">Must be Height 800px Width 800px</span>
+                </div>
+            </div>
+            <div class="card-footer">
+                <button type="submit" class="btn btn-primary" id="save" style="display:none;">Save</button>
+                <button class="btn btn-primary" id="submit">Submit</button>
+            </div>
+        }
+    </div>
+
+</div>
+
+<div class="col-md-12" id="ItemList">
+    <div class="card card-primary card-outline">
+        <div class="card-header">
+            Item List
+        </div>
+        <div class="card-body table-responsive">
+            <table id="myTable1" class="table table-hover" style="width: 100%;">
+                <thead>
+                    <tr>
+                        <th>Image</th>
+                        <th>Code</th>
+                        <th>Name</th>
+                        <th>Unit</th>
+                        
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+
+
+</div>
+
+
+@section scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+<script>
+    var myTable;
+        $(document).ready(function () {
+            $("#submit").click(function () {
+                $("#save").click();
+            });
+
+            //function preventBack() { window.history.forward(); }
+            //setTimeout("preventBack()", 0);
+            //window.onunload = function () { null };
+
+            //datatable load
+            loadTable();
+        })
+
+         function loadTable() {
+             let url = "@Url.Action("GetAll")";
+             var baseUrl = window.location.origin;
+            myTable = $('#myTable1').DataTable({
+                "ajax": "GetAll",
+                "type": "GET",
+                "datatype": "json",
+                "bDestroy": false,
+                "dom": 'Bfrtip',
+                "buttons": [
+                    { extend: 'pdf', className: 'btn btn-danger btn-sm' },
+                    { extend: 'excel', className: 'btn btn-danger btn-sm' },
+                    { extend: 'print', className: 'btn btn-danger btn-sm' },
+                    { extend: 'colvis', className: 'btn btn-danger btn-sm' }
+                ],
+                "paging": true,
+                "info": true,
+                "responsive": true,
+                "ordering": true,
+                "columns": [
+                    {
+                        "mData": "IMAGE_PATH",
+                        render: function (mData) {
+                            return '<a href="' + baseUrl + '/' + mData +'"> <img src="' + baseUrl+'/'+mData +'" alt="No Image"height="50" width="50"/> </a>'
+                        }
+                    },
+                    { "mData": "PRODUCTS_ID" },
+                    { "mData": "PRODUCTS_NAME" },
+                    { "mData": "UNIT" }
+                ],
+                "language": { "emptyTable": "no data found" }, "width": "100%"
+            });
+        };
+</script>
+
+}
+

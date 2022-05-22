@@ -4,67 +4,128 @@
 
 <div class="row mt-2">
     <div class="col">
-        <div class="container-fluid">
+        @if ((int)Session["_supplierStatus"] == 1 && (int)Session["_purcherserStatus"] == 0)
+        {
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-3 col-6">
 
-            <div class="row">
-                <div class="col-lg-3 col-6">
-
-                    <div class="small-box bg-info">
-                        <div class="inner">
-                            <h3>150</h3>
-                            <p>New Orders</p>
+                        <div class="small-box bg-info">
+                            <div class="inner text-center">
+                                <h3>@ViewBag.WingingsBids</h3>
+                                <p>Total Wining Bids</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-bag"></i>
+                            </div>
+                            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                         </div>
-                        <div class="icon">
-                            <i class="ion ion-bag"></i>
-                        </div>
-                        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
-                </div>
 
-                <div class="col-lg-3 col-6">
+                    <div class="col-lg-3 col-6">
 
-                    <div class="small-box bg-success">
-                        <div class="inner">
-                            <h3>53<sup style="font-size: 20px">%</sup></h3>
-                            <p>Bounce Rate</p>
+                        <div class="small-box bg-success">
+                            <div class="inner text-center">
+                                <h3>@ViewBag.ApplyBids</h3>
+                                <p>Total Apply Bids</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-stats-bars"></i>
+                            </div>
+                            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                         </div>
-                        <div class="icon">
-                            <i class="ion ion-stats-bars"></i>
-                        </div>
-                        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
-                </div>
 
-                <div class="col-lg-3 col-6">
-
-                    <div class="small-box bg-warning">
-                        <div class="inner">
-                            <h3>44</h3>
-                            <p>User Registrations</p>
+                    <div class="col-lg-3 col-6">
+                        <div class="small-box bg-warning">
+                            <div class="inner text-center">
+                                <h3>@ViewBag.NewBids</h3>
+                                <p>New Bids</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-person-add"></i>
+                            </div>
+                            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                         </div>
-                        <div class="icon">
-                            <i class="ion ion-person-add"></i>
-                        </div>
-                        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
-                </div>
 
-                <div class="col-lg-3 col-6">
-
-                    <div class="small-box bg-danger">
-                        <div class="inner">
-                            <h3>65</h3>
-                            <p>Unique Visitors</p>
+                    <div class="col-lg-3 col-6">
+                        <div class="small-box bg-danger">
+                            <div class="inner text-center">
+                                <h3>@ViewBag.NotWinBid</h3>
+                                <p>Not Win Bids</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-pie-graph"></i>
+                            </div>
+                            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                         </div>
-                        <div class="icon">
-                            <i class="ion ion-pie-graph"></i>
-                        </div>
-                        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
-                </div>
 
+                </div>
             </div>
+        }
+        else { 
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-3 col-6">
+
+                <div class="small-box bg-info">
+                    <div class="inner text-center">
+                        <h3>@ViewBag.totalRFQ</h3>
+                        <p>Total RFQ</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-bag"></i>
+                    </div>
+                    <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-6">
+
+                <div class="small-box bg-success">
+                    <div class="inner text-center">
+                        <h3>@ViewBag.totalQuto</h3>
+                        <p>Total Submitted Quotation</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-stats-bars"></i>
+                    </div>
+                    <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-warning">
+                    <div class="inner text-center">
+                        <h3>@ViewBag.currentRFQ</h3>
+                        <p>Current RFQ</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-person-add"></i>
+                    </div>
+                    <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-danger">
+                    <div class="inner text-center">
+                        <h3>@ViewBag.totalSupplier</h3>
+                        <p>Total Registration</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-pie-graph"></i>
+                    </div>
+                    <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+
         </div>
+    </div>
+        }
+
         <div class="col text-center text-primary mt-5">
             <img src="~/App_Asset/dist/img/rfqHomePage.jpg" class="img-fluid" />
         </div>

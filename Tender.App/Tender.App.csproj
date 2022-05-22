@@ -160,6 +160,12 @@
       <Private>True</Private>
       <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="X.PagedList, Version=1.20.0.1855, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\X.PagedList.1.20.0.1\lib\portable-net4+sl5+wp8+win8\X.PagedList.dll</HintPath>
+    </Reference>
+    <Reference Include="X.PagedList.Mvc, Version=4.7.0.1855, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\X.PagedList.Mvc.4.7.0.0\lib\net40\X.PagedList.Mvc.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -175,8 +181,10 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service\SetupService.cs" />
     <Compile Include="Service\AlertService.cs" />
     <Compile Include="Service\CommonService.cs" />
+    <Compile Include="Service\HomeService.cs" />
     <Compile Include="Service\QuotationService.cs" />
     <Compile Include="Service\TenderService.cs" />
     <Compile Include="Service\AccountsService.cs" />
@@ -2114,6 +2122,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\docs.txt" />
+    <Content Include="Content\PagedList.css" />
     <Content Include="Docs\sqlsOra.txt" />
     <Content Include="Docs\sqls.txt" />
     <Content Include="favicon.ico" />
@@ -2309,11 +2318,13 @@
     <Content Include="Views\Tender\TenderDetails.cshtml" />
     <Content Include="Views\Quotation\WiningsBid.cshtml" />
     <Content Include="Views\Accounts\supplierProfile.cshtml" />
+    <Content Include="Views\Setup\CreateTenderProduct.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="App_Asset\dist\img\productImage\" />
+    <Folder Include="App_Asset\dist\img\profileImage\" />
     <Folder Include="App_Data\" />
     <Folder Include="Views\Base\" />
-    <Folder Include="Views\Setup\" />
     <Folder Include="Views\ValidateLogin\" />
   </ItemGroup>
   <ItemGroup>

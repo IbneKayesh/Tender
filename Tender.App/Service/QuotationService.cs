@@ -12,7 +12,7 @@ namespace Tender.App.Service
         {
             string sql = $"SELECT V.VENDOR_ID,ORGANIZATION_NAME FROM VENDOR V WHERE V.VENDOR_ID='{vendorId}'";
             return DatabaseMSSql.SqlQuery<VENDOR>(sql);
-        }       
+        }      
         public static Tuple<List<RFQ_TenderView>, EQResult> getAllTender(string vendorId)
         {
             string sql = $@" SELECT R.RFQ_NUMBER, R.VENDOR_ID TND_VENDOR_ID,
@@ -53,7 +53,7 @@ namespace Tender.App.Service
                             CASE WHEN    R.LOCAL_IMPORT=1 THEN 'Local' ELSE 'Importer' END  LOCAL_IMPORT,
                             CASE WHEN     R.RE_BID=1 THEN 'Submit Once' ELSE 'Submit Multiple' END RE_BID,
                             CASE WHEN  R.LOWER_RATE=1 THEN 'Lower Rate Only' ELSE 'Any Rate' END LOWER_RATE, 
-                               R.START_DATE, R.END_DATE, TP.PRODUCTS_NAME TND_PRODUCTS_NAME, TP.UNIT, 
+                               R.START_DATE, R.END_DATE, TP.PRODUCTS_NAME TND_PRODUCTS_NAME,TP.IMAGE_PATH, TP.UNIT, 
                                R.PRODUCTS_DESC TND_PRODUCTS_DESC, R.PRODUCTS_RATE TND_PRODUCTS_RATE, R.PRODUCTS_QUANTITY TND_PRODUCTS_QTY, 
                                R.LAST_DELIVERY_DATE,
                                CASE WHEN  R.PARTIAL_SHIPMENT=2 THEN 'Allow' WHEN  R.PARTIAL_SHIPMENT=1 THEN 'Not Allow' ELSE '' END PARTIAL_SHIPMENT, SM.SHIPMENT_MODE_NAME TENDER_SHIPMENT_MODE, 
@@ -84,7 +84,7 @@ namespace Tender.App.Service
                             CASE WHEN     R.RE_BID=1 THEN 'Submit Once' ELSE 'Submit Multiple' END RE_BID,
                             CASE WHEN  R.LOWER_RATE=1 THEN 'Lower Rate Only' ELSE 'Any Rate' END LOWER_RATE, 
                               R.START_DATE, R.END_DATE, TP.PRODUCTS_NAME PRODUCTS_ID, TP.UNIT, 
-                               R.PRODUCTS_DESC TND_PRODUCTS_DESC, R.PRODUCTS_RATE TND_PRODUCTS_RATE, R.PRODUCTS_QUANTITY TND_PRODUCTS_QTY, 
+                               R.PRODUCTS_DESC TND_PRODUCTS_DESC, R.PRODUCTS_RATE TND_PRODUCTS_RATE,TP.IMAGE_PATH, R.PRODUCTS_QUANTITY TND_PRODUCTS_QTY, 
                                R.LAST_DELIVERY_DATE,
                                CASE WHEN  R.PARTIAL_SHIPMENT=2 THEN 'Allow' WHEN  R.PARTIAL_SHIPMENT=1 THEN 'Not Allow' ELSE '' END PARTIAL_SHIPMENT, SM.SHIPMENT_MODE_NAME TENDER_SHIPMENT_MODE, 
                                P.PORT_NAME TENDER_PORT_ID, R.DELIVERY_ADDRESS, R.RECEIVER_NAME, 
@@ -114,10 +114,41 @@ namespace Tender.App.Service
 
         public static Tuple<List<RFQ_BIDDING>, EQResult> winingsBid(string vendorId)
         {
-            string sql = $@"SELECT RB.RFQ_NUMBER, RB.QUOTE_NUMBER,TP.PRODUCTS_NAME TND_PRODUCTS_NAME, RB.PRODUCTS_RATE,RB.PRODUCTS_QUANTITY,TP.UNIT,RB.SUBMIT_DATE,APP.APPROVAL_DATE,APP.APPROVAL_NOTE
-                            FROM RFQ_BIDDING RB
-                            INNER JOIN TNDR_PRODUCTS TP ON TP.PRODUCTS_ID=RB.PRODUCTS_ID
-                            INNER JOIN RFQ_TENDER_APPROVAL APP ON APP.RFQ_NUMBER=RB.RFQ_NUMBER  AND APP.VENDOR_ID=RB.VENDOR_ID AND APP.QUOTE_NUMBER=RB.QUOTE_NUMBER                        
+            //string sql = $@"SELECT RB.RFQ_NUMBER, RB.QUOTE_NUMBER,TP.PRODUCTS_NAME TND_PRODUCTS_NAME, RB.PRODUCTS_RATE,RB.PRODUCTS_QUANTITY,TP.UNIT,RB.SUBMIT_DATE,APP.APPROVAL_DATE,APP.APPROVAL_NOTE
+            //                FROM RFQ_BIDDING RB
+            //                INNER JOIN TNDR_PRODUCTS TP ON TP.PRODUCTS_ID=RB.PRODUCTS_ID
+            //                INNER JOIN RFQ_TENDER_APPROVAL APP ON APP.RFQ_NUMBER=RB.RFQ_NUMBER  AND APP.VENDOR_ID=RB.VENDOR_ID AND APP.QUOTE_NUMBER=RB.QUOTE_NUMBER                        
+            //                WHERE RB.VENDOR_ID='{vendorId}'
+            //                ";
+            string sql = $@"SELECT RB.QUOTE_NUMBER, R.RFQ_NUMBER, R.VENDOR_ID TND_VENDOR_ID, VN.ORGANIZATION_NAME VENDOR_NAME,RB.VENDOR_ID ,RB.SUBMIT_DATE, APP.APPROVAL_DATE, APP.APPROVAL_NOTE,
+                            CASE WHEN  R.SELL_BUY=0 THEN 'Buyer' ELSE 'Seller ' END SELL_BUY, 
+                            CASE WHEN    R.LOCAL_IMPORT=1 THEN 'Local' ELSE 'Importer' END  LOCAL_IMPORT,
+                            CASE WHEN     R.RE_BID=1 THEN 'Submit Once' ELSE 'Submit Multiple' END RE_BID,
+                            CASE WHEN  R.LOWER_RATE=1 THEN 'Lower Rate Only' ELSE 'Any Rate' END LOWER_RATE, 
+                              R.START_DATE, R.END_DATE, TP.PRODUCTS_NAME TND_PRODUCTS_NAME, TP.UNIT, 
+                               R.PRODUCTS_DESC TND_PRODUCTS_DESC, R.PRODUCTS_RATE TND_PRODUCTS_RATE,TP.IMAGE_PATH, R.PRODUCTS_QUANTITY TND_PRODUCTS_QTY, 
+                               R.LAST_DELIVERY_DATE,
+                               CASE WHEN  R.PARTIAL_SHIPMENT=2 THEN 'Allow' WHEN  R.PARTIAL_SHIPMENT=1 THEN 'Not Allow' ELSE '' END PARTIAL_SHIPMENT, SM.SHIPMENT_MODE_NAME TENDER_SHIPMENT_MODE, 
+                               P.PORT_NAME TENDER_PORT_ID, R.DELIVERY_ADDRESS, R.RECEIVER_NAME, 
+                               R.RECEIVER_DETAILS, CASE WHEN  R.COST_EX_INC=1 THEN 'Include' ELSE 'Exclude' END COST_EX_INC, INCO.INCO_TERMS_NAME, 
+                               R.CURRENCY_NAME, R.CURRENCY_RATE, TPM.PAYMENT_MODE_NAME PAY_A, 
+                               R.PAY_AP, TPM.PAYMENT_MODE_NAME PAY_B, R.PAY_BP, 
+                               R.IS_APPROVE,R.PRODUCTS_ID,
+                               RB.PRODUCTS_DESC , RB.PRODUCTS_QUANTITY, RB.PRODUCTS_RATE ,RB.SENDER_NAME,RB.SENDER_DETAILS,RB.LOADING_ADDRESS, QSM.SHIPMENT_MODE_NAME Q_SHIPMENT_MODE,
+                               QP.PORT_NAME Q_PORT_NAME,RB.SUBMIT_DATE ,NVL(APP.APPROVAL_ID,0)  APPROVAL_ID
+                            FROM RFQ_BIDDING RB 
+                            INNER  JOIN RFQ_TENDER R ON R.RFQ_NUMBER=RB.RFQ_NUMBER
+                            INNER JOIN TNDR_PRODUCTS TP ON TP.PRODUCTS_ID=R.PRODUCTS_ID
+                            LEFT JOIN TNDR_SHIPMENT_MODE SM ON SM.SHIPMENT_MODE_ID=R.SHIPMENT_MODE
+                            LEFT JOIN TNDR_PORT P ON P.PORT_ID=R.PORT_ID
+                            LEFT JOIN TNDR_INCO_TERMS INCO ON INCO.INCO_TERMS_ID=R.INCO_TERMS
+                            INNER JOIN TNDR_PAYMENT_MODE TPM ON TPM.PAYMENT_MODE_ID=R.PAY_A
+                            INNER JOIN TNDR_PAYMENT_MODE TPB ON TPB.PAYMENT_MODE_ID=R.PAY_B
+                            LEFT JOIN TNDR_SHIPMENT_MODE QSM ON QSM.SHIPMENT_MODE_ID=RB.SHIPMENT_MODE
+                            LEFT JOIN TNDR_PORT QP ON QP.PORT_ID=RB.PORT_ID
+                            INNER JOIN VENDOR VN ON VN.VENDOR_ID=RB.VENDOR_ID
+                            LEFT JOIN RFQ_TENDER_APPROVAL APP ON APP.RFQ_NUMBER=R.RFQ_NUMBER
+                            INNER JOIN RFQ_TENDER_APPROVAL APP  ON APP.RFQ_NUMBER = RB.RFQ_NUMBER AND APP.VENDOR_ID = RB.VENDOR_ID AND APP.QUOTE_NUMBER = RB.QUOTE_NUMBER
                             WHERE RB.VENDOR_ID='{vendorId}'
                             ";
             var objList = DatabaseMSSql.SqlQuery<RFQ_BIDDING>(sql);

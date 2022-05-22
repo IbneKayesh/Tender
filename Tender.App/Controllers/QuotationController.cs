@@ -2,21 +2,20 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using Tender.App.Service;
 using Tender.Models.Models;
+using PagedList;
 
 namespace Tender.App.Controllers
 {
     public class QuotationController : Controller
     {
         // GET: Bid, For Bidder
-        public ActionResult Index()
-        {
-            List<RFQ_TenderView> obj = QuotationService.getAllTender((string)Session["vendorId"]).Item1;
-
-            return View(obj);
+        public ActionResult Index(int? page)
+        { 
+            List<RFQ_TenderView> obj = QuotationService.getAllTender((string)Session["vendorId"]).Item1.Where(c=>c.APPROVAL_ID =="0").ToList();
+            return View(obj.ToPagedList(page ??1, pageSize:8));
         }
 
         [HttpGet]

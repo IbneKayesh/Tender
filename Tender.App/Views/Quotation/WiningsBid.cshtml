@@ -8,7 +8,7 @@
 <section class="content">
     <div class="card card-solid">
         <div class="card-body">
-            
+
             <div class="card card-primary card-outline mt-3">
                 <div class="card-header">
                     <h3 class="card-title">
@@ -20,6 +20,7 @@
                     <table class="table table-bordered table-striped table-hover table-responsive-md">
                         <thead>
                             <tr class="table-secondary">
+                                <th>View Details</th>
                                 <th>RFQ Number</th>
                                 <th>Quote Number</th>
                                 <th>Product Name</th>
@@ -36,17 +37,44 @@
                                 foreach (var item in Model)
                                 {
                                     <tr data-widget="expandable-table" aria-expanded="false" data-toggle="tooltip" data-placement="top" title="Click For Details">
-                                        
+                                        <td><a class="btn btn-sm  btn-outline-success">View Details</a></td>
                                         <td>@item.RFQ_NUMBER</td>
                                         <td>@item.QUOTE_NUMBER</td>
                                         <td>@item.TND_PRODUCTS_NAME</td>
                                         <td>@item.SUBMIT_DATE.ToString("yyyy-MM-dd")</td>
                                         <td>@item.PRODUCTS_RATE</td>
-                                        <td>@item.PRODUCTS_QUANTITY</td>                                       
-                                        <td>@item.APPROVAL_DATE.ToString("yyyy-MM-dd")</td>                                       
-                                        <td>@item.APPROVAL_NOTE</td>                                       
+                                        <td>@item.PRODUCTS_QUANTITY</td>
+                                        <td>@item.APPROVAL_DATE.ToString("yyyy-MM-dd")</td>
+                                        <td>@item.APPROVAL_NOTE</td>
                                     </tr>
-                                   
+
+                                    <tr class="expandable-body table-active">
+                                        <td colspan="9">
+                                            <div class="row ">
+                                                <div class="col-md-6 ">
+                                                    <span class="text-bold">Tender Product Details :</span> @item.TND_PRODUCTS_DESC <br />
+                                                    <span class="text-bold">Tender Port Name :</span> @item.TENDER_PORT_ID <br />
+                                                    <span class="text-bold">Tender Shipment Mode :</span> @item.TENDER_SHIPMENT_MODE <br />
+                                                    <span class="text-bold">Loading Address :</span> @item.LOADING_ADDRESS <br />
+                                                    <span class="text-bold">Receiver Name :</span> @item.RECEIVER_NAME <br />
+                                                    <span class="text-bold">Shipment Mode :</span> @item.RECEIVER_DETAILS <br />
+                                                    <hr />
+                                                </div>
+
+                                                <div class="col-md-6 ">
+                                                    <span class="text-bold">Quot Product Details :</span> @item.PRODUCTS_DESC <br />
+                                                    <span class="text-bold">Quot Port Name :</span> @item.Q_PORT_NAME <br />
+                                                    <span class="text-bold">Quot Shipment Mode :</span> @item.Q_SHIPMENT_MODE <br />
+                                                    <span class="text-bold"> Delivery Address :</span> @item.DELIVERY_ADDRESS <br />
+                                                    <span class="text-bold"> Sender Name :</span> @item.SENDER_NAME <br />
+                                                    <span class="text-bold"> Sender Details :</span> @item.SENDER_DETAILS <br />
+                                                    <hr />
+                                                </div>
+
+                                            </div>
+                                        </td>
+                                    </tr>
+
                                 }
                             }
 
@@ -74,7 +102,9 @@
 @section scripts{
     @Scripts.Render("~/bundles/jqueryval")
     <script>
-       
+        function preventBack() { window.history.forward(); }
+        setTimeout("preventBack()", 0);
+        window.onunload = function () { null };
     </script>
 
 }

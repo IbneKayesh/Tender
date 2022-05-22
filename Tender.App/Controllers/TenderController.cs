@@ -6,22 +6,24 @@ using System.Web.Mvc;
 using Tender.Models.Models;
 using Tender.App.Service;
 using Aio.Db.MSSqlEF;
+using PagedList;
+
 
 namespace Tender.App.Controllers
 {
     public class TenderController : Controller
     {
-        public ActionResult Index()
+        public ActionResult Index(int? page)
         {
-            List<RFQ_TenderView> obj = QuotationService.getAllTender((string)Session["vendorId"]).Item1;
+            List<RFQ_TenderView> obj = QuotationService.getAllTender((string)Session["vendorId"]).Item1.Where(c=>c.SUBMITED_BIDS != 0).ToList();
 
-            return View(obj);
+            return View(obj.ToPagedList(page ?? 1, pageSize: 8));
         }
         [HttpGet]
-        public ActionResult ViewAllTender()
+        public ActionResult ViewAllTender(int ? page)
         {
             List<RFQ_TenderView> obj = QuotationService.getAllTender((string)Session["vendorId"]).Item1;
-            return View(obj);
+            return View(obj.ToPagedList(page ?? 1, pageSize: 8));
         }
         [HttpGet]
         public ActionResult TenderDetails(string id)

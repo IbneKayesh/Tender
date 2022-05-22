@@ -10,7 +10,14 @@
             <div class="row">
                 <div class="col-12 col-sm-4">
                     <div class="col-12">
-                        <img src="~/App_Asset/dist/img/noImage.jpg" class="product-image" alt="Product Image" />
+                        @if (Model.IMAGE_PATH != null)
+                        {
+                            <img src="~/@Model.IMAGE_PATH" class="product-image img-fluid" alt="Product Image" />
+                        }
+                        else
+                        {
+                            <img src="~/App_Asset/dist/img/noImage.jpg" class="product-image img-fluid" alt="Product Image" />
+                        }
                     </div>                    
                 </div>
                 <div class="col-12 col-sm-8">
@@ -252,6 +259,10 @@
     <script>
         $(document).ready(function () {
             setInterval("dateimeFunction()", 1000);
+
+            function preventBack() { window.history.forward(); }
+            setTimeout("preventBack()", 0);
+            window.onunload = function () { null };
         })
         function dateimeFunction() {
             var endDateTime = $('.endDate').val();

@@ -1,9 +1,51 @@
-﻿@model IEnumerable<Tender.Models.Models.RFQ_TenderView>
-
+﻿
+@model IPagedList<Tender.Models.Models.RFQ_TenderView>
+@using PagedList;
+@using PagedList.Mvc;
 @{
     ViewBag.Title = "View All";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    <style>
+        @@media screen and (max-width: 662px) {
+            .pagination {
+                font-size: 12px;
+            }
+        }
+
+        .ul.pagination {
+            display: inline-block;
+            padding: 0;
+            margin: 0;
+            margin-left: 20px;
+        }
+
+        ul.pagination li {
+            display: inline;
+        }
+
+            ul.pagination li a {
+                color: red;
+                background-color: lightsteelblue;
+                float: left;
+                padding: 8px 16px;
+                text-decoration: none;
+                transition: background-color .3s;
+            }
+
+                ul.pagination li a.active {
+                    background-color: powderblue;
+                    color: brown;
+                }
+
+                ul.pagination li a:hover:not(.active) {
+                    background-color: gray;
+                }
+    </style>
 }
+
+
+
 <div class="text-center">
     <h2>We arrange for you</h2>
 </div>
@@ -13,29 +55,29 @@
     {
         foreach (var item in Model)
         {
-           
-                TimeSpan diffTime = item.END_DATE - DateTime.Now;
-                <div class="col-sm-6 col-md-3 tndDiv">
-                    <div class="card card-info card-outline">
-                        <div class="card-header">
-                            <h2 class="card-title">Tender Code <span class="text-bold"># @item.RFQ_NUMBER</span></h2>
-                        </div>
-                        <div class="card-body">
-                            <input type="hidden" value="@item.END_DATE.ToString("yyyy-MM-dd")" class="endDate" />
-                            <p>@item.PRODUCTS_NAME</p>
-                            <p>Rate : @item.PRODUCTS_RATE</p>
-                            <p>Quantity : @item.PRODUCTS_QUANTITY (@item.UNIT)</p>
-                            <p>Tender Type : @item.SELL_BUY</p>
-                            <span class="diffDateValue text-danger">
-                            </span>
-                            <br />
-                            <span class="text-success">Submitted Bids : @item.SUBMITED_BIDS</span>
-                        </div>
-                        <div class="card-footer">
-                            <a class="btn btn-outline-danger btn-sm btn-block" href="@Url.Action("TenderDetails","Tender",new { id = item.RFQ_NUMBER })">View Details</a>
-                        </div>
+
+            TimeSpan diffTime = item.END_DATE - DateTime.Now;
+            <div class="col-sm-6 col-md-3 tndDiv">
+                <div class="card card-info card-outline">
+                    <div class="card-header">
+                        <h2 class="card-title">Tender Code <span class="text-bold"># @item.RFQ_NUMBER</span></h2>
+                    </div>
+                    <div class="card-body">
+                        <input type="hidden" value="@item.END_DATE.ToString("yyyy-MM-dd")" class="endDate" />
+                        <p>@item.PRODUCTS_NAME</p>
+                        <p>Rate : @item.PRODUCTS_RATE</p>
+                        <p>Quantity : @item.PRODUCTS_QUANTITY (@item.UNIT)</p>
+                        <p>Tender Type : @item.SELL_BUY</p>
+                        <span class="diffDateValue text-danger">
+                        </span>
+                        <br />
+                        <span class="text-success">Submitted Bids : @item.SUBMITED_BIDS</span>
+                    </div>
+                    <div class="card-footer">
+                        <a class="btn btn-outline-danger btn-sm btn-block" href="@Url.Action("TenderDetails","Tender",new { id = item.RFQ_NUMBER })">View Details</a>
                     </div>
                 </div>
+            </div>
 
         }
 
@@ -43,12 +85,29 @@
 
 </div>
 
+<div id="container" class="col-4 text-center">
+    <p></p>
+    <p></p>
+    <div class="pagination text-center">
+        <div class="pagination-container mt-2 mr-2">
+            Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+            of @Model.PageCount
+        </div>   <br />  @Html.PagedListPager(Model, page => Url.Action("ViewAllTender", new { page }))
+    </div>
+</div>
+
+
 
 @section scripts{
     @Scripts.Render("~/bundles/jqueryval")
     <script>
         $(document).ready(function () {
             setInterval("dateimeFunction()", 1000);
+
+            function preventBack() { window.history.forward(); }
+            setTimeout("preventBack()", 0);
+            window.onunload = function () { null };
+
         })
         function dateimeFunction() {
             $(".tndDiv").each(function () {

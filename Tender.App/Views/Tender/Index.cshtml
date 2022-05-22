@@ -1,9 +1,49 @@
-﻿@model IEnumerable<Tender.Models.Models.RFQ_TenderView>
-
+﻿@model IPagedList<Tender.Models.Models.RFQ_TenderView>
+@using PagedList;
+@using PagedList.Mvc;
 @{
     ViewBag.Title = "Compare List";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    <style>
+        @@media screen and (max-width: 662px) {
+            .pagination {
+                font-size: 12px;
+            }
+        }
+
+        .ul.pagination {
+            display: inline-block;
+            padding: 0;
+            margin: 0;
+            margin-left: 20px;
+        }
+
+        ul.pagination li {
+            display: inline;
+        }
+
+            ul.pagination li a {
+                color: red;
+                background-color: lightsteelblue;
+                float: left;
+                padding: 8px 16px;
+                text-decoration: none;
+                transition: background-color .3s;
+            }
+
+                ul.pagination li a.active {
+                    background-color: powderblue;
+                    color: brown;
+                }
+
+                ul.pagination li a:hover:not(.active) {
+                    background-color: gray;
+                }
+    </style>
 }
+
+
 <div class="text-center">
     <h2>Compare List</h2>
 </div>
@@ -44,12 +84,27 @@
     }
 </div>
 
+<div id="container" class="col-4 text-center">
+    <p></p>
+    <p></p>
+    <div class="pagination text-center">
+        <div class="pagination-container mt-2 mr-2">
+            Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+            of @Model.PageCount
+        </div>   <br />  @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+    </div>
+</div>
+
 
 @section scripts{
     @Scripts.Render("~/bundles/jqueryval")
     <script>
         $(document).ready(function () {
             setInterval("dateimeFunction()", 1000);
+
+            function preventBack() { window.history.forward(); }
+            setTimeout("preventBack()", 0);
+            window.onunload = function () { null };
         })
         function dateimeFunction() {
             $(".tndDiv").each(function () {

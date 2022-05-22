@@ -75,7 +75,7 @@
                 </div>
                 <div class="col-12">
                     <div class="icheck-primary">
-                        <input type="checkbox" id="SUPPLIER_NOTIFY_X" name="SUPPLIER_NOTIFY_X"/>
+                        <input type="checkbox" id="SUPPLIER_NOTIFY_X" name="SUPPLIER_NOTIFY_X" />
                         <label for="SUPPLIER_NOTIFY_X">
                             Get Supplier Notification
                         </label>
@@ -101,4 +101,13 @@
 </div>
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(document).ready(function () {
+          
+            function preventBack() { window.history.forward(); }
+            setTimeout("preventBack()", 0);
+            window.onunload = function () { null };
+
+        })
+    </script>
 }

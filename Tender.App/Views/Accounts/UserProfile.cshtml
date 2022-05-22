@@ -30,7 +30,15 @@
                     <div class="card card-primary card-outline">
                         <div class="card-body box-profile">
                             <div class="text-center">
-                                <img src="~/App_Asset/dist/img/user1-128x128.jpg" class="profile-user-img img-fluid img-circle" alt="User profile picture" />
+                                @if (Model.PROFILE_IMAGE != null)
+                                {
+                                    <img src="~/@Model.PROFILE_IMAGE" class="profile-user-img img-fluid img-circle" alt="User profile picture" />
+                                }
+                                else
+                                {
+                                    <img src="~/App_Asset/dist/img/user1-128x128.jpg" class="profile-user-img img-fluid img-circle" alt="User profile picture" />
+                                }
+
                             </div>
                             <h3 class="profile-username text-center">@Model.ORGANIZATION_NAME</h3>
                             <p class="text-muted text-center mb-0 pd-0">@Model.VENDOR_EMAIL</p>
@@ -48,7 +56,7 @@
 
                             <strong><i class="fas fa-map-marker-alt mr-1"></i> Location</strong>
                             <p class="text-muted">
-                                Present Address  : @Model.ADDRESS_1<br/>
+                                Present Address  : @Model.ADDRESS_1<br />
                                 Secondery Address : @Model.ADDRESS_2
                             </p>
                         </div>
@@ -84,7 +92,7 @@
                                     {
                                         <label class="m-2 btn btn-sm btn-outline-primary">
                                             @mItem.CATEGORY_NAME
-                                            <input class="v-cat" type="checkbox" id="@mItem.CATEGORY_ID" @(mItem.IS_ACTIVE == 1 ? "checked='checked'" : string.Empty)  />
+                                            <input class="v-cat" type="checkbox" id="@mItem.CATEGORY_ID" @(mItem.IS_ACTIVE == 1 ? "checked='checked'" : string.Empty) />
                                         </label>
                                     }
                                     <hr />
@@ -117,41 +125,72 @@
                                         @Html.HiddenFor(model => model.VENDOR_EMAIL)
                                         @Html.HiddenFor(model => model.VENDOR_ID)
                                         @Html.HiddenFor(model => model.VENDOR_PASSWD)
+                                        @Html.HiddenFor(model => model.PROFILE_IMAGE)
 
-                                    <span class="text-danger"> @ViewBag.ExistUserId</span>
-                                    <div class="form-row">
-                                        <div class="col-md-6 col-sm-12">
-                                            <div class="form-group">
-                                                <label for="VENDOR_USER_ID" class="control-label"> User Id</label>
-                                                @Html.EditorFor(model => model.VENDOR_USER_ID, new { htmlAttributes = new { @class = "form-control form-control-sm"} })
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 col-sm-12">
-                                            <div class="form-group">
-                                                <label for="VENDOR_USER_ID" class="control-label"> Country</label>
-                                                @Html.EditorFor(model => model.COUNTRY_NAME, new { htmlAttributes = new { @class = "form-control form-control-sm", @readonly = true } })
-                                            </div>
-                                        </div>
-                                    </div>
+                                        <span class="text-danger"> @ViewBag.ExistUserId</span>
                                         <div class="form-row">
                                             <div class="col-md-6 col-sm-12">
                                                 <div class="form-group">
-                                                    <label for="CONTACT_NAME" class="control-label"> Contact</label>
-                                                    @Html.EditorFor(model => model.CONTACT_NAME, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "Contact Person" } })
+                                                    <label for="VENDOR_USER_ID" class="control-label"> User Id</label>
+                                                    @Html.EditorFor(model => model.VENDOR_USER_ID, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
                                                 </div>
                                             </div>
-
                                             <div class="col-md-6 col-sm-12">
                                                 <div class="form-group">
-                                                    <label for="CONTACT_NUMBER" class="control-label"> Contact Number</label>
-                                                    @Html.EditorFor(model => model.CONTACT_NUMBER, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "Contact Number" } })
+                                                    <label for="VENDOR_USER_ID" class="control-label"> Country</label>
+                                                    @Html.EditorFor(model => model.COUNTRY_NAME, new { htmlAttributes = new { @class = "form-control form-control-sm", @readonly = true } })
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="form-row">
                                             <div class="col-md-6 col-sm-12">
                                                 <div class="form-group">
-                                                    <label for="ADDRESS_1" class="control-label"> Present Address</label>
+                                                    <label for="CONTACT_NAME" class="control-label"> 1st Contact Person</label><span class="text-danger">*</span>
+                                                    @Html.EditorFor(model => model.CONTACT_NAME, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "1st Contact Person" } })
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6 col-sm-12">
+                                                <div class="form-group">
+                                                    <label for="CONTACT_NUMBER" class="control-label">1st Contact Number</label><span class="text-danger">*</span>
+                                                    @Html.EditorFor(model => model.CONTACT_NUMBER, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "1st Contact Number" } })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="col-md-6 col-sm-12">
+                                                <div class="form-group">
+                                                    <label for="CONTACT_NAME" class="control-label"> 2nd Contact Person</label>
+                                                    @Html.EditorFor(model => model.CONTACT_NAME2, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "2nd Contact Person" } })
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6 col-sm-12">
+                                                <div class="form-group">
+                                                    <label for="CONTACT_NUMBER" class="control-label"> 2nd Contact Number</label>
+                                                    @Html.EditorFor(model => model.CONTACT_NUMBER2, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "2nd Contact Number" } })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="col-md-6 col-sm-12">
+                                                <div class="form-group">
+                                                    <label for="CONTACT_NAME" class="control-label"> 3rd Contact Person</label>
+                                                    @Html.EditorFor(model => model.CONTACT_NAME3, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "3rd Contact Person" } })
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6 col-sm-12">
+                                                <div class="form-group">
+                                                    <label for="CONTACT_NUMBER" class="control-label"> 3rd Contact Number</label>
+                                                    @Html.EditorFor(model => model.CONTACT_NUMBER3, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "3rd Contact Number" } })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="col-md-6 col-sm-12">
+                                                <div class="form-group">
+                                                    <label for="ADDRESS_1" class="control-label"> Present Address</label><span class="text-danger">*</span>
                                                     @Html.EditorFor(model => model.ADDRESS_1, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "Present Address" } })
                                                 </div>
                                             </div>
@@ -165,13 +204,13 @@
                                         <div class="form-row">
                                             <div class="col-md-6 col-sm-12">
                                                 <div class="form-group">
-                                                    <label for="YEAR_OF_ESTABLISHMENT" class="control-label"> Establishment Year</label>
+                                                    <label for="YEAR_OF_ESTABLISHMENT" class="control-label"> Establishment Year</label><span class="text-danger">*</span>
                                                     @Html.EditorFor(model => model.YEAR_OF_ESTABLISHMENT, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "Establishment Year" } })
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12">
                                                 <div class="form-group">
-                                                    <label for="YEARLY_TRUNOVER" class="control-label"> Yearly Turnover</label>
+                                                    <label for="YEARLY_TRUNOVER" class="control-label"> Yearly Turnover</label> <span class="text-danger">*</span>
                                                     @Html.EditorFor(model => model.YEARLY_TRUNOVER, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "Yearly Turnover" } })
                                                 </div>
                                             </div>
@@ -180,13 +219,13 @@
                                         <div class="form-row">
                                             <div class="col-md-6 col-sm-12">
                                                 <div class="form-group">
-                                                    <label for="NO_OF_EMPLOYEES" class="control-label"> Number of Employee</label>
+                                                    <label for="NO_OF_EMPLOYEES" class="control-label"> Number of Employee</label> <span class="text-danger">*</span>
                                                     @Html.EditorFor(model => model.NO_OF_EMPLOYEES, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "50-100 People" } })
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12">
                                                 <div class="form-group">
-                                                    <label for="TAX_NUMBER" class="control-label"> TAX/TIN</label>
+                                                    <label for="TAX_NUMBER" class="control-label"> TAX/TIN</label> <span class="text-danger">*</span>
                                                     @Html.EditorFor(model => model.TAX_NUMBER, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "TAX/TIN" } })
                                                 </div>
                                             </div>
@@ -194,7 +233,7 @@
                                         <div class="form-row">
                                             <div class="col-md-6 col-sm-12">
                                                 <div class="form-group">
-                                                    <label for="TRADE_NUMBER" class="control-label"> Trade Number</label>
+                                                    <label for="TRADE_NUMBER" class="control-label"> Trade Number</label> <span class="text-danger">*</span>
                                                     @Html.EditorFor(model => model.TRADE_NUMBER, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "Trade License Number" } })
                                                 </div>
                                             </div>
@@ -207,7 +246,7 @@
                                             <div class="col-md-6 col-sm-12">
                                                 <div class="form-group">
                                                     <div class="icheck-primary">
-                                                        <input type="checkbox" id="PURCHASER_X" name="PURCHASER_X" @(Model.PURCHASER == 1 ? "checked" :"unchecked") />
+                                                        <input type="checkbox" id="PURCHASER_X" name="PURCHASER_X" @(Model.PURCHASER == 1 ? "checked" : "unchecked") />
                                                         <label for="PURCHASER_X"> Purchaser</label>
                                                     </div>
                                                 </div>
@@ -216,7 +255,7 @@
                                             <div class="col-md-6 col-sm-12">
                                                 <div class="form-group">
                                                     <div class="icheck-primary">
-                                                        <input type="checkbox" id="PURCHASER_NOTIFY_X" name="PURCHASER_NOTIFY_X" @(Model.PURCHASER_NOTIFY == 1 ? "checked" :"unchecked") />
+                                                        <input type="checkbox" id="PURCHASER_NOTIFY_X" name="PURCHASER_NOTIFY_X" @(Model.PURCHASER_NOTIFY == 1 ? "checked" : "unchecked") />
                                                         <label for="PURCHASER_NOTIFY_X">
                                                             Get Purchaser Notification
                                                         </label>
@@ -230,7 +269,7 @@
                                             <div class="col-md-6 col-sm-12">
                                                 <div class="form-group">
                                                     <div class="icheck-primary">
-                                                        <input type="checkbox" id="SUPPLIER_X" name="SUPPLIER_X" @(Model.SUPPLIER == 1 ? "checked" :"unchecked") />
+                                                        <input type="checkbox" id="SUPPLIER_X" name="SUPPLIER_X" @(Model.SUPPLIER == 1 ? "checked" : "unchecked") />
                                                         <label for="SUPPLIER_X">
                                                             Supplier
                                                         </label>
@@ -241,7 +280,7 @@
                                             <div class="col-md-6 col-sm-12">
                                                 <div class="form-group">
                                                     <div class="icheck-primary">
-                                                        <input type="checkbox" id="SUPPLIER_NOTIFY_X" name="SUPPLIER_NOTIFY_X" @(Model.SUPPLIER_NOTIFY == 1 ? "checked" :"unchecked") />
+                                                        <input type="checkbox" id="SUPPLIER_NOTIFY_X" name="SUPPLIER_NOTIFY_X" @(Model.SUPPLIER_NOTIFY == 1 ? "checked" : "unchecked") />
                                                         <label for="SUPPLIER_NOTIFY_X">
                                                             Get Supplier Notification
                                                         </label>
@@ -255,13 +294,15 @@
                                                     @Html.Label("Upload Profile Picture", new { @class = "control-label" })
                                                     <input type="file" name="ProfilePicture" accept=".png, .jpg, .jpeg" /><br />
                                                     <span class="text-success">png,jpg,jpeg format only</span>
+                                                    <span class="text-primary">Maximum Size 100 KB</span>
                                                 </div>
                                             </div>
                                         </div>
 
                                         <div class="row float-right">
                                             <div class="col-12 float-right">
-                                                <button type="submit" class="btn btn-danger btn-sm">Submit</button>
+                                                <button type="submit" class="btn btn-danger btn-sm" id="save" style="display:none;">save</button>
+                                                <button  class="btn btn-danger btn-sm" id="submit">Submit</button>
                                             </div>
                                         </div>
                                     }
@@ -288,12 +329,23 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
     <script>
-        $('input[type=checkbox]').change(function () {
-            var clId = $(this).attr("class");
-            var clNm = $(this).attr('id');
-            if (clId == "v-pro" || clId == "v-cat" || clId == "v-cer" || clId == "v-doc") {
-                $.post("FollowMe", { "cId": clId, "cNm": clNm });
-            }
-        });
+        $(document).ready(function () {
+            $("#submit").click(function () {
+                $("#save").click();
+            });
+
+            function preventBack() { window.history.forward(); }
+            setTimeout("preventBack()", 0);
+            window.onunload = function () { null };
+
+            $('input[type=checkbox]').change(function () {
+                var clId = $(this).attr("class");
+                var clNm = $(this).attr('id');
+                if (clId == "v-pro" || clId == "v-cat" || clId == "v-cer" || clId == "v-doc") {
+                    $.post("FollowMe", { "cId": clId, "cNm": clNm });
+                }
+            });     
+        })
+       
     </script>
 }

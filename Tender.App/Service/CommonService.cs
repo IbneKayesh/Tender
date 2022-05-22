@@ -51,6 +51,21 @@ namespace Tender.App.Service
                 return _tpl.Item1.RFQ_SL;
             }
         }
+        public static string productId(string tableName)
+        {
+            string sql = $"select MAX_ID from TABLE_MAX_ID where TABLE_NAME='{tableName}'";
+            Tuple<TABLE_MAX_ID, EQResult> _tpl = DatabaseMSSql.SqlQuerySingle<TABLE_MAX_ID>(sql);
+            if (_tpl.Item2.ROWS == 0)
+            {
+                return string.Empty;
+            }
+            else
+            {
+                int _maxId = _tpl.Item1.MAX_ID + 1;
+                return _maxId.ToString();
+            }
+        }
+
         public static Tuple<List<VENDOR>, EQResult> GetVendor(string vendorId)
         {
             string sql = $"SELECT V.VENDOR_ID,ORGANIZATION_NAME FROM VENDOR V WHERE V.VENDOR_ID='{vendorId}'";

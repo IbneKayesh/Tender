@@ -103,6 +103,8 @@ namespace Tender.Models.Models
         public DateTime APPROVAL_DATE { get; set; }
         [NotMapped]
         public string APPROVAL_NOTE { get; set; }
+        [NotMapped]
+        public string IMAGE_PATH { get; set; }
 
 
 
