@@ -179,6 +179,10 @@ namespace Tender.App.Controllers
                     ModelState.AddModelError("", "This User Id Already Exist");
                     return View(obj);
                 }
+                else if (obj.PURCHASER_NOTIFY == 1 && obj.SUPPLIER_NOTIFY == 1) {
+                    ModelState.AddModelError("", "Please Select Purchaser notification  or Supplier notification, choose One ");
+                    return View(obj);
+                }
                 else
                 {
                     if (ProfilePicture != null)
@@ -209,24 +213,27 @@ namespace Tender.App.Controllers
                                 }
                                 return RedirectToAction("UserProfile", "Accounts");
                             }
-                            else {
+                            else
+                            {
                                 TempData["msg"] = AlertService.SaveWarningOK("Image format must be jpg, jpeg,png");
                                 return View(obj);
                             }
-                            
+
                         }
-                        else {
+                        else
+                        {
                             TempData["msg"] = AlertService.SaveWarningOK("Image size less then 100 KB");
                             return View(obj);
                         }
-                       
+
                     }
                     var _tpl1 = AccountsService.profileUpdate(obj);
                     if (_tpl1.SUCCESS == true)
                     {
                         TempData["msg"] = AlertService.SaveSuccess("Profile Update Successfully");
                     }
-                    else if (_tpl1.SUCCESS == false) {
+                    else if (_tpl1.SUCCESS == false)
+                    {
                         TempData["msg"] = AlertService.SaveSuccess(_tpl1.MESSAGES);
                     }
 

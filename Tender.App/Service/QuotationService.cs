@@ -75,7 +75,14 @@ namespace Tender.App.Service
             Tuple<RFQ_BIDDING, EQResult> _tpl = DatabaseMSSql.SqlQuerySingle<RFQ_BIDDING>(sql);
             return _tpl;
         }
-
+        public static Tuple<List<RFQ_TNDR_DOCUMENTS>, EQResult> getTenderDocumentList(string rfqNumber)
+        {
+            string sql = $@"SELECT RTD.RFQ_NUMBER, TD.DOCUMENTS_NAME,RTD.DOCUMENTS_ID,RTD.IS_ACTIVE FROM RFQ_TNDR_DOCUMENTS RTD
+                            INNER JOIN  TNDR_DOCUMENTS TD ON TD.DOCUMENTS_ID=RTD.DOCUMENTS_ID
+                            WHERE RTD.RFQ_NUMBER='{rfqNumber}'";
+            var objList = DatabaseMSSql.SqlQuery<RFQ_TNDR_DOCUMENTS>(sql);
+            return objList;
+        }
         public static Tuple<List<RFQ_BIDDING>, EQResult> getTenderListForCompare(string rfqNumber)
         {
             string sql = $@"SELECT RB.QUOTE_NUMBER, R.RFQ_NUMBER, R.VENDOR_ID TND_VENDOR_ID, VN.ORGANIZATION_NAME VENDOR_NAME,RB.VENDOR_ID ,

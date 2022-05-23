@@ -193,6 +193,7 @@
     <Content Include="App_Asset\dist\img\compare.png" />
     <Content Include="App_Asset\dist\img\ML_Red_wave__1_.jpg" />
     <Content Include="App_Asset\dist\img\noImage.jpg" />
+    <Content Include="App_Asset\dist\img\rfq.jpg" />
     <Content Include="App_Asset\dist\img\rfqHomePage.jpg" />
     <Content Include="App_Asset\dist\img\tenderDetails.jpg" />
     <Content Include="App_Asset\js\bid.js" />

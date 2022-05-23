@@ -15,12 +15,12 @@ namespace Tender.App.Controllers
     {
         public ActionResult Index(int? page)
         {
-            List<RFQ_TenderView> obj = QuotationService.getAllTender((string)Session["vendorId"]).Item1.Where(c=>c.SUBMITED_BIDS != 0).ToList();
+            List<RFQ_TenderView> obj = QuotationService.getAllTender((string)Session["vendorId"]).Item1.Where(c => c.SUBMITED_BIDS != 0).ToList();
 
             return View(obj.ToPagedList(page ?? 1, pageSize: 8));
         }
         [HttpGet]
-        public ActionResult ViewAllTender(int ? page)
+        public ActionResult ViewAllTender(int? page)
         {
             List<RFQ_TenderView> obj = QuotationService.getAllTender((string)Session["vendorId"]).Item1;
             return View(obj.ToPagedList(page ?? 1, pageSize: 8));
@@ -34,17 +34,21 @@ namespace Tender.App.Controllers
             Tuple<RFQ_BIDDING, EQResult> _tpl = QuotationService.getTenderById(id);
             if (_tpl.Item2.SUCCESS && _tpl.Item2.ROWS == 1)
             {
+                List<RFQ_TNDR_DOCUMENTS> docList = QuotationService.getTenderDocumentList(id).Item1;
+                _tpl.Item1.RFQ_TNDR_DOCUMENTS = docList;
                 return View(_tpl.Item1);
             }
             return View(obj);
-
-            //return View(new RFQ_BIDDING());
         }
         [HttpGet]
         public ActionResult SubmitTender()
         {
+            if (Session["ssUser"] == null)
+            {
+                RedirectToAction("Login", "Accounts");
+            }
             RFQ_TENDER obj = new RFQ_TENDER();
-            obj.VENDOR_ID =  (string)Session["vendorId"];
+            obj.VENDOR_ID = (string)Session["vendorId"];
             DropDownFor_Tender();
             return View(obj);
         }
@@ -58,8 +62,8 @@ namespace Tender.App.Controllers
             DropDownFor_Tender();
             if (ModelState.IsValid)
             {
-               var  _tpl=TenderService.SaveData(obj);
-                if (_tpl.SUCCESS ==true)
+                var _tpl = TenderService.SaveData(obj);
+                if (_tpl.SUCCESS == true)
                 {
                     TempData["msg"] = AlertService.SaveSuccess();
                 }
@@ -74,17 +78,17 @@ namespace Tender.App.Controllers
         }
         public ActionResult CompareTender(string id)
         {
-            List<RFQ_BIDDING> obj = QuotationService.getTenderListForCompare(id).Item1;           
+            List<RFQ_BIDDING> obj = QuotationService.getTenderListForCompare(id).Item1;
             return View(obj);
         }
-        public ActionResult ApproveTender(string rfqNumber,string quotNumber,string vendorId)
+        public ActionResult ApproveTender(string rfqNumber, string quotNumber, string vendorId)
         {
             RFQ_TENDER_APPROVAL obj = new RFQ_TENDER_APPROVAL();
-            obj.APPROVAL_ID= Guid.NewGuid().ToString();
+            obj.APPROVAL_ID = Guid.NewGuid().ToString();
             obj.RFQ_NUMBER = rfqNumber;
             obj.QUOTE_NUMBER = quotNumber;
             obj.VENDOR_ID = vendorId;
-           var _tpl= QuotationService.ApproveQuotation(obj);
+            var _tpl = QuotationService.ApproveQuotation(obj);
             if (_tpl.SUCCESS == true)
             {
                 TempData["msg"] = AlertService.SaveSuccessOK("Approve Successfully");

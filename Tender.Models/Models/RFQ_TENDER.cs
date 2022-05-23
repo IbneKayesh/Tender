@@ -68,6 +68,7 @@ namespace Tender.Models.Models
         [Required(ErrorMessage = "{0} is required")]
         public int PAY_BP { get; set; }
 
+        public DateTime ADDED_DATE { get; set; }
 
         public virtual List<RFQ_TNDR_DOCUMENTS> RFQ_TNDR_DOCUMENTS { get; set; }
 

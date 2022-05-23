@@ -27,6 +27,8 @@ namespace Tender.App.Controllers
             Tuple<RFQ_BIDDING, EQResult> _tpl = QuotationService.getTenderById(id);
             if (_tpl.Item2.SUCCESS && _tpl.Item2.ROWS == 1)
             {
+                List<RFQ_TNDR_DOCUMENTS> docList = QuotationService.getTenderDocumentList(id).Item1;
+                _tpl.Item1.RFQ_TNDR_DOCUMENTS = docList;
                 return View(_tpl.Item1);
             }
             return View(obj);

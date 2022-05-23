@@ -50,5 +50,8 @@ namespace Tender.Models.Models
         public int PURCHASER_NOTIFY { get; set; }
         [NotMapped]
         public string PURCHASER_NOTIFY_X { get; set; }
+
+        [NotMapped]
+        public DateTime ADDED_DATE { get; set; }
     }
 }

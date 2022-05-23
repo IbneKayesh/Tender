@@ -65,7 +65,6 @@
                                         <li><a href="@Url.Action("Index", "Tender")" class="dropdown-item"> Compare List</a></li>
                                         <li><a href="@Url.Action("CreateTenderProduct", "Setup")" class="dropdown-item"> Item</a></li>
                                     </ul>
-
                                 </li>
                             }
                             else if ((int)Session["_supplierStatus"] == 1 && (int)Session["_purcherserStatus"] == 0)
@@ -73,10 +72,9 @@
                                 <li class="nav-item dropdown">
                                     <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">My Menu</a>
                                     <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow mt-2">
-                                        <li><a href="@Url.Action("Index", "Quotation")" class="dropdown-item">Quotation List</a></li>
+                                        <li><a href="@Url.Action("Index", "Quotation")" class="dropdown-item">New Tender List</a></li>
                                         <li><a href="@Url.Action("WiningsBid", "Quotation")" class="dropdown-item">Wining Bids</a></li>
                                     </ul>
-
                                 </li>
                             }
                         }
@@ -197,6 +195,8 @@
     <script src="~/App_Asset/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
     <script src="~/App_Asset/plugins/datatables-buttons/js/buttons.print.min.js"></script>
     <script src="~/App_Asset/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+    <!--chart js-->
+    <script src="~/App_Asset/plugins/chart.js/Chart.min.js"></script>
 
     @RenderSection("scripts", required: false)
     <script>

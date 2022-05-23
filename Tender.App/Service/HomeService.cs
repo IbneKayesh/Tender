@@ -35,7 +35,7 @@ namespace Tender.App.Service
 
         public static Tuple<List<RFQ_TENDER>, EQResult> totalRFQ(string vendorId)
         {
-            string sql = $@"SELECT RFQ_NUMBER FROM  RFQ_TENDER WHERE  VENDOR_ID='{vendorId}'";
+            string sql = $@"SELECT RFQ_NUMBER,ADDED_DATE FROM  RFQ_TENDER WHERE  VENDOR_ID='{vendorId}'";
             var objList = DatabaseMSSql.SqlQuery<RFQ_TENDER>(sql);
             return objList;
         }
@@ -62,7 +62,22 @@ namespace Tender.App.Service
             var objList = DatabaseMSSql.SqlQuery<VENDOR>(sql);
             return objList;
         }
+        public static Tuple<List<VENDOR>, EQResult> newRegistration()
+        {
+            string sql = $@"SELECT * FROM VENDOR WHERE  TO_DATE(ADDED_DATE, 'DD-MM-YYYY') BETWEEN  TO_DATE(SYSDATE-7, 'DD-MM-YYYY') AND TO_DATE(SYSDATE, 'DD-MM-YYYY') ORDER BY ADDED_DATE DESC";
+            var objList = DatabaseMSSql.SqlQuery<VENDOR>(sql);
+            return objList;
+        }
 
+        public static Tuple<List<RFQ_BIDDING>, EQResult> newQutoSubmit()
+        {
+            string sql = $@"SELECT RB.RFQ_NUMBER,RB.QUOTE_NUMBER,V.ORGANIZATION_NAME VENDOR_ID,RB.SUBMIT_DATE FROM RFQ_BIDDING RB
+INNER JOIN VENDOR V ON V.VENDOR_ID=RB.VENDOR_ID
+WHERE  TO_DATE(RB.ADDED_DATE, 'DD-MM-YYYY') BETWEEN  TO_DATE(SYSDATE-7, 'DD-MM-YYYY') AND TO_DATE(SYSDATE, 'DD-MM-YYYY') 
+ORDER BY RB.ADDED_DATE DESC";
+            var objList = DatabaseMSSql.SqlQuery<RFQ_BIDDING>(sql);
+            return objList;
+        }
 
     }
 }

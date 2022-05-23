@@ -2,10 +2,11 @@
     ViewBag.Title = "Home Page";
 }
 
-<div class="row mt-2">
-    <div class="col">
-        @if ((int)Session["_supplierStatus"] == 1 && (int)Session["_purcherserStatus"] == 0)
-        {
+
+@if ((int)Session["_supplierStatus"] == 1 && (int)Session["_purcherserStatus"] == 0)
+{
+    <div class="row mt-2">
+        <div class="col">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-3 col-6">
@@ -63,71 +64,192 @@
                     </div>
 
                 </div>
-            </div>
-        }
-        else { 
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-lg-3 col-6">
-
-                <div class="small-box bg-info">
-                    <div class="inner text-center">
-                        <h3>@ViewBag.totalRFQ</h3>
-                        <p>Total RFQ</p>
-                    </div>
-                    <div class="icon">
-                        <i class="ion ion-bag"></i>
-                    </div>
-                    <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                <div class="col text-center text-primary mt-5">
+                    <img src="~/App_Asset/dist/img/rfqHomePage.jpg" class="img-fluid" />
                 </div>
             </div>
-
-            <div class="col-lg-3 col-6">
-
-                <div class="small-box bg-success">
-                    <div class="inner text-center">
-                        <h3>@ViewBag.totalQuto</h3>
-                        <p>Total Submitted Quotation</p>
-                    </div>
-                    <div class="icon">
-                        <i class="ion ion-stats-bars"></i>
-                    </div>
-                    <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-                </div>
-            </div>
-
-            <div class="col-lg-3 col-6">
-                <div class="small-box bg-warning">
-                    <div class="inner text-center">
-                        <h3>@ViewBag.currentRFQ</h3>
-                        <p>Current RFQ</p>
-                    </div>
-                    <div class="icon">
-                        <i class="ion ion-person-add"></i>
-                    </div>
-                    <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-                </div>
-            </div>
-
-            <div class="col-lg-3 col-6">
-                <div class="small-box bg-danger">
-                    <div class="inner text-center">
-                        <h3>@ViewBag.totalSupplier</h3>
-                        <p>Total Registration</p>
-                    </div>
-                    <div class="icon">
-                        <i class="ion ion-pie-graph"></i>
-                    </div>
-                    <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-                </div>
-            </div>
-
         </div>
     </div>
-        }
+}
+else
+{
+    <div class="row mt-2">
+        <div class="col">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-3 col-6">
 
-        <div class="col text-center text-primary mt-5">
-            <img src="~/App_Asset/dist/img/rfqHomePage.jpg" class="img-fluid" />
+                        <div class="small-box bg-info">
+                            <div class="inner text-center">
+                                <h3>@ViewBag.totalRFQ</h3>
+                                <p>Total RFQ</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-bag"></i>
+                            </div>
+                            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-6">
+
+                        <div class="small-box bg-success">
+                            <div class="inner text-center">
+                                <h3>@ViewBag.totalQuto</h3>
+                                <p>Total Submitted Quotation</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-stats-bars"></i>
+                            </div>
+                            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-6">
+                        <div class="small-box bg-warning">
+                            <div class="inner text-center">
+                                <h3>@ViewBag.currentRFQ</h3>
+                                <p>Current RFQ</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-person-add"></i>
+                            </div>
+                            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-6">
+                        <div class="small-box bg-danger">
+                            <div class="inner text-center">
+                                <h3>@ViewBag.totalSupplier</h3>
+                                <p>Total Registration</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-pie-graph"></i>
+                            </div>
+                            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="card direct-chat direct-chat-warning">
+                        <div class="card-header bg-warning p-2 m-2">
+                            <h3 class="card-title">Notification for last 7 days</h3>
+                            <div class="card-tools">
+                                <span title="3 New Messages" class="badge badge-success">
+                                    @ViewBag.newRegistrationCount
+                                </span>
+                                <span title="3 New Messages" class="badge badge-info">
+                                    @ViewBag.newSubmitQuotCount
+                                </span>
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                                <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="card-body">
+                            <div class="direct-chat-messages">
+                                <div class="direct-chat-msg">
+                                    @if (@ViewBag.newRegistrationCount > 0)
+                                    {
+                                        foreach (var item in ViewBag.newRegistration)
+                                        {
+                                            <span class="badge badge-success">@item.ORGANIZATION_NAME Registration at @item.ADDED_DATE</span><br />
+                                        }
+                                    }
+
+                                    @if (@ViewBag.newSubmitQuotCount > 0)
+                                    {
+                                        foreach (var item in ViewBag.newSubmitQuot)
+                                        {
+                                            <span class="badge badge-info">This @item.QUOTE_NUMBER submitted from @item.VENDOR_ID aganist this @item.RFQ_NUMBER at @item.SUBMIT_DATE</span><br />
+                                        }
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-md-7">
+                    <div class="card direct-chat direct-chat-warning">
+                        <div class="card-header bg-success p-2 m-2">
+                            <h3 class="card-title">Monthly Submitted Tender Status </h3>
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                                <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="chart">
+                                <canvas id="chart_bars" class="chart-canvas"></canvas>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-</div>
+}
+
+@section scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(document).ready(function () {
+        var repArray =@Html.Raw(Json.Encode(ViewBag.REP));
+        var MonthList = @Html.Raw(Json.Encode(ViewBag.MONTHLIST));
+        var ctx = $("#chart_bars");
+        var bacChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: MonthList,
+                datasets: [{
+                    label: "Monthly Submit Tender",
+                    data: repArray,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+
+                }]
+            },
+            options: {
+                maintainAspectRation: false,
+                scales: {
+                    xAxes: [{ tricks: { beginAtZero: true}}]
+                },
+                legend: { display: false }
+                },
+            })
+
+
+        })
+
+    </script>
+
+}

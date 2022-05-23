@@ -5,12 +5,14 @@
     Layout = "~/Views/Shared/_LayoutRL.cshtml";
 }
 
-<div class="card card-outline card-primary">
+<div class="card card-outline card-primary" style="background-color:bisque;">
     <div class="card-header text-center">
         <a href="#" class="h1"><b>RF</b>Q</a>
     </div>
     <div class="card-body">
-        <p class="login-box-msg">Sign in to start your session</p>
+        <p class="login-box-msg">Sign in to start your session
+        
+        </p>
         @using (Html.BeginForm())
         {
             @Html.ValidationSummary(false, "", new { @class = "text-danger" })

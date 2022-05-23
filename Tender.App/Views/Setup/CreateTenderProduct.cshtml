@@ -59,7 +59,7 @@
                         <th>Code</th>
                         <th>Name</th>
                         <th>Unit</th>
-                        
+
                     </tr>
                 </thead>
             </table>
@@ -72,19 +72,19 @@
 
 @section scripts{
     @Scripts.Render("~/bundles/jqueryval")
-<script>
+    <script>
     var myTable;
-        $(document).ready(function () {
+    $(document).ready(function () {
+        //datatable load
+        loadTable();
+
             $("#submit").click(function () {
                 $("#save").click();
             });
 
-            //function preventBack() { window.history.forward(); }
-            //setTimeout("preventBack()", 0);
-            //window.onunload = function () { null };
-
-            //datatable load
-            loadTable();
+            function preventBack() { window.history.forward(); }
+            setTimeout("preventBack()", 0);
+            window.onunload = function () { null };
         })
 
          function loadTable() {
@@ -94,16 +94,9 @@
                 "ajax": "GetAll",
                 "type": "GET",
                 "datatype": "json",
-                "bDestroy": false,
-                "dom": 'Bfrtip',
-                "buttons": [
-                    { extend: 'pdf', className: 'btn btn-danger btn-sm' },
-                    { extend: 'excel', className: 'btn btn-danger btn-sm' },
-                    { extend: 'print', className: 'btn btn-danger btn-sm' },
-                    { extend: 'colvis', className: 'btn btn-danger btn-sm' }
-                ],
+                "bDestroy": false,                
                 "paging": true,
-                "info": true,
+                "info": false,
                 "responsive": true,
                 "ordering": true,
                 "columns": [
@@ -120,7 +113,7 @@
                 "language": { "emptyTable": "no data found" }, "width": "100%"
             });
         };
-</script>
+    </script>
 
 }
 

@@ -106,7 +106,7 @@ namespace Tender.Models.Models
         [NotMapped]
         public string IMAGE_PATH { get; set; }
 
-
+        public virtual List<RFQ_TNDR_DOCUMENTS> RFQ_TNDR_DOCUMENTS { get; set; }
 
     }
 }

@@ -29,6 +29,23 @@ namespace Tender.App.Controllers
             List<VENDOR> totalSupplier = HomeService.totalSupplier().Item1;
             ViewBag.totalSupplier = totalSupplier.Count();
 
+            List<VENDOR> newRegistration = HomeService.newRegistration().Item1;
+            ViewBag.newRegistration = newRegistration;
+            ViewBag.newRegistrationCount = newRegistration.Count();
+
+            List<RFQ_BIDDING> newQuto = HomeService.newQutoSubmit().Item1;
+            ViewBag.newSubmitQuot= newQuto;
+            ViewBag.newSubmitQuotCount = newQuto.Count();
+
+            List<int> repartitions = new List<int>();
+            var montthlist = totalRFQ.Select(x => x.ADDED_DATE.ToString("MMMM")).Distinct();
+            foreach (var item in montthlist)
+            {
+                repartitions.Add(totalRFQ.Count(x => x.ADDED_DATE.ToString("MMMM") == item));
+            }
+            ViewBag.MONTHLIST = montthlist;
+            ViewBag.REP = repartitions;
+
             return View();
         }     
         public ActionResult About()
