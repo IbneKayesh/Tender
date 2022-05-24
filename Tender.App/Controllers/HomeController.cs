@@ -6,6 +6,8 @@ using System.Web.Mvc;
 using Tender.App.Service;
 using Tender.Models.Models;
 using Aio.Db.MSSqlEF;
+using Newtonsoft.Json;
+
 namespace Tender.App.Controllers
 {
     public class HomeController : Controller
@@ -45,6 +47,19 @@ namespace Tender.App.Controllers
             }
             ViewBag.MONTHLIST = montthlist;
             ViewBag.REP = repartitions;
+
+
+
+            List<ChartModel> chartModel = new List<ChartModel>();
+
+            chartModel.Add(new ChartModel("Samsung", 25));
+            chartModel.Add(new ChartModel("Micromax", 13));
+            chartModel.Add(new ChartModel("Lenovo", 8));
+            chartModel.Add(new ChartModel("Intex", 7));
+            chartModel.Add(new ChartModel("Reliance", 6.8));
+            chartModel.Add(new ChartModel("Others", 40.2));
+
+            ViewBag.DataPoints = JsonConvert.SerializeObject(chartModel);
 
             return View();
         }     
