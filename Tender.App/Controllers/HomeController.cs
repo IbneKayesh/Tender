@@ -46,21 +46,8 @@ namespace Tender.App.Controllers
                 repartitions.Add(totalRFQ.Count(x => x.ADDED_DATE.ToString("MMMM") == item));
             }
             ViewBag.MONTHLIST = montthlist;
-            ViewBag.REP = repartitions;
-
-
-
-            List<ChartModel> chartModel = new List<ChartModel>();
-
-            chartModel.Add(new ChartModel("Samsung", 25));
-            chartModel.Add(new ChartModel("Micromax", 13));
-            chartModel.Add(new ChartModel("Lenovo", 8));
-            chartModel.Add(new ChartModel("Intex", 7));
-            chartModel.Add(new ChartModel("Reliance", 6.8));
-            chartModel.Add(new ChartModel("Others", 40.2));
-
-            ViewBag.DataPoints = JsonConvert.SerializeObject(chartModel);
-
+            ViewBag.REP = repartitions;   
+            
             return View();
         }     
         public ActionResult About()
