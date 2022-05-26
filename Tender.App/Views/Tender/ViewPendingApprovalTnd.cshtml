@@ -86,7 +86,7 @@
         <div class="pagination-container mt-2 mr-2">
             Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
             of @Model.PageCount
-        </div>   <br />  @Html.PagedListPager(Model, page => Url.Action("ViewAllTender", new { page }))
+        </div>   <br />  @Html.PagedListPager(Model, page => Url.Action("ViewPendingApprovalTnd", new { page }))
     </div>
 </div>
 
@@ -117,29 +117,6 @@
             });
         }
 
-     @*function get_ItemList() {
-            var srcType = $('#SEARCH_TYPE').val();
-            if (srcType == "1") {
-                var url = "@Url.Action("ViewAllTender")";
-                $.getJSON(url, function (response) {
-            });
-            }
-            else if (srcType == "2") {
-                  var url = "@Url.Action("ViewApproveTender")";
-                  $.getJSON(url, function (response) {
-            });
-            }
-            else if (srcType == "3") {
-                var url = "@Url.Action("ViewPendingApprovalTnd")";
-                $.getJSON(url, function (response) {
-            });
-            }
-            else if (srcType == "4") {
-                  var url = "@Url.Action("ViewExpireTnd")";
-                   $.getJSON(url, function (response) {
-            });
-            }
-        };*@
 </script>
 
 }

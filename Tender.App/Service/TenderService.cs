@@ -198,5 +198,18 @@ namespace Tender.App.Service
             string sql = $" SELECT * FROM TNDR_DOCUMENTS WHERE DOCUMENTS_TYPE ='TENDER'";
             return DatabaseMSSql.SqlQuery<TNDR_DOCUMENTS>(sql);
         }
+
+        public static SelectList DropDown_SearchType()
+        {
+            SelectList DataList = new SelectList(
+                  new List<SelectListItem>
+                  {
+                      new SelectListItem{ Text="View All Tender", Value = "1" },
+                      new SelectListItem{ Text="Approval Tender", Value = "2" },
+                      new SelectListItem{ Text="Not Approval Tender", Value = "3" },
+                      new SelectListItem{ Text="No Qutotation Apply but Expeire", Value = "4" }
+                  }, "Value", "Text", null);
+            return DataList;
+        }
     }
 }

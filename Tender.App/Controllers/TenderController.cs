@@ -19,10 +19,29 @@ namespace Tender.App.Controllers
 
             return View(obj.ToPagedList(page ?? 1, pageSize: 8));
         }
-        [HttpGet]
         public ActionResult ViewAllTender(int? page)
         {
+            ViewBag.SEARCH_TYPE = TenderService.DropDown_SearchType();
             List<RFQ_TenderView> obj = QuotationService.getAllTender((string)Session["vendorId"]).Item1;
+            return View(obj.ToPagedList(page ?? 1, pageSize: 8));
+        }
+        public ActionResult ViewApproveTender(int? page)
+        {
+            ViewBag.SEARCH_TYPE = TenderService.DropDown_SearchType();
+            List<RFQ_TenderView> obj = QuotationService.getAllTender((string)Session["vendorId"]).Item1.Where(c=>c.APPROVAL_ID !="0").ToList();
+            return View(obj.ToPagedList(page ?? 1, pageSize: 8));
+        }
+        public ActionResult ViewPendingApprovalTnd(int? page)
+        {
+            ViewBag.SEARCH_TYPE = TenderService.DropDown_SearchType();
+            List<RFQ_TenderView> obj = QuotationService.getAllTender((string)Session["vendorId"]).Item1.Where(c => c.APPROVAL_ID == "0").ToList() ;
+            return View(obj.ToPagedList(page ?? 1, pageSize: 8));
+        }
+        public ActionResult ViewExpireTnd(int? page)
+        {
+            ViewBag.SEARCH_TYPE = TenderService.DropDown_SearchType();
+
+            List<RFQ_TenderView> obj = QuotationService.getAllTender((string)Session["vendorId"]).Item1.Where(c=>(c.END_DATE<=System.DateTime.Now.Date) && (c.SUBMITED_BIDS==0)).ToList();
             return View(obj.ToPagedList(page ?? 1, pageSize: 8));
         }
         [HttpGet]
@@ -119,6 +138,8 @@ namespace Tender.App.Controllers
             ViewBag.PAY_B = new SelectList(TenderService.getPaymentMode().Item1.ToList(), "PAYMENT_MODE_ID", "PAYMENT_MODE_NAME");
             ViewBag.CURRENCY_NAME = new SelectList(TenderService.getCurrency().Item1.ToList(), "CURRENCY_NAME", "CURRENCY_NAME");
             ViewBag.TENDER_DOC = new SelectList(TenderService.getTnderDoc().Item1.ToList(), "DOCUMENTS_ID", "DOCUMENTS_NAME");
+
+            
 
         }
         [AllowAnonymous]

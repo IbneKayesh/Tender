@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>RFQ 0.0.2 | @ViewBag.Title</title>
+    <link href="~/App_Asset/dist/img/rfqHomePage.jpg" rel="shortcut icon" type="image/x-icon" />
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -66,7 +67,16 @@
                                         <li><a href="@Url.Action("SubmitTender", "Tender")" class="dropdown-item">Submit Tender</a></li>
                                         <li><a href="@Url.Action("ViewAllTender", "Tender")" class="dropdown-item"> Tender List</a></li>
                                         <li><a href="@Url.Action("Index", "Tender")" class="dropdown-item"> Compare List</a></li>
-                                        <li><a href="@Url.Action("CreateTenderProduct", "Setup")" class="dropdown-item"> Item</a></li>
+                                        <li><a href="@Url.Action("CreateTenderProduct", "Setup")" class="dropdown-item"> Item</a></li>                                       
+                                        <li class="dropdown-submenu">
+                                            <a id="dropdownSubMenu3" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-item dropdown-toggle">View Tender</a>
+                                            <ul aria-labelledby="dropdownSubMenu3" class="dropdown-menu border-0 shadow">
+                                                <li><a href="@Url.Action("ViewAllTender", "Tender")" class="dropdown-item">View All Tender</a></li>
+                                                <li><a href="@Url.Action("ViewApproveTender", "Tender")" class="dropdown-item">Approval Tender</a></li>
+                                                <li><a href="@Url.Action("ViewPendingApprovalTnd", "Tender")" class="dropdown-item">Pending Approval Tender</a></li>
+                                                <li><a href="@Url.Action("ViewExpireTnd", "Tender")" class="dropdown-item">No Qutotation Apply but Expeire</a></li>
+                                            </ul>
+                                        </li>
                                     </ul>
                                 </li>
                             }

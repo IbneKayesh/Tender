@@ -2320,6 +2320,9 @@
     <Content Include="Views\Quotation\WiningsBid.cshtml" />
     <Content Include="Views\Accounts\supplierProfile.cshtml" />
     <Content Include="Views\Setup\CreateTenderProduct.cshtml" />
+    <Content Include="Views\Tender\ViewApproveTender.cshtml" />
+    <Content Include="Views\Tender\ViewPendingApprovalTnd.cshtml" />
+    <Content Include="Views\Tender\ViewExpireTnd.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Asset\dist\img\productImage\" />

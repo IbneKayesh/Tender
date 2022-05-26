@@ -130,7 +130,7 @@
                                             <div class="col-md-6 col-sm-12">
                                                 <div class="form-group">
                                                     <label for="VENDOR_USER_ID" class="control-label"> User Id</label>
-                                                    @Html.EditorFor(model => model.VENDOR_USER_ID, new { htmlAttributes = new { @class = "form-control form-control-sm" , @readonly = true } })
+                                                    @Html.EditorFor(model => model.VENDOR_USER_ID, new { htmlAttributes = new { @class = "form-control form-control-sm", @readonly = true } })
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12">
@@ -143,29 +143,60 @@
                                         <div class="form-row">
                                             <div class="col-md-6 col-sm-12">
                                                 <div class="form-group">
-                                                    <label for="CONTACT_NAME" class="control-label"> Contact</label>
-                                                    @Html.EditorFor(model => model.CONTACT_NAME, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "Contact Person" , @readonly = true } })
+                                                    <label for="CONTACT_NAME" class="control-label">1st Contact Person</label>
+                                                    @Html.EditorFor(model => model.CONTACT_NAME, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "Contact Person", @readonly = true } })
                                                 </div>
                                             </div>
 
                                             <div class="col-md-6 col-sm-12">
                                                 <div class="form-group">
-                                                    <label for="CONTACT_NUMBER" class="control-label"> Contact Number</label>
-                                                    @Html.EditorFor(model => model.CONTACT_NUMBER, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "Contact Number" , @readonly = true } })
+                                                    <label for="CONTACT_NUMBER" class="control-label">1st Contact Number</label>
+                                                    @Html.EditorFor(model => model.CONTACT_NUMBER, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "Contact Number", @readonly = true } })
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="form-row">
                                             <div class="col-md-6 col-sm-12">
                                                 <div class="form-group">
+                                                    <label for="CONTACT_NAME2" class="control-label"> 2nd Contact Person</label>
+                                                    @Html.EditorFor(model => model.CONTACT_NAME2, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "2nd Contact Person" , @readonly = true } })
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6 col-sm-12">
+                                                <div class="form-group">
+                                                    <label for="CONTACT_NUMBER2" class="control-label"> 2nd Contact Number</label>
+                                                    @Html.EditorFor(model => model.CONTACT_NUMBER2, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "2nd Contact Number" , @readonly = true } })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="col-md-6 col-sm-12">
+                                                <div class="form-group">
+                                                    <label for="CONTACT_NAME3" class="control-label"> 3rd Contact Person</label><span class="text-danger">*</span>
+                                                    @Html.EditorFor(model => model.CONTACT_NAME3, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "3rd Contact Person", @readonly = true } })
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6 col-sm-12">
+                                                <div class="form-group">
+                                                    <label for="CONTACT_NUMBER3" class="control-label">3rd Contact Number</label><span class="text-danger">*</span>
+                                                    @Html.EditorFor(model => model.CONTACT_NUMBER3, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "3rd Contact Number", @readonly = true } })
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-row">
+                                            <div class="col-md-6 col-sm-12">
+                                                <div class="form-group">
                                                     <label for="ADDRESS_1" class="control-label"> Present Address</label>
-                                                    @Html.EditorFor(model => model.ADDRESS_1, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "Present Address" ,  @readonly = true } })
+                                                    @Html.EditorFor(model => model.ADDRESS_1, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "Present Address", @readonly = true } })
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12">
                                                 <div class="form-group">
                                                     <label for="ADDRESS_2" class="control-label"> Permanent Address</label>
-                                                    @Html.EditorFor(model => model.ADDRESS_2, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "Permanent Address" ,  @readonly = true } })
+                                                    @Html.EditorFor(model => model.ADDRESS_2, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "Permanent Address", @readonly = true } })
                                                 </div>
                                             </div>
                                         </div>
@@ -173,13 +204,13 @@
                                             <div class="col-md-6 col-sm-12">
                                                 <div class="form-group">
                                                     <label for="YEAR_OF_ESTABLISHMENT" class="control-label"> Establishment Year</label>
-                                                    @Html.EditorFor(model => model.YEAR_OF_ESTABLISHMENT, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "Establishment Year",  @readonly = true } })
+                                                    @Html.EditorFor(model => model.YEAR_OF_ESTABLISHMENT, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "Establishment Year", @readonly = true } })
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12">
                                                 <div class="form-group">
                                                     <label for="YEARLY_TRUNOVER" class="control-label"> Yearly Turnover</label>
-                                                    @Html.EditorFor(model => model.YEARLY_TRUNOVER, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "Yearly Turnover" , @readonly = true } })
+                                                    @Html.EditorFor(model => model.YEARLY_TRUNOVER, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "Yearly Turnover", @readonly = true } })
                                                 </div>
                                             </div>
 
@@ -188,13 +219,13 @@
                                             <div class="col-md-6 col-sm-12">
                                                 <div class="form-group">
                                                     <label for="NO_OF_EMPLOYEES" class="control-label"> Number of Employee</label>
-                                                    @Html.EditorFor(model => model.NO_OF_EMPLOYEES, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "50-100 People",  @readonly = true } })
+                                                    @Html.EditorFor(model => model.NO_OF_EMPLOYEES, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "50-100 People", @readonly = true } })
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12">
                                                 <div class="form-group">
                                                     <label for="TAX_NUMBER" class="control-label"> TAX/TIN</label>
-                                                    @Html.EditorFor(model => model.TAX_NUMBER, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "TAX/TIN",  @readonly = true } })
+                                                    @Html.EditorFor(model => model.TAX_NUMBER, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "TAX/TIN", @readonly = true } })
                                                 </div>
                                             </div>
                                         </div>
@@ -202,7 +233,7 @@
                                             <div class="col-md-6 col-sm-12">
                                                 <div class="form-group">
                                                     <label for="TRADE_NUMBER" class="control-label"> Trade Number</label>
-                                                    @Html.EditorFor(model => model.TRADE_NUMBER, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "Trade License Number",  @readonly = true } })
+                                                    @Html.EditorFor(model => model.TRADE_NUMBER, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "Trade License Number", @readonly = true } })
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12">
@@ -255,7 +286,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>                                                                        
+                                        </div>
                                     }
 
                                 </div>
