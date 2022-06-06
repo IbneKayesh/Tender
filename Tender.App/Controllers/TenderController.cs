@@ -93,7 +93,7 @@ namespace Tender.App.Controllers
                 ModelState.AddModelError("Err", "Invalid Data");
                 return View(obj);
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("ViewAllTender");
         }
         public ActionResult CompareTender(string id)
         {

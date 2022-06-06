@@ -35,7 +35,8 @@ namespace Tender.App.Service
 
         public static Tuple<List<RFQ_TENDER>, EQResult> totalRFQ(string vendorId)
         {
-            string sql = $@"SELECT RFQ_NUMBER,ADDED_DATE FROM  RFQ_TENDER WHERE  VENDOR_ID='{vendorId}'";
+           // string sql = $@"SELECT RFQ_NUMBER,ADDED_DATE FROM  RFQ_TENDER WHERE  VENDOR_ID='{vendorId}'";
+            string sql = $@"SELECT RFQ_NUMBER,ADDED_DATE FROM  RFQ_TENDER";
             var objList = DatabaseMSSql.SqlQuery<RFQ_TENDER>(sql);
             return objList;
         }
