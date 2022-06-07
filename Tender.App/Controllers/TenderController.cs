@@ -13,30 +13,35 @@ namespace Tender.App.Controllers
 {
     public class TenderController : Controller
     {
+        [UserSessionCheck]
         public ActionResult Index(int? page)
         {
             List<RFQ_TenderView> obj = QuotationService.getAllTender((string)Session["vendorId"]).Item1.Where(c => c.SUBMITED_BIDS != 0).ToList();
 
             return View(obj.ToPagedList(page ?? 1, pageSize: 8));
         }
+        [UserSessionCheck]
         public ActionResult ViewAllTender(int? page)
         {
             ViewBag.SEARCH_TYPE = TenderService.DropDown_SearchType();
             List<RFQ_TenderView> obj = QuotationService.getAllTender((string)Session["vendorId"]).Item1;
             return View(obj.ToPagedList(page ?? 1, pageSize: 8));
         }
+        [UserSessionCheck]
         public ActionResult ViewApproveTender(int? page)
         {
             ViewBag.SEARCH_TYPE = TenderService.DropDown_SearchType();
             List<RFQ_TenderView> obj = QuotationService.getAllTender((string)Session["vendorId"]).Item1.Where(c=>c.APPROVAL_ID !="0").ToList();
             return View(obj.ToPagedList(page ?? 1, pageSize: 8));
         }
+        [UserSessionCheck]
         public ActionResult ViewPendingApprovalTnd(int? page)
         {
             ViewBag.SEARCH_TYPE = TenderService.DropDown_SearchType();
             List<RFQ_TenderView> obj = QuotationService.getAllTender((string)Session["vendorId"]).Item1.Where(c => c.APPROVAL_ID == "0").ToList() ;
             return View(obj.ToPagedList(page ?? 1, pageSize: 8));
         }
+        [UserSessionCheck]
         public ActionResult ViewExpireTnd(int? page)
         {
             ViewBag.SEARCH_TYPE = TenderService.DropDown_SearchType();
@@ -45,6 +50,7 @@ namespace Tender.App.Controllers
             return View(obj.ToPagedList(page ?? 1, pageSize: 8));
         }
         [HttpGet]
+        [UserSessionCheck]
         public ActionResult TenderDetails(string id)
         {
             DropDownFor_Tender();
@@ -60,6 +66,7 @@ namespace Tender.App.Controllers
             return View(obj);
         }
         [HttpGet]
+        [UserSessionCheck]
         public ActionResult SubmitTender()
         {
             if (Session["ssUser"] == null)
@@ -95,11 +102,13 @@ namespace Tender.App.Controllers
             }
             return RedirectToAction("ViewAllTender");
         }
+        [UserSessionCheck]
         public ActionResult CompareTender(string id)
         {
             List<RFQ_BIDDING> obj = QuotationService.getTenderListForCompare(id).Item1;
             return View(obj);
         }
+        [UserSessionCheck]
         public ActionResult ApproveTender(string rfqNumber, string quotNumber, string vendorId)
         {
             RFQ_TENDER_APPROVAL obj = new RFQ_TENDER_APPROVAL();

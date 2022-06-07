@@ -12,6 +12,7 @@ namespace Tender.App.Controllers
 {
     public class HomeController : Controller
     {
+        [UserSessionCheck]
         public ActionResult Index()
         {
             List<RFQ_BIDDING> obj = QuotationService.winingsBid((string)Session["vendorId"]).Item1;

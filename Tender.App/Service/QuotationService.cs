@@ -83,6 +83,45 @@ namespace Tender.App.Service
             var objList = DatabaseMSSql.SqlQuery<RFQ_TenderView>(sql);
             return objList;
         }
+
+        public static Tuple<List<RFQ_TenderView>, EQResult> getAllTenderForSupplier(string vendorId)
+        {
+            string sql = $@" SELECT R.RFQ_NUMBER, R.VENDOR_ID TND_VENDOR_ID,
+                            CASE WHEN  R.SELL_BUY=0 THEN 'Buyer' ELSE 'Seller ' END SELL_BUY, 
+                            CASE WHEN    R.LOCAL_IMPORT=1 THEN 'Local' ELSE 'Importer' END  LOCAL_IMPORT,
+                            CASE WHEN     R.RE_BID=1 THEN 'Submit Once' ELSE 'Submit Multiple' END RE_BID,
+                            CASE WHEN  R.LOWER_RATE=1 THEN 'Lower Rate Only' ELSE 'Any Rate' END LOWER_RATE, 
+                               R.START_DATE, R.END_DATE, TP.PRODUCTS_NAME , TP.UNIT, 
+                               R.PRODUCTS_DESC TND_PRODUCTS_DESC, R.PRODUCTS_RATE , R.PRODUCTS_QUANTITY , 
+                               R.LAST_DELIVERY_DATE,
+                               CASE WHEN  R.PARTIAL_SHIPMENT=2 THEN 'Allow' WHEN  R.PARTIAL_SHIPMENT=1 THEN 'Not Allow' ELSE '' END PARTIAL_SHIPMENT, SM.SHIPMENT_MODE_NAME TENDER_SHIPMENT_MODE, 
+                               P.PORT_NAME TENDER_PORT_ID, R.DELIVERY_ADDRESS, R.RECEIVER_NAME, 
+                               R.RECEIVER_DETAILS, CASE WHEN  R.COST_EX_INC=1 THEN 'Include' ELSE 'Exclude' END COST_EX_INC, INCO.INCO_TERMS_NAME, 
+                               R.CURRENCY_NAME, R.CURRENCY_RATE, TPM.PAYMENT_MODE_NAME PAY_A, 
+                               R.PAY_AP, TPM.PAYMENT_MODE_NAME PAY_B, R.PAY_BP, 
+                               R.IS_APPROVE,R.PRODUCTS_ID,NVL(BIDDERS.SUBMITED_BIDS,0) SUBMITED_BIDS ,NVL(APP.APPROVAL_ID,0)  APPROVAL_ID,NVL2(T1.RFQ_NUMBER,'Y','N')VSUBMIT_STATUS
+                            FROM TND.RFQ_TENDER R
+                            INNER JOIN TNDR_PRODUCTS TP ON TP.PRODUCTS_ID=R.PRODUCTS_ID
+                            LEFT JOIN TNDR_SHIPMENT_MODE SM ON SM.SHIPMENT_MODE_ID=R.SHIPMENT_MODE
+                            LEFT JOIN TNDR_PORT P ON P.PORT_ID=R.PORT_ID
+                            LEFT JOIN TNDR_INCO_TERMS INCO ON INCO.INCO_TERMS_ID=R.INCO_TERMS
+                            INNER JOIN TNDR_PAYMENT_MODE TPM ON TPM.PAYMENT_MODE_ID=R.PAY_A
+                            INNER JOIN TNDR_PAYMENT_MODE TPB ON TPB.PAYMENT_MODE_ID=R.PAY_B
+                            LEFT JOIN ( SELECT RFQ_NUMBER,MAX(RFQ_SL)SUBMITED_BIDS  FROM RFQ_BIDDING GROUP BY RFQ_NUMBER ) BIDDERS ON BIDDERS.RFQ_NUMBER=R.RFQ_NUMBER
+                            LEFT JOIN RFQ_TENDER_APPROVAL APP ON APP.RFQ_NUMBER=R.RFQ_NUMBER
+                             LEFT JOIN (
+                            SELECT DISTINCT RFQ_NUMBER, VENDOR_ID FROM RFQ_BIDDING WHERE VENDOR_ID='{vendorId}' 
+                            ) T1 ON T1.RFQ_NUMBER=R.RFQ_NUMBER    
+                            WHERE R.PRODUCTS_ID IN (
+                            SELECT DISTINCT PRODUCTS_ID FROM VENDOR_PRODUCTS WHERE VENDOR_ID='{vendorId}'  AND IS_ACTIVE=1
+                            )
+                            AND END_DATE >=SYSDATE  
+                            ORDER BY R.RFQ_NUMBER ASC
+                            ";
+            var objList = DatabaseMSSql.SqlQuery<RFQ_TenderView>(sql);
+            return objList;
+        }
+
         public static Tuple<RFQ_BIDDING, EQResult> getTenderById(string rfqNumber)
         {
             string sql = $@"SELECT R.RFQ_NUMBER, R.VENDOR_ID TND_VENDOR_ID,

@@ -31,12 +31,14 @@ namespace Tender.App.Controllers
 
         #region tenderProduct       
         [HttpGet]
+        [UserSessionCheck]
         public ActionResult CreateTenderProduct()
         {
             TNDR_PRODUCTS obj = new TNDR_PRODUCTS();
             return View(obj);
         }
         [HttpPost]
+        [UserSessionCheck]
         public ActionResult CreateTenderProduct(TNDR_PRODUCTS obj)
         {
             if (ModelState.IsValid)

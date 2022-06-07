@@ -12,13 +12,15 @@ namespace Tender.App.Controllers
     public class QuotationController : Controller
     {
         // GET: Bid, For Bidder
+        [UserSessionCheck]
         public ActionResult Index(int? page)
         { 
-            List<RFQ_TenderView> obj = QuotationService.getAllTender((string)Session["vendorId"]).Item1.Where(c=>c.APPROVAL_ID =="0").ToList();
+            List<RFQ_TenderView> obj = QuotationService.getAllTenderForSupplier((string)Session["vendorId"]).Item1.Where(c=>c.APPROVAL_ID =="0").ToList();
             return View(obj.ToPagedList(page ??1, pageSize:8));
         }
 
         [HttpGet]
+        [UserSessionCheck]
         public ActionResult SubmitQuote(string id)
         {
             DropDownFor_Tender();
@@ -56,6 +58,7 @@ namespace Tender.App.Controllers
             DropDownFor_Tender();
             return RedirectToAction("Index");
         }
+        [UserSessionCheck]
         public ActionResult WiningsBid()
         {
             List<RFQ_BIDDING> obj = QuotationService.winingsBid((string)Session["vendorId"]).Item1;
