@@ -100,8 +100,20 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\portable-net45+win8+wp8+wpa81\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.InteropServices.RuntimeInformation, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.InteropServices.RuntimeInformation.4.3.0\lib\net45\System.Runtime.InteropServices.RuntimeInformation.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -160,11 +172,20 @@
       <Private>True</Private>
       <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="WebMatrix.Data, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.Data.3.2.9\lib\net45\WebMatrix.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="WebMatrix.WebData, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.WebData.3.2.9\lib\net45\WebMatrix.WebData.dll</HintPath>
+    </Reference>
     <Reference Include="X.PagedList, Version=1.20.0.1855, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
       <HintPath>..\packages\X.PagedList.1.20.0.1\lib\portable-net4+sl5+wp8+win8\X.PagedList.dll</HintPath>
     </Reference>
     <Reference Include="X.PagedList.Mvc, Version=4.7.0.1855, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
       <HintPath>..\packages\X.PagedList.Mvc.4.7.0.0\lib\net40\X.PagedList.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Essentials, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Xamarin.Essentials.1.7.3\lib\netstandard1.0\Xamarin.Essentials.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -174,6 +195,7 @@
     <Compile Include="Controllers\AccountsController.cs" />
     <Compile Include="Controllers\QuotationController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\RemoteValidationController.cs" />
     <Compile Include="Controllers\SetupController.cs" />
     <Compile Include="Controllers\TenderController.cs" />
     <Compile Include="Controllers\UserSessionCheckAttribute.cs" />
@@ -193,9 +215,18 @@
     <Content Include="App_Asset\dist\img\compare.png" />
     <Content Include="App_Asset\dist\img\ML_Red_wave__1_.jpg" />
     <Content Include="App_Asset\dist\img\noImage.jpg" />
+    <Content Include="App_Asset\dist\img\pran.png" />
+    <Content Include="App_Asset\dist\img\prf.png" />
+    <Content Include="App_Asset\dist\img\productImage\73394075.jpg" />
+    <Content Include="App_Asset\dist\img\productImage\bg.jpg" />
+    <Content Include="App_Asset\dist\img\productImage\msg.jpg" />
+    <Content Include="App_Asset\dist\img\profileImage\73394075.jpg" />
     <Content Include="App_Asset\dist\img\rfq.jpg" />
     <Content Include="App_Asset\dist\img\rfqHomePage.jpg" />
     <Content Include="App_Asset\dist\img\tenderDetails.jpg" />
+    <Content Include="App_Asset\img\73394075.jpg" />
+    <Content Include="App_Asset\img\reg-failed.png" />
+    <Content Include="App_Asset\img\reg-ok.png" />
     <Content Include="App_Asset\js\bid.js" />
     <Content Include="App_Asset\css\style.css" />
     <Content Include="App_Asset\dist\calender\bootstrap-datepicker.min.css" />
@@ -2130,6 +2161,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="pran.png" />
     <Content Include="Scripts\ai.0.22.9-build00167.js" />
     <Content Include="Scripts\ai.0.22.9-build00167.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -2323,12 +2355,13 @@
     <Content Include="Views\Tender\ViewApproveTender.cshtml" />
     <Content Include="Views\Tender\ViewPendingApprovalTnd.cshtml" />
     <Content Include="Views\Tender\ViewExpireTnd.cshtml" />
+    <Content Include="Views\Accounts\TokenMatch.cshtml" />
+    <Content Include="Views\Accounts\ResetPassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Asset\dist\img\productImage\" />
-    <Folder Include="App_Asset\dist\img\profileImage\" />
     <Folder Include="App_Data\" />
     <Folder Include="Views\Base\" />
+    <Folder Include="Views\RemoteValidationController\" />
     <Folder Include="Views\ValidateLogin\" />
   </ItemGroup>
   <ItemGroup>

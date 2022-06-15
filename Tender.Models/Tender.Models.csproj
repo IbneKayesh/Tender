@@ -73,6 +73,7 @@
   <ItemGroup>
     <Compile Include="Models\CHANGE_PASWD.cs" />
     <Compile Include="Models\ChartModel.cs" />
+    <Compile Include="Models\FORGET_PASSWORD_TOKEN.cs" />
     <Compile Include="Models\RFQ_TenderView.cs" />
     <Compile Include="Models\RFQ_TENDER_APPROVAL.cs" />
     <Compile Include="Models\RFQ_TENDER_COST.cs" />

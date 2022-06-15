@@ -161,7 +161,11 @@ else
                                     {
                                         foreach (var item in ViewBag.newRegistration)
                                         {
-                                           <span class="badge badge-success">@item.ORGANIZATION_NAME Registration at @item.ADDED_DATE</span><br />
+                                            <span class="badge badge-success">
+                                                <a class="text-dark" href="@Url.Action("supplierProfile", "Accounts", new {id = item.VENDOR_ID })">
+                                                    @item.ORGANIZATION_NAME Registration at @item.ADDED_DATE
+                                                </a>
+                                            </span><br />
                                         }
                                     }
 
@@ -169,7 +173,12 @@ else
                                     {
                                         foreach (var item in ViewBag.newSubmitQuot)
                                         {
-                                            <span class="badge badge-info">This @item.QUOTE_NUMBER submitted from @item.VENDOR_ID aganist this @item.RFQ_NUMBER at @item.SUBMIT_DATE</span><br />
+                                            <span class="badge badge-warning">
+                                                <a href="@Url.Action("CompareTender","Tender",new { id = item.RFQ_NUMBER })">
+                                                    This @item.QUOTE_NUMBER submitted from @item.VENDOR_ID aganist this @item.RFQ_NUMBER at @item.SUBMIT_DATE
+                                                </a>
+                                            </span>
+                                            <br />
                                         }
                                     }
                                 </div>
@@ -201,24 +210,24 @@ else
                 </div>
 
                 @*<div class="col-md-7">
-                    <div class="card direct-chat direct-chat-warning">
-                        <div class="card-header bg-success p-2 m-2">
-                            <h3 class="card-title">Monthly Submitted Tender Status (Current Year)</h3>
-                            <div class="card-tools">
-                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                                    <i class="fas fa-minus"></i>
-                                </button>
-                                <button type="button" class="btn btn-tool" data-card-widget="remove">
-                                    <i class="fas fa-times"></i>
-                                </button>
+                        <div class="card direct-chat direct-chat-warning">
+                            <div class="card-header bg-success p-2 m-2">
+                                <h3 class="card-title">Monthly Submitted Tender Status (Current Year)</h3>
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
                             </div>
-                        </div>
-                        <div class="card-body">
-                            <div id="chartContainer" style="height:100%; width: 100%;"></div>
-                        </div>
+                            <div class="card-body">
+                                <div id="chartContainer" style="height:100%; width: 100%;"></div>
+                            </div>
 
-                    </div>
-                </div>*@
+                        </div>
+                    </div>*@
 
             </div>
         </div>
@@ -229,7 +238,7 @@ else
     @Scripts.Render("~/bundles/jqueryval")
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.1/chart.min.js"></script>
     <script>
-        
+
         $(document).ready(function () {
         var repArray =@Html.Raw(Json.Encode(ViewBag.REP));
         var MonthList = @Html.Raw(Json.Encode(ViewBag.MONTHLIST));

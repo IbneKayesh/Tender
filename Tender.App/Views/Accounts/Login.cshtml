@@ -7,7 +7,8 @@
 
 <div class="card card-outline card-primary" style="background-color:bisque;">
     <div class="card-header text-center">
-        <a href="#" class="h1 text-bold"><b>RF</b>Q</a>
+        <a href="#" class="h1 text-bold mt-1"><b>RF</b>Q</a>
+        <img src="~/App_Asset/dist/img/pran.png" class="img-fluid" alt="Pran Rfl Group" height="60" width="60" />
     </div>
     <div class="card-body">
         <p class="login-box-msg">
@@ -58,9 +59,9 @@
             <a href="@Url.Action("Registration","Accounts")" class="btn btn-block btn-primary">
                 Register a new membership
             </a>
-            @*<a href="@Url.Action("ForgotPassword","Accounts")" class="btn btn-block btn-danger">
-                    <i class="fab fa-user-alt mr-2"></i> I forgot my password
-                </a>*@
+            <a href="@Url.Action("ForgotPassword","Accounts")" class="btn btn-block btn-danger">
+                <i class="fab fa-user-alt mr-2"></i> I forgot my password
+            </a>
         </div>
     </div>
 
@@ -69,11 +70,11 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
     <script type='text/javascript'>
-        $(document).ready(function(){
-           // $('#check').click(function(){
-           ////  alert($(this).is(':checked'));
-           //     $(this).is(':checked') ? $('#VENDOR_PASSWD').attr('type', 'text') : $('#VENDOR_PASSWD').attr('type', 'password');
-           // });
+        $(document).ready(function () {
+            // $('#check').click(function(){
+            ////  alert($(this).is(':checked'));
+            //     $(this).is(':checked') ? $('#VENDOR_PASSWD').attr('type', 'text') : $('#VENDOR_PASSWD').attr('type', 'password');
+            // });
 
             $(function () {
                 $("#toggle_pwd").click(function () {

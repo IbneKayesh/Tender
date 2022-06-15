@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="~/App_Asset/plugins/fontawesome-free/css/all.min.css">
     <link rel="stylesheet" href="~/App_Asset/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
     <link rel="stylesheet" href="~/App_Asset/dist/css/adminlte.min.css?v=3.2.0">
+    <!-- SweetAlert2 -->
+    <link rel="stylesheet" href="~/App_Asset/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
 </head>
 @*<body class="hold-transition register-page" style="background-image: url('../../App_Asset/dist/img/rfq.jpg'); background-repeat: no-repeat;  height:100%;width:100%;">*@
 <body class="hold-transition register-page">
@@ -23,7 +25,15 @@
 
     <script src="~/Scripts/jquery.validate.min.js"></script>
     <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <!-- SweetAlert2 -->
+    <script src="~/App_Asset/plugins/sweetalert2/sweetalert2.min.js"></script>
 
     @RenderSection("scripts", required: false)
+    <script>
+      
+        //Sweet Alert
+        @Html.Raw(TempData["msg"])
+
+    </script>
 </body>
 </html>

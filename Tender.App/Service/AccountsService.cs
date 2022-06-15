@@ -13,6 +13,43 @@ namespace Tender.App.Service
             sql = $"select VENDOR_EMAIL,VENDOR_ID,ORGANIZATION_NAME,COUNTRY_NAME,SUPPLIER,PURCHASER,VENDOR_USER_ID from VENDOR t where t.VENDOR_EMAIL='{_obj.VENDOR_EMAIL}' and VENDOR_PASSWD='{_obj.VENDOR_PASSWD}'";
             return DatabaseMSSql.SqlQuerySingle<VENDER_SESSION>(sql);
         }
+        #region FORGET PASSWORD
+        public static EQResult SaveToken(FORGET_PASSWORD_TOKEN _obj)
+        {
+            sql = $"select * from FORGET_PASSWORD_TOKEN WHERE LOWER(VENDOR_EMAIL)='{_obj.VENDOR_EMAIL.ToLower()}'";
+            Tuple<VENDOR_LOGIN, EQResult> _tpl = DatabaseMSSql.SqlQuerySingle<VENDOR_LOGIN>(sql);
+            if (_tpl.Item2.ROWS == 0)
+            {
+                sql = $@"INSERT INTO FORGET_PASSWORD_TOKEN (VENDOR_EMAIL,TOKEN) VALUES ('{_obj.VENDOR_EMAIL}',{_obj.TOKEN})";
+                return DatabaseMSSql.ExecuteSqlCommand(sql);
+            }
+            else {
+                sql = $@"UPDATE FORGET_PASSWORD_TOKEN SET TOKEN='{_obj.TOKEN}' WHERE LOWER(VENDOR_EMAIL)='{_obj.VENDOR_EMAIL.ToLower()}'";
+                return DatabaseMSSql.ExecuteSqlCommand(sql);
+            }            
+        }
+        public static Tuple<VENDOR_LOGIN, EQResult> EmailVerification(VENDOR_LOGIN _obj)
+        {
+            sql = $"select VENDOR_EMAIL,VENDOR_ID,VENDOR_PASSWD,ORGANIZATION_NAME,COUNTRY_NAME,SUPPLIER,PURCHASER,VENDOR_USER_ID from VENDOR t where t.VENDOR_EMAIL='{_obj.VENDOR_EMAIL}'";
+            return DatabaseMSSql.SqlQuerySingle<VENDOR_LOGIN>(sql);
+        }
+
+        public static Tuple<FORGET_PASSWORD_TOKEN, EQResult> EmailTokenVerify(FORGET_PASSWORD_TOKEN _obj)
+        {
+            sql = $"SELECT * from FORGET_PASSWORD_TOKEN t where t.VENDOR_EMAIL='{_obj.VENDOR_EMAIL}' AND t.TOKEN={_obj.TOKEN}";
+            return DatabaseMSSql.SqlQuerySingle<FORGET_PASSWORD_TOKEN>(sql);
+        }
+
+        public static EQResult ResetPassword(VENDOR_LOGIN _obj)
+        {
+            sql = $@"UPDATE VENDOR SET VENDOR_PASSWD='{_obj.VENDOR_PASSWD}' WHERE LOWER(VENDOR_EMAIL)='{_obj.VENDOR_EMAIL.ToLower()}'";        
+            return DatabaseMSSql.ExecuteSqlCommand(sql);
+           
+        }
+
+        #endregion
+
+
         public static Tuple<List<VENDOR_LOGIN>, EQResult> getItemMaster()
         {
             sql = $"select ITEM_ID,ITEM_NAME,ITEM_TYPE from ITEM_MASTER";

@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
 using Tender.App.Service;
@@ -72,8 +74,9 @@ namespace Tender.App.Controllers
                 {
                     ModelState.AddModelError("", "Select Registration Type Purchaser or Supplier");
                 }
-                else if (obj.SUPPLIER==1 && obj.PURCHASER==1) { 
-                ModelState.AddModelError("", "Select Registration Type Purchaser or Supplier any one");
+                else if (obj.SUPPLIER == 1 && obj.PURCHASER == 1)
+                {
+                    ModelState.AddModelError("", "Select Registration Type Purchaser or Supplier any one");
                 }
                 else
                 {
@@ -129,13 +132,125 @@ namespace Tender.App.Controllers
 
         public ActionResult ForgotPassword()
         {
-            return View();
+            VENDOR_LOGIN obj = new VENDOR_LOGIN();
+            return View(obj);
         }
 
         [HttpPost]
         public ActionResult ForgotPassword(VENDOR_LOGIN obj)
         {
+            Tuple<VENDOR_LOGIN, EQResult> _tpl = AccountsService.EmailVerification(obj);
+            string emailAddress = _tpl.Item1.VENDOR_EMAIL;
+            if (!string.IsNullOrEmpty(emailAddress))
+            {
+                Random rnd = new Random();
+                int confirmationToken = rnd.Next(000000, 999999);
+
+                FORGET_PASSWORD_TOKEN tokenObj = new FORGET_PASSWORD_TOKEN();
+                tokenObj.VENDOR_EMAIL = obj.VENDOR_EMAIL;
+                tokenObj.TOKEN = confirmationToken;
+
+                EQResult _tpl1 = AccountsService.SaveToken(tokenObj);
+                if (_tpl1.SUCCESS)
+                {
+                    SendEMail(obj.VENDOR_EMAIL, "Reset password code for http://rfq.prangroup.com/", confirmationToken.ToString());
+                    TempData["msg"] = AlertService.SaveSuccess("Please check your email");
+                    ViewBag.VENDOR_EMAIL = obj.VENDOR_EMAIL;
+                    return RedirectToAction("TokenMatch", obj);
+                }
+                else {
+                    TempData["msg"] = AlertService.SaveWarningOK(_tpl1.MESSAGES);
+                }
+            }
+            else
+            {
+                TempData["msg"] = AlertService.SaveWarningOK("email not found");
+            }
             return View(obj);
+        }
+        [HttpGet]
+        public ActionResult TokenMatch(VENDOR_LOGIN obj)
+        {
+            return View(obj);
+        }
+        [HttpPost]
+        public ActionResult TokenMatch(VENDOR_LOGIN _obj, int tokenNumber)
+        {
+            FORGET_PASSWORD_TOKEN obj = new FORGET_PASSWORD_TOKEN();
+            obj.VENDOR_EMAIL = _obj.VENDOR_EMAIL;
+            obj.TOKEN = tokenNumber;
+            Tuple<FORGET_PASSWORD_TOKEN, EQResult> _tpl = AccountsService.EmailTokenVerify(obj);
+            if (!string.IsNullOrEmpty(_tpl.Item1.VENDOR_EMAIL))
+            {
+                TempData["msg"] = AlertService.SaveSuccess("Verification Code Matched Successful");
+                return RedirectToAction("ResetPassword", _obj);
+            }
+            else
+            {
+                TempData["msg"] = AlertService.SaveWarningOK("Verification code not matched");
+            }
+            return View(_obj);
+        }
+
+        [HttpGet]
+        public ActionResult ResetPassword(VENDOR_LOGIN obj)
+        {
+            return View(obj);
+        }
+
+        [HttpPost]
+        public ActionResult ResetPassword(VENDOR_LOGIN obj, string confirmPassword)
+        {
+            if (ModelState.IsValid)
+            {
+                EQResult _tpl1 = AccountsService.ResetPassword(obj);
+                if (_tpl1.SUCCESS)
+                {
+                    TempData["msg"] = AlertService.SaveSuccess("Password Reset Successful");
+                    return RedirectToAction("Login");
+                }
+                else
+                {
+                    TempData["msg"] = AlertService.SaveWarningOK(_tpl1.MESSAGES);
+                }
+            }
+            return View(obj);
+        }
+
+        private void SendEMail(string emailid, string subject, string body)
+        {
+            string Sender_Account = "lsms@prangroup.com";// emal.EMAL_SMTP;
+            string Sender_Credential = "@dm!n@#sysmail";// emal.EMAL_PASS;
+
+            System.Net.Mail.SmtpClient client = new System.Net.Mail.SmtpClient();
+            client.DeliveryMethod = System.Net.Mail.SmtpDeliveryMethod.Network;
+            System.Net.NetworkCredential credentials = new System.Net.NetworkCredential(Sender_Account, Sender_Credential);
+            client.UseDefaultCredentials = false;
+            client.Credentials = credentials;
+
+            System.Net.Mail.MailMessage msg = new System.Net.Mail.MailMessage();
+
+            msg.From = new MailAddress("lsms@prangroup.com");
+            msg.To.Add(new MailAddress(emailid));
+
+            msg.Subject = subject;
+            //message.Body = string.Format(body, model.FromName, model.FromEmail, model.Message);
+            msg.Body = body;
+            msg.IsBodyHtml = true;
+
+            using (var smtp = new SmtpClient())
+            {
+                var credential = new NetworkCredential
+                {
+                    UserName = "lsms@prangroup.com",  // replace with valid value
+                    Password = "@dm!n@#sysmail"  // replace with valid value
+                };
+                smtp.Credentials = credential;
+                smtp.Host = "172.17.2.12";
+                smtp.Port = 587;
+                smtp.EnableSsl = false;
+                smtp.Send(msg);
+            }
         }
 
 
@@ -179,7 +294,8 @@ namespace Tender.App.Controllers
                     ModelState.AddModelError("", "This User Id Already Exist");
                     return View(obj);
                 }
-                else if (obj.PURCHASER_NOTIFY == 1 && obj.SUPPLIER_NOTIFY == 1) {
+                else if (obj.PURCHASER_NOTIFY == 1 && obj.SUPPLIER_NOTIFY == 1)
+                {
                     ModelState.AddModelError("", "Please Select Purchaser notification  or Supplier notification, choose One ");
                     return View(obj);
                 }
