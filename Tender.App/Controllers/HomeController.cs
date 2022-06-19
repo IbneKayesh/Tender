@@ -47,8 +47,17 @@ namespace Tender.App.Controllers
                 repartitions.Add(totalRFQ.Count(x => x.ADDED_DATE.ToString("MMMM") == item));
             }
             ViewBag.MONTHLIST = montthlist;
-            ViewBag.REP = repartitions;   
-            
+            ViewBag.REP = repartitions;
+
+
+            List<RFQ_BIDDING> WiningBidsNotify = QuotationService.winingsBidforNftn((string)Session["vendorId"]).Item1.ToList();
+            DateTime da = DateTime.Today;
+            var A = WiningBidsNotify.Where(c => c.APPROVAL_DATE<da);
+
+            ViewBag.WiningBidsNotify = WiningBidsNotify;
+            ViewBag.WiningBidsNotifyCount = WiningBidsNotify.Count();
+           
+
             return View();
         }     
         public ActionResult About()

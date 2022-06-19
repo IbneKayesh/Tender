@@ -71,5 +71,32 @@ namespace Tender.App.Controllers
             ViewBag.PORT_ID = new SelectList(TenderService.getPort().Item1.ToList(), "PORT_ID", "PORT_NAME");
 
         }
+
+        //Remove
+        public void a(int n)
+        {
+            int s = 0;
+            int sum = 0;
+            string series = "";
+            string symbol;
+            for (int i = 0; i < n; i++)
+            {
+                if (i % 2 == 0)
+                {
+                    if(s%2 == 0)
+                    {
+                        symbol = "+";
+                        sum = sum + 1 / i;
+                    }
+                    else
+                    {
+                        symbol = "-";
+                        sum = sum - 1 / i;
+                    }
+                    series +=""+symbol+""+ 1 / i;
+                    s++;
+                }
+            }
+        }
     }
 }

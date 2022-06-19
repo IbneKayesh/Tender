@@ -36,7 +36,7 @@
 
                     <div class="btn-default py-2 px-0 mt-4">
                         <h5 class="mb-0">
-                            Rate :   @Model.TND_PRODUCTS_RATE @Model.CURRENCY_NAME, Quantity : @Model.TND_PRODUCTS_QTY @Model.UNIT
+                            Purposed Rate :   @Model.TND_PRODUCTS_RATE @Model.CURRENCY_NAME, Quantity : @Model.TND_PRODUCTS_QTY @Model.UNIT
                         </h5>
                     </div>
                 </div>
@@ -181,7 +181,7 @@
                                 </div>
                                 <div class="col-md-3 col-lg-2 col-sm-6">
                                     <div class="form-group">
-                                        <label class="control-label">Quantity</label> <span class="text-danger">*</span>
+                                        <label class="control-label">Quantity</label> <span class="text-danger">*</span><span class="text-ge"> ( @Model.TND_PRODUCTS_QTY @Model.UNIT)</span>
                                         @Html.EditorFor(model => model.PRODUCTS_QUANTITY, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "Quantity" } })
                                         @Html.ValidationMessageFor(m => m.PRODUCTS_QUANTITY, "", new { @class = "text-danger" })
                                     </div>
@@ -198,20 +198,26 @@
                                     <div class="col-lg-2 col-md-4 col-sm-6">
                                         <div class="form-group">
                                             <label class="control-label">Shipment Mode</label>
-                                            @Html.DropDownList("SHIPMENT_MODE", null, "-Select-", new { @class = "form-control form-control-sm select2", placeholder = "" })
+                                            @Html.DropDownList("SHIPMENT_MODE", null, "-Select-", new { @class = "form-control form-control-sm", placeholder = "" })
                                             @Html.ValidationMessageFor(m => m.SHIPMENT_MODE, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
-                                    <div class="col-lg-2 col-md-4 col-sm-6">
+                                    <div class="col-lg-2 col-md-4 col-sm-6"> 
                                         <div class="form-group">
                                             <label class="control-label">Port Name</label>
-                                            @Html.DropDownList("PORT_ID", null, "-Select-", new { @class = "form-control form-control-sm select2", placeholder = "" })
+                                            @Html.DropDownList("PORT_ID", null, "-Select-", new { @class = "form-control form-control-sm", placeholder = "" })
                                             @Html.ValidationMessageFor(m => m.PORT_ID, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
                                 }
-
+                                <div class="col-md-4 col-lg-3 col-sm-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Note</label>
+                                        @Html.TextAreaFor(m => m.NOTE, new { @class = "form-control form-control-sm", rows = "1", required = "required", placeholder = "Note" })
+                                        @Html.ValidationMessageFor(m => m.NOTE, "", new { @class = "text-danger" })
+                                    </div>
                                 </div>
+                            </div>
                             <div class="row">
                                 <div class="col-md-2 col-lg-2">
                                     <div class="form-group">
@@ -235,11 +241,16 @@
     <script src="~/App_Asset/js/bid.js"></script>
     <script>
         $(document).ready(function () {
+            var shipmentMode =@Model.SHIPMENT_MODE;
+            $('#SHIPMENT_MODE').val(shipmentMode).attr("selected", "selected");
+            var portID =@Model.PORT_ID;
+            $('#PORT_ID').val(shipmentMode).attr("selected", "selected");
+
             setInterval("dateimeFunction()", 1000);
 
-            function preventBack() { window.history.forward(); }
-            setTimeout("preventBack()", 0);
-            window.onunload = function () { null };
+            //function preventBack() { window.history.forward(); }
+            //setTimeout("preventBack()", 0);
+            //window.onunload = function () { null };
         })
         function dateimeFunction() {
             var endDateTime = $('.endDate').val();

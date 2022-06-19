@@ -32,6 +32,11 @@ namespace Tender.Models.Models
         [StringLength(maximumLength: 100, ErrorMessage = "{0} length is between {2} and {1}", MinimumLength = 5)]
         public string SENDER_DETAILS { get; set; }
 
+        [StringLength(maximumLength: 140, ErrorMessage = "{0} length is between {2} and {1}", MinimumLength = 5)]
+        [Required(ErrorMessage = "{0} is required")]
+        public string NOTE { get; set; }
+        
+
         [NotMapped]
         public string TND_VENDOR_ID { get; set; }
         [NotMapped]

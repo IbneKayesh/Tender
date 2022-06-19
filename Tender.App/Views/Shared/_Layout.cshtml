@@ -67,7 +67,7 @@
                                         <li><a href="@Url.Action("SubmitTender", "Tender")" class="dropdown-item">Submit Tender</a></li>
                                         <li><a href="@Url.Action("ViewAllTender", "Tender")" class="dropdown-item"> Tender List</a></li>
                                         <li><a href="@Url.Action("Index", "Tender")" class="dropdown-item"> Compare List</a></li>
-                                        <li><a href="@Url.Action("CreateTenderProduct", "Setup")" class="dropdown-item"> Item</a></li>                                       
+                                        <li><a href="@Url.Action("CreateTenderProduct", "Setup")" class="dropdown-item"> Item</a></li>
                                         <li class="dropdown-submenu">
                                             <a id="dropdownSubMenu3" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-item dropdown-toggle">View Tender</a>
                                             <ul aria-labelledby="dropdownSubMenu3" class="dropdown-menu border-0 shadow">
@@ -94,20 +94,50 @@
                     </ul>
 
                     <!-- SEARCH FORM -->
-                    <form class="form-inline ml-0 ml-md-3">
-                        <div class="input-group input-group-sm">
-                            <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
-                            <div class="input-group-append">
-                                <button class="btn btn-navbar" type="submit">
-                                    <i class="fas fa-search"></i>
-                                </button>
+                    @*<form class="form-inline ml-0 ml-md-3">
+                            <div class="input-group input-group-sm">
+                                <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
+                                <div class="input-group-append">
+                                    <button class="btn btn-navbar" type="submit">
+                                        <i class="fas fa-search"></i>
+                                    </button>
+                                </div>
                             </div>
-                        </div>
-                    </form>
+                        </form>*@
                 </div>
 
                 <!-- Right navbar links -->
                 <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-auto">
+                    @if ((int)Session["_supplierStatus"] == 1 && (int)Session["_purcherserStatus"] == 0)
+                    {
+                        <li class="nav-item dropdown">
+                            <a class="nav-link" data-toggle="dropdown" href="#">
+                                <i class="far fa-bell"></i>
+                                <span class="badge badge-warning navbar-badge">@ViewBag.WiningBidsNotifyCount</span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right mt-2 bg-gradient-white text-bold">
+                                <span class="dropdown-item dropdown-header">@ViewBag.WiningBidsNotifyCount Notifications for last one month</span>
+
+                                <div class="dropdown-divider"></div>
+
+                                @if (@ViewBag.WiningBidsNotifyCount > 0)
+                                {
+                                    foreach (var item in ViewBag.WiningBidsNotify)
+                                    {
+                                        <small class="text-bold">
+                                            <a href="@Url.Action("WiningsBid", "Quotation")" class="dropdown-item text-success text-bold">
+                                                Your Organization win this @item.RFQ_NUMBER<br/> against @item.QUOTE_NUMBER
+                                            </a>
+                                        </small>
+                                    }
+                                }
+
+                                <div class="dropdown-divider"></div>
+                                <a href="@Url.Action("WiningsBid", "Quotation")" class="dropdown-item dropdown-footer">See All Notifications</a>
+                            </div>
+                        </li>
+                    }
+
 
                     <li class="nav-item dropdown">
                         @if (Session["ssUser"] == null)
@@ -155,8 +185,6 @@
             <!-- Main content -->
             <div class="content">
                 @*<div class="container">
-
-
                     </div>*@<!-- /.container-fluid -->
                 @RenderBody()
             </div>
@@ -169,13 +197,14 @@
         </aside>
         <!-- /.control-sidebar -->
         <!-- Main Footer -->
-        <footer class="main-footer">
+        <footer class="main-footer bg-gradient-dark">
+
             <!-- To the right -->
-            <div class="float-right d-none d-sm-inline">
-                Anything you want
+            <div class="float-right  d-sm-inline ">
+                For any queries/Support contact-mis5@prgoverseas.com
             </div>
             <!-- Default to the left -->
-            <strong>Copyright &copy; 2022-2050 <a href="https://en.wikipedia.org/wiki/PRAN-RFL_Group">PRG Head Office CS-MIS-SW</a>.</strong> All rights reserved.
+            <p>&copy; 2022-2025 <a href="https://en.wikipedia.org/wiki/PRAN-RFL_Group">PRG HO CS-MIS </a> All rights reserved.</p>
         </footer>
     </div>
     <!-- ./wrapper -->
@@ -215,7 +244,6 @@
     @RenderSection("scripts", required: false)
     <script>
         $('.select2').select2()
-
         //Sweet Alert
         @Html.Raw(TempData["msg"])
 
