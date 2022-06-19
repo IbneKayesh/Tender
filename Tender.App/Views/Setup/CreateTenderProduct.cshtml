@@ -17,26 +17,30 @@
         {
             @Html.ValidationSummary(false, "", new { @class = "text-danger" })
             @Html.AntiForgeryToken()
-            <div class="card-body">
-                <div class="form-group">
-                    <label for="exampleInputEmail1">Product Name</label>
-                    @Html.EditorFor(model => model.PRODUCTS_NAME, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "Product Name" } })
-                </div>
-                <div class="form-group">
-                    <label for="exampleInputEmail1">Unit</label>
-                    @Html.EditorFor(model => model.UNIT, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "Product Name" } })
-                </div>
-
-                <div class="form-group">
-                    @Html.Label("Upload Product Picture", new { @class = "control-label" })
-                    <input type="file" name="ProductPicture" accept=".png, .jpg, .jpeg" />
-                    <br />
-
-                    <span class="text-success">png,jpg,jpeg format only</span>
-                    <span class="text-primary">Maximun Size 100KB</span><br />
-                    <span class="text-danger">Must be Height 800px Width 800px</span>
-                </div>
+    <div class="card-body">
+        <div class="form-group">
+            <label for="exampleInputEmail1">Product Name</label>
+            @Html.EditorFor(model => model.PRODUCTS_NAME, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "Product Name" } })
+        </div>
+        <div class="form-group">
+            <label for="exampleInputEmail1">Unit</label>
+            @Html.EditorFor(model => model.UNIT, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "Product Name" } })
+        </div>
+            <div class="form-group">
+                <label class="control-label">Shipment Mode</label>
+                @Html.DropDownList("GROUP_ID", null, "-Select-", new { @class = "form-control form-control-sm select2", placeholder = "" })
+                @Html.ValidationMessageFor(m => m.GROUP_ID, "", new { @class = "text-danger" })
             </div>
+        <div class="form-group">
+            @Html.Label("Upload Product Picture", new { @class = "control-label" })
+            <input type="file" name="ProductPicture" accept=".png, .jpg, .jpeg" />
+            <br />
+
+            <span class="text-success">png,jpg,jpeg format only</span>
+            <span class="text-primary">Maximun Size 100KB</span><br />
+            <span class="text-danger">Must be Height 800px Width 800px</span>
+        </div>
+    </div>
             <div class="card-footer">
                 <button type="submit" class="btn btn-primary" id="save" style="display:none;">Save</button>
                 <button class="btn btn-primary" id="submit">Submit</button>
@@ -57,6 +61,7 @@
                     <tr>
                         <th>Image</th>
                         <th>Code</th>
+                        <th>Catagory</th>
                         <th>Name</th>
                         <th>Unit</th>
 
@@ -107,6 +112,7 @@
                         }
                     },
                     { "mData": "PRODUCTS_ID" },
+                    { "mData": "GROUP_ID" },
                     { "mData": "PRODUCTS_NAME" },
                     { "mData": "UNIT" }
                 ],

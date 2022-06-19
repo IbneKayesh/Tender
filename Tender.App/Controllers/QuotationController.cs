@@ -16,7 +16,10 @@ namespace Tender.App.Controllers
         public ActionResult Index(int? page)
         { 
             List<RFQ_TenderView> obj = QuotationService.getAllTenderForSupplier((string)Session["vendorId"]).Item1.Where(c=>c.APPROVAL_ID =="0").ToList();
-            return View(obj.ToPagedList(page ??1, pageSize:8));
+            if (obj.Count == 0) {
+                TempData["msg"] = AlertService.SaveWarningOK("No tender found");
+            }
+           return View(obj.ToPagedList(page ??1, pageSize:8));
         }
 
         [HttpGet]

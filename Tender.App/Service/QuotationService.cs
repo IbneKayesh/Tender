@@ -112,9 +112,9 @@ namespace Tender.App.Service
                              LEFT JOIN (
                             SELECT DISTINCT RFQ_NUMBER, VENDOR_ID FROM RFQ_BIDDING WHERE VENDOR_ID='{vendorId}' 
                             ) T1 ON T1.RFQ_NUMBER=R.RFQ_NUMBER    
-                            WHERE R.PRODUCTS_ID IN (
-                            SELECT DISTINCT PRODUCTS_ID FROM VENDOR_PRODUCTS WHERE VENDOR_ID='{vendorId}'  AND IS_ACTIVE=1
-                            )
+                           WHERE TP.GROUP_ID IN (
+                            SELECT DISTINCT GROUP_ID FROM VENDOR_PRODUCTS_GROUP WHERE VENDOR_ID='{vendorId}'  AND IS_ACTIVE=1
+                            ) 
                             AND END_DATE >=SYSDATE  
                             ORDER BY R.RFQ_NUMBER ASC
                             ";

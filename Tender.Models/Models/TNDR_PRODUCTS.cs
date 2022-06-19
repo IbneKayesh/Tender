@@ -19,6 +19,7 @@ namespace Tender.Models.Models
         [Required(ErrorMessage = "{0} is required")]
         public string PRODUCTS_NAME { get; set; }
         public string IMAGE_PATH { get; set; }
+        public string GROUP_ID { get; set; }
 
      //   [ImageFile(Width = 100, Height = 100, ErrorMessage = "Please upload image 100x100")]
         public HttpPostedFileBase ProductPicture { get; set; }

@@ -14,6 +14,7 @@ namespace Tender.Models.Models
             VENDOR_CERTIFICATE = new List<VENDOR_CERTIFICATE>();
             VENDOR_DOCUMENTS = new List<VENDOR_DOCUMENTS>();
             VENDOR_PRODUCTS = new List<VENDOR_PRODUCTS>();
+            VENDOR_PRODUCTS_GROUP = new List<VENDOR_PRODUCTS_GROUP>();
         }
 
         [Display(Name = "Login User Name")]
@@ -94,6 +95,9 @@ namespace Tender.Models.Models
         public virtual List<VENDOR_CERTIFICATE> VENDOR_CERTIFICATE { get; set; }
         public virtual List<VENDOR_DOCUMENTS> VENDOR_DOCUMENTS { get; set; }
         public virtual List<VENDOR_PRODUCTS> VENDOR_PRODUCTS { get; set; }
+        public virtual List<VENDOR_PRODUCTS_GROUP> VENDOR_PRODUCTS_GROUP { get; set; }
+ 
+        
 
         public VENDOR_DETAILS getAll()
         {

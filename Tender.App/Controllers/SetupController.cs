@@ -34,6 +34,7 @@ namespace Tender.App.Controllers
         [UserSessionCheck]
         public ActionResult CreateTenderProduct()
         {
+            ViewBag.GROUP_ID = new SelectList(SetupService.getpProductGroup().Item1.ToList(), "ID", "NAME");
             TNDR_PRODUCTS obj = new TNDR_PRODUCTS();
             return View(obj);
         }
@@ -41,6 +42,7 @@ namespace Tender.App.Controllers
         [UserSessionCheck]
         public ActionResult CreateTenderProduct(TNDR_PRODUCTS obj)
         {
+            ViewBag.GROUP_ID = new SelectList(SetupService.getpProductGroup().Item1.ToList(), "ID", "NAME");
             if (ModelState.IsValid)
             {
                 if (SetupService.checkItem(obj.PRODUCTS_NAME).Item1.PRODUCTS_NAME != null)
@@ -48,7 +50,6 @@ namespace Tender.App.Controllers
                     ModelState.AddModelError("", "This Product Name Already Exist");
                     return View(obj);
                 }
-
                 if (obj.ProductPicture != null)
                 {
                     if (obj.ProductPicture.ContentLength <= 102400)

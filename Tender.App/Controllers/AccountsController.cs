@@ -72,7 +72,7 @@ namespace Tender.App.Controllers
             {
                 if (obj.SUPPLIER == 0 && obj.PURCHASER == 0)
                 {
-                    ModelState.AddModelError("", "Select Registration Type Purchaser or Supplier");
+                    ModelState.AddModelError("", "Select Supplier");
                 }
                 else if (obj.SUPPLIER == 1 && obj.PURCHASER == 1)
                 {
@@ -269,6 +269,7 @@ namespace Tender.App.Controllers
                 _tpl.Item1.VENDOR_CERTIFICATE = AccountsService.getVENDOR_CERTIFICATE(snObj.VENDOR_ID).Item1;
                 _tpl.Item1.VENDOR_DOCUMENTS = AccountsService.getVENDOR_DOCUMENTS(snObj.VENDOR_ID).Item1;
                 _tpl.Item1.VENDOR_PRODUCTS = AccountsService.getVENDOR_PRODUCTS(snObj.VENDOR_ID).Item1;
+                _tpl.Item1.VENDOR_PRODUCTS_GROUP = AccountsService.getVENDOR_PRODUCTS_GROUP(snObj.VENDOR_ID).Item1;
                 return View(_tpl.Item1);
 
             }
@@ -402,6 +403,14 @@ namespace Tender.App.Controllers
                 }
             }
             return View("UserProfile", new VENDOR_DETAILS().getAll());
+        }
+
+        [UserSessionCheck]
+        public ActionResult ViewAllSupplier() {
+
+            List<VENDOR_DETAILS> obj = AccountsService.supplierList().Item1;
+            return View(obj);
+
         }
 
 

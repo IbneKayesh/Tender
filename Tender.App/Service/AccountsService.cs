@@ -82,7 +82,30 @@ namespace Tender.App.Service
         }
         public static EQResult add_edit_follow_me(string id, string cID, string cNAME)
         {
-            if (cID == "v-pro")
+            if (cID == "v-pcat")
+            {
+                sql = $"select VENDOR_ID,PRODUCTS_GROUP_ID,PRODUCTS_GROUP_NAME,IS_ACTIVE from VENDOR_PRODUCTS_GROUP where VENDOR_ID ='{id}' and PRODUCTS_GROUP_ID='{cNAME}'";
+                var _tpl = DatabaseMSSql.SqlQuerySingle<VENDOR_CATEGORY>(sql);
+                if (_tpl.Item2.ROWS == 0)
+                {
+                    sql = $"INSERT INTO VENDOR_PRODUCTS_GROUP(VENDOR_ID,PRODUCTS_GROUP_ID,PRODUCTS_GROUP_NAME,IS_ACTIVE)VALUES('{id}','{cNAME}','{cNAME}',1)";
+                    return DatabaseMSSql.ExecuteSqlCommand(sql);
+                }
+                else
+                {
+                    if (_tpl.Item1.IS_ACTIVE == 1)
+                    {
+                        sql = $"update VENDOR_PRODUCTS_GROUP set IS_ACTIVE=0 where VENDOR_ID='{id}' and PRODUCTS_GROUP_ID='{cNAME}'";
+                    }
+                    else
+                    {
+                        sql = $"update VENDOR_PRODUCTS_GROUP set IS_ACTIVE=1 where VENDOR_ID='{id}' and PRODUCTS_GROUP_ID='{cNAME}'";
+                    }
+                    return DatabaseMSSql.ExecuteSqlCommand(sql);
+                }
+            }
+
+            else if (cID == "v-pro")
             {
                 sql = $"select VENDOR_ID,PRODUCTS_ID,PRODUCTS_NAME,IS_ACTIVE from VENDOR_PRODUCTS where VENDOR_ID='{id}' and PRODUCTS_ID='{cNAME}'";
                 var _tpl = DatabaseMSSql.SqlQuerySingle<VENDOR_CATEGORY>(sql);
@@ -228,6 +251,20 @@ namespace Tender.App.Service
             return DatabaseMSSql.SqlQuery<VENDOR_PRODUCTS>(sql);
         }
 
+        public static Tuple<List<VENDOR_PRODUCTS_GROUP>, EQResult> getVENDOR_PRODUCTS_GROUP(string id)
+        {
+            sql = $@"SELECT T1.ID PRODUCTS_GROUP_ID,T1.NAME PRODUCTS_GROUP_NAME,
+                    CASE WHEN T2.IS_ACTIVE IS NULL
+                    THEN 0
+                    ELSE
+                    T2.IS_ACTIVE
+                    END IS_ACTIVE
+                    FROM TNDR_PRODUCT_GROUP T1
+                    LEFT JOIN VENDOR_PRODUCTS_GROUP T2 ON T1.ID = T2.PRODUCTS_GROUP_ID                   
+                    AND T2.VENDOR_ID='{id}'";
+            return DatabaseMSSql.SqlQuery<VENDOR_PRODUCTS_GROUP>(sql);
+        }
+
         public static EQResult profileUpdate(VENDOR_DETAILS _obj)
         {
             sql = $@"update VENDOR set VENDOR_USER_ID='{_obj.VENDOR_USER_ID}',CONTACT_NAME='{_obj.CONTACT_NAME}',NO_OF_EMPLOYEES='{_obj.NO_OF_EMPLOYEES}',
@@ -249,6 +286,14 @@ namespace Tender.App.Service
             sql = $"select * from VENDOR  where LOWER( VENDOR_USER_ID ) ='{userId.ToLower()}' and VENDOR_ID <>('{vendorId}')";
             Tuple<VENDOR_DETAILS, EQResult> _tpl = DatabaseMSSql.SqlQuerySingle<VENDOR_DETAILS>(sql);
             return _tpl;
+        }
+
+
+        public static Tuple<List<VENDOR_DETAILS>, EQResult> supplierList()
+        {
+            string sql = $@"SELECT * FROM VENDOR WHERE SUPPLIER=1";
+            var objList = DatabaseMSSql.SqlQuery<VENDOR_DETAILS>(sql);
+            return objList;
         }
 
     }

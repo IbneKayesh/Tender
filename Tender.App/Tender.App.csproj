@@ -2357,6 +2357,7 @@
     <Content Include="Views\Tender\ViewExpireTnd.cshtml" />
     <Content Include="Views\Accounts\TokenMatch.cshtml" />
     <Content Include="Views\Accounts\ResetPassword.cshtml" />
+    <Content Include="Views\Accounts\ViewAllSupplier.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
