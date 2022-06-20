@@ -372,6 +372,7 @@ namespace Tender.App.Controllers
                 _tpl.Item1.VENDOR_CERTIFICATE = AccountsService.getVENDOR_CERTIFICATE(id).Item1;
                 _tpl.Item1.VENDOR_DOCUMENTS = AccountsService.getVENDOR_DOCUMENTS(id).Item1;
                 _tpl.Item1.VENDOR_PRODUCTS = AccountsService.getVENDOR_PRODUCTS(id).Item1;
+                _tpl.Item1.VENDOR_PRODUCTS_GROUP = AccountsService.getVENDOR_PRODUCTS_GROUP(id).Item1;
                 return View(_tpl.Item1);
 
             }

@@ -74,7 +74,7 @@
                         <div class="card-body">
                             <div class="tab-content">
                                 <div class="active tab-pane" id="follow">
-                                    <strong><i class="fa fa-list-alt mr-1"></i> Products  </strong>
+                                    @*<strong><i class="fa fa-list-alt mr-1"></i> Products  </strong>
                                     <p>
                                         @foreach (var mItem in Model.VENDOR_PRODUCTS)
                                         {
@@ -84,7 +84,19 @@
                                             }
 
                                         }
+                                    </p>*@
+
+                                    <strong><i class="fa fa-list-alt mr-1"></i> Item Catagory  </strong>
+                                    <p>
+                                        @foreach (var mItem in Model.VENDOR_PRODUCTS_GROUP)
+                                        {
+                                            if (mItem.IS_ACTIVE == true)
+                                            {
+                                                <span class="badge badge-primary"> @mItem.PRODUCTS_GROUP_NAME</span>
+                                            }
+                                        }
                                     </p>
+
                                     <hr />
                                     <strong><i class="fas fa-business-time mr-1"></i> Business</strong><br />
                                     @foreach (var mItem in Model.VENDOR_CATEGORY)
