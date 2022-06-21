@@ -33,4 +33,17 @@
     <br>
     Email: <b>@Model.VENDOR_EMAIL</b> You have not received your e-mail with the link? <a href="@Url.Action("RegistrationSuccessfull")"> send again</a><br>
 </p>
-<a href="@Url.Action("Login","Accounts")" class="button"> Login</a>
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+    @Html.AntiForgeryToken()
+    <div>
+        <input type="hidden" value="@Model.VENDOR_EMAIL" id="VENDOR_EMAIL" name="VENDOR_EMAIL" />
+        <div class="form-group">
+            <label for="exampleInputEmail1">Verification Code</label>
+            <input class="form-control form-control-sm" id="token" name="token" placeholder="Enter Verification Code">
+        </div>        
+    </div>
+
+    <input type="submit" class="btn btn-success btn-lg" value="Submit"/>
+}

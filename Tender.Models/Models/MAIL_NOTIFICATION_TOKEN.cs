@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace Tender.Models.Models
 {
-  public class FORGET_PASSWORD_TOKEN
+  public class MAIL_NOTIFICATION_TOKEN
     {
         public string VENDOR_EMAIL { get; set; }
         public int TOKEN { get; set; }
         public DateTime ADDED_DATE { get; set; }
+        public string TOKEN_TYPE { get; set; }
     }
 }

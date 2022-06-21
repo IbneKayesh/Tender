@@ -14,17 +14,17 @@ namespace Tender.App.Service
             return DatabaseMSSql.SqlQuerySingle<VENDER_SESSION>(sql);
         }
         #region FORGET PASSWORD
-        public static EQResult SaveToken(FORGET_PASSWORD_TOKEN _obj)
+        public static EQResult SaveToken(MAIL_NOTIFICATION_TOKEN _obj, string token_type)
         {
-            sql = $"select * from FORGET_PASSWORD_TOKEN WHERE LOWER(VENDOR_EMAIL)='{_obj.VENDOR_EMAIL.ToLower()}'";
+            sql = $"select * from MAIL_NOTIFICATION_TOKEN WHERE TOKEN_TYPE='{token_type}' AND LOWER(VENDOR_EMAIL)='{_obj.VENDOR_EMAIL.ToLower()}'";
             Tuple<VENDOR_LOGIN, EQResult> _tpl = DatabaseMSSql.SqlQuerySingle<VENDOR_LOGIN>(sql);
             if (_tpl.Item2.ROWS == 0)
             {
-                sql = $@"INSERT INTO FORGET_PASSWORD_TOKEN (VENDOR_EMAIL,TOKEN) VALUES ('{_obj.VENDOR_EMAIL}',{_obj.TOKEN})";
+                sql = $@"INSERT INTO MAIL_NOTIFICATION_TOKEN (VENDOR_EMAIL,TOKEN,TOKEN_TYPE) VALUES ('{_obj.VENDOR_EMAIL}',{_obj.TOKEN},'{token_type}')";
                 return DatabaseMSSql.ExecuteSqlCommand(sql);
             }
             else {
-                sql = $@"UPDATE FORGET_PASSWORD_TOKEN SET TOKEN='{_obj.TOKEN}' WHERE LOWER(VENDOR_EMAIL)='{_obj.VENDOR_EMAIL.ToLower()}'";
+                sql = $@"UPDATE MAIL_NOTIFICATION_TOKEN SET TOKEN='{_obj.TOKEN}' WHERE TOKEN_TYPE='{token_type}' AND LOWER(VENDOR_EMAIL)='{_obj.VENDOR_EMAIL.ToLower()}'";
                 return DatabaseMSSql.ExecuteSqlCommand(sql);
             }            
         }
@@ -34,10 +34,10 @@ namespace Tender.App.Service
             return DatabaseMSSql.SqlQuerySingle<VENDOR_LOGIN>(sql);
         }
 
-        public static Tuple<FORGET_PASSWORD_TOKEN, EQResult> EmailTokenVerify(FORGET_PASSWORD_TOKEN _obj)
+        public static Tuple<MAIL_NOTIFICATION_TOKEN, EQResult> EmailTokenVerify(MAIL_NOTIFICATION_TOKEN _obj, string token_type)
         {
-            sql = $"SELECT * from FORGET_PASSWORD_TOKEN t where t.VENDOR_EMAIL='{_obj.VENDOR_EMAIL}' AND t.TOKEN={_obj.TOKEN}";
-            return DatabaseMSSql.SqlQuerySingle<FORGET_PASSWORD_TOKEN>(sql);
+            sql = $"SELECT * from MAIL_NOTIFICATION_TOKEN t where t.VENDOR_EMAIL='{_obj.VENDOR_EMAIL}' AND t.TOKEN={_obj.TOKEN} AND T.TOKEN_TYPE='{token_type}'";
+            return DatabaseMSSql.SqlQuerySingle<MAIL_NOTIFICATION_TOKEN>(sql);
         }
 
         public static EQResult ResetPassword(VENDOR_LOGIN _obj)
@@ -72,7 +72,7 @@ namespace Tender.App.Service
         }
         public static EQResult email_confirmation(string id)
         {
-            sql = $"update VENDOR set IS_CONFIRMED=1 where VENDOR_ID='{id}'";
+            sql = $"update VENDOR set IS_ACTIVE=1 where VENDOR_EMAIL='{id}'";
             return DatabaseMSSql.ExecuteSqlCommand(sql);
         }
         public static EQResult change_password(string id, CHANGE_PASWD _obj)

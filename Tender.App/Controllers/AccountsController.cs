@@ -7,6 +7,7 @@ using System.Net;
 using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Routing;
 using Tender.App.Service;
 using Tender.Models.Models;
 
@@ -84,46 +85,74 @@ namespace Tender.App.Controllers
                     EQResult _tpl = AccountsService.registration(obj);
                     if (_tpl.SUCCESS && _tpl.ROWS == 1)
                     {
-                        TempData["regObj"] = obj;
-                        TempData["regOk"] = _tpl;
-                        return RedirectToAction("RegistrationSuccessfull");
+                        Random rnd = new Random();
+                        int confirmationToken = rnd.Next(000000, 999999);
+
+                        MAIL_NOTIFICATION_TOKEN tokenObj = new MAIL_NOTIFICATION_TOKEN();
+                        tokenObj.VENDOR_EMAIL = obj.VENDOR_EMAIL;
+                        tokenObj.TOKEN = confirmationToken;
+
+                        EQResult _tpl1 = AccountsService.SaveToken(tokenObj, "R");
+                        if (_tpl1.SUCCESS)
+                        {
+                            string mailbody = "Your registration confirmation email is " + obj.VENDOR_EMAIL + " that confirm a verification Code is: <h3>" + confirmationToken + "</h3>";
+
+                            SendEMail(obj.VENDOR_EMAIL, "Registration Confirmation Code for http://rfq.prangroup.com/", mailbody);
+                            TempData["msg"] = AlertService.SaveSuccess("Please check your email");
+                            ViewBag.VENDOR_EMAIL = obj.VENDOR_EMAIL;
+                            TempData["regObj"] = obj;
+                            TempData["regOk"] = _tpl;
+                            return RedirectToAction("RegistrationSuccessfull", obj);
+                        }
                     }
                     else if (_tpl.ROWS == 99)
                     {
                         ModelState.AddModelError("", _tpl.MESSAGES);
                     }
-                    else
-                    {
-                        ModelState.AddModelError("", "Something went wrong, try again");
-                    }
+
                 }
+            }
+            else
+            {
+                ModelState.AddModelError("", "Something went wrong, try again");
             }
             DropDownFor_Signup();
             return View(obj);
         }
-
-        public ActionResult RegistrationSuccessfull()
+        public ActionResult RegistrationSuccessfull(VENDOR obj)
         {
-            //Create a email confirmation link here
-
-
-
-            VENDOR obj = new VENDOR();
-            obj.ORGANIZATION_NAME = "Your Org Name";
-            obj.VENDOR_EMAIL = "a..z@gmail.com";
-
-            if (TempData["regObj"] != null && TempData["regOk"] != null)
-            {
-                obj = (VENDOR)TempData["regObj"];
-                obj.VENDOR_EMAIL = "..." + obj.VENDOR_EMAIL.Remove(3);
-                EQResult _tpl = (EQResult)TempData["regOk"];
-            }
             return View(obj);
         }
-
-        public ActionResult RegistrationConfirmation(string id)
+        [HttpPost]
+        public ActionResult RegistrationSuccessfull(VENDOR obj, int token)
         {
-            EQResult _tpl = AccountsService.email_confirmation(id);
+            if (String.IsNullOrEmpty(token.ToString()))
+            {
+                TempData["msg"] = AlertService.SaveSuccess("Please enter verification code");
+                return View(obj);
+            }
+            else
+            {
+                MAIL_NOTIFICATION_TOKEN tokenObj = new MAIL_NOTIFICATION_TOKEN();
+                tokenObj.VENDOR_EMAIL = obj.VENDOR_EMAIL;
+                tokenObj.TOKEN = token;
+                Tuple<MAIL_NOTIFICATION_TOKEN, EQResult> _tpl = AccountsService.EmailTokenVerify(tokenObj, "R");
+                if (!string.IsNullOrEmpty(_tpl.Item1.VENDOR_EMAIL))
+                {
+                    TempData["msg"] = AlertService.SaveSuccess("Verification Code Matched Successful");                   
+                    return RedirectToAction("RegistrationConfirmation",obj);
+                    //return RedirectToAction("RegistrationConfirmation", "Accounts", new { id = tokenObj.VENDOR_EMAIL });
+                }
+                else
+                {
+                    TempData["msg"] = AlertService.SaveWarningOK("Verification code not matched");
+                    return View(obj);
+                }
+            }
+        }
+        public ActionResult RegistrationConfirmation(VENDOR obj)
+        {
+            EQResult _tpl = AccountsService.email_confirmation(obj.VENDOR_EMAIL);
             TempData["regOk"] = (_tpl.ROWS) == 1 ? "OK" : "NO";
             return View();
         }
@@ -146,11 +175,11 @@ namespace Tender.App.Controllers
                 Random rnd = new Random();
                 int confirmationToken = rnd.Next(000000, 999999);
 
-                FORGET_PASSWORD_TOKEN tokenObj = new FORGET_PASSWORD_TOKEN();
+                MAIL_NOTIFICATION_TOKEN tokenObj = new MAIL_NOTIFICATION_TOKEN();
                 tokenObj.VENDOR_EMAIL = obj.VENDOR_EMAIL;
                 tokenObj.TOKEN = confirmationToken;
 
-                EQResult _tpl1 = AccountsService.SaveToken(tokenObj);
+                EQResult _tpl1 = AccountsService.SaveToken(tokenObj, "F");
                 if (_tpl1.SUCCESS)
                 {
                     SendEMail(obj.VENDOR_EMAIL, "Reset password code for http://rfq.prangroup.com/", confirmationToken.ToString());
@@ -158,7 +187,8 @@ namespace Tender.App.Controllers
                     ViewBag.VENDOR_EMAIL = obj.VENDOR_EMAIL;
                     return RedirectToAction("TokenMatch", obj);
                 }
-                else {
+                else
+                {
                     TempData["msg"] = AlertService.SaveWarningOK(_tpl1.MESSAGES);
                 }
             }
@@ -176,10 +206,10 @@ namespace Tender.App.Controllers
         [HttpPost]
         public ActionResult TokenMatch(VENDOR_LOGIN _obj, int tokenNumber)
         {
-            FORGET_PASSWORD_TOKEN obj = new FORGET_PASSWORD_TOKEN();
+            MAIL_NOTIFICATION_TOKEN obj = new MAIL_NOTIFICATION_TOKEN();
             obj.VENDOR_EMAIL = _obj.VENDOR_EMAIL;
             obj.TOKEN = tokenNumber;
-            Tuple<FORGET_PASSWORD_TOKEN, EQResult> _tpl = AccountsService.EmailTokenVerify(obj);
+            Tuple<MAIL_NOTIFICATION_TOKEN, EQResult> _tpl = AccountsService.EmailTokenVerify(obj, "F");
             if (!string.IsNullOrEmpty(_tpl.Item1.VENDOR_EMAIL))
             {
                 TempData["msg"] = AlertService.SaveSuccess("Verification Code Matched Successful");
@@ -252,7 +282,41 @@ namespace Tender.App.Controllers
                 smtp.Send(msg);
             }
         }
+        private void SendRegistrationEmail(string emailid, string subject, string body)
+        {
+            string Sender_Account = "lsms@prangroup.com";// emal.EMAL_SMTP;
+            string Sender_Credential = "@dm!n@#sysmail";// emal.EMAL_PASS;
 
+            System.Net.Mail.SmtpClient client = new System.Net.Mail.SmtpClient();
+            client.DeliveryMethod = System.Net.Mail.SmtpDeliveryMethod.Network;
+            System.Net.NetworkCredential credentials = new System.Net.NetworkCredential(Sender_Account, Sender_Credential);
+            client.UseDefaultCredentials = false;
+            client.Credentials = credentials;
+
+            System.Net.Mail.MailMessage msg = new System.Net.Mail.MailMessage();
+
+            msg.From = new MailAddress("lsms@prangroup.com");
+            msg.To.Add(new MailAddress(emailid));
+
+            msg.Subject = subject;
+            //message.Body = string.Format(body, model.FromName, model.FromEmail, model.Message);
+            msg.Body = body;
+            msg.IsBodyHtml = true;
+
+            using (var smtp = new SmtpClient())
+            {
+                var credential = new NetworkCredential
+                {
+                    UserName = "lsms@prangroup.com",  // replace with valid value
+                    Password = "@dm!n@#sysmail"  // replace with valid value
+                };
+                smtp.Credentials = credential;
+                smtp.Host = "172.17.2.12";
+                smtp.Port = 587;
+                smtp.EnableSsl = false;
+                smtp.Send(msg);
+            }
+        }
 
 
         [UserSessionCheck]
@@ -407,7 +471,8 @@ namespace Tender.App.Controllers
         }
 
         [UserSessionCheck]
-        public ActionResult ViewAllSupplier() {
+        public ActionResult ViewAllSupplier()
+        {
 
             List<VENDOR_DETAILS> obj = AccountsService.supplierList().Item1;
             return View(obj);
