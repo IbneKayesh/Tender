@@ -1,7 +1,7 @@
 ﻿@model Tender.Models.Models.RFQ_TENDER
 
 @{
-    ViewBag.Title = "Submit Tender";
+    ViewBag.Title = "Create RFQ";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -17,7 +17,7 @@
         <div class="card-footer row">
             <div class="col-md-3 col-sm-4 mb-2">
                 <a class="btn btn-block btn-lg  btn-primary" id="tndDetails">
-                    Tender Information
+                    RFQ Information
                     <i class="fa fa-file"></i>
                 </a>
             </div>
@@ -84,7 +84,7 @@
                         </div>
                         <div class="col-md-3 col-sm-6">
                             <div class="form-group">
-                                <label class="control-label">Tender Type</label> <span class="text-danger">*</span>
+                                <label class="control-label">RFQ Type</label> <span class="text-danger">*</span>
                                 @Html.DropDownList("SELL_BUY", null, new { @class = "form-control form-control-sm select2", style = "width:100%" })
                                 @Html.ValidationMessageFor(m => m.SELL_BUY, "", new { @class = "text-danger" })
                             </div>
@@ -162,11 +162,9 @@
                         <div class="col-md-3 col-sm-6">
                             <div class="form-group">
                                 <label class="control-label">Select Documents</label> <span class="text-danger">*</span>
-                                @Html.DropDownList("TENDER_DOC", null, "-Select-", new { @class = "form-control form-control-sm select2", id = "DOCUMENTS_LIST_ID", placeholder = "", style = "width:100%" })
+                                @Html.DropDownList("TENDER_DOC", null, "-Select-", new { @class = "form-control form-control-sm select2", id = "DOCUMENTS_LIST_ID", placeholder = "", style = "width:100%",onchange= "addDropdownDocument();" })
                                 @Html.ValidationMessageFor(m => m.PRODUCTS_DESC, "", new { @class = "text-danger" })
-
-                            </div>
-                            <span><button type="button" id="addDocItem" class="btn btn-info btn-sm">Add!</button></span>
+                            </div>                           
                         </div>
                         <div class="col-md-4 col-sm-6" style="display:none;" id="docDiv">
                             <div class="form-group mt-3">
@@ -271,7 +269,7 @@
                         <div class="col-md-3 col-sm-6">
                             <div class="form-group">
                                 <label class="control-label">Pay Mode A</label> <span class="text-danger">*</span>
-                                @Html.DropDownList("PAY_A", null, new { @class = "form-control form-control-sm select2", placeholder = "", style = "width:100%" })
+                                @Html.DropDownList("PAY_A", null,"--Select--", new { @class = "form-control form-control-sm select2", placeholder = "", style = "width:100%",onchange= "get_PAYMENT_MODE_ID_B();" })
                                 @Html.ValidationMessageFor(m => m.PAY_A, "", new { @class = "text-danger" })
                             </div>
                         </div>
@@ -285,7 +283,9 @@
                         <div class="col-md-3 col-sm-6">
                             <div class="form-group">
                                 <label class="control-label">Payment Mode B</label> <span class="text-danger">*</span>
-                                @Html.DropDownList("PAY_B", null, new { @class = "form-control form-control-sm select2", placeholder = "", style = "width:100%" })
+                                @*@Html.DropDownList("PAY_B", null, new { @class = "form-control form-control-sm select2", placeholder = "", style = "width:100%" })*@
+                                @Html.DropDownListFor(m => m.PAY_B, Enumerable.Empty<SelectListItem>(), "--select--", new { @class = "form-control form-control-sm select2", placeholder = "", style = "width:100%" })
+
                                 @Html.ValidationMessageFor(m => m.PAY_B, "", new { @class = "text-danger" })
                             </div>
                         </div>
@@ -315,9 +315,7 @@
     @Scripts.Render("~/bundles/jqueryval")
     <script>
         $(document).ready(function () {
-            function preventBack() { window.history.forward(); }
-            setTimeout("preventBack()", 0);
-            window.onunload = function () { null };
+           
 
             $(".forImpoter").css("display", "none")
 
@@ -356,29 +354,51 @@
             });
 
 
-
-
-            $("#addDocItem").click(function (e) {
-                e.preventDefault();
-
-
-                var docId = $.trim($("#DOCUMENTS_LIST_ID :selected").val()),
-                    docName = $.trim($("#DOCUMENTS_LIST_ID :selected").text()),
-                    rdocumentsBody = $("#rdocuments tbody");
-
-                if (docId == "" || docName == "") {
-                    Swal.fire('warning', 'Select a valid documents', 'warning');
+            //payment type select and percent calculation -------start--------
+            $("#PAY_AP").change(function () {
+                debugger
+                var PAC = $('#PAY_AP').val();
+                if (PAC == "") {
+                    $("#PAY_AP").val('0');
+                    $('#PAY_BP').val('0');
+                    Swal.fire('error', 'select payment mode A', 'error');
+                    //alert("select payment mode a");
                     return;
-                };
-                $("#docDiv").css("display", "block");
-                var rdocumentsItem = '<tr><td><select><option value="' + docId + '">' + docName + '</option></select></td><td><a data-itemId="0" href="#" class="deleteItem btn btn-danger btn-xs">Delete</a></td></tr>';
-                rdocumentsBody.append(rdocumentsItem);
-                clearItem();
+                }
+                var PA = $('#PAY_AP').val();
+                if (PA > 100) {
+                    $('#PAY_AP').val('100');
+                    $('#PAY_BP').val('0');
+                } else {
+                    var PBC = $('#PAY_BP').val();
+                    if (PBC == "") {
+                        $('#PAY_AP').val('0');
+                        $('#PAY_BP').val('0');
+                        Swal.fire('error', 'select payment mode B', 'error');
+                        return;
+                    } else {
+                        $('#PAY_BP').val(100 - PA);
+                    }
+                }
             });
 
-            function clearItem() {
-                $("#DOCUMENTS_LIST_ID :selected").remove();
-            }
+            $("#PAY_BP").change(function () {
+                var PBC = $('#PAY_BP').val();
+                if (PBC == "") {
+                    $('#PAY_BP').val('0');
+                    Swal.fire('error', 'select payment mode B', 'error');
+                    return;
+                }
+                var PB = $('#PAY_BP').val();
+                if (PB > 100) {
+                    $('#PAY_AP').val('0');
+                    $('#PAY_BP').val('100');
+                } else {
+                    $('#PAY_AP').val(100 - PB);
+                }
+            });
+            //End payment type select and percent calculation----------------
+            
             $('#rdocuments tbody').on('click', 'tr .deleteItem', function (e) {
                 e.preventDefault();
                 $(this).closest('tr').fadeOut("slow", function () {
@@ -388,7 +408,6 @@
                     $(this).remove();
                 })
             });
-
 
             $("#save2db").on("click", function () {
                 var listName = "RFQ_TNDR_DOCUMENTS";
@@ -407,6 +426,37 @@
                 });
             });
         });
+
+        function get_PAYMENT_MODE_ID_B() {
+            debugger
+            var url = 'DropDownFor_PaymentModeA';
+            var paymentModeID = $('#PAY_A').val();
+            var PAY_B = $('#PAY_B');
+            PAY_B.empty();
+            $.getJSON(url, { paymentModeID: paymentModeID }, function (response) {
+                $.each(response, function (index, item) {
+                    PAY_B.append($("<option></option>").attr("value", item.Value).text(item.Text));
+                });
+            });
+            /*$.LoadingOverlay("hide");*/
+        };
+
+        function addDropdownDocument() {
+            var docId = $.trim($("#DOCUMENTS_LIST_ID :selected").val()),
+                docName = $.trim($("#DOCUMENTS_LIST_ID :selected").text()),
+                rdocumentsBody = $("#rdocuments tbody");
+            if (docId == "" || docName == "") {
+                Swal.fire('warning', 'Select a valid documents', 'warning');
+                return;
+            };
+            $("#docDiv").css("display", "block");
+            var rdocumentsItem = '<tr><td><select class="form-control form-control-sm" style="min-width:180px;appearance: none;border:none;"><option value="' + docId + '">' + docName + '</option></select></td><td><a data-itemId="0" href="#" class="deleteItem btn btn-danger btn-xs">Delete</a></td></tr>';
+            rdocumentsBody.append(rdocumentsItem);
+            clearItem();
+        }
+        function clearItem() {
+            $("#DOCUMENTS_LIST_ID :selected").remove();
+        }
 
         function importertype() {
             var LOCAL_IMPORT = $("#LOCAL_IMPORT").val();

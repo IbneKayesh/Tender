@@ -173,6 +173,11 @@ namespace Tender.App.Service
             string sql = $" SELECT * FROM TNDR_SHIPMENT_MODE";
             return DatabaseMSSql.SqlQuery<TNDR_SHIPMENT_MODE>(sql);
         }
+        public static Tuple<List<TNDR_PAYMENT_MODE>, EQResult> getPaymentModeByID(string _id)
+        {
+            string sql = $"SELECT * FROM TNDR_PAYMENT_MODE WHERE PAYMENT_MODE_ID <> '{_id}'";
+            return DatabaseMSSql.SqlQuery<TNDR_PAYMENT_MODE>(sql);
+        }
         public static Tuple<List<TNDR_PORT>, EQResult> getPort()
         {
             string sql = $"SELECT * FROM TNDR_PORT";

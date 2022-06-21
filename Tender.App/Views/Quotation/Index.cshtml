@@ -56,7 +56,7 @@
             <div class="col-sm-6 col-md-3 tndDiv">
                 <div class="card card-info card-outline">
                     <div class="card-header">
-                        <h2 class="card-title">Tender Code <span class="text-bold"># @item.RFQ_NUMBER</span></h2>
+                        <h2 class="card-title">RFQ Number <span class="text-bold"># @item.RFQ_NUMBER</span></h2>
                     </div>
                     <div class="card-body">
                         <input type="hidden" value="@item.END_DATE.ToString("yyyy-MM-dd")" class="endDate" />
@@ -68,7 +68,7 @@
                         </span><br />
                         <span>@item.RE_BID</span>
                         <br />
-                        <span class="text-success">Submitted Bids : @item.SUBMITED_BIDS</span>
+                        <span class="text-success">Submitted Quote : @item.SUBMITED_BIDS</span>
                     </div>
                     <div class="card-footer">
                         @if (item.RE_BID == "Submit Once" && item.VSUBMIT_STATUS == "Y")

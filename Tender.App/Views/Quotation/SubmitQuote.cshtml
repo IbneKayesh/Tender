@@ -21,17 +21,17 @@
                     </div>                    
                 </div>
                 <div class="col-12 col-sm-8">
-                    <h4 class="my-3">Tender Number :<span class="text-primary">@Model.RFQ_NUMBER</span> </h4>
+                    <h4 class="my-3">RFQ Number :<span class="text-primary">@Model.RFQ_NUMBER</span> </h4>
                     <h6 class="my-3">Item :<span class="text-success"> @Model.TND_PRODUCTS_NAME</span></h6>
                     <p>Item Description : @Model.TND_PRODUCTS_DESC </p>
-                    <p>Tender Type : @Model.SELL_BUY </p>
+                    <p>RFQ Type : @Model.SELL_BUY </p>
                     <hr>
-                    <h5>This Auction Ends in</h5>
+                    <h5>This RFQ Ends in</h5>
                     <input type="hidden" value="@Model.END_DATE.ToString("yyyy-MM-dd")" class="endDate" />
                     <span class="text-danger text-bold" id="auc_end"></span>
                     <hr />
                     <div class="row">
-                        <div class="col">Total Bids : @Model.TOTAL_BIDDING </div>
+                        <div class="col">Total Quote : @Model.TOTAL_BIDDING </div>
                     </div>
 
                     <div class="btn-default py-2 px-0 mt-4">
@@ -45,7 +45,7 @@
             <div class="card-footer row">
                 <div class="col-md-3 col-sm-4 mb-2">
                     <a class="btn btn-block btn-lg btn-outline-primary" id="tndDetails">
-                        Tender Information
+                        RFQ Information
                         <i class="fa fa-file"></i>
                     </a>
                 </div>
@@ -70,13 +70,13 @@
             </div>
             <div class="row" id="detailsBody">
                 <div class="col-md-12 mb-3 ml-3">
-                    <span class="text-bold mb-3">Tender Number   : </span><span class="mb-3">@Model.RFQ_NUMBER</span>
+                    <span class="text-bold mb-3">RFQ Number   : </span><span class="mb-3">@Model.RFQ_NUMBER</span>
                 </div>
                 <div class="col-md-12 mb-3 ml-3">
-                    <span class="text-bold mb-3">Tender Type  : </span><span class="mb-3">@Model.SELL_BUY</span>
+                    <span class="text-bold mb-3">RFQ Type  : </span><span class="mb-3">@Model.SELL_BUY</span>
                 </div>
                 <div class="col-md-12 mb-3 ml-3">
-                    <span class="text-bold mb-3">Bidding type : </span><span class="mb-3">@Model.RE_BID</span>
+                    <span class="text-bold mb-3">Quotation type : </span><span class="mb-3">@Model.RE_BID</span>
                 </div>
                 <div class="col-md-12 mb-3 ml-3">
                     <span class="text-bold mb-3"> Quotation Rate Range : </span><span class="mb-3">@Model.LOWER_RATE</span>
@@ -95,7 +95,7 @@
                     <span class="text-bold mb-3">Product Name  : </span><span class="mb-3">@Model.TND_PRODUCTS_NAME</span>
                 </div>
                 <div class="col-md-12 mb-3 ml-3">
-                    <span class="text-bold mb-3">Tender Rate  : </span><span class="mb-3">@Model.TND_PRODUCTS_RATE</span>
+                    <span class="text-bold mb-3">RFQ Rate  : </span><span class="mb-3">@Model.TND_PRODUCTS_RATE</span>
                 </div>
                 <div class="col-md-12 mb-3 ml-3">
                     <span class="text-bold mb-3">Product Quantity : </span><span class="mb-3">@Model.TND_PRODUCTS_QTY</span>
@@ -104,10 +104,10 @@
                     <span class="text-bold mb-3"> Unit : </span><span class="mb-3">@Model.UNIT</span>
                 </div>
                 <div class="col-md-12 mb-3 ml-3">
-                    <span class="text-bold mb-3">Tender Product Description : </span><span class="mb-3">@Model.TND_PRODUCTS_DESC</span>
+                    <span class="text-bold mb-3">RFQ Product Description : </span><span class="mb-3">@Model.TND_PRODUCTS_DESC</span>
                 </div>
                 <div class="col-md-12 mb-3 ml-3">
-                    <span class="text-bold mb-3">Tender Documents : </span>
+                    <span class="text-bold mb-3">RFQ Documents : </span>
                     @if (Model.RFQ_TNDR_DOCUMENTS.Count() > 0)
                     {
                         foreach (var item in Model.RFQ_TNDR_DOCUMENTS)
@@ -121,7 +121,7 @@
 
             <div class="row" id="shipmentBody" style="display:none;">
                 <div class="col-md-12 mb-3 ml-3">
-                    <span class="text-bold mb-3">Partial ShipMent  : </span><span class="mb-3">@Model.PARTIAL_SHIPMENT</span>
+                    <span class="text-bold mb-3">Partial Shipment  : </span><span class="mb-3">@Model.PARTIAL_SHIPMENT</span>
                 </div>
                 <div class="col-md-12 mb-3 ml-3">
                     <span class="text-bold">Last Shipment Date  :</span><span>@Model.LAST_DELIVERY_DATE.ToString("dd-MMMM-yyyy")</span>
@@ -160,14 +160,14 @@
                                 </div>
                                 <div class="col-md-4 col-lg-3 col-sm-6">
                                     <div class="form-group">
-                                        <label class="control-label">Sender Name</label> <span class="text-danger">*</span>
+                                        <label class="control-label">Source Name</label> <span class="text-danger">*</span>
                                         @Html.EditorFor(model => model.SENDER_NAME, new { htmlAttributes = new { @class = "form-control form-control-sm", required = "required", placeholder = "Sender Name" } })
                                         @Html.ValidationMessageFor(m => m.SENDER_NAME, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
                                 <div class="col-md-4 col-lg-3 col-sm-6">
                                     <div class="form-group">
-                                        <label class="control-label">Sender Details</label> <span class="text-danger">*</span>
+                                        <label class="control-label">Source Details</label> <span class="text-danger">*</span>
                                         @Html.TextAreaFor(m => m.SENDER_DETAILS, new { @class = "form-control form-control-sm", rows = "1", required = "required", placeholder = "Sender Details" })
                                         @Html.ValidationMessageFor(m => m.SENDER_DETAILS, "", new { @class = "text-danger" })
                                     </div>

@@ -64,17 +64,17 @@
                                 <li class="nav-item dropdown">
                                     <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">My Menu</a>
                                     <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow mt-2">
-                                        <li><a href="@Url.Action("SubmitTender", "Tender")" class="dropdown-item">Submit Tender</a></li>
-                                        <li><a href="@Url.Action("ViewAllTender", "Tender")" class="dropdown-item"> Tender List</a></li>
-                                        <li><a href="@Url.Action("Index", "Tender")" class="dropdown-item"> Compare List</a></li>
+                                        <li><a href="@Url.Action("SubmitTender", "Tender")" class="dropdown-item">New RFQ</a></li>
+                                        <li><a href="@Url.Action("ViewAllTender", "Tender")" class="dropdown-item"> RFQ List</a></li>
+                                        <li><a href="@Url.Action("Index", "Tender")" class="dropdown-item"> Compare RFQ List</a></li>
                                         <li><a href="@Url.Action("CreateTenderProduct", "Setup")" class="dropdown-item"> Item</a></li>
                                         <li class="dropdown-submenu">
                                             <a id="dropdownSubMenu3" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-item dropdown-toggle">View Tender</a>
                                             <ul aria-labelledby="dropdownSubMenu3" class="dropdown-menu border-0 shadow">
-                                                <li><a href="@Url.Action("ViewAllTender", "Tender")" class="dropdown-item">View All Tender</a></li>
-                                                <li><a href="@Url.Action("ViewApproveTender", "Tender")" class="dropdown-item">Approval Tender</a></li>
-                                                <li><a href="@Url.Action("ViewPendingApprovalTnd", "Tender")" class="dropdown-item">Pending Approval Tender</a></li>
-                                                <li><a href="@Url.Action("ViewExpireTnd", "Tender")" class="dropdown-item">No Qutotation Apply but Expire</a></li>
+                                                <li><a href="@Url.Action("ViewAllTender", "Tender")" class="dropdown-item">View All RFQ</a></li>
+                                                <li><a href="@Url.Action("ViewApproveTender", "Tender")" class="dropdown-item">Approval RFQ</a></li>
+                                                <li><a href="@Url.Action("ViewPendingApprovalTnd", "Tender")" class="dropdown-item">Pending Approval RFQ</a></li>
+                                                <li><a href="@Url.Action("ViewExpireTnd", "Tender")" class="dropdown-item">No RFQ Apply but Expire</a></li>
                                             </ul>
                                         </li>
                                     </ul>
@@ -85,8 +85,8 @@
                                 <li class="nav-item dropdown">
                                     <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">My Menu</a>
                                     <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow mt-2">
-                                        <li><a href="@Url.Action("Index", "Quotation")" class="dropdown-item">New Tender List</a></li>
-                                        <li><a href="@Url.Action("WiningsBid", "Quotation")" class="dropdown-item">Wining Bids</a></li>
+                                        <li><a href="@Url.Action("Index", "Quotation")" class="dropdown-item">New RFQ List</a></li>
+                                        <li><a href="@Url.Action("WiningsBid", "Quotation")" class="dropdown-item">Wining Quotation</a></li>
                                     </ul>
                                 </li>
                             }
@@ -201,10 +201,10 @@
 
             <!-- To the right -->
             <div class="float-right  d-sm-inline ">
-                For any queries/Support contact-mis5@prgoverseas.com
+               ##
             </div>
             <!-- Default to the left -->
-            <p>&copy; 2022-2025 <a href="https://en.wikipedia.org/wiki/PRAN-RFL_Group">PRG HO CS-MIS </a> All rights reserved.</p>
+            <p>&copy; @DateTime.Now.Year <a href="https://en.wikipedia.org/wiki/PRAN-RFL_Group">PRG-MIS </a> All rights reserved.</p>
         </footer>
     </div>
     <!-- ./wrapper -->
