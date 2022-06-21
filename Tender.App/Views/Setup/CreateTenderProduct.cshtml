@@ -24,11 +24,11 @@
         </div>
         <div class="form-group">
             <label for="exampleInputEmail1">Unit</label>
-            @Html.EditorFor(model => model.UNIT, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "Product Name" } })
+            @Html.EditorFor(model => model.UNIT, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "Unit" } })
         </div>
             <div class="form-group">
-                <label class="control-label">Shipment Mode</label>
-                @Html.DropDownList("GROUP_ID", null, "-Select-", new { @class = "form-control form-control-sm select2", placeholder = "" })
+                <label class="control-label">Select Catagory</label>
+                @Html.DropDownList("GROUP_ID", null, "-Select-", new { @class = "form-control form-control-sm select2", placeholder = "Catagory" })
                 @Html.ValidationMessageFor(m => m.GROUP_ID, "", new { @class = "text-danger" })
             </div>
         <div class="form-group">
