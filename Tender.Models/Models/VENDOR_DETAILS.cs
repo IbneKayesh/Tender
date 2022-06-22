@@ -96,6 +96,7 @@ namespace Tender.Models.Models
         public virtual List<VENDOR_DOCUMENTS> VENDOR_DOCUMENTS { get; set; }
         public virtual List<VENDOR_PRODUCTS> VENDOR_PRODUCTS { get; set; }
         public virtual List<VENDOR_PRODUCTS_GROUP> VENDOR_PRODUCTS_GROUP { get; set; }
+        public virtual List<VENDOR_FILE> VENDOR_FILE { get; set; }
  
         
 

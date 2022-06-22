@@ -92,6 +92,7 @@
     <Compile Include="Models\RFQ_TENDER.cs" />
     <Compile Include="Models\RFQ_TNDR_DOCUMENTS.cs" />
     <Compile Include="Models\VENDER_SESSION.cs" />
+    <Compile Include="Models\VENDOR_FILE.cs" />
     <Compile Include="Models\VENDOR_LOGIN.cs" />
     <Compile Include="Models\VENDOR_DETAILS.cs" />
     <Compile Include="Models\VENDOR.cs" />

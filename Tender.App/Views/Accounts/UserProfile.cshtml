@@ -309,6 +309,30 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="form-row">
+                                            <div class="col-md-3 col-sm-6">
+                                                <div class="form-group">
+                                                    <label class="control-label">Select Documents</label> <span class="text-danger">*</span>
+                                                    @Html.DropDownList("CERTIFICATE_ID", null, "-Select-", new { @class = "form-control form-control-sm select2", id = "DOCUMENTS_LIST_ID", placeholder = "", style = "width:100%", onchange = "addDropdownDocument();" })
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-4 col-sm-6" style="display:none;" id="docDiv">
+                                                <div class="form-group mt-3">
+                                                    <div class="table-responsive">
+                                                        <table id="rdocuments" class="table">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Document List</th>
+                                                                    <th></th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody></tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
 
                                         <div class="row float-right">
                                             <div class="col-12 float-right">
@@ -323,6 +347,7 @@
                                 <div class="tab-pane" id="settings">
                                     @Html.Partial("_Changepassword", Model.CHANGE_PASWD)
                                 </div>
+
 
                             </div>
 
@@ -345,16 +370,41 @@
                 $("#save").click();
             });
 
-
-
             $('input[type=checkbox]').change(function () {
                 var clId = $(this).attr("class");
                 var clNm = $(this).attr('id');
                 if (clId == "v-pro" || clId == "v-cat" || clId == "v-cer" || clId == "v-doc" || clId == "v-pcat") {
                     $.post("FollowMe", { "cId": clId, "cNm": clNm });
                 }
-            });     
+            });
+
+            $('#rdocuments tbody').on('click', 'tr .deleteItem', function (e) {
+                e.preventDefault();
+                $(this).closest('tr').fadeOut("slow", function () {
+                    var dataId = $(this).find('td:eq(0)').find('select').val();
+                    var dataName = $(this).find('td:eq(0)').find('select').text();
+                    $("#DOCUMENTS_LIST_ID").append(new Option(dataName, dataId));
+                    $(this).remove();
+                })
+            });
+
         })
+        function addDropdownDocument() {
+            var docId = $.trim($("#DOCUMENTS_LIST_ID :selected").val()),
+                docName = $.trim($("#DOCUMENTS_LIST_ID :selected").text()),
+                rdocumentsBody = $("#rdocuments tbody");
+            if (docId == "" || docName == "") {
+                Swal.fire('warning', 'Select a valid documents', 'warning');
+                return;
+            };
+            $("#docDiv").css("display", "block");
+            var rdocumentsItem = '<tr><td><select class="form-control form-control-sm" style="min-width:180px;appearance: none;border:none;"><option value="' + docId + '">' + docName + '</option></select></td><td><a data-itemId="0" href="#" class="deleteItem btn btn-danger btn-xs">Delete</a></td></tr>';
+            rdocumentsBody.append(rdocumentsItem);
+            clearItem();
+        }
+        function clearItem() {
+            $("#DOCUMENTS_LIST_ID :selected").remove();
+        }
        
     </script>
 }

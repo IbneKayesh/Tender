@@ -31,13 +31,15 @@ namespace Tender.App.Service
                                 {_obj.SHIPMENT_MODE},{_obj.PORT_ID} ,'{_obj.DELIVERY_ADDRESS}' ,'{_obj.RECEIVER_NAME}' ,'{_obj.RECEIVER_DETAILS}' ,
                                 {_obj.COST_EX_INC} ,'{_obj.INCO_TERMS}'
                                 ,'{_obj.CURRENCY_NAME}' ,{_obj.CURRENCY_RATE} ,'{_obj.PAY_A}' ,{_obj.PAY_AP} ,'{_obj.PAY_B}' ,{_obj.PAY_BP} )");
-            if (_obj.RFQ_TNDR_DOCUMENTS.Count() > 0) {
-                foreach (var item in _obj.RFQ_TNDR_DOCUMENTS) {
+            if (_obj.RFQ_TNDR_DOCUMENTS.Count() > 0)
+            {
+                foreach (var item in _obj.RFQ_TNDR_DOCUMENTS)
+                {
                     sqlList.Add($@"INSERT INTO TND.RFQ_TNDR_DOCUMENTS ( RFQ_NUMBER, DOCUMENTS_ID) VALUES ( '{tenderNumber}','{item.DOCUMENTS_ID}')");
                 }
             }
             sqlList.Add($@"UPDATE TABLE_MAX_ID SET MAX_ID=MAX_ID+1 WHERE TABLE_NAME='RFQ_TENDER'");
-           
+
             return DatabaseMSSql.ExecuteSqlCommand(sqlList);
         }
 
@@ -82,9 +84,9 @@ namespace Tender.App.Service
         {
             SelectList DataList = new SelectList(
                   new List<SelectListItem>
-                  {   
+                  {
                       new SelectListItem{ Text="Not Allow", Value = "1" },
-                      new SelectListItem{ Text="Allow", Value = "2" },                   
+                      new SelectListItem{ Text="Allow", Value = "2" },
                   }, "Value", "Text", 1);
             return DataList;
         }
@@ -203,7 +205,12 @@ namespace Tender.App.Service
             string sql = $" SELECT * FROM TNDR_DOCUMENTS WHERE DOCUMENTS_TYPE ='TENDER'";
             return DatabaseMSSql.SqlQuery<TNDR_DOCUMENTS>(sql);
         }
-
+        
+        public static Tuple<List<TNDR_CERTIFICATE>, EQResult> getvendorDoc()
+        {
+            string sql = $" SELECT * FROM TNDR_CERTIFICATE";
+            return DatabaseMSSql.SqlQuery<TNDR_CERTIFICATE>(sql);
+        }
         public static SelectList DropDown_SearchType()
         {
             SelectList DataList = new SelectList(

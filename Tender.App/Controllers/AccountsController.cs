@@ -513,7 +513,7 @@ namespace Tender.App.Controllers
         public void DropDownFor_Signup()
         {
             ViewBag.COUNTRY_NAME = DropDownList_All_Country();
-
+            ViewBag.CERTIFICATE_ID = new SelectList(TenderService.getvendorDoc().Item1.ToList(), "CERTIFICATE_ID", "CERTIFICATE_NAME");
         }
         public SelectList DropDownList_All_Country()
         {
