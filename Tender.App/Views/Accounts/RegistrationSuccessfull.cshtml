@@ -31,7 +31,10 @@
     Please click on the link within the next 48 hours.<br>
 
     <br>
-    Email: <b>@Model.VENDOR_EMAIL</b> You have not received your e-mail with the link? <a href="@Url.Action("RegistrationSuccessfull")"> send again</a><br>
+    Email: <b>@Model.VENDOR_EMAIL</b> You have not received your e-mail with the link?
+    @*<a href="@Url.Action("RegistrationSuccessfull",Model.PURCHASER)"> send again</a>*@
+    <input type="button" id="sendAgain" class="btn btn-sm btn-danger" onclick="ajaxAgainCodeSend();" value="Send Again" />
+    <br>
 </p>
 @using (Html.BeginForm())
 {
@@ -41,9 +44,40 @@
         <input type="hidden" value="@Model.VENDOR_EMAIL" id="VENDOR_EMAIL" name="VENDOR_EMAIL" />
         <div class="form-group">
             <label for="exampleInputEmail1">Verification Code</label>
-            <input class="form-control form-control-sm" id="token" name="token" placeholder="Enter Verification Code">
-        </div>        
+            <input class="form-control form-control-sm" id="token" name="token" placeholder="Enter Verification Code" required>
+        </div>
     </div>
 
-    <input type="submit" class="btn btn-success btn-lg" value="Submit"/>
+    <input type="submit" class="btn btn-success btn-lg" value="Submit" />
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        @*function ajaxAgainCodeSend() {
+            debugger
+        var email ="@Model.VENDOR_EMAIL";
+        //Send the JSON array to Controller using AJAX.
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("AgainSendToken")",
+            data: email,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                alert(data);
+            },
+        });
+    }*@
+
+        function ajaxAgainCodeSend() {
+            debugger;
+            var e = "@Model.VENDOR_EMAIL";
+            var url = "/Accounts/AgainSendToken"; //"@Url.Action("AgainSendToken")",
+
+            $.getJSON(url,{ email:e}, function (response){
+            alert(response);
+            });
+    };
+    </script>
 }

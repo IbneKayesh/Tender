@@ -119,8 +119,38 @@ namespace Tender.App.Controllers
             DropDownFor_Signup();
             return View(obj);
         }
+        //again send notification code method for ajax
+
+        public ActionResult AgainSendToken(string email) {
+           var VENDOR_EMAIL = email;
+            if (!String.IsNullOrEmpty(VENDOR_EMAIL.ToString())) {
+                Random rnd = new Random();
+                int confirmationToken = rnd.Next(000000, 999999);
+
+                MAIL_NOTIFICATION_TOKEN tokenObj = new MAIL_NOTIFICATION_TOKEN();
+                tokenObj.VENDOR_EMAIL = VENDOR_EMAIL;
+                tokenObj.TOKEN = confirmationToken;
+
+                EQResult _tpl1 = AccountsService.SaveToken(tokenObj, "R");
+                if (_tpl1.SUCCESS)
+                {
+                    string mailbody = "Your registration confirmation email is " + VENDOR_EMAIL + " that confirm a verification Code is: <h3>" + confirmationToken + "</h3>";
+
+                    SendEMail(VENDOR_EMAIL, "Registration Confirmation Code for http://rfq.prangroup.com/", mailbody);
+                    TempData["msg"] = AlertService.SaveSuccess("Please check your email");
+                    ViewBag.VENDOR_EMAIL = VENDOR_EMAIL;
+                    //TempData["regObj"] = obj;
+                    //TempData["regOk"] = _tpl;
+                    //return RedirectToAction("RegistrationSuccessfull", obj);
+                    return Json("Successful", JsonRequestBehavior.AllowGet);
+                }
+            }
+            return Json("Error ! Please again regstration", JsonRequestBehavior.AllowGet);
+        }
+
         public ActionResult RegistrationSuccessfull(VENDOR obj)
         {
+
             return View(obj);
         }
         [HttpPost]
@@ -128,7 +158,7 @@ namespace Tender.App.Controllers
         {
             if (String.IsNullOrEmpty(token.ToString()))
             {
-                TempData["msg"] = AlertService.SaveSuccess("Please enter verification code");
+                //TempData["msg"] = AlertService.SaveSuccess("Please enter verification code");
                 return View(obj);
             }
             else
