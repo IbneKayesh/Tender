@@ -233,7 +233,8 @@ namespace Tender.App.Service
                     END IS_ACTIVE
                     FROM TNDR_DOCUMENTS T1
                     LEFT JOIN VENDOR_DOCUMENTS T2 ON T1.DOCUMENTS_ID = T2.DOCUMENTS_ID
-                    AND T2.VENDOR_ID='{id}' AND T1.DOCUMENTS_TYPE='USER'";
+                    AND T2.VENDOR_ID='{id}'";
+                    //AND T2.VENDOR_ID='{id}' AND T1.DOCUMENTS_TYPE='USER'";
             return DatabaseMSSql.SqlQuery<VENDOR_DOCUMENTS>(sql);
         }
 
@@ -264,7 +265,14 @@ namespace Tender.App.Service
                     AND T2.VENDOR_ID='{id}'";
             return DatabaseMSSql.SqlQuery<VENDOR_PRODUCTS_GROUP>(sql);
         }
-
+        public static Tuple<List<VENDOR_FILE>, EQResult> getVENDOR_FILE_LIST(string _vendorid)
+        {
+            sql = $@"SELECT VF.*,NVL(TC.CERTIFICATE_NAME,TD.DOCUMENTS_NAME) DOC_NAME FROM VENDOR_FILE VF
+                    LEFT JOIN  TNDR_CERTIFICATE TC ON TC.CERTIFICATE_ID=VF.DOC_ID AND VF.DOCUMENT_TYPE='Certificate'
+                    LEFT JOIN  TNDR_DOCUMENTS TD ON TD.DOCUMENTS_ID=VF.DOC_ID AND VF.DOCUMENT_TYPE='Documents'
+                    WHERE VF.IS_ACTIVE=1 AND VF.VENDOR_ID='{_vendorid}'";
+            return DatabaseMSSql.SqlQuery<VENDOR_FILE>(sql);
+        }
         public static EQResult profileUpdate(VENDOR_DETAILS _obj)
         {
             sql = $@"update VENDOR set VENDOR_USER_ID='{_obj.VENDOR_USER_ID}',CONTACT_NAME='{_obj.CONTACT_NAME}',NO_OF_EMPLOYEES='{_obj.NO_OF_EMPLOYEES}',
@@ -275,6 +283,20 @@ namespace Tender.App.Service
                 where VENDOR_ID='{_obj.VENDOR_ID}'";
             return DatabaseMSSql.ExecuteSqlCommand(sql);
         }
+
+        public static EQResult documentSave(VENDOR_FILE _obj)
+        {
+            sql = $@"INSERT INTO TND.VENDOR_FILE (
+                   FILE_ID, VENDOR_ID, FILE_PATH,FILE_NUMBER, FILE_NAME, FILE_TYPE,DOC_ID, DOCUMENT_TYPE,CREATE_USER, CREATE_DEVICE)
+                   VALUES ( q'[{_obj.FILE_ID}]', q'[{_obj.VENDOR_ID}]',q'[{_obj.FILE_PATH}]',q'[{_obj.FILE_NUMBER}]',q'[{_obj.FILE_NAME}]',q'[{_obj.FILE_TYPE}]',q'[{_obj.DOC_ID}]',q'[{_obj.DOCUMENT_TYPE}]',q'[{_obj.CREATE_USER}]',q'[{_obj.CREATE_DEVICE}]')";
+            return DatabaseMSSql.ExecuteSqlCommand(sql);
+        }
+        public static Tuple<VENDOR_FILE, EQResult> filePath(string _fileId)
+        {
+            sql = $"SELECT * FROM VENDOR_FILE VF WHERE VF.FILE_ID='{_fileId}' AND IS_ACTIVE=1";
+            return DatabaseMSSql.SqlQuerySingle<VENDOR_FILE>(sql);
+        }
+
         public static Tuple<VENDOR_DETAILS, EQResult> getProfile(string id)
         {
             sql = $"select t.* from VENDOR t where t.VENDOR_ID='{id}'";

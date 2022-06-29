@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Tender.Models.Models
 {
-    public class RFQ_TENDER_APPROVAL 
-	{
+    public class RFQ_TENDER_APPROVAL_VIEW : RFQ_BIDDING
+    {
         public string APPROVAL_ID { get; set; }
         public string RFQ_NUMBER { get; set; }
         public string QUOTE_NUMBER { get; set; }

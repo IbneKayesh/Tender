@@ -123,6 +123,16 @@ namespace Tender.App.Controllers
             }
             return RedirectToAction("Index", "Tender");
         }
+        public ActionResult ApprovalProcess() {
+            RFQ_TENDER_APPROVAL_VIEW obj = new RFQ_TENDER_APPROVAL_VIEW();
+
+            List<RFQ_TENDER_APPROVAL_VIEW> list = QuotationService.ApproveTenderList().Item1;
+            if (list.Count()>1)
+            {
+                return View(list);
+            }
+            return View(obj);
+        }
         public void DropDownFor_Tender()
         {
             ViewBag.SELL_BUY = TenderService.DropDownList_Sel_Buy();

@@ -1,0 +1,16 @@
+﻿@model Tender.Models.Models.VENDOR_FILE
+@{
+
+}
+
+@using (Html.BeginForm("UploadDocument", "Accounts", FormMethod.Post, new { @class = "form-horizontal", enctype = "multipart/form-data" }))
+{
+    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+    @Html.AntiForgeryToken()
+
+    <div class="form-group row float-right">
+        <div class="offset-sm-2 col-sm-10">
+            <button type="submit" class="btn btn-danger btn-sm mr-3">Submit</button>
+        </div>
+    </div>
+}

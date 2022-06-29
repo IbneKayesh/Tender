@@ -202,10 +202,26 @@ namespace Tender.App.Service
         }
         public static Tuple<List<TNDR_DOCUMENTS>, EQResult> getTnderDoc()
         {
-            string sql = $" SELECT * FROM TNDR_DOCUMENTS WHERE DOCUMENTS_TYPE ='TENDER'";
+          //  string sql = $" SELECT * FROM TNDR_DOCUMENTS WHERE DOCUMENTS_TYPE ='TENDER'";
+            string sql = $"SELECT * FROM TNDR_DOCUMENTS";
             return DatabaseMSSql.SqlQuery<TNDR_DOCUMENTS>(sql);
         }
-        
+        public static Tuple<List<TNDR_DOCUMENTS>, EQResult> getVendorUploadDocument(string _vendorID)
+        {
+            //  string sql = $" SELECT * FROM TNDR_DOCUMENTS WHERE DOCUMENTS_TYPE ='TENDER'";
+            string sql = $@"SELECT * FROM TNDR_DOCUMENTS WHERE DOCUMENTS_ID NOT IN ( SELECT TD.DOCUMENTS_ID FROM TNDR_DOCUMENTS TD 
+                            INNER JOIN VENDOR_FILE VF ON VF.DOC_ID = TD.DOCUMENTS_ID AND VF.DOCUMENT_TYPE = 'Documents'
+                            WHERE VF.IS_ACTIVE = 1 AND VF.VENDOR_ID = '{_vendorID}')";
+            return DatabaseMSSql.SqlQuery<TNDR_DOCUMENTS>(sql);
+        }
+        public static Tuple<List<TNDR_CERTIFICATE>, EQResult> getvendorUploadCertificate(string _vendorID)
+        {
+            string sql = $@"SELECT * FROM TNDR_CERTIFICATE WHERE CERTIFICATE_ID NOT IN (SELECT TD.CERTIFICATE_ID FROM TNDR_CERTIFICATE TD 
+                            INNER JOIN VENDOR_FILE VF ON VF.DOC_ID = TD.CERTIFICATE_ID AND VF.DOCUMENT_TYPE = 'Certificate'
+                            WHERE VF.IS_ACTIVE = 1 AND VF.VENDOR_ID = '{_vendorID}')";
+            return DatabaseMSSql.SqlQuery<TNDR_CERTIFICATE>(sql);
+        }
+
         public static Tuple<List<TNDR_CERTIFICATE>, EQResult> getvendorDoc()
         {
             string sql = $" SELECT * FROM TNDR_CERTIFICATE";

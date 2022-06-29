@@ -10,6 +10,7 @@ namespace Tender.Models.Models
         public VENDOR_DETAILS()
         {
             CHANGE_PASWD = new CHANGE_PASWD();
+            VENDOR_FILE = new VENDOR_FILE();
             VENDOR_CATEGORY = new List<VENDOR_CATEGORY>();
             VENDOR_CERTIFICATE = new List<VENDOR_CERTIFICATE>();
             VENDOR_DOCUMENTS = new List<VENDOR_DOCUMENTS>();
@@ -90,13 +91,17 @@ namespace Tender.Models.Models
 
         [NotMapped]
         public CHANGE_PASWD CHANGE_PASWD { get; set; }
+        [NotMapped]
+        public VENDOR_FILE VENDOR_FILE { get; set; }
 
         public virtual List<VENDOR_CATEGORY> VENDOR_CATEGORY { get; set; }
         public virtual List<VENDOR_CERTIFICATE> VENDOR_CERTIFICATE { get; set; }
         public virtual List<VENDOR_DOCUMENTS> VENDOR_DOCUMENTS { get; set; }
         public virtual List<VENDOR_PRODUCTS> VENDOR_PRODUCTS { get; set; }
         public virtual List<VENDOR_PRODUCTS_GROUP> VENDOR_PRODUCTS_GROUP { get; set; }
-        public virtual List<VENDOR_FILE> VENDOR_FILE { get; set; }
+        public virtual List<VENDOR_FILE> VENDOR_DOCUMENTS_LIST { get; set; }
+
+        
  
         
 

@@ -2151,6 +2151,10 @@
     <Content Include="App_Asset\plugins\uplot\uPlot.iife.js" />
     <Content Include="App_Asset\plugins\uplot\uPlot.iife.min.js" />
     <Content Include="App_Asset\plugins\uplot\uPlot.min.css" />
+    <Content Include="App_Asset\SDocument\emailNotify.PNG" />
+    <Content Include="App_Asset\SDocument\FORMAT.PNG" />
+    <Content Include="App_Asset\SDocument\pran.png" />
+    <Content Include="App_Asset\SDocument\profile.PNG" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\docs.txt" />
@@ -2358,6 +2362,9 @@
     <Content Include="Views\Accounts\TokenMatch.cshtml" />
     <Content Include="Views\Accounts\ResetPassword.cshtml" />
     <Content Include="Views\Accounts\ViewAllSupplier.cshtml" />
+    <Content Include="Views\Accounts\_DocumentUpload.cshtml" />
+    <Content Include="Views\Accounts\_documents.cshtml" />
+    <Content Include="Views\Tender\ApprovalProcess.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

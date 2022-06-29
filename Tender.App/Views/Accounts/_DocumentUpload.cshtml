@@ -1,0 +1,59 @@
+﻿@model Tender.Models.Models.VENDOR_FILE
+@{
+
+}
+
+@using (Html.BeginForm("UploadDocument", "Accounts", FormMethod.Post, new { @class = "form-horizontal", enctype = "multipart/form-data" }))
+{
+    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+    @Html.AntiForgeryToken()
+
+    <div class="form-row">
+        <div class="col-md-6 col-sm-12">
+            <div class="form-group">
+                <label class="control-label">Select Document Type</label> <span class="text-danger">*</span>
+                <select class="form-control form-control-sm select2" name="DOCUMENT_TYPE" id="DOCUMENT_TYPE" placeholder="Type" onchange="get_DocList(this)" style="width:100%">
+                    <option value="">-Select One-</option>
+                    <option value="Documents">Business Documents</option>
+                    <option value="Certificate">Certificate</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-md-6 col-sm-12">
+            <div class="form-group">
+                <label class="control-label">Select Document Type</label> <span class="text-danger">*</span>
+                <select class="form-control form-control-sm select2" name="DOC_ID" id="DOC_ID" placeholder="Type" style="width:100%"></select>
+                @*@Html.DropDownList("CERTIFICATE_ID", null, "-Select-", new { @class = "form-control form-control-sm select2", id = "DOCUMENTS_LIST_ID", name = "CERTIFICATE_ID", placeholder = "", style = "width:100%" })*@
+
+            </div>
+        </div>
+        <div class="col-md-6 col-sm-12" id="uploadDoc">
+            <div class="form-group">
+                @Html.Label("Upload Documents", new { @class = "control-label" })
+                <input type="file" name="Document" accept=".png, .jpg, .jpeg, .pdf, .docx" /><br />
+                <span class="text-success">png,jpg,jpeg,pdf,docx format only</span><br />
+                <span class="text-primary">Maximum Size 5 MB</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group row float-right">
+        <div class="offset-sm-2 col-sm-10">
+            <button type="submit" class="btn btn-danger btn-sm mr-3">Submit</button>
+        </div>
+    </div>
+}
+    <script>
+        function get_DocList() {
+            var url = "/Accounts/DropDownFor_DocList",
+                DOCUMENT_TYPE = $('#DOCUMENT_TYPE').val(),
+                DOC_ID = $('#DOC_ID');
+                DOC_ID.empty();
+                DOC_ID.append($("<option></option>").attr("value", '').text('--Select--'));
+                $.getJSON(url, { DOCUMENT_TYPE: DOCUMENT_TYPE }, function (response) {
+                $.each(response, function (index, item) {
+                DOC_ID.append($("<option></option>").attr("value", item.Value).text(item.Text));
+                });
+            });
+          };
+    </script>

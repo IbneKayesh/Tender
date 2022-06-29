@@ -70,6 +70,7 @@
                             <ul class="nav nav-pills">
                                 <li class="nav-item"><a class="nav-link active" href="#follow" data-toggle="tab">Following</a></li>
                                 <li class="nav-item"><a class="nav-link" href="#UpdateProfile" data-toggle="tab">Update Profile</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#doc" data-toggle="tab">Document</a></li>
                                 <li class="nav-item"><a class="nav-link" href="#settings" data-toggle="tab">Change Password</a></li>
                             </ul>
                         </div>
@@ -88,15 +89,15 @@
                                     </p>
 
                                     @*<strong><i class="fa fa-list-alt mr-1"></i> Products  </strong>
-                                    <p>
-                                        @foreach (var mItem in Model.VENDOR_PRODUCTS)
-                                        {
-                                            <label class="m-2 btn btn-sm btn-outline-primary">
-                                                @mItem.PRODUCTS_NAME
-                                                <input class="v-pro" type="checkbox" id="@mItem.PRODUCTS_ID" checked="@mItem.IS_ACTIVE" />
-                                            </label>
-                                        }
-                                    </p>*@
+                                        <p>
+                                            @foreach (var mItem in Model.VENDOR_PRODUCTS)
+                                            {
+                                                <label class="m-2 btn btn-sm btn-outline-primary">
+                                                    @mItem.PRODUCTS_NAME
+                                                    <input class="v-pro" type="checkbox" id="@mItem.PRODUCTS_ID" checked="@mItem.IS_ACTIVE" />
+                                                </label>
+                                            }
+                                        </p>*@
                                     <hr />
                                     <strong><i class="fas fa-business-time mr-1"></i> Business</strong><br />
                                     @foreach (var mItem in Model.VENDOR_CATEGORY)
@@ -310,40 +311,65 @@
                                             </div>
                                         </div>
                                         <div class="form-row">
-                                            <div class="col-md-3 col-sm-6">
+                                            <div class="col-md-6 col-sm-12">
                                                 <div class="form-group">
-                                                    <label class="control-label">Select Documents</label> <span class="text-danger">*</span>
-                                                    @Html.DropDownList("CERTIFICATE_ID", null, "-Select-", new { @class = "form-control form-control-sm select2", id = "DOCUMENTS_LIST_ID", placeholder = "", style = "width:100%", onchange = "addDropdownDocument();" })
+                                                    <label class="control-label">Select Document Type</label> <span class="text-danger">*</span>
+                                                    @Html.DropDownList("CERTIFICATE_ID", null, "-Select-", new { @class = "form-control form-control-sm select2", id = "DOCUMENTS_LIST_ID", name = "DocumentType", placeholder = "", style = "width:100%" })
                                                 </div>
                                             </div>
-
-                                            <div class="col-md-4 col-sm-6" style="display:none;" id="docDiv">
-                                                <div class="form-group mt-3">
-                                                    <div class="table-responsive">
-                                                        <table id="rdocuments" class="table">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th>Document List</th>
-                                                                    <th></th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody></tbody>
-                                                        </table>
-                                                    </div>
+                                            <div class="col-md-6 col-sm-12" id="uploadDoc" style="display:none;">
+                                                <div class="form-group">
+                                                    @Html.Label("Upload Documents", new { @class = "control-label" })
+                                                    <input type="file" name="Document" accept=".png, .jpg, .jpeg, .pdf, .docx" /><br />
+                                                    <span class="text-success">png,jpg,jpeg,pdf,docx format only</span>
+                                                    <span class="text-primary">Maximum Size 5 MB</span>
                                                 </div>
                                             </div>
                                         </div>
-
                                         <div class="row float-right">
                                             <div class="col-12 float-right">
                                                 <button type="submit" class="btn btn-danger btn-sm" id="save" style="display:none;">save</button>
-                                                <button  class="btn btn-danger btn-sm" id="submit">Submit</button>
+                                                <button class="btn btn-danger btn-sm" id="submit">Submit</button>
                                             </div>
                                         </div>
                                     }
 
                                 </div>
 
+                                <div class="tab-pane" id="doc">
+                                    @Html.Partial("_DocumentUpload", Model.VENDOR_FILE)
+                                    <hr />
+                                    @if (Model.VENDOR_DOCUMENTS_LIST.Count() > 0)
+                                    {
+                                        <span class="badge badge-primary text-bold">Certificate</span>
+                                        foreach (var item in Model.VENDOR_DOCUMENTS_LIST)
+                                        {
+                                            if (item.DOCUMENT_TYPE == "Certificate")
+                                            {
+                                                <div class="row mt-1">
+                                                    <div class="col-6">@item.DOC_NAME</div>
+                                                    <div class="col-6">
+                                                        <a href="@Url.Action("FileDownload", "Accounts", new {id = item.FILE_ID })">@item.FILE_NAME  <i class="fas fa-download"></i></a>
+                                                    </div>
+                                                </div>
+                                            }
+                                        }
+                                        <hr />
+                                        <span class="badge badge-success text-bold">Business Document</span>
+                                        foreach (var item in Model.VENDOR_DOCUMENTS_LIST)
+                                        {
+                                            if (item.DOCUMENT_TYPE == "Documents")
+                                            {
+                                                <div class="row mt-1">
+                                                    <div class="col-6">@item.DOC_NAME</div>
+                                                    <div class="col-6">
+                                                        <a href="@Url.Action("FileDownload", "Accounts", new {id = item.FILE_ID })">@item.FILE_NAME <i class="fas fa-download"></i></a>
+                                                    </div>
+                                                </div>
+                                            }
+                                        }
+                                    }
+                                </div>
                                 <div class="tab-pane" id="settings">
                                     @Html.Partial("_Changepassword", Model.CHANGE_PASWD)
                                 </div>
@@ -378,33 +404,37 @@
                 }
             });
 
-            $('#rdocuments tbody').on('click', 'tr .deleteItem', function (e) {
-                e.preventDefault();
-                $(this).closest('tr').fadeOut("slow", function () {
-                    var dataId = $(this).find('td:eq(0)').find('select').val();
-                    var dataName = $(this).find('td:eq(0)').find('select').text();
-                    $("#DOCUMENTS_LIST_ID").append(new Option(dataName, dataId));
-                    $(this).remove();
-                })
+            $("#DOCUMENTS_LIST_ID").change(function () {
+                $("#uploadDoc").css("display", "block");
             });
 
+            //$('#rdocuments tbody').on('click', 'tr .deleteItem', function (e) {
+            //    e.preventDefault();
+            //    $(this).closest('tr').fadeOut("slow", function () {
+            //        var dataId = $(this).find('td:eq(0)').find('select').val();
+            //        var dataName = $(this).find('td:eq(0)').find('select').text();
+            //        $("#DOCUMENTS_LIST_ID").append(new Option(dataName, dataId));
+            //        $(this).remove();
+            //    })
+            //});
+
         })
-        function addDropdownDocument() {
-            var docId = $.trim($("#DOCUMENTS_LIST_ID :selected").val()),
-                docName = $.trim($("#DOCUMENTS_LIST_ID :selected").text()),
-                rdocumentsBody = $("#rdocuments tbody");
-            if (docId == "" || docName == "") {
-                Swal.fire('warning', 'Select a valid documents', 'warning');
-                return;
-            };
-            $("#docDiv").css("display", "block");
-            var rdocumentsItem = '<tr><td><select class="form-control form-control-sm" style="min-width:180px;appearance: none;border:none;"><option value="' + docId + '">' + docName + '</option></select></td><td><a data-itemId="0" href="#" class="deleteItem btn btn-danger btn-xs">Delete</a></td></tr>';
-            rdocumentsBody.append(rdocumentsItem);
-            clearItem();
-        }
-        function clearItem() {
-            $("#DOCUMENTS_LIST_ID :selected").remove();
-        }
-       
+                //function addDropdownDocument() {
+                //    var docId = $.trim($("#DOCUMENTS_LIST_ID :selected").val()),
+                //        docName = $.trim($("#DOCUMENTS_LIST_ID :selected").text()),
+                //        rdocumentsBody = $("#rdocuments tbody");
+                //    if (docId == "" || docName == "") {
+                //        Swal.fire('warning', 'Select a valid documents', 'warning');
+                //        return;
+                //    };
+                //    $("#docDiv").css("display", "block");
+                //    var rdocumentsItem = '<tr><td><select class="form-control form-control-sm" style="min-width:180px;appearance: none;border:none;"><option value="' + docId + '">' + docName + '</option></select></td><td> <input type="file" name="document" accept=".png, .jpg, .jpeg, .pdf, .docx" /></td><td><a data-itemId="0" href="#" class="deleteItem btn btn-danger btn-xs">Delete</a></td></tr>';
+                //    rdocumentsBody.append(rdocumentsItem);
+                //    clearItem();
+                //}
+                //function clearItem() {
+                //    $("#DOCUMENTS_LIST_ID :selected").remove();
+                //}
+
     </script>
 }

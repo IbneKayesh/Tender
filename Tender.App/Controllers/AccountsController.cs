@@ -121,9 +121,11 @@ namespace Tender.App.Controllers
         }
         //again send notification code method for ajax
 
-        public ActionResult AgainSendToken(string email) {
-           var VENDOR_EMAIL = email;
-            if (!String.IsNullOrEmpty(VENDOR_EMAIL.ToString())) {
+        public ActionResult AgainSendToken(string email)
+        {
+            var VENDOR_EMAIL = email;
+            if (!String.IsNullOrEmpty(VENDOR_EMAIL.ToString()))
+            {
                 Random rnd = new Random();
                 int confirmationToken = rnd.Next(000000, 999999);
 
@@ -169,8 +171,8 @@ namespace Tender.App.Controllers
                 Tuple<MAIL_NOTIFICATION_TOKEN, EQResult> _tpl = AccountsService.EmailTokenVerify(tokenObj, "R");
                 if (!string.IsNullOrEmpty(_tpl.Item1.VENDOR_EMAIL))
                 {
-                    TempData["msg"] = AlertService.SaveSuccess("Verification Code Matched Successful");                   
-                    return RedirectToAction("RegistrationConfirmation",obj);
+                    TempData["msg"] = AlertService.SaveSuccess("Verification Code Matched Successful");
+                    return RedirectToAction("RegistrationConfirmation", obj);
                     //return RedirectToAction("RegistrationConfirmation", "Accounts", new { id = tokenObj.VENDOR_EMAIL });
                 }
                 else
@@ -354,7 +356,6 @@ namespace Tender.App.Controllers
         public ActionResult UserProfile(string id)
         {
             VENDER_SESSION snObj = (VENDER_SESSION)Session["ssUser"];
-
             DropDownFor_Signup();
             Tuple<VENDOR_DETAILS, EQResult> _tpl = AccountsService.getProfile(snObj.VENDOR_ID);
             if (_tpl.Item2.SUCCESS && _tpl.Item2.ROWS == 1)
@@ -364,19 +365,16 @@ namespace Tender.App.Controllers
                 _tpl.Item1.VENDOR_DOCUMENTS = AccountsService.getVENDOR_DOCUMENTS(snObj.VENDOR_ID).Item1;
                 _tpl.Item1.VENDOR_PRODUCTS = AccountsService.getVENDOR_PRODUCTS(snObj.VENDOR_ID).Item1;
                 _tpl.Item1.VENDOR_PRODUCTS_GROUP = AccountsService.getVENDOR_PRODUCTS_GROUP(snObj.VENDOR_ID).Item1;
+                _tpl.Item1.VENDOR_DOCUMENTS_LIST = AccountsService.getVENDOR_FILE_LIST(snObj.VENDOR_ID).Item1;
                 return View(_tpl.Item1);
-
             }
             return RedirectToAction("Index", "Home");
         }
-
-
         [UserSessionCheck]
         [HttpPost]
         public ActionResult UserProfile(VENDOR_DETAILS obj, HttpPostedFileBase ProfilePicture)
         {
             VENDER_SESSION snObj = (VENDER_SESSION)Session["ssUser"];
-
             DropDownFor_Signup();
             if (ModelState.IsValid)
             {
@@ -429,7 +427,6 @@ namespace Tender.App.Controllers
                                 TempData["msg"] = AlertService.SaveWarningOK("Image format must be jpg, jpeg,png");
                                 return View(obj);
                             }
-
                         }
                         else
                         {
@@ -453,6 +450,67 @@ namespace Tender.App.Controllers
             }
             return RedirectToAction("UserProfile", "Accounts");
         }
+
+        //partial view method
+        [UserSessionCheck]
+        [HttpPost]
+        public ActionResult UploadDocument(VENDOR_FILE obj, HttpPostedFileBase Document)
+        {
+            if (ModelState.IsValid)
+            {
+                VENDER_SESSION snObj = (VENDER_SESSION)Session["ssUser"];
+                if (Document != null && obj.DOC_ID != null)
+                {
+                    if (Document.ContentLength <= 10240*1024*5)
+                    {
+                        string pic = System.IO.Path.GetFileName(Document.FileName);
+                        string path = System.IO.Path.Combine(Server.MapPath("~/App_Asset/SDocument"), pic);
+                        var extension = Path.GetExtension(Document.FileName);
+                        if (extension.ToLower() == ".jpg" || extension.ToLower() == ".png" || extension.ToLower() == ".jpeg" ||extension.ToLower()==".pdf" || extension.ToLower() == ".docx")
+                        {
+                            Document.SaveAs(path);
+                            obj.FILE_PATH = path;
+                            obj.VENDOR_ID = snObj.VENDOR_ID;
+                            obj.FILE_ID = Guid.NewGuid().ToString();
+                            obj.FILE_NAME = pic;
+                            obj.FILE_TYPE = extension;
+                            obj.FILE_NUMBER = obj.DOC_ID;
+                            obj.DOC_ID = obj.DOC_ID;
+                            obj.DOCUMENT_TYPE = obj.DOCUMENT_TYPE;
+                            obj.CREATE_USER = snObj.VENDOR_ID;
+                            obj.CREATE_DEVICE = System.Environment.MachineName;
+                            var _tpl = AccountsService.documentSave(obj);                            
+                            if (_tpl.SUCCESS == true)
+                            {
+                                using (MemoryStream ms = new MemoryStream())
+                                {
+                                    Document.InputStream.CopyTo(ms);
+                                    byte[] array = ms.GetBuffer();
+                                }
+                                TempData["msg"] = AlertService.SaveSuccess("File Upload  Successfully");
+                            }
+                            else if (_tpl.SUCCESS == false)
+                            {
+                                TempData["msg"] = AlertService.SaveWarningOK(_tpl.MESSAGES);
+                            }
+                            return RedirectToAction("UserProfile", "Accounts");
+                        }
+                        else
+                        {
+                            TempData["msg"] = AlertService.SaveWarningOK("File format must be jpg, jpeg,png,pdf,docx");
+                            return View(obj);
+                        }
+                    }
+                    else
+                    {
+                        TempData["msg"] = AlertService.SaveWarningOK("File size less then 5 MB");
+                        return View(obj);
+                    }
+                }
+            }
+            return View("UserProfile");
+        }
+
         [UserSessionCheck]
         [HttpGet]
         public ActionResult supplierProfile(string id)
@@ -467,6 +525,7 @@ namespace Tender.App.Controllers
                 _tpl.Item1.VENDOR_DOCUMENTS = AccountsService.getVENDOR_DOCUMENTS(id).Item1;
                 _tpl.Item1.VENDOR_PRODUCTS = AccountsService.getVENDOR_PRODUCTS(id).Item1;
                 _tpl.Item1.VENDOR_PRODUCTS_GROUP = AccountsService.getVENDOR_PRODUCTS_GROUP(id).Item1;
+                _tpl.Item1.VENDOR_DOCUMENTS_LIST = AccountsService.getVENDOR_FILE_LIST(id).Item1;
                 return View(_tpl.Item1);
 
             }
@@ -718,6 +777,37 @@ namespace Tender.App.Controllers
                     new SelectListItem { Text = "Zimbabwe", Value ="ZIMBABWE"},
                       }, "Value", "Text", 1);
             return DataList;
+        }
+
+        [HttpGet]
+        public ActionResult DropDownFor_DocList(string DOCUMENT_TYPE)
+        {
+            VENDER_SESSION snObj = (VENDER_SESSION)Session["ssUser"];
+            if (DOCUMENT_TYPE == "Documents") {
+                var objList = TenderService.getVendorUploadDocument(snObj.VENDOR_ID).Item1.ToList();
+                return Json(new SelectList(objList, "DOCUMENTS_ID", "DOCUMENTS_NAME"), JsonRequestBehavior.AllowGet);
+            }
+            else if(DOCUMENT_TYPE == "Certificate")
+            {
+                var objList = TenderService.getvendorUploadCertificate(snObj.VENDOR_ID).Item1.ToList();
+                return Json(new SelectList(objList, "CERTIFICATE_ID", "CERTIFICATE_NAME"),JsonRequestBehavior.AllowGet);
+            }
+            return Json(new SelectList(null), JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult FileDownload(string id)
+        {
+            var path = AccountsService.filePath(id).Item1.FILE_PATH;
+           // var path = data.Item1.;
+            var fileName = AccountsService.filePath(id).Item1.FILE_NAME;
+            if (path != null)
+            {
+                //Read the File data into Byte Array.
+                byte[] bytes = System.IO.File.ReadAllBytes(path);
+
+                //Send the File to Download.
+                return File(bytes, "application/octet-stream", fileName);
+            }
+            return Json("Invalid document");
         }
     }
 }
