@@ -277,7 +277,7 @@ namespace Tender.App.Service
 
             List<string> sqlList = new List<string>();
 
-            sqlList.Add($@"INSERT INTO TND.RFQ_BIDDING (RFQ_NUMBER,QUOTE_NUMBER,RFQ_SL,VENDOR_ID,SUBMIT_DATE,PRODUCTS_ID,PRODUCTS_DESC,PRODUCTS_RATE, PRODUCTS_QUANTITY ,SHIPMENT_MODE,PORT_ID, 
+            sqlList.Add($@"INSERT INTO RFQ_BIDDING (RFQ_NUMBER,QUOTE_NUMBER,RFQ_SL,VENDOR_ID,SUBMIT_DATE,PRODUCTS_ID,PRODUCTS_DESC,PRODUCTS_RATE, PRODUCTS_QUANTITY ,SHIPMENT_MODE,PORT_ID, 
                            LOADING_ADDRESS, SENDER_NAME, SENDER_DETAILS ) 
                            VALUES ( '{_obj.RFQ_NUMBER}', '{qtNumber}',{slNo},'{_obj.VENDOR_ID}',TO_DATE('{_obj.SUBMIT_DATE.ToString("dd-MMM-yyyy")}','DD-MON-RRRR') ,'{_obj.PRODUCTS_ID}' ,
                            '{_obj.PRODUCTS_DESC}' ,{_obj.PRODUCTS_RATE} ,{_obj.PRODUCTS_QUANTITY} , {_obj.SHIPMENT_MODE},{_obj.PORT_ID} ,'{_obj.LOADING_ADDRESS}' ,'{_obj.SENDER_NAME}','{_obj.SENDER_DETAILS}' )");
@@ -288,10 +288,43 @@ namespace Tender.App.Service
         public static EQResult ApproveQuotation(RFQ_TENDER_APPROVAL _obj)
         {
             List<string> sqlList = new List<string>();
-            sqlList.Add($@" INSERT INTO TND.RFQ_TENDER_APPROVAL ( APPROVAL_ID, RFQ_NUMBER, QUOTE_NUMBER, VENDOR_ID, APPROVAL_NOTE) 
+            sqlList.Add($@" INSERT INTO RFQ_TENDER_APPROVAL ( APPROVAL_ID, RFQ_NUMBER, QUOTE_NUMBER, VENDOR_ID, APPROVAL_NOTE) 
                     VALUES ('{_obj.APPROVAL_ID}' ,'{_obj.RFQ_NUMBER}','{_obj.QUOTE_NUMBER}','{_obj.VENDOR_ID}','{_obj.APPROVAL_NOTE}')");
             return DatabaseMSSql.ExecuteSqlCommand(sqlList);
         }
+        public static EQResult ApproveQuotationUpdate(RFQ_TENDER_APPROVAL _obj)
+        {
+            List<string> sqlList = new List<string>();
+            if (_obj.FIRST_APRV_BY != null && _obj.FIRST_APRV_STATUS != null) {
+                sqlList.Add($@"UPDATE TND.RFQ_TENDER_APPROVAL SET       
+                           FIRST_APRV_STATUS ='{_obj.FIRST_APRV_STATUS}',
+                           FIRST_APRV_DATE =TO_DATE('{_obj.FIRST_APRV_DATE.ToString("dd-MMM-yyyy")}','DD-MON-RRRR'),
+                           FIRST_APRV_NOTE='{_obj.FIRST_APRV_NOTE}',
+                           FIRST_APRV_BY='{_obj.FIRST_APRV_BY}'
+                           where RFQ_NUMBER='{_obj.RFQ_NUMBER}' AND QUOTE_NUMBER='{_obj.QUOTE_NUMBER}'");
+            }
+            else if (_obj.SEC_APRV_BY != null && _obj.SEC_APRV_STATUS != null)
+            {
+                sqlList.Add($@"UPDATE TND.RFQ_TENDER_APPROVAL SET       
+                           SEC_APRV_STATUS='{_obj.SEC_APRV_STATUS}',
+                           SEC_APRV_DATE=TO_DATE('{_obj.SEC_APRV_DATE.ToString("dd-MMM-yyyy")}','DD-MON-RRRR'),
+                           SEC_APRV_NOTE='{_obj.SEC_APRV_NOTE}',
+                           SEC_APRV_BY='{_obj.SEC_APRV_BY}'
+                           where RFQ_NUMBER='{_obj.RFQ_NUMBER}' AND QUOTE_NUMBER='{_obj.QUOTE_NUMBER}'");
+            }
+            else if (_obj.THIRD_APRV_BY != null && _obj.THIRD_APRV_STATUS != null)
+            {
+                sqlList.Add($@"UPDATE TND.RFQ_TENDER_APPROVAL SET
+                           THIRD_APRV_STATUS='{_obj.THIRD_APRV_STATUS}',
+                           THIRD_APRV_DATE=TO_DATE('{_obj.THIRD_APRV_DATE.ToString("dd-MMM-yyyy")}','DD-MON-RRRR'),
+                           THIRD_APRV_NOTE='{_obj.THIRD_APRV_NOTE}',
+                           THIRD_APRV_BY='{_obj.THIRD_APRV_BY}'
+                           where RFQ_NUMBER='{_obj.RFQ_NUMBER}' AND QUOTE_NUMBER='{_obj.QUOTE_NUMBER}'");
+            }
+            
+            return DatabaseMSSql.ExecuteSqlCommand(sqlList);
+        }
+
         public static Tuple<List<RFQ_TENDER_APPROVAL_VIEW>, EQResult> ApproveTenderList()
         {
             string sql = $@"SELECT RB.QUOTE_NUMBER, R.RFQ_NUMBER, R.VENDOR_ID TND_VENDOR_ID, VN.ORGANIZATION_NAME VENDOR_NAME,RB.VENDOR_ID ,

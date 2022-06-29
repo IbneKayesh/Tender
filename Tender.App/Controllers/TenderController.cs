@@ -133,6 +133,39 @@ namespace Tender.App.Controllers
             }
             return View(obj);
         }
+        public ActionResult AprvRFQ(string rfqNumber, string quotNumber, string userId,string approvalNumber) {
+            RFQ_TENDER_APPROVAL obj = new RFQ_TENDER_APPROVAL();
+            obj.RFQ_NUMBER = rfqNumber;
+            obj.QUOTE_NUMBER = quotNumber;
+            if (approvalNumber == "1") {
+                obj.FIRST_APRV_BY = userId;
+                obj.FIRST_APRV_DATE = DateTime.Now;
+                obj.FIRST_APRV_STATUS = "Y";
+                obj.FIRST_APRV_NOTE = "1st approve done";
+            }
+            else if (approvalNumber == "2") {
+                obj.SEC_APRV_BY = userId;
+                obj.SEC_APRV_DATE = DateTime.Now;
+                obj.SEC_APRV_STATUS = "Y";
+                obj.SEC_APRV_NOTE = "2nd approve done";
+            }
+            else if (approvalNumber == "3") {
+                obj.THIRD_APRV_BY = userId;
+                obj.THIRD_APRV_DATE = DateTime.Now;
+                obj.THIRD_APRV_STATUS = "Y";
+                obj.THIRD_APRV_NOTE = "3rd approve done";
+            }
+            //APPROVE FOR RFQ_TENDER_APPROVAL UPDATE 
+            var _tpl = QuotationService.ApproveQuotationUpdate(obj);
+            if (_tpl.SUCCESS == true)
+            {
+                TempData["msg"] = AlertService.SaveSuccessOK("Approve Successfully");
+            }
+            else {
+                TempData["msg"] = AlertService.SaveWarningOK(_tpl.MESSAGES);
+            }
+            return RedirectToAction("ApprovalProcess");
+        }
         public void DropDownFor_Tender()
         {
             ViewBag.SELL_BUY = TenderService.DropDownList_Sel_Buy();

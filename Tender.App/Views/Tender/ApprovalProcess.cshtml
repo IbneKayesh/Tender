@@ -40,46 +40,44 @@
                             <td>@item.APPROVAL_NOTE</td>
                             <td>
                                 @if (item.FIRST_APRV_STATUS != "Y")
-                                {@*<a class="btn btn-sm  btn-outline-danger" href="@Url.Action("ApproveTender", "Tender", new { rfqNumber = item.RFQ_NUMBER, quotNumber = item.QUOTE_NUMBER, vendorId = item.VENDOR_ID })">
-                                            Confirm
-                                        </a>*@
-                                <span class="badge badge-danger">Pending</span>
-                                <span><a><i class="fa fa-user-edit"></i></a></span>
-                            }
-                            else
-                            {
-                                <span class="badge badge-warning">Approved</span>
-                            }
+                                {
+                                    <span class="badge badge-danger">Pending</span>
+                                    <span><a href="@Url.Action("AprvRFQ", "Tender", new { rfqNumber = item.RFQ_NUMBER, quotNumber = item.QUOTE_NUMBER, userId = "userId",approvalNumber="1"})"><i class="fa fa-user-edit"></i></a></span>
+                                }
+                                else
+                                {
+                                    <span class="badge badge-success">Approved</span>
+                                }
                             </td>
                             <td>
                                 @if (item.SEC_APRV_STATUS != "Y")
                                 {
                                     <span class="badge badge-danger">Pending</span>
-                                    <span><a><i class="fa fa-user-edit"></i></a></span>
+                                    <span><a href="@Url.Action("AprvRFQ", "Tender", new { rfqNumber = item.RFQ_NUMBER, quotNumber = item.QUOTE_NUMBER, userId = "userId",approvalNumber="2"})"><i class="fa fa-user-edit"></i></a></span>
                                 }
                                 else
                                 {
-                                    <a class="btn btn-sm  btn-outline-success">Approve</a>
+                                    <span class="badge badge-success">Approved</span>
                                 }
                             </td>
                             <td>
                                 @if (item.THIRD_APRV_STATUS != "Y")
                                 {
                                     <span class="badge badge-danger">Pending</span>
-                                    <span><a><i class="fa fa-user-edit"></i></a></span>
+                                    <span><a href="@Url.Action("AprvRFQ", "Tender", new { rfqNumber = item.RFQ_NUMBER, quotNumber = item.QUOTE_NUMBER, userId = "userId",approvalNumber="3"})"><i class="fa fa-user-edit"></i></a></span>
                                 }
                                 else
                                 {
-                                    <a class="btn btn-sm  btn-outline-danger">Complete</a>
+                                    <span class="badge badge-success">Approved</span>
                                 }
                             </td>
                             <td><a class="btn btn-sm  btn-outline-primary" href="@Url.Action("supplierProfile", "Accounts", new {id = item.VENDOR_ID })">View Profile</a></td>
 
                         </tr>
                         <tr class="expandable-body table-active">
-                            <td colspan="8">
+                            <td colspan="9">
                                 <div class="row ">
-                                    <div class="col-md-8">
+                                    <div class="col-md-6">
 
                                         <span class="text-bold">Product :</span> @item.PRODUCTS_ID <br />
                                         <span class="text-bold">RFQ Quantity :</span> @item.TND_PRODUCTS_QTY @item.UNIT <br />
@@ -92,7 +90,7 @@
                                         <hr />
                                     </div>
 
-                                    <div class="col-md-6 ">
+                                    <div class="col-md-6">
                                         <span class="text-bold">Quot Quantity :</span> @item.PRODUCTS_QUANTITY @item.UNIT<br />
                                         <span class="text-bold">Quot Rate :</span> @item.PRODUCTS_RATE <br />
                                         <span class="text-bold">Quot Product Details :</span> @item.PRODUCTS_DESC <br />
