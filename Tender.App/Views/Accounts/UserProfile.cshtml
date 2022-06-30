@@ -77,13 +77,22 @@
                         <div class="card-body">
                             <div class="tab-content">
                                 <div class="active tab-pane" id="follow">
+                                    <strong><i class="fa fa-building mr-1"></i> Company</strong><br />
+                                    @foreach (var mItem in Model.VENDOR_COMPANY)
+                                    {
+                                        <label class="m-2 btn btn-sm btn-outline-primary">
+                                            @mItem.COMPANY_NAME
+                                            <input class="v-com" type="checkbox" id="@mItem.COMPANY_ID" @(mItem.IS_ACTIVE == 1 ? "checked='checked'" : string.Empty) />
+                                        </label>
+                                    }
+                                    <hr />
                                     <strong><i class="fa fa-list-alt mr-1"></i> Item Catagory  </strong>
                                     <p>
                                         @foreach (var mItem in Model.VENDOR_PRODUCTS_GROUP)
                                         {
                                             <label class="m-2 btn btn-sm btn-outline-primary">
                                                 @mItem.PRODUCTS_GROUP_NAME
-                                                <input class="v-pcat" type="checkbox" id="@mItem.PRODUCTS_GROUP_ID" checked="@mItem.IS_ACTIVE" />
+                                                <input class="v-pcat" type="checkbox" id="@mItem.PRODUCTS_GROUP_ID" @(mItem.IS_ACTIVE == 1 ? "checked='checked'" : string.Empty) />
                                             </label>
                                         }
                                     </p>
@@ -397,9 +406,10 @@
             });
 
             $('input[type=checkbox]').change(function () {
+                debugger;
                 var clId = $(this).attr("class");
                 var clNm = $(this).attr('id');
-                if (clId == "v-pro" || clId == "v-cat" || clId == "v-cer" || clId == "v-doc" || clId == "v-pcat") {
+                if (clId == "v-com" || clId == "v-pro" || clId == "v-cat" || clId == "v-cer" || clId == "v-doc" || clId == "v-pcat") {
                     $.post("FollowMe", { "cId": clId, "cNm": clNm });
                 }
             });
@@ -419,22 +429,22 @@
             //});
 
         })
-                //function addDropdownDocument() {
-                //    var docId = $.trim($("#DOCUMENTS_LIST_ID :selected").val()),
-                //        docName = $.trim($("#DOCUMENTS_LIST_ID :selected").text()),
-                //        rdocumentsBody = $("#rdocuments tbody");
-                //    if (docId == "" || docName == "") {
-                //        Swal.fire('warning', 'Select a valid documents', 'warning');
-                //        return;
-                //    };
-                //    $("#docDiv").css("display", "block");
-                //    var rdocumentsItem = '<tr><td><select class="form-control form-control-sm" style="min-width:180px;appearance: none;border:none;"><option value="' + docId + '">' + docName + '</option></select></td><td> <input type="file" name="document" accept=".png, .jpg, .jpeg, .pdf, .docx" /></td><td><a data-itemId="0" href="#" class="deleteItem btn btn-danger btn-xs">Delete</a></td></tr>';
-                //    rdocumentsBody.append(rdocumentsItem);
-                //    clearItem();
-                //}
-                //function clearItem() {
-                //    $("#DOCUMENTS_LIST_ID :selected").remove();
-                //}
+                        //function addDropdownDocument() {
+                        //    var docId = $.trim($("#DOCUMENTS_LIST_ID :selected").val()),
+                        //        docName = $.trim($("#DOCUMENTS_LIST_ID :selected").text()),
+                        //        rdocumentsBody = $("#rdocuments tbody");
+                        //    if (docId == "" || docName == "") {
+                        //        Swal.fire('warning', 'Select a valid documents', 'warning');
+                        //        return;
+                        //    };
+                        //    $("#docDiv").css("display", "block");
+                        //    var rdocumentsItem = '<tr><td><select class="form-control form-control-sm" style="min-width:180px;appearance: none;border:none;"><option value="' + docId + '">' + docName + '</option></select></td><td> <input type="file" name="document" accept=".png, .jpg, .jpeg, .pdf, .docx" /></td><td><a data-itemId="0" href="#" class="deleteItem btn btn-danger btn-xs">Delete</a></td></tr>';
+                        //    rdocumentsBody.append(rdocumentsItem);
+                        //    clearItem();
+                        //}
+                        //function clearItem() {
+                        //    $("#DOCUMENTS_LIST_ID :selected").remove();
+                        //}
 
     </script>
 }

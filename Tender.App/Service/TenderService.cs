@@ -23,14 +23,14 @@ namespace Tender.App.Service
                        PORT_ID, DELIVERY_ADDRESS, RECEIVER_NAME, 
                        RECEIVER_DETAILS, COST_EX_INC, INCO_TERMS, 
                        CURRENCY_NAME, CURRENCY_RATE, PAY_A, 
-                       PAY_AP, PAY_B, PAY_BP) 
+                       PAY_AP, PAY_B, PAY_BP,COMPANY_ID) 
                        VALUES ('{tenderNumber}' ,'{_obj.VENDOR_ID}' ,{_obj.SELL_BUY} ,{_obj.LOCAL_IMPORT},{_obj.RE_BID} ,{_obj.LOWER_RATE} ,
                                 TO_DATE('{_obj.START_DATE.ToString("dd-MMM-yyyy")}','DD-MON-RRRR') ,TO_DATE('{_obj.END_DATE.ToString("dd-MMM-yyyy")}','DD-MON-RRRR')
                                 ,'{_obj.PRODUCTS_ID}' ,'{_obj.PRODUCTS_DESC}' ,{_obj.PRODUCTS_RATE} ,{_obj.PRODUCTS_QUANTITY} ,
                                 TO_DATE('{_obj.LAST_DELIVERY_DATE.ToString("dd-MMM-yyyy")}','DD-MON-RRRR') ,{_obj.PARTIAL_SHIPMENT} ,
                                 {_obj.SHIPMENT_MODE},{_obj.PORT_ID} ,'{_obj.DELIVERY_ADDRESS}' ,'{_obj.RECEIVER_NAME}' ,'{_obj.RECEIVER_DETAILS}' ,
                                 {_obj.COST_EX_INC} ,'{_obj.INCO_TERMS}'
-                                ,'{_obj.CURRENCY_NAME}' ,{_obj.CURRENCY_RATE} ,'{_obj.PAY_A}' ,{_obj.PAY_AP} ,'{_obj.PAY_B}' ,{_obj.PAY_BP} )");
+                                ,'{_obj.CURRENCY_NAME}' ,{_obj.CURRENCY_RATE} ,'{_obj.PAY_A}' ,{_obj.PAY_AP} ,'{_obj.PAY_B}' ,{_obj.PAY_BP},{_obj.COMPANY_ID} )");
             if (_obj.RFQ_TNDR_DOCUMENTS.Count() > 0)
             {
                 foreach (var item in _obj.RFQ_TNDR_DOCUMENTS)

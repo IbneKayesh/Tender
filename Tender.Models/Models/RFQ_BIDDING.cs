@@ -110,6 +110,8 @@ namespace Tender.Models.Models
         public string APPROVAL_NOTE { get; set; }
         [NotMapped]
         public string IMAGE_PATH { get; set; }
+        
+        public string COMPANY_ID { get; set; }
 
         public virtual List<RFQ_TNDR_DOCUMENTS> RFQ_TNDR_DOCUMENTS { get; set; }
 

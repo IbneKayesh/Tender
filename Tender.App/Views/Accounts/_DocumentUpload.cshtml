@@ -22,7 +22,7 @@
         <div class="col-md-6 col-sm-12">
             <div class="form-group">
                 <label class="control-label">Select Document Type</label> <span class="text-danger">*</span>
-                <select class="form-control form-control-sm select2" name="DOC_ID" id="DOC_ID" placeholder="Type" style="width:100%"></select>
+                <select class="form-control form-control-sm select2" name="DOC_ID" id="DOC_ID" placeholder="Type" style="width:100%" required></select>
                 @*@Html.DropDownList("CERTIFICATE_ID", null, "-Select-", new { @class = "form-control form-control-sm select2", id = "DOCUMENTS_LIST_ID", name = "CERTIFICATE_ID", placeholder = "", style = "width:100%" })*@
 
             </div>
@@ -30,7 +30,7 @@
         <div class="col-md-6 col-sm-12" id="uploadDoc">
             <div class="form-group">
                 @Html.Label("Upload Documents", new { @class = "control-label" })
-                <input type="file" name="Document" accept=".png, .jpg, .jpeg, .pdf, .docx" /><br />
+                <input type="file" name="Document" accept=".png, .jpg, .jpeg, .pdf, .docx"  required/><br />
                 <span class="text-success">png,jpg,jpeg,pdf,docx format only</span><br />
                 <span class="text-primary">Maximum Size 5 MB</span>
             </div>

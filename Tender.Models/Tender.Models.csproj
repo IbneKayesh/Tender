@@ -74,6 +74,7 @@
     <Compile Include="Models\CHANGE_PASWD.cs" />
     <Compile Include="Models\ChartModel.cs" />
     <Compile Include="Models\COMMON.cs" />
+    <Compile Include="Models\COMPANY.cs" />
     <Compile Include="Models\MAIL_NOTIFICATION_TOKEN.cs" />
     <Compile Include="Models\RFQ_TenderView.cs" />
     <Compile Include="Models\RFQ_TENDER_APPROVAL_VIEW.cs" />
@@ -94,6 +95,7 @@
     <Compile Include="Models\RFQ_TENDER.cs" />
     <Compile Include="Models\RFQ_TNDR_DOCUMENTS.cs" />
     <Compile Include="Models\VENDER_SESSION.cs" />
+    <Compile Include="Models\VENDOR_COMPANY.cs" />
     <Compile Include="Models\VENDOR_FILE.cs" />
     <Compile Include="Models\VENDOR_LOGIN.cs" />
     <Compile Include="Models\VENDOR_DETAILS.cs" />

@@ -16,6 +16,7 @@ namespace Tender.Models.Models
             VENDOR_DOCUMENTS = new List<VENDOR_DOCUMENTS>();
             VENDOR_PRODUCTS = new List<VENDOR_PRODUCTS>();
             VENDOR_PRODUCTS_GROUP = new List<VENDOR_PRODUCTS_GROUP>();
+            VENDOR_COMPANY = new List<VENDOR_COMPANY>();
         }
 
         [Display(Name = "Login User Name")]
@@ -100,10 +101,11 @@ namespace Tender.Models.Models
         public virtual List<VENDOR_PRODUCTS> VENDOR_PRODUCTS { get; set; }
         public virtual List<VENDOR_PRODUCTS_GROUP> VENDOR_PRODUCTS_GROUP { get; set; }
         public virtual List<VENDOR_FILE> VENDOR_DOCUMENTS_LIST { get; set; }
+        public virtual List<VENDOR_COMPANY> VENDOR_COMPANY { get; set; }
 
-        
- 
-        
+
+
+
 
         public VENDOR_DETAILS getAll()
         {

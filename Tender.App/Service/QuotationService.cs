@@ -86,7 +86,7 @@ namespace Tender.App.Service
 
         public static Tuple<List<RFQ_TenderView>, EQResult> getAllTenderForSupplier(string vendorId)
         {
-            string sql = $@" SELECT R.RFQ_NUMBER, R.VENDOR_ID TND_VENDOR_ID,
+            string sql = $@"SELECT DISTINCT R.RFQ_NUMBER, R.VENDOR_ID TND_VENDOR_ID,
                             CASE WHEN  R.SELL_BUY=0 THEN 'Buyer' ELSE 'Seller ' END SELL_BUY, 
                             CASE WHEN    R.LOCAL_IMPORT=1 THEN 'Local' ELSE 'Importer' END  LOCAL_IMPORT,
                             CASE WHEN     R.RE_BID=1 THEN 'Submit Once' ELSE 'Submit Multiple' END RE_BID,
@@ -99,7 +99,7 @@ namespace Tender.App.Service
                                R.RECEIVER_DETAILS, CASE WHEN  R.COST_EX_INC=1 THEN 'Include' ELSE 'Exclude' END COST_EX_INC, INCO.INCO_TERMS_NAME, 
                                R.CURRENCY_NAME, R.CURRENCY_RATE, TPM.PAYMENT_MODE_NAME PAY_A, 
                                R.PAY_AP, TPM.PAYMENT_MODE_NAME PAY_B, R.PAY_BP, 
-                               R.IS_APPROVE,R.PRODUCTS_ID,NVL(BIDDERS.SUBMITED_BIDS,0) SUBMITED_BIDS ,NVL(APP.APPROVAL_ID,0)  APPROVAL_ID,NVL2(T1.RFQ_NUMBER,'Y','N')VSUBMIT_STATUS
+                               R.IS_APPROVE,R.PRODUCTS_ID,NVL(BIDDERS.SUBMITED_BIDS,0) SUBMITED_BIDS ,NVL(APP.APPROVAL_ID,0)  APPROVAL_ID,NVL2(T1.RFQ_NUMBER,'Y','N')VSUBMIT_STATUS, COMPANY.COMPANY_NAME,C.COMPANY_ID
                             FROM TND.RFQ_TENDER R
                             INNER JOIN TNDR_PRODUCTS TP ON TP.PRODUCTS_ID=R.PRODUCTS_ID
                             LEFT JOIN TNDR_SHIPMENT_MODE SM ON SM.SHIPMENT_MODE_ID=R.SHIPMENT_MODE
@@ -111,7 +111,9 @@ namespace Tender.App.Service
                             LEFT JOIN RFQ_TENDER_APPROVAL APP ON APP.RFQ_NUMBER=R.RFQ_NUMBER
                              LEFT JOIN (
                             SELECT DISTINCT RFQ_NUMBER, VENDOR_ID FROM RFQ_BIDDING WHERE VENDOR_ID='{vendorId}' 
-                            ) T1 ON T1.RFQ_NUMBER=R.RFQ_NUMBER    
+                            ) T1 ON T1.RFQ_NUMBER=R.RFQ_NUMBER   
+                            INNER JOIN VENDOR_COMPANY C ON C.COMPANY_ID=R.COMPANY_ID AND C.IS_ACTIVE=1
+                            INNER JOIN COMPANY ON COMPANY.COMPANY_ID=C.COMPANY_ID
                            WHERE TP.GROUP_ID IN (
                             SELECT DISTINCT GROUP_ID FROM VENDOR_PRODUCTS_GROUP WHERE VENDOR_ID='{vendorId}'  AND IS_ACTIVE=1
                             ) 
@@ -137,7 +139,7 @@ namespace Tender.App.Service
                                R.RECEIVER_DETAILS, CASE WHEN  R.COST_EX_INC=1 THEN 'Include' ELSE 'Exclude' END COST_EX_INC, INCO.INCO_TERMS_NAME, 
                                R.CURRENCY_NAME, R.CURRENCY_RATE, TPM.PAYMENT_MODE_NAME PAY_A, 
                                R.PAY_AP, TPM.PAYMENT_MODE_NAME PAY_B, R.PAY_BP, 
-                               R.IS_APPROVE,R.PRODUCTS_ID, NVL(BIDDERS.SUBMITED_BIDS,0) TOTAL_BIDDING,R.SHIPMENT_MODE,R.PORT_ID
+                               R.IS_APPROVE,R.PRODUCTS_ID, NVL(BIDDERS.SUBMITED_BIDS,0) TOTAL_BIDDING,R.SHIPMENT_MODE,R.PORT_ID,COMPANY.COMPANY_NAME COMPANY_ID
                             FROM TND.RFQ_TENDER R
                             INNER JOIN TNDR_PRODUCTS TP ON TP.PRODUCTS_ID=R.PRODUCTS_ID
                             LEFT JOIN TNDR_SHIPMENT_MODE SM ON SM.SHIPMENT_MODE_ID=R.SHIPMENT_MODE
@@ -146,6 +148,7 @@ namespace Tender.App.Service
                             INNER JOIN TNDR_PAYMENT_MODE TPM ON TPM.PAYMENT_MODE_ID=R.PAY_A
                             INNER JOIN TNDR_PAYMENT_MODE TPB ON TPB.PAYMENT_MODE_ID=R.PAY_B
                             LEFT JOIN ( SELECT RFQ_NUMBER,MAX(RFQ_SL)SUBMITED_BIDS  FROM RFQ_BIDDING GROUP BY RFQ_NUMBER ) BIDDERS ON BIDDERS.RFQ_NUMBER=R.RFQ_NUMBER
+                            INNER JOIN COMPANY ON COMPANY.COMPANY_ID=R.COMPANY_ID                            
                             WHERE R.RFQ_NUMBER=NVL('{rfqNumber}',R.RFQ_NUMBER )
                             ";
             Tuple<RFQ_BIDDING, EQResult> _tpl = DatabaseMSSql.SqlQuerySingle<RFQ_BIDDING>(sql);

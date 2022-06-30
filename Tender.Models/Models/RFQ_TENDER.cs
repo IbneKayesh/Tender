@@ -30,7 +30,7 @@ namespace Tender.Models.Models
         [Required(ErrorMessage = "{0} is required")]
         public string PRODUCTS_ID { get; set; }
         [Required(ErrorMessage = "{0} is required")]
-        [StringLength(maximumLength: 90, ErrorMessage = "{0} length is between {2} and {1}", MinimumLength = 3)]
+        [StringLength(maximumLength: 90, ErrorMessage = "{0} length is between {2} and {1}", MinimumLength = 1)]
         public string PRODUCTS_DESC { get; set; }
         [Required(ErrorMessage = "{0} is required")]
         public decimal PRODUCTS_RATE { get; set; }
@@ -44,13 +44,13 @@ namespace Tender.Models.Models
         public int SHIPMENT_MODE { get; set; } = 0;
         public int PORT_ID { get; set; } = 0;
         [Required(ErrorMessage = "{0} is required")]
-        [StringLength(maximumLength: 90, ErrorMessage = "{0} length is between {2} and {1}", MinimumLength = 3)]
+        [StringLength(maximumLength: 90, ErrorMessage = "{0} length is between {2} and {1}", MinimumLength = 1)]
         public string DELIVERY_ADDRESS { get; set; }
         [Required(ErrorMessage = "{0} is required")]
-        [StringLength(maximumLength: 30, ErrorMessage = "{0} length is between {2} and {1}", MinimumLength = 3)]
+        [StringLength(maximumLength: 30, ErrorMessage = "{0} length is between {2} and {1}", MinimumLength = 1)]
         public string RECEIVER_NAME { get; set; }
         [Required(ErrorMessage = "{0} is required")]
-        [StringLength(maximumLength: 90, ErrorMessage = "{0} length is between {2} and {1}", MinimumLength = 3)]
+        [StringLength(maximumLength: 90, ErrorMessage = "{0} length is between {2} and {1}", MinimumLength = 1)]
         public string RECEIVER_DETAILS { get; set; }
 
         public int COST_EX_INC { get; set; }
@@ -69,6 +69,9 @@ namespace Tender.Models.Models
         public int PAY_BP { get; set; }
 
         public DateTime ADDED_DATE { get; set; }
+
+        [Required(ErrorMessage = "{0} is required")]
+        public string COMPANY_ID { get; set; }
 
         public virtual List<RFQ_TNDR_DOCUMENTS> RFQ_TNDR_DOCUMENTS { get; set; }
 

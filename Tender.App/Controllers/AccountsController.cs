@@ -366,6 +366,7 @@ namespace Tender.App.Controllers
                 _tpl.Item1.VENDOR_PRODUCTS = AccountsService.getVENDOR_PRODUCTS(snObj.VENDOR_ID).Item1;
                 _tpl.Item1.VENDOR_PRODUCTS_GROUP = AccountsService.getVENDOR_PRODUCTS_GROUP(snObj.VENDOR_ID).Item1;
                 _tpl.Item1.VENDOR_DOCUMENTS_LIST = AccountsService.getVENDOR_FILE_LIST(snObj.VENDOR_ID).Item1;
+                _tpl.Item1.VENDOR_COMPANY = AccountsService.getVENDOR_COMPANY(snObj.VENDOR_ID).Item1;
                 return View(_tpl.Item1);
             }
             return RedirectToAction("Index", "Home");
@@ -479,7 +480,7 @@ namespace Tender.App.Controllers
                             obj.DOCUMENT_TYPE = obj.DOCUMENT_TYPE;
                             obj.CREATE_USER = snObj.VENDOR_ID;
                             obj.CREATE_DEVICE = System.Environment.MachineName;
-                            var _tpl = AccountsService.documentSave(obj);                            
+                            var _tpl = AccountsService.documentSave(obj);
                             if (_tpl.SUCCESS == true)
                             {
                                 using (MemoryStream ms = new MemoryStream())
@@ -489,10 +490,16 @@ namespace Tender.App.Controllers
                                 }
                                 TempData["msg"] = AlertService.SaveSuccess("File Upload  Successfully");
                             }
+                            else if (_tpl.MESSAGES == "ORA-00001: unique constraint (TND.SYS_C0014456) violated")
+                            {
+                                TempData["msg"] = AlertService.SaveWarningOK("This file name is already exist ! Please rename your file");
+                                return RedirectToAction("UserProfile", "Accounts");
+                            }
                             else if (_tpl.SUCCESS == false)
                             {
                                 TempData["msg"] = AlertService.SaveWarningOK(_tpl.MESSAGES);
                             }
+                           
                             return RedirectToAction("UserProfile", "Accounts");
                         }
                         else

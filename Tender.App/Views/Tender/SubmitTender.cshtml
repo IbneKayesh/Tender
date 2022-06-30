@@ -56,6 +56,13 @@
                         <div class="col-md-3 col-sm-6">
                             <div class="form-group">
                                 <label class="control-label">Company</label>
+                                @Html.DropDownList("COMPANY_ID", null, new { @class = "form-control form-control-sm select2", @readonly = "readonly", style = "width:100%" })
+                                @Html.ValidationMessageFor(m => m.VENDOR_ID, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6" style="display:none">
+                            <div class="form-group">
+                                <label class="control-label">Purcheser</label>
                                 @Html.DropDownList("VENDOR_ID", null, new { @class = "form-control form-control-sm select2", @readonly = "readonly", style = "width:100%" })
                                 @Html.ValidationMessageFor(m => m.VENDOR_ID, "", new { @class = "text-danger" })
                             </div>
@@ -78,7 +85,7 @@
                         <div class="col-md-3 col-sm-6">
                             <div class="form-group">
                                 <label class="control-label">Local/Importer</label> <span class="text-danger">*</span>
-                                @Html.DropDownList("LOCAL_IMPORT", ViewBag.LOCAL_IMPORT as List<SelectListItem>, "-Select-",new { @class = "form-control form-control-sm select2", style = "width:100%", @onchange = "importertype();" })
+                                @Html.DropDownList("LOCAL_IMPORT", ViewBag.LOCAL_IMPORT as List<SelectListItem>, "-Select-", new { @class = "form-control form-control-sm select2", style = "width:100%", @onchange = "importertype();" })
                                 @Html.ValidationMessageFor(m => m.LOCAL_IMPORT, "", new { @class = "text-danger" })
                             </div>
                         </div>

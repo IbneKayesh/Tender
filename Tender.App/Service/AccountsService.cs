@@ -82,7 +82,29 @@ namespace Tender.App.Service
         }
         public static EQResult add_edit_follow_me(string id, string cID, string cNAME)
         {
-            if (cID == "v-pcat")
+            if (cID == "v-com")
+            {
+                sql = $"select * from VENDOR_COMPANY where VENDOR_ID ='{id}' and COMPANY_ID='{cNAME}'";
+                var _tpl = DatabaseMSSql.SqlQuerySingle<VENDOR_COMPANY>(sql);
+                if (_tpl.Item2.ROWS == 0)
+                {
+                    sql = $"INSERT INTO VENDOR_COMPANY(VENDOR_ID,COMPANY_ID)VALUES('{id}','{cNAME}')";
+                    return DatabaseMSSql.ExecuteSqlCommand(sql);
+                }
+                else
+                {
+                    if (_tpl.Item1.IS_ACTIVE == 1)
+                    {
+                        sql = $"update VENDOR_COMPANY set IS_ACTIVE=0 where VENDOR_ID='{id}' and COMPANY_ID='{cNAME}'";
+                    }
+                    else
+                    {
+                        sql = $"update VENDOR_COMPANY set IS_ACTIVE=1 where VENDOR_ID='{id}' and COMPANY_ID='{cNAME}'";
+                    }
+                    return DatabaseMSSql.ExecuteSqlCommand(sql);
+                }
+            }
+            else if (cID == "v-pcat")
             {
                 sql = $"select VENDOR_ID,PRODUCTS_GROUP_ID,PRODUCTS_GROUP_NAME,IS_ACTIVE from VENDOR_PRODUCTS_GROUP where VENDOR_ID ='{id}' and PRODUCTS_GROUP_ID='{cNAME}'";
                 var _tpl = DatabaseMSSql.SqlQuerySingle<VENDOR_CATEGORY>(sql);
@@ -265,6 +287,20 @@ namespace Tender.App.Service
                     AND T2.VENDOR_ID='{id}'";
             return DatabaseMSSql.SqlQuery<VENDOR_PRODUCTS_GROUP>(sql);
         }
+        public static Tuple<List<VENDOR_COMPANY>,EQResult> getVENDOR_COMPANY(string id)
+        {
+            sql = $@"SELECT T1.COMPANY_ID COMPANY_ID,T1.COMPANY_NAME COMPANY_NAME,
+                    CASE WHEN T2.IS_ACTIVE IS NULL
+                    THEN 0
+                    ELSE
+                    T2.IS_ACTIVE
+                    END IS_ACTIVE
+                    FROM COMPANY T1
+                    LEFT JOIN VENDOR_COMPANY T2 ON T1.COMPANY_ID = T2.COMPANY_ID                   
+                    AND T2.VENDOR_ID='{id}'";
+            return DatabaseMSSql.SqlQuery<VENDOR_COMPANY>(sql);
+        }
+
         public static Tuple<List<VENDOR_FILE>, EQResult> getVENDOR_FILE_LIST(string _vendorid)
         {
             sql = $@"SELECT VF.*,NVL(TC.CERTIFICATE_NAME,TD.DOCUMENTS_NAME) DOC_NAME FROM VENDOR_FILE VF

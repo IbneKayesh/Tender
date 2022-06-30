@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace Tender.Models.Models
 {
-    public class VENDOR_PRODUCTS_GROUP
+    public class VENDOR_COMPANY : COMMON
     {
+        public string COMPANY_ID { get; set; }
+        public string COMPANY_NAME { get; set; }
         public string VENDOR_ID { get; set; }
-        public string PRODUCTS_GROUP_ID { get; set; }
-        public string PRODUCTS_GROUP_NAME { get; set; }
-        public int IS_ACTIVE { get; set; }
+        public string FLAG { get; set; }
     }
 }

@@ -97,7 +97,7 @@ namespace Tender.App.Controllers
             else
             {
                 var errors = ModelState.Where(x => x.Value.Errors.Count > 0).Select(x => new { x.Key, x.Value.Errors }).ToArray();
-                ModelState.AddModelError("Err", "Invalid Data");
+                ModelState.AddModelError("Error", "Invalid Data");
                 return View(obj);
             }
             return RedirectToAction("ViewAllTender");
@@ -190,7 +190,7 @@ namespace Tender.App.Controllers
             ViewBag.PAY_B = new SelectList(TenderService.getPaymentMode().Item1.ToList(), "PAYMENT_MODE_ID", "PAYMENT_MODE_NAME");
             ViewBag.CURRENCY_NAME = new SelectList(TenderService.getCurrency().Item1.ToList(), "CURRENCY_NAME", "CURRENCY_NAME");
             ViewBag.TENDER_DOC = new SelectList(TenderService.getTnderDoc().Item1.ToList(), "DOCUMENTS_ID", "DOCUMENTS_NAME");
-
+            ViewBag.COMPANY_ID = new SelectList(CommonService.GetCompany().Item1.ToList(), "COMPANY_ID", "COMPANY_NAME");
 
 
         }
@@ -231,27 +231,6 @@ namespace Tender.App.Controllers
         {
             var obj = new SelectList(TenderService.getPaymentModeByID(paymentModeID).Item1.ToList(), "PAYMENT_MODE_ID", "PAYMENT_MODE_NAME");
             return Json(obj, JsonRequestBehavior.AllowGet);
-        }
-
-
-
-
-        //public ActionResult QuotationCompare(string id)
-        //{
-        //    RFQ_BIDDING obj = new RFQ_BIDDING();
-        //    obj.RFQ_NUMBER = "B0125258524452";
-        //    obj.RFQ_SL = 10;
-        //    obj.VENDOR_ID = "Arok Traders";
-        //    obj.SUBMIT_DATE = DateTime.Now;
-        //    obj.PRODUCTS_RATE = 500;
-        //    obj.PRODUCTS_QUANTITY = 1000;
-        //    obj.SHIPMENT_MODE = 1;
-        //    obj.PORT_ID = 1;
-        //    obj.LOADING_ADDRESS = "Chittagonj Port";
-        //    obj.SENDER_NAME = "Pran Rfl Group";
-        //    obj.SENDER_DETAILS = "must be receive in 30 days";
-        //    obj.PRODUCTS_DESC = "1000 Ton Camical";
-        //    return View(obj);
-        //}
+        }       
     }
 }
