@@ -56,7 +56,7 @@
                         <div class="col-md-3 col-sm-6">
                             <div class="form-group">
                                 <label class="control-label">Company</label>
-                                @Html.DropDownList("COMPANY_ID", null, new { @class = "form-control form-control-sm select2", @readonly = "readonly", style = "width:100%" })
+                                @Html.DropDownList("COMPANY_ID", null, new { @class = "form-control form-control-sm select2", id = "COMPANY_ID", @readonly = "readonly", style = "width:100%" })
                                 @Html.ValidationMessageFor(m => m.VENDOR_ID, "", new { @class = "text-danger" })
                             </div>
                         </div>
@@ -141,7 +141,7 @@
                         <div class="col-md-3 col-sm-6">
                             <div class="form-group">
                                 <label class="control-label">Product</label> <span class="text-danger">*</span>
-                                @Html.DropDownList("PRODUCTS_ID", null, new { @class = "form-control form-control-sm select2", placeholder = "", style = "width:100%" })
+                                @Html.DropDownList("PRODUCTS_ID", null, new { @class = "form-control form-control-sm select2", id = "PRODUCTS_ID", placeholder = "", style = "width:100%" })
                                 @Html.ValidationMessageFor(m => m.PRODUCTS_ID, "", new { @class = "text-danger" })
                             </div>
                         </div>
@@ -169,9 +169,9 @@
                         <div class="col-md-3 col-sm-6">
                             <div class="form-group">
                                 <label class="control-label">Select Documents</label> <span class="text-danger">*</span>
-                                @Html.DropDownList("TENDER_DOC", null, "-Select-", new { @class = "form-control form-control-sm select2", id = "DOCUMENTS_LIST_ID", placeholder = "", style = "width:100%",onchange= "addDropdownDocument();" })
+                                @Html.DropDownList("TENDER_DOC", null, "-Select-", new { @class = "form-control form-control-sm select2", id = "DOCUMENTS_LIST_ID", placeholder = "", style = "width:100%", onchange = "addDropdownDocument();" })
                                 @Html.ValidationMessageFor(m => m.PRODUCTS_DESC, "", new { @class = "text-danger" })
-                            </div>                           
+                            </div>
                         </div>
                         <div class="col-md-4 col-sm-6" style="display:none;" id="docDiv">
                             <div class="form-group mt-3">
@@ -276,7 +276,7 @@
                         <div class="col-md-3 col-sm-6">
                             <div class="form-group">
                                 <label class="control-label">Pay Mode A</label> <span class="text-danger">*</span>
-                                @Html.DropDownList("PAY_A", null,"--Select--", new { @class = "form-control form-control-sm select2", placeholder = "", style = "width:100%",onchange= "get_PAYMENT_MODE_ID_B();" })
+                                @Html.DropDownList("PAY_A", null, "--Select--", new { @class = "form-control form-control-sm select2", placeholder = "", style = "width:100%", onchange = "get_PAYMENT_MODE_ID_B();" })
                                 @Html.ValidationMessageFor(m => m.PAY_A, "", new { @class = "text-danger" })
                             </div>
                         </div>
@@ -303,26 +303,58 @@
                                 @Html.ValidationMessageFor(m => m.PAY_BP, "", new { @class = "text-danger" })
                             </div>
                         </div>
+                        <div class="col-md-12 col-sm-12">
+                            <div class="form-group">
+                                <a id="selectedSupplierList" class="btn btn-sm btn-outline-primary" onclick="AjaxSelectedSupplierListCheck();">Show Selected Supplier List</a>
+                                @*<a id="selectedSupplierList" href="@Url.Action("CompanyProductCatWiseSupllierList",new { company_id ="", product_id=Model.PRODUCTS_ID })" class="btn btn-sm btn-outline-primary">Show Selected Supplier List</a>*@
+                            </div>
+                        </div>
+
                     </div>
 
                     <div class="float-right">
                         <button type="button" id="prvPymt" class="btn btn-secondary">Previous</button>
                         <button type="submit" class="btn btn-danger" id="save2db">Submit Tender</button>
                     </div>
+
+
                 </div>
             </div>
-
+            //supplier list modal
+            <div id="myModal" class="modal fade" tabindex="-1" style="height:100%;width:100%">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-body pb-0 mb-0">
+                            <div class="table-responsive">
+                                <table id="supplierList" class="table table-bordered table-striped table-hover table-responsive-md" style="width:100%">
+                                    <thead>
+                                        <tr class="table-secondary">
+                                            <th>Name</th>
+                                            <th>Email</th>
+                                            <th>Country</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody style="font-size:14px;">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="modal-footer pt-0 mt-0">
+                            <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
         }
 
     </div>
 </div>
-
 @section scripts{
     @Scripts.Render("~/bundles/jqueryval")
-    <script>
+<script>
         $(document).ready(function () {
-           
+
 
             $(".forImpoter").css("display", "none")
 
@@ -405,7 +437,7 @@
                 }
             });
             //End payment type select and percent calculation----------------
-            
+
             $('#rdocuments tbody').on('click', 'tr .deleteItem', function (e) {
                 e.preventDefault();
                 $(this).closest('tr').fadeOut("slow", function () {
@@ -433,6 +465,51 @@
                 });
             });
         });
+    function AjaxSelectedSupplierListCheck() {
+        debugger
+            //get parameter value
+        var COMPANY_ID = $.trim($("#COMPANY_ID :selected").val()),
+            PRODUCTS_ID = $.trim($("#PRODUCTS_ID :selected").val());
+        if (COMPANY_ID == '' || PRODUCTS_ID == '') {
+                Swal.fire('warning', 'Please Select Company and Product', 'warning');
+                return false;
+            }
+        //Send the JSON array to Controller using AJAX.
+        $.ajax({
+            url: "@Url.Action("CompanyProductCatWiseSupllierList")",
+            data: { COMPANY_ID:COMPANY_ID,PRODUCTS_ID:PRODUCTS_ID},
+            //contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data) {              
+                window.open("/Accounts/SupplierList/vendorList?'" + "" + "'", '_blank');
+              //  window.open("@Url.Action("SupplierList", "Accounts")", new { vendorList = "" }, '_blank');
+                //var items = '';
+                //$('#supplierList tbody tr').remove();
+                //$.each(data, function (i, item) {
+                //    var rows = "<tr style='width:100%;height:40px;'>"
+                //        + "<td class='prtoducttd'>" + item.ORGANIZATION_NAME + "</td>"
+                //        + "<td class='prtoducttd'>" + item.VENDOR_EMAIL + "</td>"
+                //        + "<td class='prtoducttd'>" + item.COUNTRY_NAME + "</td>"
+                //        + "</tr>";
+                //    $('#supplierList tbody').append(rows);
+
+                //});
+                //$("#myModal").modal('show');
+                console.log(data);
+                //    $.ajax({
+                //        type: "POST",
+                //        url:window.open("/Accounts/SupplierList/", '_blank'),
+                //    data: JSON.stringify(data),
+                //    contentType: "application/json; charset=utf-8",
+                //    dataType: "json",
+                //        success: function (data) {
+                //            console.log("success");
+                //            window.open("/Accounts/SupplierList/", '_blank')
+                //    },
+                //});
+            },
+        });
+    }
 
         function get_PAYMENT_MODE_ID_B() {
             debugger
@@ -562,6 +639,6 @@
             $("#tndPayment").removeClass("btn-outline-primary");
             $("#tndPayment").addClass("btn-primary");
         }
-    </script>
+</script>
 }
 

@@ -2365,6 +2365,8 @@
     <Content Include="Views\Accounts\_DocumentUpload.cshtml" />
     <Content Include="Views\Accounts\_documents.cshtml" />
     <Content Include="Views\Tender\ApprovalProcess.cshtml" />
+    <Content Include="Views\Accounts\SupplierList.cshtml" />
+    <Content Include="Views\Accounts\_supplierList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

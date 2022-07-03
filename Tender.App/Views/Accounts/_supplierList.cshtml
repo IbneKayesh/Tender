@@ -1,0 +1,79 @@
+﻿@model IEnumerable<Tender.Models.Models.VENDOR_DETAILS>
+@{
+    ViewBag.Title = "Supplier List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+</style>
+<section class="content">
+    <div class="card card-solid">
+        <div class="card-body">
+
+            <div class="card card-primary card-outline mt-3">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <i class="fas fa-list"></i>
+                        @ViewBag.Title  &nbsp;&nbsp; <small>@System.DateTime.Now</small>
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table id="example1" class="table table-bordered table-striped table-hover table-responsive-md" style="width:100%">
+                            <thead>
+                                <tr class="table-secondary">
+                                    <th>Details</th>
+                                    <th>Organization</th>
+                                    <th>Country</th>
+                                    <th>Mail</th>
+                                    <th>Year of Eastablishment</th>
+                                    <th>Yearly Trunover</th>
+                                    <th>Address</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model != null)
+                                {
+                                    foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td><a href="@Url.Action("supplierProfile", "Accounts", new {id = item.VENDOR_ID })" class="btn btn-sm  btn-outline-success">View Details</a></td>
+                                            <td>@item.ORGANIZATION_NAME</td>
+                                            <td>@item.COUNTRY_NAME</td>
+                                            <td>@item.VENDOR_EMAIL</td>
+                                            <td>@item.YEAR_OF_ESTABLISHMENT</td>
+                                            <td>@item.YEARLY_TRUNOVER</td>
+                                            <td> @item.ADDRESS_1 </td>
+                                        </tr>
+                                    }
+                                }
+
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+@section scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(document).ready(function () {
+            $(function () {
+                $("#example1").DataTable({
+                    "responsive": true, "lengthChange": true, "autoWidth": true,
+                    "buttons": false
+
+                }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+            });
+        });
+    </script>
+
+}

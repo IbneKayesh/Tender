@@ -231,6 +231,17 @@ namespace Tender.App.Controllers
         {
             var obj = new SelectList(TenderService.getPaymentModeByID(paymentModeID).Item1.ToList(), "PAYMENT_MODE_ID", "PAYMENT_MODE_NAME");
             return Json(obj, JsonRequestBehavior.AllowGet);
-        }       
+        }
+
+        [HttpGet]
+        public ActionResult CompanyProductCatWiseSupllierList(string COMPANY_ID, string PRODUCTS_ID) {
+            HttpContext.Session.Remove("snVendorList");
+            var objList = TenderService.companyProductCatWiseSupllierList(COMPANY_ID, PRODUCTS_ID).Item1.ToList();
+            Session["snVendorList"] = objList;
+
+           var  snVendorList=(List<VENDOR_DETAILS>)Session["snVendorList"];
+
+            return Json(objList, JsonRequestBehavior.AllowGet);
+        }
     }
 }

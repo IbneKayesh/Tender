@@ -239,5 +239,20 @@ namespace Tender.App.Service
                   }, "Value", "Text", null);
             return DataList;
         }
+        public static Tuple<List<VENDOR_DETAILS>, EQResult> companyProductCatWiseSupllierList(string companyId,string productId)
+        {
+            string sql = $@"SELECT DISTINCT V.* FROM VENDOR V
+                            INNER JOIN VENDOR_PRODUCTS_GROUP VPG ON VPG.VENDOR_ID=V.VENDOR_ID
+                            INNER JOIN VENDOR_COMPANY VC ON VC.VENDOR_ID=V.VENDOR_ID
+                            INNER JOIN COMPANY C ON C.COMPANY_ID=VC.COMPANY_ID
+                            INNER JOIN TNDR_PRODUCT_GROUP TPG ON TPG.ID=VPG.PRODUCTS_GROUP_ID
+                            INNER JOIN TNDR_PRODUCTS TP ON TP.GROUP_ID=TPG.ID
+                            INNER JOIN RFQ_TENDER RT ON RT.PRODUCTS_ID=TP.PRODUCTS_ID AND RT.COMPANY_ID=C.COMPANY_ID
+                            WHERE -- RT.RFQ_NUMBER='RFQ-220600017'
+                            TP.PRODUCTS_ID=NVL('{productId}',TP.PRODUCTS_ID) 
+                            AND C.COMPANY_ID=NVL('{companyId}',C.COMPANY_ID)
+                            AND V.SUPPLIER=1 AND V.IS_ACTIVE=1";
+            return DatabaseMSSql.SqlQuery<VENDOR_DETAILS>(sql);
+        }
     }
 }

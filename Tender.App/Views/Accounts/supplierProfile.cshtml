@@ -74,23 +74,21 @@
                         <div class="card-body">
                             <div class="tab-content">
                                 <div class="active tab-pane" id="follow">
-                                    @*<strong><i class="fa fa-list-alt mr-1"></i> Products  </strong>
-            <p>
-                @foreach (var mItem in Model.VENDOR_PRODUCTS)
-                {
-                    if (mItem.IS_ACTIVE == true)
-                    {
-                        <span class="badge badge-primary"> @mItem.PRODUCTS_NAME</span>
-                    }
-
-                }
-            </p>*@
-
+                                    <strong><i class="fa fa-building mr-1"></i> Company</strong><br />
+                                    <p>
+                                        @foreach (var mItem in Model.VENDOR_COMPANY)
+                                        {
+                                            if (mItem.IS_ACTIVE == 1)
+                                            {
+                                                <span class="badge badge-primary"> @mItem.COMPANY_NAME</span>
+                                            }
+                                        }
+                                    </p>
                                     <strong><i class="fa fa-list-alt mr-1"></i> Item Catagory  </strong>
                                     <p>
                                         @foreach (var mItem in Model.VENDOR_PRODUCTS_GROUP)
                                         {
-                                            if (mItem.IS_ACTIVE == true)
+                                            if (mItem.IS_ACTIVE == 1)
                                             {
                                                 <span class="badge badge-primary"> @mItem.PRODUCTS_GROUP_NAME</span>
                                             }
@@ -333,8 +331,9 @@
                                             }
                                         }
                                     }
-                                    else { 
-                                    <h4>No Document Available</h4>
+                                    else
+                                    {
+                                        <h4>No Document Available</h4>
                                     }
                                 </div>
 

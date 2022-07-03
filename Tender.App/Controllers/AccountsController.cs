@@ -1,5 +1,6 @@
 ﻿using Aio.Db.MSSqlEF;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -533,6 +534,7 @@ namespace Tender.App.Controllers
                 _tpl.Item1.VENDOR_PRODUCTS = AccountsService.getVENDOR_PRODUCTS(id).Item1;
                 _tpl.Item1.VENDOR_PRODUCTS_GROUP = AccountsService.getVENDOR_PRODUCTS_GROUP(id).Item1;
                 _tpl.Item1.VENDOR_DOCUMENTS_LIST = AccountsService.getVENDOR_FILE_LIST(id).Item1;
+                _tpl.Item1.VENDOR_COMPANY = AccountsService.getVENDOR_COMPANY(snObj.VENDOR_ID).Item1;
                 return View(_tpl.Item1);
 
             }
@@ -575,6 +577,15 @@ namespace Tender.App.Controllers
 
         }
 
+        public ActionResult SupplierList(List<VENDOR_DETAILS> vendorList) {
+            List<VENDOR_DETAILS> List = new List<VENDOR_DETAILS>();
+            // string postsHtml = ViewRenderer.RenderPartialView("~/views/yourcontroller/_PostsPartial.cshtml", model);
+
+            //return Json(new { html = postsHtml });
+          //  return PartialView("~/views/Accounts/_supplierList.cshtml", vendorList);
+            return View(List);
+
+        }
 
         public void DropDownFor_Signup()
         {
