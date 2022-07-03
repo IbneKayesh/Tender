@@ -347,12 +347,34 @@ namespace Tender.App.Service
         }
 
 
-        public static Tuple<List<VENDOR_DETAILS>, EQResult> supplierList()
+        public static Tuple<List<VENDOR_DETAILS>, EQResult> supplierList(string _country,string _company,string _ProductGroup)
         {
-            string sql = $@"SELECT * FROM VENDOR WHERE SUPPLIER=1";
+            string sql = $@"SELECT DISTINCT V.* FROM VENDOR V
+                         LEFT JOIN VENDOR_COMPANY VC ON VC.VENDOR_ID=V.VENDOR_ID";
+            if (_ProductGroup != "")
+            {
+                sql += $" INNER JOIN VENDOR_PRODUCTS_GROUP VPG ON VPG.VENDOR_ID=V.VENDOR_ID";
+            }
+            if (_company != "")
+            {
+                sql += $" INNER JOIN VENDOR_COMPANY VC ON VC.VENDOR_ID=V.VENDOR_ID";
+            }
+
+            sql += $" WHERE V.SUPPLIER=1 AND V.IS_ACTIVE=1 AND V.COUNTRY_NAME = NVL('{_country}', V.COUNTRY_NAME)";
+
+            if (_ProductGroup != "")
+            {
+                sql += $" AND VPG.PRODUCTS_GROUP_ID='{_ProductGroup}'";
+            }
+            if (_company != "")
+            {
+                sql += $" AND VC.COMPANY_ID='{_company}'";
+            }
+
             var objList = DatabaseMSSql.SqlQuery<VENDOR_DETAILS>(sql);
             return objList;
         }
 
     }
 }
+//LEFT JOIN VENDOR_PRODUCTS_GROUP VPG ON VPG.VENDOR_ID=V.VENDOR_ID

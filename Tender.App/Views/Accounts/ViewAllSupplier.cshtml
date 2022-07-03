@@ -3,8 +3,6 @@
     ViewBag.Title = "Supplier List";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<style>
-</style>
 <section class="content">
     <div class="card card-solid">
         <div class="card-body">
@@ -17,6 +15,36 @@
                     </h3>
                 </div>
                 <div class="card-body">
+                    @using (Html.BeginForm("ViewAllSupplier", "Accounts", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                        @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                        @Html.AntiForgeryToken()
+                    <div class="form-row">
+                        <div class="col-md-3 col-sm-6">
+                            <div class="form-group">
+                                <label class="control-label">Country</label>
+                                @Html.DropDownList("COUNTRY_NAME", null, "-Select-", new { @class = "form-control form-control-sm select2", name = "COUNTRY_NAME", placeholder = "", style = "width:100%;" })
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <div class="form-group">
+                                <label for="VENDOR_USER_ID" class="control-label"> Company</label>
+                                @Html.DropDownList("COMPANY_ID", null, "-Select-", new { @class = "form-control form-control-sm select2", name = "COMPANY_ID", placeholder = "", style = "width:100%;" })
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <div class="form-group">
+                                <label for="VENDOR_USER_ID" class="control-label"> Product Group</label>
+                                @Html.DropDownList("GROUP_ID", null, "-Select-", new { @class = "form-control form-control-sm select2", name = "GROUP_ID", placeholder = "",style="width:100%;" })
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <div class="form-group mt-sm-2">
+                                <button type="submit" class="btn btn-sm btn-success  mt-sm-4">Find</button>
+                            </div>
+                        </div>
+                    </div>
+                    }
                     <div class="table-responsive">
                         <table id="example1" class="table table-bordered table-striped table-hover table-responsive-md" style="width:100%">
                             <thead>
@@ -25,8 +53,6 @@
                                     <th>Organization</th>
                                     <th>Country</th>
                                     <th>Mail</th>
-                                    <th>Year of Eastablishment</th>
-                                    <th>Yearly Trunover</th>
                                     <th>Address</th>
                                 </tr>
                             </thead>
@@ -40,8 +66,6 @@
                                             <td>@item.ORGANIZATION_NAME</td>
                                             <td>@item.COUNTRY_NAME</td>
                                             <td>@item.VENDOR_EMAIL</td>
-                                            <td>@item.YEAR_OF_ESTABLISHMENT</td>
-                                            <td>@item.YEARLY_TRUNOVER</td>
                                             <td> @item.ADDRESS_1 </td>
                                         </tr>
                                     }

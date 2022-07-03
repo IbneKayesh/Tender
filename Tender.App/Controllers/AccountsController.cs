@@ -569,12 +569,18 @@ namespace Tender.App.Controllers
         }
 
         [UserSessionCheck]
+
         public ActionResult ViewAllSupplier()
         {
-
-            List<VENDOR_DETAILS> obj = AccountsService.supplierList().Item1;
+            DropDownFor_Signup();
+            return View();
+        }
+        [HttpPost]
+        public ActionResult ViewAllSupplier(string COUNTRY_NAME, string COMPANY_ID, string GROUP_ID)
+        {
+            DropDownFor_Signup();
+            List<VENDOR_DETAILS> obj = AccountsService.supplierList(COUNTRY_NAME,COMPANY_ID,GROUP_ID).Item1;
             return View(obj);
-
         }
 
         public ActionResult SupplierList(List<VENDOR_DETAILS> vendorList) {
@@ -591,6 +597,8 @@ namespace Tender.App.Controllers
         {
             ViewBag.COUNTRY_NAME = DropDownList_All_Country();
             ViewBag.CERTIFICATE_ID = new SelectList(TenderService.getvendorDoc().Item1.ToList(), "CERTIFICATE_ID", "CERTIFICATE_NAME");
+            ViewBag.COMPANY_ID = new SelectList(CommonService.GetCompany().Item1.ToList(), "COMPANY_ID", "COMPANY_NAME");
+            ViewBag.GROUP_ID = new SelectList(SetupService.getpProductGroup().Item1.ToList(), "ID", "NAME");
         }
         public SelectList DropDownList_All_Country()
         {
