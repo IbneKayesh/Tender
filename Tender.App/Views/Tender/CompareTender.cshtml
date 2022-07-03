@@ -43,6 +43,9 @@
                         <div class="col">Receiver Name : @Model.Select(c => c.RECEIVER_NAME).FirstOrDefault() </div>
                         <div class="col">Receiver Details : @Model.Select(c => c.RECEIVER_DETAILS).FirstOrDefault() </div>
                     </div>
+                    <div class="row mt-2">
+                        <a class="btn btn-sm btn-outline-primary" href="@Url.Action("SupplierList", "Accounts", new { RFQ_NUMBER = Model.Select(c=>c.RFQ_NUMBER).FirstOrDefault()})" target="_blank">Supplier List For This RFQ</a>
+                    </div>
 
 
                 </div>
@@ -152,9 +155,7 @@
         $(document).ready(function () {
             setInterval("dateimeFunction()", 1000);
 
-            function preventBack() { window.history.forward(); }
-            setTimeout("preventBack()", 0);
-            window.onunload = function () { null };
+          
         })
         function dateimeFunction() {
             var endDateTime = $('.endDate').val();

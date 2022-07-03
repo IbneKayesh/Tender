@@ -40,6 +40,10 @@
                             Rate :   @Model.TND_PRODUCTS_RATE @Model.CURRENCY_NAME, Quantity : @Model.TND_PRODUCTS_QTY @Model.UNIT
                         </h5>
                     </div>
+
+                    <div class="row mt-2">
+                        <a class="btn btn-sm btn-outline-primary" href="@Url.Action("SupplierList", "Accounts", new { RFQ_NUMBER = Model.RFQ_NUMBER})" target="_blank">Supplier List For This RFQ</a>
+                    </div>
                 </div>
             </div>
             <br />

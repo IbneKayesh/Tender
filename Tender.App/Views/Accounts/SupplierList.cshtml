@@ -3,10 +3,17 @@
     ViewBag.Title = "Supplier List";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
-    var snVendorList = (List<Tender.Models.Models.VENDOR_DETAILS>)Session["snVendorList"];
+    //if (Model != null)
+    //{
+    //    List<Tender.Models.Models.VENDOR_DETAILS> snVendorList =new  List<Tender.Models.Models.VENDOR_DETAILS>();
+    //    snVendorList = Model.ToList(); ;
+    //}
+    //else {
+
+    //}
+   
+
 }
-<style>
-</style>
 <section class="content">
     <div class="card card-solid">
         <div class="card-body">
@@ -33,12 +40,13 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @if (snVendorList != null)
+                                @if (Model == null)
                                 {
+                                    var snVendorList = (List<Tender.Models.Models.VENDOR_DETAILS>)Session["snVendorList"];
                                     foreach (var item in snVendorList)
                                     {
                                         <tr>
-                                            <td><a href="@Url.Action("supplierProfile", "Accounts", new {id = item.VENDOR_ID })" class="btn btn-sm  btn-outline-success">View Details</a></td>
+                                            <td><a href="@Url.Action("supplierProfile", "Accounts", new { id = item.VENDOR_ID })" class="btn btn-sm  btn-outline-success">View Details</a></td>
                                             <td>@item.ORGANIZATION_NAME</td>
                                             <td>@item.COUNTRY_NAME</td>
                                             <td>@item.VENDOR_EMAIL</td>
@@ -48,7 +56,21 @@
                                         </tr>
                                     }
                                 }
-
+                                else
+                                {
+                                    foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td><a href="@Url.Action("supplierProfile", "Accounts", new { id = item.VENDOR_ID })" class="btn btn-sm  btn-outline-success">View Details</a></td>
+                                            <td>@item.ORGANIZATION_NAME</td>
+                                            <td>@item.COUNTRY_NAME</td>
+                                            <td>@item.VENDOR_EMAIL</td>
+                                            <td>@item.YEAR_OF_ESTABLISHMENT</td>
+                                            <td>@item.YEARLY_TRUNOVER</td>
+                                            <td> @item.ADDRESS_1 </td>
+                                        </tr>
+                                    }
+                                }
                             </tbody>
                         </table>
 
@@ -60,7 +82,6 @@
         </div>
 
     </div>
-
 </section>
 
 

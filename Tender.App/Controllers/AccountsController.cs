@@ -583,12 +583,16 @@ namespace Tender.App.Controllers
             return View(obj);
         }
 
-        public ActionResult SupplierList(List<VENDOR_DETAILS> vendorList) {
+        public ActionResult SupplierList(List<VENDOR_DETAILS> vendorList,string RFQ_NUMBER) {
             List<VENDOR_DETAILS> List = new List<VENDOR_DETAILS>();
             // string postsHtml = ViewRenderer.RenderPartialView("~/views/yourcontroller/_PostsPartial.cshtml", model);
 
             //return Json(new { html = postsHtml });
-          //  return PartialView("~/views/Accounts/_supplierList.cshtml", vendorList);
+            //  return PartialView("~/views/Accounts/_supplierList.cshtml", vendorList);
+            if (RFQ_NUMBER != null) {
+                List<VENDOR_DETAILS> obj = AccountsService.RfqBysupplierList(RFQ_NUMBER).Item1;
+                List = obj;
+            }
             return View(List);
 
         }
