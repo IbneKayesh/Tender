@@ -53,7 +53,7 @@ namespace Tender.Models.Models
 
         [Display(Name = "Present Address")]
         [Required(ErrorMessage = "{0} is required")]
-        [StringLength(maximumLength: 50, ErrorMessage = "{0} length is between {2} and {1}", MinimumLength = 3)]
+        [StringLength(maximumLength: 50, ErrorMessage = "{0} length is between {2} and {1}", MinimumLength = 2)]
         public string ADDRESS_1 { get; set; }
 
         [Display(Name = "Permanent Address")]
@@ -65,22 +65,22 @@ namespace Tender.Models.Models
         public Nullable<int> YEAR_OF_ESTABLISHMENT { get; set; }
 
         [Display(Name = "Yearly Turnover")]
-        [Required(ErrorMessage = "{0} is required")]
-        [Range(minimum: 1000, maximum: 9999999999999, ErrorMessage = "{0} range is {1} and {2}")]
+        //[Required(ErrorMessage = "{0} is required")]
+        [Range(minimum: 1, maximum: 9999999999999, ErrorMessage = "{0} range is {1} and {2}")]
         public Nullable<Int64> YEARLY_TRUNOVER { get; set; }
 
         [Display(Name = "Number of Employee")]
-        [Required(ErrorMessage = "{0} is required")]
+        //[Required(ErrorMessage = "{0} is required")]
         [StringLength(maximumLength: 50, ErrorMessage = "{0} length is between {2} and {1}", MinimumLength = 1)]
         public string NO_OF_EMPLOYEES { get; set; }
 
         [Display(Name = "TAX/TIN")]
-        [Required(ErrorMessage = "{0} is required")]
+        //[Required(ErrorMessage = "{0} is required")]
         [StringLength(maximumLength: 50, ErrorMessage = "{0} length is between {2} and {1}", MinimumLength = 3)]
         public string TAX_NUMBER { get; set; }
 
         [Display(Name = "Trade Number")]
-        [Required(ErrorMessage = "{0} is required")]
+       // [Required(ErrorMessage = "{0} is required")]
         [StringLength(maximumLength: 50, ErrorMessage = "{0} length is between {2} and {1}", MinimumLength = 3)]
         public string TRADE_NUMBER { get; set; }
 

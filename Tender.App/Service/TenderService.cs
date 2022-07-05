@@ -31,7 +31,7 @@ namespace Tender.App.Service
                                 {_obj.SHIPMENT_MODE},{_obj.PORT_ID} ,'{_obj.DELIVERY_ADDRESS}' ,'{_obj.RECEIVER_NAME}' ,'{_obj.RECEIVER_DETAILS}' ,
                                 {_obj.COST_EX_INC} ,'{_obj.INCO_TERMS}'
                                 ,'{_obj.CURRENCY_NAME}' ,{_obj.CURRENCY_RATE} ,'{_obj.PAY_A}' ,{_obj.PAY_AP} ,'{_obj.PAY_B}' ,{_obj.PAY_BP},{_obj.COMPANY_ID} )");
-            if (_obj.RFQ_TNDR_DOCUMENTS.Count() > 0)
+            if (_obj.RFQ_TNDR_DOCUMENTS !=null)
             {
                 foreach (var item in _obj.RFQ_TNDR_DOCUMENTS)
                 {

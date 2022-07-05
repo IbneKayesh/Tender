@@ -55,6 +55,14 @@
             <div>
                 <span id="password_strength"></span>
             </div>
+            <div class="input-group mb-3">
+                @Html.DropDownList("COMPANY_ID", ViewBag.COMPANY_ID as List<SelectListItem>, "-Select Company-", new { @class = "form-control form-control-sm select2" })
+                <div class="input-group-append">
+                    <div class="input-group-text">
+                        <span class="far fa-building"></span>
+                    </div>
+                </div>
+            </div>
             <div class="row" style="display:none">
                 <div class="col-12">
                     <div class="icheck-primary">
@@ -123,7 +131,7 @@
                     $("#VENDOR_PASSWD").attr("type", type);
                 });
             });
-            $("#register").attr("disabled", "disabled");
+           // $("#register").attr("disabled", "disabled");
 
         })
 
@@ -187,10 +195,10 @@
             }
             password_strength.innerHTML = passwordStrength;
             password_strength.style.color = color;
-            debugger
-            if (color == "Green" || color == "darkgreen") {
-                $("#register").prop('disabled', false);
-            }
+            //debugger
+            //if (color == "Green" || color == "darkgreen") {
+            //    $("#register").prop('disabled', false);
+            //}
         }
     </script>
 }

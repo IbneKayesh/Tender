@@ -80,10 +80,13 @@
                                     <strong><i class="fa fa-building mr-1"></i> Company</strong><br />
                                     @foreach (var mItem in Model.VENDOR_COMPANY)
                                     {
+                                        if (mItem.IS_ACTIVE == 1) { 
                                         <label class="m-2 btn btn-sm btn-outline-primary">
                                             @mItem.COMPANY_NAME
-                                            <input class="v-com" type="checkbox" id="@mItem.COMPANY_ID" @(mItem.IS_ACTIVE == 1 ? "checked='checked'" : string.Empty) />
+                                            @*<input class="v-com" type="checkbox" id="@mItem.COMPANY_ID" @(mItem.IS_ACTIVE == 1 ? "checked='checked'" : string.Empty) />*@
                                         </label>
+                                        }
+                                        
                                     }
                                     <hr />
                                     <strong><i class="fa fa-list-alt mr-1"></i> Item Catagory  </strong>
@@ -231,7 +234,7 @@
                                             </div>
                                             <div class="col-md-6 col-sm-12">
                                                 <div class="form-group">
-                                                    <label for="YEARLY_TRUNOVER" class="control-label"> Yearly Turnover(USD)</label> <span class="text-danger">*</span>
+                                                    <label for="YEARLY_TRUNOVER" class="control-label"> Yearly Turnover(USD)</label> 
                                                     @Html.EditorFor(model => model.YEARLY_TRUNOVER, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "Yearly Turnover" } })
                                                 </div>
                                             </div>
@@ -240,13 +243,13 @@
                                         <div class="form-row">
                                             <div class="col-md-6 col-sm-12">
                                                 <div class="form-group">
-                                                    <label for="NO_OF_EMPLOYEES" class="control-label"> Number of Employee</label> <span class="text-danger">*</span>
+                                                    <label for="NO_OF_EMPLOYEES" class="control-label"> Number of Employee</label> 
                                                     @Html.EditorFor(model => model.NO_OF_EMPLOYEES, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "50-100 People" } })
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12">
                                                 <div class="form-group">
-                                                    <label for="TAX_NUMBER" class="control-label"> TAX/TIN</label> <span class="text-danger">*</span>
+                                                    <label for="TAX_NUMBER" class="control-label"> TAX/TIN</label> 
                                                     @Html.EditorFor(model => model.TAX_NUMBER, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "TAX/TIN" } })
                                                 </div>
                                             </div>
@@ -254,7 +257,7 @@
                                         <div class="form-row">
                                             <div class="col-md-6 col-sm-12">
                                                 <div class="form-group">
-                                                    <label for="TRADE_NUMBER" class="control-label"> Trade Number</label> <span class="text-danger">*</span>
+                                                    <label for="TRADE_NUMBER" class="control-label"> Trade Number</label> 
                                                     @Html.EditorFor(model => model.TRADE_NUMBER, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "Trade License Number" } })
                                                 </div>
                                             </div>

@@ -63,7 +63,7 @@ namespace Tender.App.Controllers
             return View(new VENDOR());
         }
         [HttpPost]
-        public ActionResult Registration(VENDOR obj)
+        public ActionResult Registration(VENDOR obj, VENDOR_COMPANY companyObj)
         {
             obj.PURCHASER = obj.PURCHASER_X == "on" ? 1 : 0;
             obj.PURCHASER_NOTIFY = obj.PURCHASER_NOTIFY_X == "on" ? 1 : 0;
@@ -83,8 +83,11 @@ namespace Tender.App.Controllers
                 else
                 {
                     obj.VENDOR_ID = Guid.NewGuid().ToString();
-                    EQResult _tpl = AccountsService.registration(obj);
-                    if (_tpl.SUCCESS && _tpl.ROWS == 1)
+                    companyObj.VENDOR_ID = obj.VENDOR_ID;
+                    companyObj.FLAG = obj.SUPPLIER_X == "on" ? "S" : "F";
+                    
+                    EQResult _tpl = AccountsService.registration(obj,companyObj);
+                    if (_tpl.SUCCESS && _tpl.ROWS == 2)
                     {
                         Random rnd = new Random();
                         int confirmationToken = rnd.Next(000000, 999999);

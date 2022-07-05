@@ -55,15 +55,20 @@ namespace Tender.App.Service
             sql = $"select ITEM_ID,ITEM_NAME,ITEM_TYPE from ITEM_MASTER";
             return DatabaseMSSql.SqlQuery<VENDOR_LOGIN>(sql);
         }
-        public static EQResult registration(VENDOR _obj)
+        public static EQResult registration(VENDOR _obj, VENDOR_COMPANY companyObj)
         {
+            List<string> sqlList = new List<string>();
+
             sql = $"select VENDOR_EMAIL,VENDOR_PASSWD from VENDOR t where t.VENDOR_EMAIL='{_obj.VENDOR_EMAIL.ToLower()}'";
             Tuple<VENDOR_LOGIN, EQResult> _tpl = DatabaseMSSql.SqlQuerySingle<VENDOR_LOGIN>(sql);
             if (!_tpl.Item2.SUCCESS)
             {
-                sql = $@"insert into VENDOR(VENDOR_ID,VENDOR_EMAIL,VENDOR_PASSWD,ORGANIZATION_NAME,COUNTRY_NAME,SUPPLIER,PURCHASER,SUPPLIER_NOTIFY,PURCHASER_NOTIFY,VENDOR_USER_ID)
-                    values('{_obj.VENDOR_ID}','{_obj.VENDOR_EMAIL.ToLower()}','{_obj.VENDOR_PASSWD}','{_obj.ORGANIZATION_NAME}','{_obj.COUNTRY_NAME}','{_obj.SUPPLIER}','{_obj.PURCHASER}','{_obj.SUPPLIER_NOTIFY}','{_obj.PURCHASER_NOTIFY}','{_obj.VENDOR_EMAIL}')";
-                return DatabaseMSSql.ExecuteSqlCommand(sql);
+                sqlList.Add($@"insert into VENDOR(VENDOR_ID, VENDOR_EMAIL, VENDOR_PASSWD, ORGANIZATION_NAME, COUNTRY_NAME, SUPPLIER, PURCHASER, SUPPLIER_NOTIFY, PURCHASER_NOTIFY, VENDOR_USER_ID)
+                    values('{_obj.VENDOR_ID}', '{_obj.VENDOR_EMAIL.ToLower()}', '{_obj.VENDOR_PASSWD}', '{_obj.ORGANIZATION_NAME}', '{_obj.COUNTRY_NAME}', '{_obj.SUPPLIER}', '{_obj.PURCHASER}', '{_obj.SUPPLIER_NOTIFY}', '{_obj.PURCHASER_NOTIFY}', '{_obj.VENDOR_EMAIL}')");
+                
+                sqlList.Add($@"INSERT INTO VENDOR_COMPANY (COMPANY_ID,VENDOR_ID,FLAG) VALUES('{companyObj.COMPANY_ID}','{companyObj.VENDOR_ID}','{companyObj.FLAG}')") ;
+           
+                return DatabaseMSSql.ExecuteSqlCommand(sqlList);
             }
             EQResult obj = new EQResult();
             obj.ROWS = 99;
@@ -276,6 +281,16 @@ namespace Tender.App.Service
 
         public static Tuple<List<VENDOR_PRODUCTS_GROUP>, EQResult> getVENDOR_PRODUCTS_GROUP(string id)
         {
+            //sql = $@"SELECT T1.ID PRODUCTS_GROUP_ID,T1.NAME PRODUCTS_GROUP_NAME,
+            //        CASE WHEN T2.IS_ACTIVE IS NULL
+            //        THEN 0
+            //        ELSE
+            //        T2.IS_ACTIVE
+            //        END IS_ACTIVE
+            //        FROM TNDR_PRODUCT_GROUP T1
+            //        LEFT JOIN VENDOR_PRODUCTS_GROUP T2 ON T1.ID = T2.PRODUCTS_GROUP_ID                   
+            //        AND T2.VENDOR_ID='{id}'";
+
             sql = $@"SELECT T1.ID PRODUCTS_GROUP_ID,T1.NAME PRODUCTS_GROUP_NAME,
                     CASE WHEN T2.IS_ACTIVE IS NULL
                     THEN 0
@@ -283,8 +298,10 @@ namespace Tender.App.Service
                     T2.IS_ACTIVE
                     END IS_ACTIVE
                     FROM TNDR_PRODUCT_GROUP T1
-                    LEFT JOIN VENDOR_PRODUCTS_GROUP T2 ON T1.ID = T2.PRODUCTS_GROUP_ID                   
-                    AND T2.VENDOR_ID='{id}'";
+                    LEFT JOIN VENDOR_PRODUCTS_GROUP T2 ON T1.ID = T2.PRODUCTS_GROUP_ID                 
+                    AND T2.VENDOR_ID='{id}'
+                    WHERE  T1.COMPANY_ID IN (SELECT COMPANY_ID FROM VENDOR_COMPANY  WHERE VENDOR_ID='{id}')";
+
             return DatabaseMSSql.SqlQuery<VENDOR_PRODUCTS_GROUP>(sql);
         }
         public static Tuple<List<VENDOR_COMPANY>,EQResult> getVENDOR_COMPANY(string id)

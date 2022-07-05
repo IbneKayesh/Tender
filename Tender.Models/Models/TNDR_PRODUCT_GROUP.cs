@@ -10,5 +10,6 @@ namespace Tender.Models.Models
     {
         public string ID { get; set; }
         public string NAME { get; set; }
+        public string COMPANY_ID { get; set; }
     }
 }

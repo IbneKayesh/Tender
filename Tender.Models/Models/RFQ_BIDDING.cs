@@ -10,30 +10,54 @@ namespace Tender.Models.Models
 {
     public class RFQ_BIDDING
     {
+        [Display(Name ="Tran Number")]
         public string RFQ_NUMBER { get; set; }
+
         public string QUOTE_NUMBER { get; set; }
+
         public int RFQ_SL { get; set; }
+
         public string VENDOR_ID { get; set; }
+
+        [Display(Name = "Submit Date")]
         public DateTime SUBMIT_DATE { get; set; }
+
+        [Display(Name = "Product")]
         public string PRODUCTS_ID { get; set; }
+
+        [Display(Name = "Product Description")]
         public string PRODUCTS_DESC { get; set; }
+
+        [Display(Name = "Rate")]
         [Required(ErrorMessage = "{0} is required")]
         public decimal PRODUCTS_RATE { get; set; }
+
+        [Display(Name = "Quantity")]
         [Required(ErrorMessage = "{0} is required")]
         public decimal PRODUCTS_QUANTITY { get; set; }
+
+        [Display(Name = "Shipment Mode")]
         public int SHIPMENT_MODE { get; set; }
+
+        [Display(Name = "Port")]
         public int PORT_ID { get; set; }
+
         [Required(ErrorMessage = "{0} is required")]
+        [Display(Name = "Loading Address")]
         public string LOADING_ADDRESS { get; set; }
+
         [Required(ErrorMessage = "{0} is required")]
-        [StringLength(maximumLength: 100, ErrorMessage = "{0} length is between {2} and {1}", MinimumLength = 3)]
+        [StringLength(maximumLength: 100, ErrorMessage = "{0} length is between {2} and {1}", MinimumLength = 0)]
+        [Display(Name = "Source Name")]
         public string SENDER_NAME { get; set; }
+
         [Required(ErrorMessage = "{0} is required")]
-        [StringLength(maximumLength: 100, ErrorMessage = "{0} length is between {2} and {1}", MinimumLength = 5)]
+        [Display(Name = "Source Details")]
+        [StringLength(maximumLength: 100, ErrorMessage = "{0} length is between {2} and {1}", MinimumLength = 0)]
         public string SENDER_DETAILS { get; set; }
 
-        [StringLength(maximumLength: 140, ErrorMessage = "{0} length is between {2} and {1}", MinimumLength = 5)]
-        [Required(ErrorMessage = "{0} is required")]
+        //[Required(ErrorMessage = "{0} is required")]
+        [Display(Name = "Note")]
         public string NOTE { get; set; }
         
 

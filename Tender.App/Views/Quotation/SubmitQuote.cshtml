@@ -190,8 +190,8 @@
                                 <div class="col-md-6 col-lg-3 col-sm-6">
                                     <div class="form-group">
                                         <label class="control-label">Product Details</label>
-                                        @Html.TextAreaFor(m => m.PRODUCTS_DESC, new { @class = "form-control form-control-sm", rows = "1", required = "required", placeholder = "Product Details" })
-                                        @Html.ValidationMessageFor(m => m.PRODUCTS_DESC, "", new { @class = "text-danger" })
+                                        @Html.TextAreaFor(m => m.PRODUCTS_DESC, new { @class = "form-control form-control-sm", rows = "1" , placeholder = "Product Details" })
+                                        @*@Html.ValidationMessageFor(m => m.PRODUCTS_DESC, "", new { @class = "text-danger" })*@
                                     </div>
                                 </div>
                                 @if (Model.TENDER_SHIPMENT_MODE != null && Model.TENDER_PORT_ID != null)
@@ -200,22 +200,22 @@
                                         <div class="form-group">
                                             <label class="control-label">Shipment Mode</label>
                                             @Html.DropDownList("SHIPMENT_MODE", null, "-Select-", new { @class = "form-control form-control-sm", placeholder = "" })
-                                            @Html.ValidationMessageFor(m => m.SHIPMENT_MODE, "", new { @class = "text-danger" })
+                                            @*@Html.ValidationMessageFor(m => m.SHIPMENT_MODE, "", new { @class = "text-danger" })*@
                                         </div>
                                     </div>
                                     <div class="col-lg-2 col-md-4 col-sm-6"> 
                                         <div class="form-group">
                                             <label class="control-label">Port Name</label>
                                             @Html.DropDownList("PORT_ID", null, "-Select-", new { @class = "form-control form-control-sm", placeholder = "" })
-                                            @Html.ValidationMessageFor(m => m.PORT_ID, "", new { @class = "text-danger" })
+                                            @*@Html.ValidationMessageFor(m => m.PORT_ID, "", new { @class = "text-danger" })*@
                                         </div>
                                     </div>
                                 }
                                 <div class="col-md-4 col-lg-3 col-sm-6">
                                     <div class="form-group">
                                         <label class="control-label">Note</label>
-                                        @Html.TextAreaFor(m => m.NOTE, new { @class = "form-control form-control-sm", rows = "1", required = "required", placeholder = "Note" })
-                                        @Html.ValidationMessageFor(m => m.NOTE, "", new { @class = "text-danger" })
+                                        @Html.TextAreaFor(m => m.NOTE, new { @class = "form-control form-control-sm", rows = "1", placeholder = "Note" })
+                                        @*@Html.ValidationMessageFor(m => m.NOTE, "", new { @class = "text-danger" })*@
                                     </div>
                                 </div>
                             </div>

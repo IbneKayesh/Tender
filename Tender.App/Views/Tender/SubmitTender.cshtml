@@ -49,13 +49,13 @@
                         <div class="col-md-3 col-sm-6">
                             <div class="form-group">
                                 <label class="control-label">RFQ Number</label>
-                                @Html.EditorFor(model => model.RFQ_NUMBER, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "Tender Number", @readonly = "readonly" } })
+                                @Html.EditorFor(model => model.RFQ_NUMBER, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "RFQ Number", @readonly = "readonly" } })
                                 @Html.ValidationMessageFor(m => m.RFQ_NUMBER, "", new { @class = "text-danger" })
                             </div>
                         </div>
                         <div class="col-md-3 col-sm-6">
                             <div class="form-group">
-                                <label class="control-label">Company</label>
+                                <label class="control-label">Company</label><span class="text-danger">*</span>
                                 @Html.DropDownList("COMPANY_ID", null, new { @class = "form-control form-control-sm select2", id = "COMPANY_ID", @readonly = "readonly", style = "width:100%" })
                                 @Html.ValidationMessageFor(m => m.VENDOR_ID, "", new { @class = "text-danger" })
                             </div>
@@ -147,9 +147,9 @@
                         </div>
                         <div class="col-md-2 col-sm-6">
                             <div class="form-group">
-                                <label class="control-label">Rate</label> <span class="text-danger">*</span>
+                                <label class="control-label">Rate</label> 
                                 @Html.EditorFor(model => model.PRODUCTS_RATE, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "Rate" } })
-                                @Html.ValidationMessageFor(m => m.PRODUCTS_RATE, "", new { @class = "text-danger" })
+                                @*@Html.ValidationMessageFor(m => m.PRODUCTS_RATE, "", new { @class = "text-danger" })*@
                             </div>
                         </div>
                         <div class="col-md-2 col-sm-6">
@@ -163,14 +163,14 @@
                             <div class="form-group">
                                 <label class="control-label">Product Details</label>
                                 @Html.EditorFor(model => model.PRODUCTS_DESC, new { htmlAttributes = new { @class = "form-control form-control-sm", row = "1", placeholder = "Product Detils" } })
-                                @Html.ValidationMessageFor(m => m.PRODUCTS_DESC, "", new { @class = "text-danger" })
+                                @*@Html.ValidationMessageFor(m => m.PRODUCTS_DESC, "", new { @class = "text-danger" })*@
                             </div>
                         </div>
                         <div class="col-md-3 col-sm-6">
                             <div class="form-group">
-                                <label class="control-label">Select Documents</label> <span class="text-danger">*</span>
+                                <label class="control-label">Select Documents</label>
                                 @Html.DropDownList("TENDER_DOC", null, "-Select-", new { @class = "form-control form-control-sm select2", id = "DOCUMENTS_LIST_ID", placeholder = "", style = "width:100%", onchange = "addDropdownDocument();" })
-                                @Html.ValidationMessageFor(m => m.PRODUCTS_DESC, "", new { @class = "text-danger" })
+                                @*@Html.ValidationMessageFor(m => m.PRODUCTS_DESC, "", new { @class = "text-danger" })*@
                             </div>
                         </div>
                         <div class="col-md-4 col-sm-6" style="display:none;" id="docDiv">
@@ -208,23 +208,23 @@
                         </div>
                         <div class="col-md-3 col-sm-6 forImpoter">
                             <div class="form-group">
-                                <label class="control-label">Port Name</label> <span class="text-danger">*</span>
-                                @Html.DropDownList("PORT_ID", ViewBag.PORT_ID as List<SelectListItem>, "-Select-", new { @class = "form-control form-control-sm select2", id = "PORT_ID", placeholder = "", style = "width:100%" })
-                                @Html.ValidationMessageFor(m => m.PORT_ID, "", new { @class = "text-danger" })
+                                <label class="control-label">Port Name</label>
+                                @Html.DropDownList("PORT_ID", ViewBag.PORT_ID as List<SelectListItem>, "--Select--", new { @class = "form-control form-control-sm select2", id = "PORT_ID", placeholder = "", style = "width:100%" })
+                                @*@Html.ValidationMessageFor(m => m.PORT_ID, "", new { @class = "text-danger" })*@
                             </div>
                         </div>
                         <div class="col-md-3 col-sm-6 forImpoter">
                             <div class="form-group">
-                                <label class="control-label">Partial Shipment</label> <span class="text-danger">*</span>
+                                <label class="control-label">Partial Shipment</label>
                                 @Html.DropDownList("PARTIAL_SHIPMENT", null, new { @class = "form-control form-control-sm select2", id = "PARTIAL_SHIPMENT", placeholder = "", style = "width:100%" })
                                 @Html.ValidationMessageFor(m => m.PARTIAL_SHIPMENT, "", new { @class = "text-danger" })
                             </div>
                         </div>
                         <div class="col-md-3 col-sm-6 forImpoter">
                             <div class="form-group">
-                                <label class="control-label">Shipment Mode</label> <span class="text-danger">*</span>
+                                <label class="control-label">Shipment Mode</label>
                                 @Html.DropDownList("SHIPMENT_MODE", ViewBag.SHIPMENT_MODE as List<SelectListItem>, "-Select-", new { @class = "form-control form-control-sm select2", id = "SHIPMENT_MODE", placeholder = "", style = "width:100%" })
-                                @Html.ValidationMessageFor(m => m.SHIPMENT_MODE, "", new { @class = "text-danger" })
+                                @*@Html.ValidationMessageFor(m => m.SHIPMENT_MODE, "", new { @class = "text-danger" })*@
                             </div>
                         </div>
                         <div class="col-md-6 col-sm-6">
@@ -236,14 +236,14 @@
                         </div>
                         <div class="col-md-3 col-sm-6">
                             <div class="form-group">
-                                <label class="control-label">Receiver</label> <span class="text-danger">*</span>
+                                <label class="control-label">Receiver</label>
                                 @Html.EditorFor(model => model.RECEIVER_NAME, new { htmlAttributes = new { @class = "form-control form-control-sm", row = "1", placeholder = "Receiver Name" } })
                                 @Html.ValidationMessageFor(m => m.RECEIVER_NAME, "", new { @class = "text-danger" })
                             </div>
                         </div>
                         <div class="col-md-3 col-sm-6">
                             <div class="form-group">
-                                <label class="control-label">Receiver Details</label> <span class="text-danger">*</span>
+                                <label class="control-label">Receiver Details</label>
                                 @Html.EditorFor(model => model.RECEIVER_DETAILS, new { htmlAttributes = new { @class = "form-control form-control-sm", row = "1", placeholder = "Receiver Details" } })
                                 @Html.ValidationMessageFor(m => m.RECEIVER_NAME, "", new { @class = "text-danger" })
                             </div>
@@ -548,10 +548,13 @@
                 $(".forImpoter").css("display", "block");
             }
             else if (LOCAL_IMPORT == 1) {
-                // $(".forImpoter").css("display", "none");
-               // $("#SHIPMENT_MODE").val(0);
+                $(".forImpoter").css("display", "none");
+                // $("#SHIPMENT_MODE").val(0);
                 $("#PARTIAL_SHIPMENT").val("");
-               // $("#PORT_ID").val("");
+                // $("#PORT_ID").val("");
+            }
+            else if (LOCAL_IMPORT == "") {
+                $(".forImpoter").css("display", "none");
             }
             var url = 'DropDownFor_Port';
             var LOCAL_IMPORT = $('#LOCAL_IMPORT').val();
