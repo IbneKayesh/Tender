@@ -11,7 +11,7 @@ namespace Tender.App.Service
     {
         public static EQResult SaveData(RFQ_TENDER _obj)
         {
-            var tenderNumber = CommonService.getTenderNumber("RFQ_TENDER");
+            var tenderNumber = CommonService.getTenderNumber("RFQ_TENDER",_obj.COMPANY_ID);
             List<string> sqlList = new List<string>();
 
             sqlList.Add($@"INSERT INTO RFQ_TENDER (
@@ -38,7 +38,7 @@ namespace Tender.App.Service
                     sqlList.Add($@"INSERT INTO TND.RFQ_TNDR_DOCUMENTS ( RFQ_NUMBER, DOCUMENTS_ID) VALUES ( '{tenderNumber}','{item.DOCUMENTS_ID}')");
                 }
             }
-            sqlList.Add($@"UPDATE TABLE_MAX_ID SET MAX_ID=MAX_ID+1 WHERE TABLE_NAME='RFQ_TENDER'");
+            sqlList.Add($@"UPDATE TABLE_MAX_ID SET MAX_ID=MAX_ID+1 WHERE TABLE_NAME='RFQ_TENDER' AND COMPANY_ID='{_obj.COMPANY_ID}'");
 
             return DatabaseMSSql.ExecuteSqlCommand(sqlList);
         }
@@ -167,7 +167,14 @@ namespace Tender.App.Service
 
         public static Tuple<List<TNDR_PRODUCTS>, EQResult> GetVendorWiseItem(string vendorId)
         {
-            string sql = $"SELECT TP.PRODUCTS_ID,TP.PRODUCTS_NAME ||'- ('||TP.UNIT||')' PRODUCTS_NAME FROM TNDR_PRODUCTS TP INNER JOIN VENDOR_PRODUCTS VP ON TP.PRODUCTS_ID=VP.PRODUCTS_ID WHERE VP.IS_ACTIVE=1 AND  VP.VENDOR_ID='{vendorId}'";
+            string sql = $@"SELECT   TP.PRODUCTS_ID,
+         TP.PRODUCTS_NAME || '- (' || TP.UNIT || ')' PRODUCTS_NAME
+  FROM      TNDR_PRODUCTS TP
+         INNER JOIN
+            VENDOR_PRODUCTS_GROUP VP
+         ON TP.GROUP_ID = VP.PRODUCTS_GROUP_ID
+ WHERE   VP.IS_ACTIVE = 1
+         AND VP.VENDOR_ID = '{vendorId}'";
             return DatabaseMSSql.SqlQuery<TNDR_PRODUCTS>(sql);
         }
         public static Tuple<List<TNDR_SHIPMENT_MODE>, EQResult> getShipmentMode()

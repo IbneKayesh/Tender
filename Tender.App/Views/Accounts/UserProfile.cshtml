@@ -44,7 +44,7 @@
                             <p class="text-muted text-center mb-0 pd-0">@Model.VENDOR_EMAIL</p>
                             <p class="text-muted text-center">@Model.CONTACT_NUMBER</p>
                         </div>
-
+    
                     </div>
 
 
@@ -322,22 +322,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="form-row">
-                                            <div class="col-md-6 col-sm-12">
-                                                <div class="form-group">
-                                                    <label class="control-label">Select Document Type</label> <span class="text-danger">*</span>
-                                                    @Html.DropDownList("CERTIFICATE_ID", null, "-Select-", new { @class = "form-control form-control-sm select2", id = "DOCUMENTS_LIST_ID", name = "DocumentType", placeholder = "", style = "width:100%" })
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6 col-sm-12" id="uploadDoc" style="display:none;">
-                                                <div class="form-group">
-                                                    @Html.Label("Upload Documents", new { @class = "control-label" })
-                                                    <input type="file" name="Document" accept=".png, .jpg, .jpeg, .pdf, .docx" /><br />
-                                                    <span class="text-success">png,jpg,jpeg,pdf,docx format only</span>
-                                                    <span class="text-primary">Maximum Size 5 MB</span>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        
                                         <div class="row float-right">
                                             <div class="col-12 float-right">
                                                 <button type="submit" class="btn btn-danger btn-sm" id="save" style="display:none;">save</button>
@@ -391,11 +376,8 @@
 
                         </div>
                     </div>
-
                 </div>
-
             </div>
-
         </div>
     </section>
 </div>

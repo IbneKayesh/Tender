@@ -52,7 +52,7 @@ namespace Tender.App.Controllers
                 }
                 if (obj.ProductPicture != null)
                 {
-                    if (obj.ProductPicture.ContentLength <= 102400)
+                    if (obj.ProductPicture.ContentLength <= 10240*500)
                     {
                         string pic = System.IO.Path.GetFileName(obj.ProductPicture.FileName);
                         var extension = Path.GetExtension(obj.ProductPicture.FileName);
@@ -93,7 +93,7 @@ namespace Tender.App.Controllers
                     }
                     else
                     {
-                        TempData["msg"] = AlertService.SaveWarningOK("Image Size must be less then 100 kb");
+                        TempData["msg"] = AlertService.SaveWarningOK("Image Size must be less then 500 kb");
                         return View(obj);
                     }
                 }

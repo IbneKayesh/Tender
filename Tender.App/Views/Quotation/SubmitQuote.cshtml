@@ -21,7 +21,7 @@
                     </div>                    
                 </div>
                 <div class="col-12 col-sm-8">
-                    <h4 class="my-3">Company :<span class="text-black">@Model.COMPANY_ID</span> </h4>
+                    <h4 class="my-3">Company :<span class="text-black">@Model.COMPANY_NAME</span> </h4>
                     <h4 class="my-3">RFQ Number :<span class="text-primary">@Model.RFQ_NUMBER</span> </h4>
                     <h6 class="my-3">Item :<span class="text-success"> @Model.TND_PRODUCTS_NAME</span></h6>
                     <p>Item Description : @Model.TND_PRODUCTS_DESC </p>
@@ -150,6 +150,7 @@
                         @Html.HiddenFor(model => model.RFQ_NUMBER)
                         @Html.HiddenFor(model => model.VENDOR_ID)
                         @Html.HiddenFor(model => model.PRODUCTS_ID)
+                        @Html.HiddenFor(model => model.COMPANY_ID)
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-md-4 col-lg-4 col-sm-6">

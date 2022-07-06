@@ -30,6 +30,9 @@
 
     <link href="~/App_Asset/plugins/chart.js/Chart.css" rel="stylesheet" />
     <link href="~/App_Asset/plugins/chart.js/Chart.min.css" rel="stylesheet" />
+    @*~/manifest.json*@
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#2196f3" />
 </head>
 
 <body class="hold-transition layout-top-nav">
@@ -70,6 +73,7 @@
                                         <li><a href="@Url.Action("CreateTenderProduct", "Setup")" class="dropdown-item"> Item</a></li>
                                         <li><a href="@Url.Action("ApprovalProcess", "Tender")" class="dropdown-item"> RFQ Approval</a></li>
                                         <li><a href="@Url.Action("ViewAllSupplier", "Accounts")" class="dropdown-item"> Supplier List</a></li>
+                                        <li><a href="@Url.Action("PublishRfq", "Rfq")" class="dropdown-item"> New RFQ List</a></li>
                                         <li class="dropdown-submenu">
                                             <a id="dropdownSubMenu3" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-item dropdown-toggle">View Tender</a>
                                             <ul aria-labelledby="dropdownSubMenu3" class="dropdown-menu border-0 shadow">
@@ -128,7 +132,7 @@
                                     {
                                         <small class="text-bold">
                                             <a href="@Url.Action("WiningsBid", "Quotation")" class="dropdown-item text-success text-bold">
-                                                Your Organization win this @item.RFQ_NUMBER<br/> against @item.QUOTE_NUMBER
+                                                Your Organization win this @item.RFQ_NUMBER<br /> against @item.QUOTE_NUMBER
                                             </a>
                                         </small>
                                     }
@@ -203,7 +207,7 @@
 
             <!-- To the right -->
             <div class="float-right  d-sm-inline ">
-               ##
+                ##
             </div>
             <!-- Default to the left -->
             <p>&copy; @DateTime.Now.Year <a href="https://en.wikipedia.org/wiki/PRAN-RFL_Group">PRG-MIS </a> All rights reserved.</p>
@@ -242,6 +246,18 @@
     <!--chart js-->
     <script src="~/App_Asset/plugins/chart.js/Chart.min.js"></script>
     <script src="~/App_Asset/plugins/chart.js/Chart.js"></script>
+
+
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker
+                .register('/serviceworker.js')
+                .then(function () { console.log('Service Worker Registered'); });
+        }
+    </script>
+
+    <script src="~/serviceworker.js"></script>
+
 
     @RenderSection("scripts", required: false)
     <script>

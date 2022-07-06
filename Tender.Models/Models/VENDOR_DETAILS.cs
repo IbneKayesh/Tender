@@ -87,8 +87,10 @@ namespace Tender.Models.Models
         public string PROFILE_IMAGE { get; set; }
 
         public int IS_CONFIRMED { get; set; }
+        public int LOCK_UNLOCK { get; set; }
 
         public bool IS_APPROVE { get; set; }
+
 
         [NotMapped]
         public CHANGE_PASWD CHANGE_PASWD { get; set; }

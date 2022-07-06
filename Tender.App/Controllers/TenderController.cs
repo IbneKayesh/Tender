@@ -16,37 +16,42 @@ namespace Tender.App.Controllers
         [UserSessionCheck]
         public ActionResult Index(int? page)
         {
-            List<RFQ_TenderView> obj = QuotationService.getAllTender((string)Session["vendorId"]).Item1.Where(c => c.SUBMITED_BIDS != 0).ToList();
+            VENDOR_COMPANY snPurcheserComObj = (VENDOR_COMPANY)Session["ssPurcheserCompany"];
+            List<RFQ_TenderView> obj = QuotationService.getAllTender((string)Session["vendorId"], snPurcheserComObj.COMPANY_ID).Item1.Where(c => c.SUBMITED_BIDS != 0).ToList();
 
             return View(obj.ToPagedList(page ?? 1, pageSize: 8));
         }
         [UserSessionCheck]
         public ActionResult ViewAllTender(int? page)
         {
+            VENDOR_COMPANY snPurcheserComObj = (VENDOR_COMPANY)Session["ssPurcheserCompany"];
+
             ViewBag.SEARCH_TYPE = TenderService.DropDown_SearchType();
-            List<RFQ_TenderView> obj = QuotationService.getAllTender((string)Session["vendorId"]).Item1;
+            List<RFQ_TenderView> obj = QuotationService.getAllTender((string)Session["vendorId"],snPurcheserComObj.COMPANY_ID).Item1;
             return View(obj.ToPagedList(page ?? 1, pageSize: 8));
         }
         [UserSessionCheck]
         public ActionResult ViewApproveTender(int? page)
         {
             ViewBag.SEARCH_TYPE = TenderService.DropDown_SearchType();
-            List<RFQ_TenderView> obj = QuotationService.getAllTender((string)Session["vendorId"]).Item1.Where(c => c.APPROVAL_ID != "0").ToList();
+            VENDOR_COMPANY snPurcheserComObj = (VENDOR_COMPANY)Session["ssPurcheserCompany"];
+            List<RFQ_TenderView> obj = QuotationService.getAllTender((string)Session["vendorId"],snPurcheserComObj.COMPANY_ID).Item1.Where(c => c.APPROVAL_ID != "0").ToList();
             return View(obj.ToPagedList(page ?? 1, pageSize: 8));
         }
         [UserSessionCheck]
         public ActionResult ViewPendingApprovalTnd(int? page)
         {
             ViewBag.SEARCH_TYPE = TenderService.DropDown_SearchType();
-            List<RFQ_TenderView> obj = QuotationService.getAllTender((string)Session["vendorId"]).Item1.Where(c => c.APPROVAL_ID == "0").ToList();
+            VENDOR_COMPANY snPurcheserComObj = (VENDOR_COMPANY)Session["ssPurcheserCompany"];
+            List<RFQ_TenderView> obj = QuotationService.getAllTender((string)Session["vendorId"], snPurcheserComObj.COMPANY_ID).Item1.Where(c => c.APPROVAL_ID == "0").ToList();
             return View(obj.ToPagedList(page ?? 1, pageSize: 8));
         }
         [UserSessionCheck]
         public ActionResult ViewExpireTnd(int? page)
         {
             ViewBag.SEARCH_TYPE = TenderService.DropDown_SearchType();
-
-            List<RFQ_TenderView> obj = QuotationService.getAllTender((string)Session["vendorId"]).Item1.Where(c => (c.END_DATE <= System.DateTime.Now.Date) && (c.SUBMITED_BIDS == 0)).ToList();
+            VENDOR_COMPANY snPurcheserComObj = (VENDOR_COMPANY)Session["ssPurcheserCompany"];
+            List<RFQ_TenderView> obj = QuotationService.getAllTender((string)Session["vendorId"], snPurcheserComObj.COMPANY_ID).Item1.Where(c => (c.END_DATE <= System.DateTime.Now.Date) && (c.SUBMITED_BIDS == 0)).ToList();
             return View(obj.ToPagedList(page ?? 1, pageSize: 8));
         }
         [HttpGet]
@@ -82,7 +87,7 @@ namespace Tender.App.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult SubmitTender(RFQ_TENDER obj)
         {
-            obj.RFQ_NUMBER = CommonService.getTenderNumber("RFQ_TENDER");
+            obj.RFQ_NUMBER = CommonService.getTenderNumber("RFQ_TENDER",obj.COMPANY_ID);
             //obj.PORT_ID = obj.PORT_ID == 0 ? 0 : obj.PORT_ID;
             //ModelState.Clear();
             DropDownFor_Tender();
@@ -168,6 +173,8 @@ namespace Tender.App.Controllers
         }
         public void DropDownFor_Tender()
         {
+            VENDOR_COMPANY snPurcheserComObj = (VENDOR_COMPANY)Session["ssPurcheserCompany"];
+
             ViewBag.SELL_BUY = TenderService.DropDownList_Sel_Buy();
             ViewBag.RE_BID = TenderService.getReBidding();
             ViewBag.LOWER_RATE = TenderService.getAnyRate();
@@ -190,7 +197,7 @@ namespace Tender.App.Controllers
             ViewBag.PAY_B = new SelectList(TenderService.getPaymentMode().Item1.ToList(), "PAYMENT_MODE_ID", "PAYMENT_MODE_NAME");
             ViewBag.CURRENCY_NAME = new SelectList(TenderService.getCurrency().Item1.ToList(), "CURRENCY_NAME", "CURRENCY_NAME");
             ViewBag.TENDER_DOC = new SelectList(TenderService.getTnderDoc().Item1.ToList(), "DOCUMENTS_ID", "DOCUMENTS_NAME");
-            ViewBag.COMPANY_ID = new SelectList(CommonService.GetCompany().Item1.ToList(), "COMPANY_ID", "COMPANY_NAME");
+            ViewBag.COMPANY_ID = new SelectList(CommonService.GetCompany(snPurcheserComObj.COMPANY_ID).Item1.ToList(), "COMPANY_ID", "COMPANY_NAME");
 
 
         }

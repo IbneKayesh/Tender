@@ -15,6 +15,13 @@ namespace Tender.App.Controllers
         [UserSessionCheck]
         public ActionResult Index()
         {
+
+            VENDOR_COMPANY snPurcheserComObj = (VENDOR_COMPANY)Session["ssPurcheserCompany"];
+
+            if (snPurcheserComObj == null) {
+                snPurcheserComObj = new VENDOR_COMPANY();
+            }
+
             List<RFQ_BIDDING> obj = QuotationService.winingsBid((string)Session["vendorId"]).Item1;
             ViewBag.WingingsBids = obj.Count();
             List<RFQ_BIDDING> ttbid = HomeService.applyBids((string)Session["vendorId"]).Item1;
@@ -23,20 +30,22 @@ namespace Tender.App.Controllers
             ViewBag.NewBids = newBid.Count();
             List<RFQ_TENDER_APPROVAL> NotWinBid = HomeService.NotWinBids((string)Session["vendorId"]).Item1;
             ViewBag.NotWinBid = NotWinBid.Count();
-            List<RFQ_TENDER> totalRFQ = HomeService.totalRFQ((string)Session["vendorId"]).Item1;
+
+
+            List<RFQ_TENDER> totalRFQ = HomeService.totalRFQ((string)Session["vendorId"],snPurcheserComObj.COMPANY_ID).Item1;
             ViewBag.totalRFQ = totalRFQ.Count();
-            List<RFQ_BIDDING> totalQuto = HomeService.totalQuto((string)Session["vendorId"]).Item1;
+            List<RFQ_BIDDING> totalQuto = HomeService.totalQuto((string)Session["vendorId"], snPurcheserComObj.COMPANY_ID).Item1;
             ViewBag.totalQuto = totalQuto.Count();
-            List<RFQ_TENDER> currentRFQ = HomeService.currentRFQ((string)Session["vendorId"]).Item1;
+            List<RFQ_TENDER> currentRFQ = HomeService.currentRFQ((string)Session["vendorId"],snPurcheserComObj.COMPANY_ID).Item1;
             ViewBag.currentRFQ = currentRFQ.Count();
-            List<VENDOR> totalSupplier = HomeService.totalSupplier().Item1;
+            List<VENDOR> totalSupplier = HomeService.totalSupplier(snPurcheserComObj.COMPANY_ID).Item1;
             ViewBag.totalSupplier = totalSupplier.Count();
 
-            List<VENDOR> newRegistration = HomeService.newRegistration().Item1;
+            List<VENDOR> newRegistration = HomeService.newRegistration(snPurcheserComObj.COMPANY_ID).Item1;
             ViewBag.newRegistration = newRegistration;
             ViewBag.newRegistrationCount = newRegistration.Count();
 
-            List<RFQ_BIDDING> newQuto = HomeService.newQutoSubmit().Item1;
+            List<RFQ_BIDDING> newQuto = HomeService.newQutoSubmit(snPurcheserComObj.COMPANY_ID).Item1;
             ViewBag.newSubmitQuot= newQuto;
             ViewBag.newSubmitQuotCount = newQuto.Count();
 

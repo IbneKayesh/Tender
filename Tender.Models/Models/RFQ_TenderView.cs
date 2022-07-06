@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Tender.Models.Models
 {
-    public class RFQ_TenderView
+    public class RFQ_TenderView :COMMON
     {
         public string RFQ_NUMBER { get; set; }
 

@@ -1,0 +1,95 @@
+﻿@model IEnumerable<Tender.Models.Models.RFQ_TenderView>
+@{
+    ViewBag.Title = "RFQ List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<section class="content">
+    <div class="card card-solid">
+        <div class="card-body">
+
+            <div class="card card-primary card-outline mt-3">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <i class="fas fa-list"></i>
+                        @ViewBag.Title  &nbsp;&nbsp; <small>@System.DateTime.Now</small>
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table id="example1" class="table table-bordered table-striped table-hover table-responsive-md" style="width:100%">
+                            <thead>
+                                <tr class="table-secondary">
+                                    <th>Details</th>
+                                    <th>RFQ Number</th>
+                                    <th>Start Date</th>
+                                    <th>End Date</th>
+                                    <th>Type</th>
+                                    <th>Product Name</th>
+                                    <th>Qty</th>
+                                    <th>Submit Bids</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model != null)
+                                {
+                                    foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>
+                                                <a class="btn btn-sm btn-outline-success" href="@Url.Action("TenderDetails","Tender",new { id = item.RFQ_NUMBER })">Details</a>
+                                            </td>
+                                            <td>@item.RFQ_NUMBER</td>
+                                            <td>@item.START_DATE</td>
+                                            <td>@item.END_DATE</td>
+                                            <td>@item.SELL_BUY</td>
+                                            <td>@item.PRODUCTS_NAME</td>
+                                            <td>@item.PRODUCTS_QUANTITY</td>
+                                            <td>
+                                                @item.SUBMITED_BIDS &nbsp; &nbsp;
+                                                @if (item.SUBMITED_BIDS != 0) { 
+                                                  <span class="badge badge-warning"><a href="@Url.Action("CompareTender","Tender",new { id = item.RFQ_NUMBER })">Compare</a></span>  
+                                                }
+                                            </td>
+                                            <td>
+                                                @if (item.IS_APPROVE == 0)
+                                                {
+                                                    <a href="@Url.Action("RFQLockUnlock","Rfq",new { rfqNumber = item.RFQ_NUMBER,StatusFlag=1})"><i class='fas fa-lock-open' style='font-size:30px;color:forestgreen'></i></a>
+                                                }
+                                                else if (item.IS_APPROVE == 1)
+                                                {
+                                                    <a href="@Url.Action("RFQLockUnlock","Rfq",new { rfqNumber = item.RFQ_NUMBER,StatusFlag=0})"><i class='fas fa-lock' style='font-size:30px;color:red'></i></a>
+                                                }
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+</section>
+
+
+@section scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(document).ready(function () {
+            $(function () {
+                $("#example1").DataTable({
+                    "responsive": true, "lengthChange": true, "autoWidth": true,
+                    "buttons": false
+
+                }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+            });
+        });
+    </script>
+
+}

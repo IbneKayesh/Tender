@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Tender.Models.Models
 {
-    public class RFQ_TENDER
+    public class RFQ_TENDER : COMMON
     {
         public string RFQ_NUMBER { get; set; }
         [Required(ErrorMessage = "{0} is required")]
@@ -95,6 +95,8 @@ namespace Tender.Models.Models
         [Required(ErrorMessage = "{0} is required")]
         [DisplayName("Company")]
         public string COMPANY_ID { get; set; }
+
+        public int IS_APPROVE { get; set; }
 
         public virtual List<RFQ_TNDR_DOCUMENTS> RFQ_TNDR_DOCUMENTS { get; set; }
 

@@ -29,7 +29,7 @@
                         <div class="col-md-3 col-sm-6">
                             <div class="form-group">
                                 <label for="VENDOR_USER_ID" class="control-label"> Company</label>
-                                @Html.DropDownList("COMPANY_ID", null, "-Select-", new { @class = "form-control form-control-sm select2", name = "COMPANY_ID", placeholder = "", style = "width:100%;" })
+                                @Html.DropDownList("COM_ID_FOR_PUR", null, new { @class = "form-control form-control-sm select2", name = "COM_ID_FOR_PUR", placeholder = "", @ReadOnly="readonly", style = "width:100%;" })
                             </div>
                         </div>
                         <div class="col-md-3 col-sm-6">
@@ -54,6 +54,7 @@
                                     <th>Country</th>
                                     <th>Mail</th>
                                     <th>Address</th>
+                                    <th>Option</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -67,6 +68,16 @@
                                             <td>@item.COUNTRY_NAME</td>
                                             <td>@item.VENDOR_EMAIL</td>
                                             <td> @item.ADDRESS_1 </td>
+                                            <td>
+                                                @if (item.LOCK_UNLOCK == 0)
+                                                {
+                                                    <a href="@Url.Action("ProfileLockUnlock","Accounts",new {vendorId =item.VENDOR_ID,StatusFlag=1,COUNTRY_NAME=ViewBag.COUNTRY_NAME1,COM_ID_FOR_PUR=ViewBag.COM_ID_FOR_PUR1,GROUP_ID=ViewBag.GROUP_ID1})"><i class='fas fa-lock-open' style='font-size:30px;color:forestgreen'></i></a>
+                                                }
+                                                else if (item.LOCK_UNLOCK == 1)
+                                                {
+                                                    <a href="@Url.Action("ProfileLockUnlock","Accounts",new {vendorId =item.VENDOR_ID,StatusFlag=0})"><i class='fas fa-lock' style='font-size:30px;color:red'></i></a>
+                                                }
+                                            </td>
                                         </tr>
                                     }
                                 }

@@ -10,9 +10,16 @@ namespace Tender.App.Service
         static string sql = "";
         public static Tuple<VENDER_SESSION, EQResult> UserLogin(VENDOR_LOGIN _obj)
         {
-            sql = $"select VENDOR_EMAIL,VENDOR_ID,ORGANIZATION_NAME,COUNTRY_NAME,SUPPLIER,PURCHASER,VENDOR_USER_ID from VENDOR t where t.VENDOR_EMAIL='{_obj.VENDOR_EMAIL}' and VENDOR_PASSWD='{_obj.VENDOR_PASSWD}'";
+            sql = $"select VENDOR_EMAIL,VENDOR_ID,ORGANIZATION_NAME,COUNTRY_NAME,SUPPLIER,PURCHASER,VENDOR_USER_ID from VENDOR t where t.VENDOR_EMAIL='{_obj.VENDOR_EMAIL}' and VENDOR_PASSWD='{_obj.VENDOR_PASSWD}' AND t.IS_ACTIVE=1";
             return DatabaseMSSql.SqlQuerySingle<VENDER_SESSION>(sql);
         }
+
+        public static Tuple<List<VENDOR_COMPANY>, EQResult> UserCompany(string userId)
+        {
+            sql = $"SELECT * FROM VENDOR_COMPANY WHERE VENDOR_ID='{userId}'";
+            return DatabaseMSSql.SqlQuery<VENDOR_COMPANY>(sql);
+        }
+
         #region FORGET PASSWORD
         public static EQResult SaveToken(MAIL_NOTIFICATION_TOKEN _obj, string token_type)
         {
@@ -406,6 +413,14 @@ namespace Tender.App.Service
             var objList = DatabaseMSSql.SqlQuery<VENDOR_DETAILS>(sql);
             return objList;
         }
+        #region profile lock unlock
+        public static EQResult ProfileLockUnlock(int appStatus, string id)
+        {
+            List<string> sqlList = new List<string>();
+            sqlList.Add($@"UPDATE VENDOR SET LOCK_UNLOCK={appStatus} WHERE VENDOR_ID='{id}' AND IS_ACTIVE=1");
+            return DatabaseMSSql.ExecuteSqlCommand(sqlList);
+        }
+        #endregion
 
     }
 }

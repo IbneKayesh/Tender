@@ -31,6 +31,15 @@ namespace Tender.App.Controllers
                 Tuple<VENDER_SESSION, EQResult> _tpl = AccountsService.UserLogin(obj);
                 if (_tpl.Item2.SUCCESS && _tpl.Item2.ROWS == 1)
                 {
+                    var company= AccountsService.UserCompany(_tpl.Item1.VENDOR_ID).Item1;
+                    if (_tpl.Item1.PURCHASER == 1)
+                    {
+                        Session["ssPurcheserCompany"] = company.FirstOrDefault();
+                    }
+                    else if(_tpl.Item1.SUPPLIER==1){
+                        Session["ssSuplierCompany"] = company.ToList();
+                    }
+
                     Session["ssUser"] = _tpl.Item1;
                     Session["_vendorUserId"] = _tpl.Item1.VENDOR_USER_ID;
                     Session["_vendorEmail"] = _tpl.Item1.VENDOR_EMAIL;
@@ -70,6 +79,9 @@ namespace Tender.App.Controllers
             obj.SUPPLIER = obj.SUPPLIER_X == "on" ? 1 : 0;
             obj.SUPPLIER_NOTIFY = obj.SUPPLIER_NOTIFY_X == "on" ? 1 : 0;
 
+            //if (companyObj.COMPANY_ID == null) {
+            //    ModelState.AddModelError("", "Company is required");
+            //}
             if (ModelState.IsValid)
             {
                 if (obj.SUPPLIER == 0 && obj.PURCHASER == 0)
@@ -85,8 +97,8 @@ namespace Tender.App.Controllers
                     obj.VENDOR_ID = Guid.NewGuid().ToString();
                     companyObj.VENDOR_ID = obj.VENDOR_ID;
                     companyObj.FLAG = obj.SUPPLIER_X == "on" ? "S" : "F";
-                    
-                    EQResult _tpl = AccountsService.registration(obj,companyObj);
+
+                    EQResult _tpl = AccountsService.registration(obj, companyObj);
                     if (_tpl.SUCCESS && _tpl.ROWS == 2)
                     {
                         Random rnd = new Random();
@@ -573,17 +585,62 @@ namespace Tender.App.Controllers
 
         [UserSessionCheck]
 
-        public ActionResult ViewAllSupplier()
+        public ActionResult ViewAllSupplier(string COUNTRY_NAME1, string COM_ID_FOR_PUR1, string GROUP_ID1,string post)
         {
             DropDownFor_Signup();
-            return View();
+            if (COUNTRY_NAME1 == null)
+            {
+                COUNTRY_NAME1 = "";
+            }
+            if (COM_ID_FOR_PUR1 == null)
+            {
+                COM_ID_FOR_PUR1 = "";
+            }
+            if (GROUP_ID1 == null)
+            {
+                GROUP_ID1 = "";
+            }
+            List<VENDOR_DETAILS> obj = AccountsService.supplierList(COUNTRY_NAME1, COM_ID_FOR_PUR1, GROUP_ID1).Item1;
+            
+
+
+            ViewBag.COUNTRY_NAME1 = COUNTRY_NAME1;
+            ViewBag.COM_ID_FOR_PUR1 = COM_ID_FOR_PUR1;
+            ViewBag.GROUP_ID1 = GROUP_ID1;
+
+            return View(obj);
+           // return View();
         }
         [HttpPost]
-        public ActionResult ViewAllSupplier(string COUNTRY_NAME, string COMPANY_ID, string GROUP_ID)
+        public ActionResult ViewAllSupplier(string COUNTRY_NAME, string COM_ID_FOR_PUR, string GROUP_ID)
         {
             DropDownFor_Signup();
-            List<VENDOR_DETAILS> obj = AccountsService.supplierList(COUNTRY_NAME,COMPANY_ID,GROUP_ID).Item1;
+            List<VENDOR_DETAILS> obj = AccountsService.supplierList(COUNTRY_NAME, COM_ID_FOR_PUR, GROUP_ID).Item1;
+
+            ViewBag.COUNTRY_NAME1 = COUNTRY_NAME;
+            ViewBag.COM_ID_FOR_PUR1 = COM_ID_FOR_PUR;
+            ViewBag.GROUP_ID1 = GROUP_ID;
+
             return View(obj);
+        }
+
+        [UserSessionCheck]
+        public ActionResult ProfileLockUnlock(string vendorId, int StatusFlag, string COUNTRY_NAME, string COM_ID_FOR_PUR, string GROUP_ID)
+        {
+            var _tpl = AccountsService.ProfileLockUnlock(StatusFlag, vendorId);
+            if (_tpl.SUCCESS == true && _tpl.ROWS == 1 && StatusFlag == 1)
+            {
+                TempData["msg"] = AlertService.SaveSuccessOK("Lock Successfully");
+            }
+            else if (_tpl.SUCCESS == true && _tpl.ROWS == 1 && StatusFlag == 0)
+            {
+                TempData["msg"] = AlertService.SaveSuccessOK("Unlock Successfully");
+            }
+            else
+            {
+                TempData["msg"] = AlertService.SaveWarningOK("Something is wrong ! Please try again");
+            }
+            return RedirectToAction("ViewAllSupplier", "Accounts",new { COUNTRY_NAME1 = COUNTRY_NAME , COM_ID_FOR_PUR1 = COM_ID_FOR_PUR , GROUP_ID1 = GROUP_ID });
         }
 
         public ActionResult SupplierList(List<VENDOR_DETAILS> vendorList,string RFQ_NUMBER) {
@@ -602,10 +659,15 @@ namespace Tender.App.Controllers
 
         public void DropDownFor_Signup()
         {
+            VENDOR_COMPANY snPurcheserComObj = (VENDOR_COMPANY)Session["ssPurcheserCompany"];
             ViewBag.COUNTRY_NAME = DropDownList_All_Country();
             ViewBag.CERTIFICATE_ID = new SelectList(TenderService.getvendorDoc().Item1.ToList(), "CERTIFICATE_ID", "CERTIFICATE_NAME");
-            ViewBag.COMPANY_ID = new SelectList(CommonService.GetCompany().Item1.ToList(), "COMPANY_ID", "COMPANY_NAME");
+            ViewBag.COMPANY_ID = new SelectList(CommonService.GetCompany(null).Item1.ToList(), "COMPANY_ID", "COMPANY_NAME");
             ViewBag.GROUP_ID = new SelectList(SetupService.getpProductGroup().Item1.ToList(), "ID", "NAME");
+            if (snPurcheserComObj != null) {
+                ViewBag.COM_ID_FOR_PUR = new SelectList(CommonService.GetCompany(snPurcheserComObj.COMPANY_ID).Item1.ToList(), "COMPANY_ID", "COMPANY_NAME");
+            }
+            
         }
         public SelectList DropDownList_All_Country()
         {
