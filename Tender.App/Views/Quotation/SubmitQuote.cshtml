@@ -29,7 +29,7 @@
                     <hr>
                     <h5>This RFQ Ends in</h5>
                     <input type="hidden" value="@Model.END_DATE.ToString("yyyy-MM-dd")" class="endDate" />
-                    <span class="text-danger text-bold" id="auc_end"></span>
+                    <span class="text-danger text-bold" id="auc_end"></span> <span> (BD Time Zone)</span>
                     <hr />
                     <div class="row">
                         <div class="col">Total Quote : @Model.TOTAL_BIDDING </div>
@@ -83,10 +83,10 @@
                     <span class="text-bold mb-3"> Quotation Rate Range : </span><span class="mb-3">@Model.LOWER_RATE</span>
                 </div>
                 <div class="col-md-12 mb-3 ml-3">
-                    <span class="text-bold mb-3">Quotation Submit Start:  : </span><span class="mb-3">@Model.START_DATE.ToString("dd-MMM-yyyy")</span>
+                    <span class="text-bold mb-3">Quotation Submit Start:  : </span><span class="mb-3">@Model.START_DATE.ToString("dddd, dd MMMM yyyy")<small>(BD Standard Time)</small></span>
                 </div>
                 <div class="col-md-12 mb-3 ml-3">
-                    <span class="text-bold mb-3">Quotation Submit End: : </span><span class="mb-3"> @Model.END_DATE.ToString("dd-MMM-yyyy")</span>
+                    <span class="text-bold mb-3">Quotation Submit End: : </span><span class="mb-3"> @Model.END_DATE.ToString("dddd, dd MMMM yyyy")<small>(BD Standard Time)</small></span>
                 </div>
             </div>
 
@@ -125,7 +125,7 @@
                     <span class="text-bold mb-3">Partial Shipment  : </span><span class="mb-3">@Model.PARTIAL_SHIPMENT</span>
                 </div>
                 <div class="col-md-12 mb-3 ml-3">
-                    <span class="text-bold">Last Shipment Date  :</span><span>@Model.LAST_DELIVERY_DATE.ToString("dd-MMMM-yyyy")</span>
+                    <span class="text-bold">Last Shipment Date  :</span><span>@Model.LAST_DELIVERY_DATE.ToString("dd-MMMM-yyyy") <small>(BD Standard Time)</small></span>
                 </div>
                 <div class="col-md-12 mb-3 ml-3">
                     <span class="text-bold">Shipment Mode  :</span><span>@Model.TENDER_SHIPMENT_MODE</span>

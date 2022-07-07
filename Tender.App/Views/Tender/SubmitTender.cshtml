@@ -69,7 +69,7 @@
                         </div>
                         <div class="col-md-3 col-sm-6">
                             <div class="form-group">
-                                <label class="control-label">Start Date</label> <span class="text-danger">*</span>
+                                <label class="control-label">Start Date</label><small>(BD Standard Time)</small> <span class="text-danger">*</span>
                                 @Html.EditorFor(model => model.START_DATE, new { htmlAttributes = new { @class = "form-control form-control-sm", type = "date", placeholder = "Start Date" } })
                                 @Html.ValidationMessageFor(m => m.START_DATE, "", new { @class = "text-danger" })
                             </div>
@@ -77,7 +77,7 @@
 
                         <div class="col-md-3 col-sm-6">
                             <div class="form-group">
-                                <label class="control-label">End Date</label> <span class="text-danger">*</span>
+                                <label class="control-label">End Date</label><small>(BD Standard Time)</small> <span class="text-danger">*</span>
                                 @Html.EditorFor(model => model.END_DATE, new { htmlAttributes = new { @class = "form-control form-control-sm", type = "date", placeholder = "End Date" } })
                                 @Html.ValidationMessageFor(m => m.END_DATE, "", new { @class = "text-danger" })
                             </div>
@@ -201,7 +201,7 @@
                     <div class="card-body pad row">
                         <div class="col-md-3 col-sm-6">
                             <div class="form-group">
-                                <label class="control-label">Last Delivery Date</label> <span class="text-danger">*</span>
+                                <label class="control-label">Last Delivery Date</label><small>(BD Standard Time)</small> <span class="text-danger">*</span>
                                 @Html.EditorFor(model => model.LAST_DELIVERY_DATE, new { htmlAttributes = new { @class = "form-control form-control-sm", type = "date", placeholder = "last Delivery Date" } })
                                 @Html.ValidationMessageFor(m => m.LAST_DELIVERY_DATE, "", new { @class = "text-danger" })
                             </div>

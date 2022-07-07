@@ -227,8 +227,10 @@
     <Content Include="App_Asset\dist\img\rfqHomePage.jpg" />
     <Content Include="App_Asset\dist\img\tenderDetails.jpg" />
     <Content Include="App_Asset\img\73394075.jpg" />
+    <Content Include="App_Asset\img\lockIconPng.png" />
     <Content Include="App_Asset\img\reg-failed.png" />
     <Content Include="App_Asset\img\reg-ok.png" />
+    <Content Include="App_Asset\img\yourcompanylogo.jpg" />
     <Content Include="App_Asset\js\bid.js" />
     <Content Include="App_Asset\css\style.css" />
     <Content Include="App_Asset\dist\calender\bootstrap-datepicker.min.css" />

@@ -3,7 +3,50 @@
 @{
     ViewBag.Title = "User Profile";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
 }
+<style>
+
+  
+    @@media screen and (max-width: 767px) {
+        .profile {
+            position: absolute;
+            top: 10%;
+            left: 40%;
+            z-index: 1;
+        }
+        .lock {
+            position: absolute;
+            top: 25%;
+            left: 55%;
+            z-index: 2;
+        }
+    }
+   
+    @@media screen and (min-width: 768px) {
+        .profile {
+            position: absolute;
+            top: 10%;
+            left: 25%;
+            z-index: 1;
+        }
+        .lock {
+            position: absolute;
+            top: 25%;
+            left: 55%;
+            z-index: 2;
+        }
+    }
+    @@media screen and (max-width: 390px) {
+        .profile {
+            position: absolute;
+            top: 10%;
+            left: 25%;
+            z-index: 1;
+        }
+    }
+    
+</style>
 <div class="container">
 
     <section class="content-header">
@@ -32,19 +75,30 @@
                             <div class="text-center">
                                 @if (Model.PROFILE_IMAGE != null)
                                 {
-                                    <img src="~/@Model.PROFILE_IMAGE" class="profile-user-img img-fluid img-circle" alt="User profile picture" />
+                                    <img src="~/@Model.PROFILE_IMAGE" class="profile profile-user-img img-fluid img-circle" alt="User profile picture" />
                                 }
                                 else
                                 {
-                                    <img src="~/App_Asset/dist/img/user1-128x128.jpg" class="profile-user-img img-fluid img-circle" alt="User profile picture" />
+                                    <img src="~/App_Asset/img/yourcompanylogo.jpg" class="profile-user-img img-fluid img-circle" alt="User profile picture" />
                                 }
+                                <br /> <br />
+                                @if (Model.LOCK_UNLOCK == 1)
+                                {
 
+                                    <img src="~/App_Asset/img/lockIconPng.png" class="lock" alt="Lock Profile" style="height:50px;width:50px;" />
+                                    <br /><br />
+                                }
+                                <br /><br />
                             </div>
                             <h3 class="profile-username text-center">@Model.ORGANIZATION_NAME</h3>
                             <p class="text-muted text-center mb-0 pd-0">@Model.VENDOR_EMAIL</p>
                             <p class="text-muted text-center">@Model.CONTACT_NUMBER</p>
+                            @if (Model.LOCK_UNLOCK == 1) { 
+                            
+                                <span class="text-bold text-primary">**For unlock profile, please contact with your following company**</span>
+                            }
+            
                         </div>
-    
                     </div>
 
 
@@ -63,320 +117,611 @@
                     </div>
 
                 </div>
-
-                <div class="col-md-9">
-                    <div class="card">
-                        <div class="card-header p-2">
-                            <ul class="nav nav-pills">
-                                <li class="nav-item"><a class="nav-link active" href="#follow" data-toggle="tab">Following</a></li>
-                                <li class="nav-item"><a class="nav-link" href="#UpdateProfile" data-toggle="tab">Update Profile</a></li>
-                                <li class="nav-item"><a class="nav-link" href="#doc" data-toggle="tab">Document</a></li>
-                                <li class="nav-item"><a class="nav-link" href="#settings" data-toggle="tab">Change Password</a></li>
-                            </ul>
-                        </div>
-                        <div class="card-body">
-                            <div class="tab-content">
-                                <div class="active tab-pane" id="follow">
-                                    <strong><i class="fa fa-building mr-1"></i> Company</strong><br />
-                                    @foreach (var mItem in Model.VENDOR_COMPANY)
+                @if (Model.LOCK_UNLOCK == 0)
+                {
+            <div class="col-md-9">
+                <div class="card">
+                    <div class="card-header p-2">
+                        <ul class="nav nav-pills">
+                            <li class="nav-item"><a class="nav-link active" href="#follow" data-toggle="tab">Following</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#UpdateProfile" data-toggle="tab">Update Profile</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#doc" data-toggle="tab">Document</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#settings" data-toggle="tab">Change Password</a></li>
+                        </ul>
+                    </div>
+                    <div class="card-body">
+                        <div class="tab-content">
+                            <div class="active tab-pane" id="follow">
+                                <strong><i class="fa fa-building mr-1"></i> Company</strong><br />
+                                @foreach (var mItem in Model.VENDOR_COMPANY)
+                                {
+                                    if (mItem.IS_ACTIVE == 1)
                                     {
-                                        if (mItem.IS_ACTIVE == 1) { 
                                         <label class="m-2 btn btn-sm btn-outline-primary">
                                             @mItem.COMPANY_NAME
                                             @*<input class="v-com" type="checkbox" id="@mItem.COMPANY_ID" @(mItem.IS_ACTIVE == 1 ? "checked='checked'" : string.Empty) />*@
                                         </label>
-                                        }
-                                        
                                     }
-                                    <hr />
-                                    <strong><i class="fa fa-list-alt mr-1"></i> Item Catagory  </strong>
-                                    <p>
-                                        @foreach (var mItem in Model.VENDOR_PRODUCTS_GROUP)
-                                        {
-                                            <label class="m-2 btn btn-sm btn-outline-primary">
-                                                @mItem.PRODUCTS_GROUP_NAME
-                                                <input class="v-pcat" type="checkbox" id="@mItem.PRODUCTS_GROUP_ID" @(mItem.IS_ACTIVE == 1 ? "checked='checked'" : string.Empty) />
-                                            </label>
-                                        }
-                                    </p>
 
-                                    @*<strong><i class="fa fa-list-alt mr-1"></i> Products  </strong>
-                                        <p>
-                                            @foreach (var mItem in Model.VENDOR_PRODUCTS)
-                                            {
-                                                <label class="m-2 btn btn-sm btn-outline-primary">
-                                                    @mItem.PRODUCTS_NAME
-                                                    <input class="v-pro" type="checkbox" id="@mItem.PRODUCTS_ID" checked="@mItem.IS_ACTIVE" />
-                                                </label>
-                                            }
-                                        </p>*@
-                                    <hr />
-                                    <strong><i class="fas fa-business-time mr-1"></i> Business</strong><br />
-                                    @foreach (var mItem in Model.VENDOR_CATEGORY)
+                                }
+                                <hr />
+                                <strong><i class="fa fa-list-alt mr-1"></i> Item Catagory  </strong>
+                                <p>
+                                    @foreach (var mItem in Model.VENDOR_PRODUCTS_GROUP)
                                     {
                                         <label class="m-2 btn btn-sm btn-outline-primary">
-                                            @mItem.CATEGORY_NAME
-                                            <input class="v-cat" type="checkbox" id="@mItem.CATEGORY_ID" @(mItem.IS_ACTIVE == 1 ? "checked='checked'" : string.Empty) />
+                                            @mItem.PRODUCTS_GROUP_NAME
+                                            <input class="v-pcat" type="checkbox" id="@mItem.PRODUCTS_GROUP_ID" @(mItem.IS_ACTIVE == 1 ? "checked='checked'" : string.Empty) />
                                         </label>
                                     }
-                                    <hr />
-                                    <strong><i class="fa fa-certificate mr-1"></i> Certificate</strong><br />
-                                    @foreach (var mItem in Model.VENDOR_CERTIFICATE)
-                                    {
-                                        <label class="m-2 btn btn-sm btn-outline-primary">
-                                            @mItem.CERTIFICATE_NAME
-                                            <input class="v-cer" type="checkbox" id="@mItem.CERTIFICATE_ID" checked="@mItem.IS_ACTIVE" />
-                                        </label>
-                                    }
-                                    <hr />
-                                    <strong><i class="fa fa-file mr-1"></i> Documents</strong><br />
-                                    @foreach (var mItem in Model.VENDOR_DOCUMENTS)
-                                    {
-                                        <label class="m-2 btn btn-sm btn-outline-primary">
-                                            @mItem.DOCUMENTS_NAME
-                                            <input class="v-doc" type="checkbox" id="@mItem.DOCUMENTS_ID" checked="@mItem.IS_ACTIVE" />
-                                        </label>
-                                    }
-                                </div>
+                                </p>
 
-                                <div class="tab-pane" id="UpdateProfile">
-                                    @using (Html.BeginForm("UserProfile", "Accounts", FormMethod.Post, new { enctype = "multipart/form-data" }))
-                                    {
-                                        @Html.ValidationSummary(false, "", new { @class = "text-danger" })
-                                        @Html.AntiForgeryToken()
-                                        @Html.HiddenFor(model => model.ORGANIZATION_NAME)
-                                        @Html.HiddenFor(model => model.COUNTRY_NAME)
-                                        @Html.HiddenFor(model => model.VENDOR_EMAIL)
-                                        @Html.HiddenFor(model => model.VENDOR_ID)
-                                        @Html.HiddenFor(model => model.VENDOR_PASSWD)
-                                        @Html.HiddenFor(model => model.PROFILE_IMAGE)
+                                @*<strong><i class="fa fa-list-alt mr-1"></i> Products  </strong>
+                        <p>
+                            @foreach (var mItem in Model.VENDOR_PRODUCTS)
+                            {
+                                <label class="m-2 btn btn-sm btn-outline-primary">
+                                    @mItem.PRODUCTS_NAME
+                                    <input class="v-pro" type="checkbox" id="@mItem.PRODUCTS_ID" checked="@mItem.IS_ACTIVE" />
+                                </label>
+                            }
+                        </p>*@
+                                <hr />
+                                <strong><i class="fas fa-business-time mr-1"></i> Business</strong><br />
+                                @foreach (var mItem in Model.VENDOR_CATEGORY)
+                                {
+                                    <label class="m-2 btn btn-sm btn-outline-primary">
+                                        @mItem.CATEGORY_NAME
+                                        <input class="v-cat" type="checkbox" id="@mItem.CATEGORY_ID" @(mItem.IS_ACTIVE == 1 ? "checked='checked'" : string.Empty) />
+                                    </label>
+                                }
+                                <hr />
+                                <strong><i class="fa fa-certificate mr-1"></i> Certificate</strong><br />
+                                @foreach (var mItem in Model.VENDOR_CERTIFICATE)
+                                {
+                                    <label class="m-2 btn btn-sm btn-outline-primary">
+                                        @mItem.CERTIFICATE_NAME
+                                        <input class="v-cer" type="checkbox" id="@mItem.CERTIFICATE_ID" checked="@mItem.IS_ACTIVE" />
+                                    </label>
+                                }
+                                <hr />
+                                <strong><i class="fa fa-file mr-1"></i> Documents</strong><br />
+                                @foreach (var mItem in Model.VENDOR_DOCUMENTS)
+                                {
+                                    <label class="m-2 btn btn-sm btn-outline-primary">
+                                        @mItem.DOCUMENTS_NAME
+                                        <input class="v-doc" type="checkbox" id="@mItem.DOCUMENTS_ID" checked="@mItem.IS_ACTIVE" />
+                                    </label>
+                                }
+                            </div>
 
-                                        <span class="text-danger"> @ViewBag.ExistUserId</span>
-                                        <div class="form-row">
-                                            <div class="col-md-6 col-sm-12">
-                                                <div class="form-group">
-                                                    <label for="VENDOR_USER_ID" class="control-label"> User Id</label>
-                                                    @Html.EditorFor(model => model.VENDOR_USER_ID, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
-                                                </div>
+                            <div class="tab-pane" id="UpdateProfile">
+                                @using (Html.BeginForm("UserProfile", "Accounts", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                                {
+                                    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                                    @Html.AntiForgeryToken()
+                                    @Html.HiddenFor(model => model.ORGANIZATION_NAME)
+                                    @Html.HiddenFor(model => model.COUNTRY_NAME)
+                                    @Html.HiddenFor(model => model.VENDOR_EMAIL)
+                                    @Html.HiddenFor(model => model.VENDOR_ID)
+                                    @Html.HiddenFor(model => model.VENDOR_PASSWD)
+                                    @Html.HiddenFor(model => model.PROFILE_IMAGE)
+
+                                    <span class="text-danger"> @ViewBag.ExistUserId</span>
+                                    <div class="form-row">
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="VENDOR_USER_ID" class="control-label"> User Id</label>
+                                                @Html.EditorFor(model => model.VENDOR_USER_ID, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
                                             </div>
-                                            <div class="col-md-6 col-sm-12">
-                                                <div class="form-group">
-                                                    <label for="VENDOR_USER_ID" class="control-label"> Country</label>
-                                                    @Html.EditorFor(model => model.COUNTRY_NAME, new { htmlAttributes = new { @class = "form-control form-control-sm", @readonly = true } })
+                                        </div>
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="VENDOR_USER_ID" class="control-label"> Country</label>
+                                                @Html.EditorFor(model => model.COUNTRY_NAME, new { htmlAttributes = new { @class = "form-control form-control-sm", @readonly = true } })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="CONTACT_NAME" class="control-label"> 1st Contact Person</label><span class="text-danger">*</span>
+                                                @Html.EditorFor(model => model.CONTACT_NAME, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "1st Contact Person" } })
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="CONTACT_NUMBER" class="control-label">1st Contact Number</label><span class="text-danger">*</span>
+                                                @Html.EditorFor(model => model.CONTACT_NUMBER, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "1st Contact Number" } })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="CONTACT_NAME" class="control-label"> 2nd Contact Person</label>
+                                                @Html.EditorFor(model => model.CONTACT_NAME2, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "2nd Contact Person" } })
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="CONTACT_NUMBER" class="control-label"> 2nd Contact Number</label>
+                                                @Html.EditorFor(model => model.CONTACT_NUMBER2, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "2nd Contact Number" } })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="CONTACT_NAME" class="control-label"> 3rd Contact Person</label>
+                                                @Html.EditorFor(model => model.CONTACT_NAME3, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "3rd Contact Person" } })
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="CONTACT_NUMBER" class="control-label"> 3rd Contact Number</label>
+                                                @Html.EditorFor(model => model.CONTACT_NUMBER3, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "3rd Contact Number" } })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="ADDRESS_1" class="control-label"> Present Address</label><span class="text-danger">*</span>
+                                                @Html.EditorFor(model => model.ADDRESS_1, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "Present Address" } })
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="ADDRESS_2" class="control-label"> Permanent Address</label>
+                                                @Html.EditorFor(model => model.ADDRESS_2, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "Permanent Address" } })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="YEAR_OF_ESTABLISHMENT" class="control-label"> Establishment Year</label><span class="text-danger">*</span>
+                                                @Html.EditorFor(model => model.YEAR_OF_ESTABLISHMENT, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "Establishment Year" } })
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="YEARLY_TRUNOVER" class="control-label"> Yearly Turnover(USD)</label>
+                                                @Html.EditorFor(model => model.YEARLY_TRUNOVER, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "Yearly Turnover" } })
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="NO_OF_EMPLOYEES" class="control-label"> Number of Employee</label>
+                                                @Html.EditorFor(model => model.NO_OF_EMPLOYEES, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "50-100 People" } })
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="TAX_NUMBER" class="control-label"> TAX/TIN</label>
+                                                @Html.EditorFor(model => model.TAX_NUMBER, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "TAX/TIN" } })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="TRADE_NUMBER" class="control-label"> Trade Number</label>
+                                                @Html.EditorFor(model => model.TRADE_NUMBER, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "Trade License Number" } })
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <div class="icheck-primary">
+                                                    <input type="checkbox" id="PURCHASER_X" name="PURCHASER_X" @(Model.PURCHASER == 1 ? "checked" : "unchecked") />
+                                                    <label for="PURCHASER_X"> Purchaser</label>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="form-row">
-                                            <div class="col-md-6 col-sm-12">
-                                                <div class="form-group">
-                                                    <label for="CONTACT_NAME" class="control-label"> 1st Contact Person</label><span class="text-danger">*</span>
-                                                    @Html.EditorFor(model => model.CONTACT_NAME, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "1st Contact Person" } })
-                                                </div>
-                                            </div>
 
-                                            <div class="col-md-6 col-sm-12">
-                                                <div class="form-group">
-                                                    <label for="CONTACT_NUMBER" class="control-label">1st Contact Number</label><span class="text-danger">*</span>
-                                                    @Html.EditorFor(model => model.CONTACT_NUMBER, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "1st Contact Number" } })
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <div class="icheck-primary">
+                                                    <input type="checkbox" id="PURCHASER_NOTIFY_X" name="PURCHASER_NOTIFY_X" @(Model.PURCHASER_NOTIFY == 1 ? "checked" : "unchecked") />
+                                                    <label for="PURCHASER_NOTIFY_X">
+                                                        Get Purchaser Notification
+                                                    </label>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="form-row">
-                                            <div class="col-md-6 col-sm-12">
-                                                <div class="form-group">
-                                                    <label for="CONTACT_NAME" class="control-label"> 2nd Contact Person</label>
-                                                    @Html.EditorFor(model => model.CONTACT_NAME2, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "2nd Contact Person" } })
-                                                </div>
-                                            </div>
 
-                                            <div class="col-md-6 col-sm-12">
-                                                <div class="form-group">
-                                                    <label for="CONTACT_NUMBER" class="control-label"> 2nd Contact Number</label>
-                                                    @Html.EditorFor(model => model.CONTACT_NUMBER2, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "2nd Contact Number" } })
+                                    </div>
+
+                                    <div class="form-row">
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <div class="icheck-primary">
+                                                    <input type="checkbox" id="SUPPLIER_X" name="SUPPLIER_X" @(Model.SUPPLIER == 1 ? "checked" : "unchecked") />
+                                                    <label for="SUPPLIER_X">
+                                                        Supplier
+                                                    </label>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="form-row">
-                                            <div class="col-md-6 col-sm-12">
-                                                <div class="form-group">
-                                                    <label for="CONTACT_NAME" class="control-label"> 3rd Contact Person</label>
-                                                    @Html.EditorFor(model => model.CONTACT_NAME3, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "3rd Contact Person" } })
-                                                </div>
-                                            </div>
 
-                                            <div class="col-md-6 col-sm-12">
-                                                <div class="form-group">
-                                                    <label for="CONTACT_NUMBER" class="control-label"> 3rd Contact Number</label>
-                                                    @Html.EditorFor(model => model.CONTACT_NUMBER3, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "3rd Contact Number" } })
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <div class="icheck-primary">
+                                                    <input type="checkbox" id="SUPPLIER_NOTIFY_X" name="SUPPLIER_NOTIFY_X" @(Model.SUPPLIER_NOTIFY == 1 ? "checked" : "unchecked") />
+                                                    <label for="SUPPLIER_NOTIFY_X">
+                                                        Get Supplier Notification
+                                                    </label>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="form-row">
-                                            <div class="col-md-6 col-sm-12">
-                                                <div class="form-group">
-                                                    <label for="ADDRESS_1" class="control-label"> Present Address</label><span class="text-danger">*</span>
-                                                    @Html.EditorFor(model => model.ADDRESS_1, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "Present Address" } })
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6 col-sm-12">
-                                                <div class="form-group">
-                                                    <label for="ADDRESS_2" class="control-label"> Permanent Address</label>
-                                                    @Html.EditorFor(model => model.ADDRESS_2, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "Permanent Address" } })
-                                                </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                @Html.Label("Upload Profile Picture", new { @class = "control-label" })
+                                                <input type="file" name="ProfilePicture" accept=".png, .jpg, .jpeg" /><br />
+                                                <span class="text-success">png,jpg,jpeg format only</span>
+                                                <span class="text-primary">Maximum Size 100 KB</span>
                                             </div>
                                         </div>
-                                        <div class="form-row">
-                                            <div class="col-md-6 col-sm-12">
-                                                <div class="form-group">
-                                                    <label for="YEAR_OF_ESTABLISHMENT" class="control-label"> Establishment Year</label><span class="text-danger">*</span>
-                                                    @Html.EditorFor(model => model.YEAR_OF_ESTABLISHMENT, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "Establishment Year" } })
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6 col-sm-12">
-                                                <div class="form-group">
-                                                    <label for="YEARLY_TRUNOVER" class="control-label"> Yearly Turnover(USD)</label> 
-                                                    @Html.EditorFor(model => model.YEARLY_TRUNOVER, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "Yearly Turnover" } })
-                                                </div>
-                                            </div>
+                                    </div>
 
+                                    <div class="row float-right">
+                                        <div class="col-12 float-right">
+                                            <button type="submit" class="btn btn-danger btn-sm" id="save" style="display:none;">save</button>
+                                            <button class="btn btn-danger btn-sm" id="submit">Submit</button>
                                         </div>
-                                        <div class="form-row">
-                                            <div class="col-md-6 col-sm-12">
-                                                <div class="form-group">
-                                                    <label for="NO_OF_EMPLOYEES" class="control-label"> Number of Employee</label> 
-                                                    @Html.EditorFor(model => model.NO_OF_EMPLOYEES, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "50-100 People" } })
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6 col-sm-12">
-                                                <div class="form-group">
-                                                    <label for="TAX_NUMBER" class="control-label"> TAX/TIN</label> 
-                                                    @Html.EditorFor(model => model.TAX_NUMBER, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "TAX/TIN" } })
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-row">
-                                            <div class="col-md-6 col-sm-12">
-                                                <div class="form-group">
-                                                    <label for="TRADE_NUMBER" class="control-label"> Trade Number</label> 
-                                                    @Html.EditorFor(model => model.TRADE_NUMBER, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "Trade License Number" } })
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6 col-sm-12">
-                                                <div class="form-group">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-row">
-                                            <div class="col-md-6 col-sm-12">
-                                                <div class="form-group">
-                                                    <div class="icheck-primary">
-                                                        <input type="checkbox" id="PURCHASER_X" name="PURCHASER_X" @(Model.PURCHASER == 1 ? "checked" : "unchecked") />
-                                                        <label for="PURCHASER_X"> Purchaser</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-6 col-sm-12">
-                                                <div class="form-group">
-                                                    <div class="icheck-primary">
-                                                        <input type="checkbox" id="PURCHASER_NOTIFY_X" name="PURCHASER_NOTIFY_X" @(Model.PURCHASER_NOTIFY == 1 ? "checked" : "unchecked") />
-                                                        <label for="PURCHASER_NOTIFY_X">
-                                                            Get Purchaser Notification
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                        </div>
-
-                                        <div class="form-row">
-                                            <div class="col-md-6 col-sm-12">
-                                                <div class="form-group">
-                                                    <div class="icheck-primary">
-                                                        <input type="checkbox" id="SUPPLIER_X" name="SUPPLIER_X" @(Model.SUPPLIER == 1 ? "checked" : "unchecked") />
-                                                        <label for="SUPPLIER_X">
-                                                            Supplier
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-6 col-sm-12">
-                                                <div class="form-group">
-                                                    <div class="icheck-primary">
-                                                        <input type="checkbox" id="SUPPLIER_NOTIFY_X" name="SUPPLIER_NOTIFY_X" @(Model.SUPPLIER_NOTIFY == 1 ? "checked" : "unchecked") />
-                                                        <label for="SUPPLIER_NOTIFY_X">
-                                                            Get Supplier Notification
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-row">
-                                            <div class="col-md-6 col-sm-12">
-                                                <div class="form-group">
-                                                    @Html.Label("Upload Profile Picture", new { @class = "control-label" })
-                                                    <input type="file" name="ProfilePicture" accept=".png, .jpg, .jpeg" /><br />
-                                                    <span class="text-success">png,jpg,jpeg format only</span>
-                                                    <span class="text-primary">Maximum Size 100 KB</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="row float-right">
-                                            <div class="col-12 float-right">
-                                                <button type="submit" class="btn btn-danger btn-sm" id="save" style="display:none;">save</button>
-                                                <button class="btn btn-danger btn-sm" id="submit">Submit</button>
-                                            </div>
-                                        </div>
-                                    }
-
-                                </div>
-
-                                <div class="tab-pane" id="doc">
-                                    @Html.Partial("_DocumentUpload", Model.VENDOR_FILE)
-                                    <hr />
-                                    @if (Model.VENDOR_DOCUMENTS_LIST.Count() > 0)
-                                    {
-                                        <span class="badge badge-primary text-bold">Certificate</span>
-                                        foreach (var item in Model.VENDOR_DOCUMENTS_LIST)
-                                        {
-                                            if (item.DOCUMENT_TYPE == "Certificate")
-                                            {
-                                                <div class="row mt-1">
-                                                    <div class="col-6">@item.DOC_NAME</div>
-                                                    <div class="col-6">
-                                                        <a href="@Url.Action("FileDownload", "Accounts", new {id = item.FILE_ID })">@item.FILE_NAME  <i class="fas fa-download"></i></a>
-                                                    </div>
-                                                </div>
-                                            }
-                                        }
-                                        <hr />
-                                        <span class="badge badge-success text-bold">Business Document</span>
-                                        foreach (var item in Model.VENDOR_DOCUMENTS_LIST)
-                                        {
-                                            if (item.DOCUMENT_TYPE == "Documents")
-                                            {
-                                                <div class="row mt-1">
-                                                    <div class="col-6">@item.DOC_NAME</div>
-                                                    <div class="col-6">
-                                                        <a href="@Url.Action("FileDownload", "Accounts", new {id = item.FILE_ID })">@item.FILE_NAME <i class="fas fa-download"></i></a>
-                                                    </div>
-                                                </div>
-                                            }
-                                        }
-                                    }
-                                </div>
-                                <div class="tab-pane" id="settings">
-                                    @Html.Partial("_Changepassword", Model.CHANGE_PASWD)
-                                </div>
-
+                                    </div>
+                                }
 
                             </div>
 
+                            <div class="tab-pane" id="doc">
+                                @Html.Partial("_DocumentUpload", Model.VENDOR_FILE)
+                                <hr />
+                                @if (Model.VENDOR_DOCUMENTS_LIST.Count() > 0)
+                                {
+                                    <span class="badge badge-primary text-bold">Certificate</span>
+                                    foreach (var item in Model.VENDOR_DOCUMENTS_LIST)
+                                    {
+                                        if (item.DOCUMENT_TYPE == "Certificate")
+                                        {
+                                            <div class="row mt-1">
+                                                <div class="col-6">@item.DOC_NAME</div>
+                                                <div class="col-6">
+                                                    <a href="@Url.Action("FileDownload", "Accounts", new { id = item.FILE_ID })">@item.FILE_NAME  <i class="fas fa-download"></i></a>
+                                                </div>
+                                            </div>
+                                        }
+                                    }
+                                    <hr />
+                                    <span class="badge badge-success text-bold">Business Document</span>
+                                    foreach (var item in Model.VENDOR_DOCUMENTS_LIST)
+                                    {
+                                        if (item.DOCUMENT_TYPE == "Documents")
+                                        {
+                                            <div class="row mt-1">
+                                                <div class="col-6">@item.DOC_NAME</div>
+                                                <div class="col-6">
+                                                    <a href="@Url.Action("FileDownload", "Accounts", new { id = item.FILE_ID })">@item.FILE_NAME <i class="fas fa-download"></i></a>
+                                                </div>
+                                            </div>
+                                        }
+                                    }
+                                }
+                            </div>
+                            <div class="tab-pane" id="settings">
+                                @Html.Partial("_Changepassword", Model.CHANGE_PASWD)
+                            </div>
+
+
                         </div>
+
                     </div>
                 </div>
+            </div>
+                }
+                else if (Model.LOCK_UNLOCK == 1) { 
+            <div class="col-md-9">
+                <div class="card">
+                    <div class="card-header p-2">
+                        <ul class="nav nav-pills">
+                            <li class="nav-item"><a class="nav-link active" href="#follow" data-toggle="tab">Following</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#UpdateProfile" data-toggle="tab">View Profile</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#doc" data-toggle="tab">Document</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#settings" data-toggle="tab">Change Password</a></li>
+                        </ul>
+                    </div>
+                    <div class="card-body">
+                        <div class="tab-content">
+                            <div class="active tab-pane" id="follow">
+                                <strong><i class="fa fa-building mr-1"></i> Company</strong><br />
+                                <p>
+                                    @foreach (var mItem in Model.VENDOR_COMPANY)
+                                    {
+                                        if (mItem.IS_ACTIVE == 1)
+                                        {
+                                            <span class="badge badge-primary"> @mItem.COMPANY_NAME</span>
+                                        }
+                                    }
+                                </p>
+                                <strong><i class="fa fa-list-alt mr-1"></i> Item Catagory  </strong>
+                                <p>
+                                    @foreach (var mItem in Model.VENDOR_PRODUCTS_GROUP)
+                                    {
+                                        if (mItem.IS_ACTIVE == 1)
+                                        {
+                                            <span class="badge badge-primary"> @mItem.PRODUCTS_GROUP_NAME</span>
+                                        }
+                                    }
+                                </p>
+
+                                <hr />
+                                <strong><i class="fas fa-business-time mr-1"></i> Business</strong><br />
+                                @foreach (var mItem in Model.VENDOR_CATEGORY)
+                                {
+                                    if (mItem.IS_ACTIVE == 1)
+                                    {
+                                        <span class="badge badge-success"> @mItem.CATEGORY_NAME</span>
+                                    }
+                                }
+                                <hr />
+                                <strong><i class="fa fa-certificate mr-1"></i> Certificate</strong><br />
+                                @foreach (var mItem in Model.VENDOR_CERTIFICATE)
+                                {
+                                    if (mItem.IS_ACTIVE == true)
+                                    {
+                                        <span class="badge badge-info"> @mItem.CERTIFICATE_NAME</span>
+                                    }
+                                }
+                                <hr />
+                                <strong><i class="fa fa-file mr-1"></i> Documents</strong><br />
+                                @foreach (var mItem in Model.VENDOR_DOCUMENTS)
+                                {
+                                    if (mItem.IS_ACTIVE == true)
+                                    {
+                                        <span class="badge badge-warning"> @mItem.DOCUMENTS_NAME</span>
+                                    }
+                                }
+                            </div>
+
+                            <div class="tab-pane" id="UpdateProfile">
+                                @using (Html.BeginForm("UserProfile", "Accounts", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                                {
+                                    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                                    @Html.AntiForgeryToken()
+                                    @Html.HiddenFor(model => model.ORGANIZATION_NAME)
+                                    @Html.HiddenFor(model => model.COUNTRY_NAME)
+                                    @Html.HiddenFor(model => model.VENDOR_EMAIL)
+                                    @Html.HiddenFor(model => model.VENDOR_ID)
+                                    @Html.HiddenFor(model => model.VENDOR_PASSWD)
+
+                                    <span class="text-danger"> @ViewBag.ExistUserId</span>
+                                    <div class="form-row">
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="VENDOR_USER_ID" class="control-label"> User Id</label>
+                                                @Html.EditorFor(model => model.VENDOR_USER_ID, new { htmlAttributes = new { @class = "form-control form-control-sm", @readonly = true } })
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="VENDOR_USER_ID" class="control-label"> Country</label>
+                                                @Html.EditorFor(model => model.COUNTRY_NAME, new { htmlAttributes = new { @class = "form-control form-control-sm", @readonly = true } })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="CONTACT_NAME" class="control-label">1st Contact Person</label>
+                                                @Html.EditorFor(model => model.CONTACT_NAME, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "Contact Person", @readonly = true } })
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="CONTACT_NUMBER" class="control-label">1st Contact Number</label>
+                                                @Html.EditorFor(model => model.CONTACT_NUMBER, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "Contact Number", @readonly = true } })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="CONTACT_NAME2" class="control-label"> 2nd Contact Person</label>
+                                                @Html.EditorFor(model => model.CONTACT_NAME2, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "2nd Contact Person", @readonly = true } })
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="CONTACT_NUMBER2" class="control-label"> 2nd Contact Number</label>
+                                                @Html.EditorFor(model => model.CONTACT_NUMBER2, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "2nd Contact Number", @readonly = true } })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="CONTACT_NAME3" class="control-label"> 3rd Contact Person</label><span class="text-danger">*</span>
+                                                @Html.EditorFor(model => model.CONTACT_NAME3, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "3rd Contact Person", @readonly = true } })
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="CONTACT_NUMBER3" class="control-label">3rd Contact Number</label><span class="text-danger">*</span>
+                                                @Html.EditorFor(model => model.CONTACT_NUMBER3, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "3rd Contact Number", @readonly = true } })
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row">
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="ADDRESS_1" class="control-label"> Present Address</label>
+                                                @Html.EditorFor(model => model.ADDRESS_1, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "Present Address", @readonly = true } })
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="ADDRESS_2" class="control-label"> Permanent Address</label>
+                                                @Html.EditorFor(model => model.ADDRESS_2, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "Permanent Address", @readonly = true } })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="YEAR_OF_ESTABLISHMENT" class="control-label"> Establishment Year</label>
+                                                @Html.EditorFor(model => model.YEAR_OF_ESTABLISHMENT, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "Establishment Year", @readonly = true } })
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="YEARLY_TRUNOVER" class="control-label"> Yearly Turnover</label>
+                                                @Html.EditorFor(model => model.YEARLY_TRUNOVER, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "Yearly Turnover", @readonly = true } })
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="NO_OF_EMPLOYEES" class="control-label"> Number of Employee</label>
+                                                @Html.EditorFor(model => model.NO_OF_EMPLOYEES, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "50-100 People", @readonly = true } })
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="TAX_NUMBER" class="control-label"> TAX/TIN</label>
+                                                @Html.EditorFor(model => model.TAX_NUMBER, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "TAX/TIN", @readonly = true } })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="TRADE_NUMBER" class="control-label"> Trade Number</label>
+                                                @Html.EditorFor(model => model.TRADE_NUMBER, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "Trade License Number", @readonly = true } })
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <div class="icheck-primary">
+                                                    <input type="checkbox" id="PURCHASER_X" name="PURCHASER_X" @(Model.PURCHASER == 1 ? "checked" : "unchecked") />
+                                                    <label for="PURCHASER_X"> Purchaser</label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <div class="icheck-primary">
+                                                    <input type="checkbox" id="PURCHASER_NOTIFY_X" name="PURCHASER_NOTIFY_X" @(Model.PURCHASER_NOTIFY == 1 ? "checked" : "unchecked") />
+                                                    <label for="PURCHASER_NOTIFY_X">
+                                                        Get Purchaser Notification
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="form-row">
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <div class="icheck-primary">
+                                                    <input type="checkbox" id="SUPPLIER_X" name="SUPPLIER_X" @(Model.SUPPLIER == 1 ? "checked" : "unchecked") />
+                                                    <label for="SUPPLIER_X">
+                                                        Supplier
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <div class="icheck-primary">
+                                                    <input type="checkbox" id="SUPPLIER_NOTIFY_X" name="SUPPLIER_NOTIFY_X" @(Model.SUPPLIER_NOTIFY == 1 ? "checked" : "unchecked") />
+                                                    <label for="SUPPLIER_NOTIFY_X">
+                                                        Get Supplier Notification
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+
+                            </div>
+                            <div class="tab-pane" id="doc">
+                                @if (Model.VENDOR_DOCUMENTS_LIST.Count() > 0)
+                                {
+                                    <span class="badge badge-primary text-bold">Certificate</span>
+                                    foreach (var item in Model.VENDOR_DOCUMENTS_LIST)
+                                    {
+                                        if (item.DOCUMENT_TYPE == "Certificate")
+                                        {
+                                            <div class="row mt-1">
+                                                <div class="col-6">@item.DOC_NAME</div>
+                                                <div class="col-6">
+                                                    <a href="@Url.Action("FileDownload", "Accounts", new { id = item.FILE_ID })">@item.FILE_NAME  <i class="fas fa-download"></i></a>
+                                                </div>
+                                            </div>
+                                        }
+                                    }
+                                    <hr />
+                                    <span class="badge badge-success text-bold">Business Document</span>
+                                    foreach (var item in Model.VENDOR_DOCUMENTS_LIST)
+                                    {
+                                        if (item.DOCUMENT_TYPE == "Documents")
+                                        {
+                                            <div class="row mt-1">
+                                                <div class="col-6">@item.DOC_NAME</div>
+                                                <div class="col-6">
+                                                    <a href="@Url.Action("FileDownload", "Accounts", new { id = item.FILE_ID })">@item.FILE_NAME <i class="fas fa-download"></i></a>
+                                                </div>
+                                            </div>
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    <h4>No Document Available</h4>
+                                }
+                            </div>
+                            <div class="tab-pane" id="settings">
+                                @Html.Partial("_Changepassword", Model.CHANGE_PASWD)
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+                }
+
             </div>
         </div>
     </section>
@@ -414,22 +759,22 @@
             //});
 
         })
-                        //function addDropdownDocument() {
-                        //    var docId = $.trim($("#DOCUMENTS_LIST_ID :selected").val()),
-                        //        docName = $.trim($("#DOCUMENTS_LIST_ID :selected").text()),
-                        //        rdocumentsBody = $("#rdocuments tbody");
-                        //    if (docId == "" || docName == "") {
-                        //        Swal.fire('warning', 'Select a valid documents', 'warning');
-                        //        return;
-                        //    };
-                        //    $("#docDiv").css("display", "block");
-                        //    var rdocumentsItem = '<tr><td><select class="form-control form-control-sm" style="min-width:180px;appearance: none;border:none;"><option value="' + docId + '">' + docName + '</option></select></td><td> <input type="file" name="document" accept=".png, .jpg, .jpeg, .pdf, .docx" /></td><td><a data-itemId="0" href="#" class="deleteItem btn btn-danger btn-xs">Delete</a></td></tr>';
-                        //    rdocumentsBody.append(rdocumentsItem);
-                        //    clearItem();
-                        //}
-                        //function clearItem() {
-                        //    $("#DOCUMENTS_LIST_ID :selected").remove();
-                        //}
+                                //function addDropdownDocument() {
+                                //    var docId = $.trim($("#DOCUMENTS_LIST_ID :selected").val()),
+                                //        docName = $.trim($("#DOCUMENTS_LIST_ID :selected").text()),
+                                //        rdocumentsBody = $("#rdocuments tbody");
+                                //    if (docId == "" || docName == "") {
+                                //        Swal.fire('warning', 'Select a valid documents', 'warning');
+                                //        return;
+                                //    };
+                                //    $("#docDiv").css("display", "block");
+                                //    var rdocumentsItem = '<tr><td><select class="form-control form-control-sm" style="min-width:180px;appearance: none;border:none;"><option value="' + docId + '">' + docName + '</option></select></td><td> <input type="file" name="document" accept=".png, .jpg, .jpeg, .pdf, .docx" /></td><td><a data-itemId="0" href="#" class="deleteItem btn btn-danger btn-xs">Delete</a></td></tr>';
+                                //    rdocumentsBody.append(rdocumentsItem);
+                                //    clearItem();
+                                //}
+                                //function clearItem() {
+                                //    $("#DOCUMENTS_LIST_ID :selected").remove();
+                                //}
 
     </script>
 }

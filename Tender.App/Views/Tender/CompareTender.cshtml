@@ -31,7 +31,7 @@
                     <hr />
                     <h5>Remaning</h5>
                     <input type="hidden" value="@Model.Select(c => c.END_DATE).FirstOrDefault().ToString("yyyy-MM-dd")" class="endDate" />
-                    <span class="text-danger text-bold" id="auc_end"></span>
+                    <span class="text-danger text-bold" id="auc_end"></span> <small>(BD Standard Time)</small>
                     <hr />
                     <div class="row">
                         <div class="col">Partial Shipment : @Model.Select(c => c.PARTIAL_SHIPMENT).FirstOrDefault() </div>
@@ -65,7 +65,7 @@
                                 <th>Details</th>
                                 <th>Quote Number</th>
                                 <th>Bidders company</th>
-                                <th>Submit Date</th>
+                                <th>Submit Date <small>(BD Standard Time)</small></th>
                                 <th>Bidding Rate</th>
                                 <th>Bidding Quantity</th>
                                 <th>Confirm</th>

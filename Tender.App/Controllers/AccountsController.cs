@@ -585,30 +585,10 @@ namespace Tender.App.Controllers
 
         [UserSessionCheck]
 
-        public ActionResult ViewAllSupplier(string COUNTRY_NAME1, string COM_ID_FOR_PUR1, string GROUP_ID1,string post)
+        public ActionResult ViewAllSupplier()
         {
-            DropDownFor_Signup();
-            if (COUNTRY_NAME1 == null)
-            {
-                COUNTRY_NAME1 = "";
-            }
-            if (COM_ID_FOR_PUR1 == null)
-            {
-                COM_ID_FOR_PUR1 = "";
-            }
-            if (GROUP_ID1 == null)
-            {
-                GROUP_ID1 = "";
-            }
-            List<VENDOR_DETAILS> obj = AccountsService.supplierList(COUNTRY_NAME1, COM_ID_FOR_PUR1, GROUP_ID1).Item1;
-            
-
-
-            ViewBag.COUNTRY_NAME1 = COUNTRY_NAME1;
-            ViewBag.COM_ID_FOR_PUR1 = COM_ID_FOR_PUR1;
-            ViewBag.GROUP_ID1 = GROUP_ID1;
-
-            return View(obj);
+            DropDownFor_Signup();          
+            return View();
            // return View();
         }
         [HttpPost]
@@ -616,11 +596,6 @@ namespace Tender.App.Controllers
         {
             DropDownFor_Signup();
             List<VENDOR_DETAILS> obj = AccountsService.supplierList(COUNTRY_NAME, COM_ID_FOR_PUR, GROUP_ID).Item1;
-
-            ViewBag.COUNTRY_NAME1 = COUNTRY_NAME;
-            ViewBag.COM_ID_FOR_PUR1 = COM_ID_FOR_PUR;
-            ViewBag.GROUP_ID1 = GROUP_ID;
-
             return View(obj);
         }
 
@@ -640,7 +615,7 @@ namespace Tender.App.Controllers
             {
                 TempData["msg"] = AlertService.SaveWarningOK("Something is wrong ! Please try again");
             }
-            return RedirectToAction("ViewAllSupplier", "Accounts",new { COUNTRY_NAME1 = COUNTRY_NAME , COM_ID_FOR_PUR1 = COM_ID_FOR_PUR , GROUP_ID1 = GROUP_ID });
+            return RedirectToAction("ViewAllSupplier", "Accounts");
         }
 
         public ActionResult SupplierList(List<VENDOR_DETAILS> vendorList,string RFQ_NUMBER) {
