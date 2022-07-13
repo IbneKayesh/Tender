@@ -1,0 +1,219 @@
+﻿@model Tender.Models.Models.RFQ_BIDDING
+
+@{
+    ViewBag.Title = "Quotation Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<section class="content">
+    <div class="card card-solid">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-12 col-sm-4">
+                    <div class="col-12">
+                        @if (Model.IMAGE_PATH != null)
+                        {
+                            <img src="~/@Model.IMAGE_PATH" class="product-image img-fluid" alt="Product Image" />
+                        }
+                        else
+                        {
+                            <img src="~/App_Asset/dist/img/noImage.jpg" class="product-image img-fluid" alt="Product Image" />
+                        }
+                    </div>
+                </div>
+                <div class="col-12 col-sm-8">
+                    <h4 class="my-3">Company :<span class="text-black">@Model.COMPANY_NAME</span> </h4>
+                    <h4 class="my-3">Quotation Number :<span class="text-black">@Model.QUOTE_NUMBER</span> </h4>
+                    <h4 class="my-3">RFQ Number :<span class="text-primary">@Model.RFQ_NUMBER</span> </h4>
+                    <h6 class="my-3">Item :<span class="text-success"> @Model.TND_PRODUCTS_NAME</span></h6>
+                    <p>Item Description : @Model.TND_PRODUCTS_DESC </p>
+                    <p>RFQ Type : @Model.SELL_BUY </p>
+                    <hr>
+                    <h5>This RFQ Ends in</h5>
+                    <input type="hidden" value="@Model.END_DATE.ToString("yyyy-MM-dd")" class="endDate" />
+                    <span class="text-danger text-bold" id="auc_end"></span> <span> (BD Time Zone)</span>
+                    <hr />
+                    <div class="row">
+                        <div class="col">Total Quote : @Model.TOTAL_BIDDING </div>
+                    </div>
+
+                    <div class="btn-default py-2 px-0 mt-4">
+                        <h5 class="mb-0">
+                            Purposed Rate :   @Model.TND_PRODUCTS_RATE @Model.CURRENCY_NAME, Quantity : @Model.TND_PRODUCTS_QTY @Model.UNIT
+                        </h5>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="card-footer row">
+                <div class="col-md-3 col-sm-4 mb-2">
+                    <a class="btn btn-block btn-lg btn-outline-primary" id="tndDetails">
+                        RFQ Information
+                        <i class="fa fa-file"></i>
+                    </a>
+                </div>
+                <div class="col-md-3 col-sm-4  mb-2">
+                    <a class="btn btn-block btn-lg btn-outline-primary" id="tndItem">
+                        Item Information
+                        <i class="fa fa-list-alt"></i>
+                    </a>
+                </div>
+                <div class="col-md-3 col-sm-4 mb-2">
+                    <a class="btn btn-block btn-lg btn-outline-primary" id="tndShipment">
+                        Shipment Details
+                        <i class="fas fa-shipping-fast"></i>
+                    </a>
+                </div>
+                <div class="col-md-3 col-sm-4 mb-2">
+                    <a class="btn btn-block btn-lg btn-outline-primary" id="tndPayment">
+                        Your Quotation Details
+                        <i class="fab fa-first-order"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="row" id="detailsBody">
+                <div class="col-md-12 mb-3 ml-3">
+                    <span class="text-bold mb-3">RFQ Number   : </span><span class="mb-3">@Model.RFQ_NUMBER</span>
+                </div>
+                <div class="col-md-12 mb-3 ml-3">
+                    <span class="text-bold mb-3">RFQ Type  : </span><span class="mb-3">@Model.SELL_BUY</span>
+                </div>
+                <div class="col-md-12 mb-3 ml-3">
+                    <span class="text-bold mb-3">Quotation type : </span><span class="mb-3">@Model.RE_BID</span>
+                </div>
+                <div class="col-md-12 mb-3 ml-3">
+                    <span class="text-bold mb-3"> Quotation Rate Range : </span><span class="mb-3">@Model.LOWER_RATE</span>
+                </div>
+                <div class="col-md-12 mb-3 ml-3">
+                    <span class="text-bold mb-3">Quotation Submit Start:  : </span><span class="mb-3">@Model.START_DATE.ToString("dddd, dd MMMM yyyy")<small>(BD Standard Time)</small></span>
+                </div>
+                <div class="col-md-12 mb-3 ml-3">
+                    <span class="text-bold mb-3">Quotation Submit End: : </span><span class="mb-3"> @Model.END_DATE.ToString("dddd, dd MMMM yyyy")<small>(BD Standard Time)</small></span>
+                </div>
+            </div>
+
+            <div class="row" id="itemBody" style="display:none;">
+
+                <div class="col-md-12 mb-3 ml-3">
+                    <span class="text-bold mb-3">Product Name  : </span><span class="mb-3">@Model.TND_PRODUCTS_NAME</span>
+                </div>
+                <div class="col-md-12 mb-3 ml-3">
+                    <span class="text-bold mb-3">RFQ Rate  : </span><span class="mb-3">@Model.TND_PRODUCTS_RATE</span>
+                </div>
+                <div class="col-md-12 mb-3 ml-3">
+                    <span class="text-bold mb-3">Product Quantity : </span><span class="mb-3">@Model.TND_PRODUCTS_QTY</span>
+                </div>
+                <div class="col-md-12 mb-3 ml-3">
+                    <span class="text-bold mb-3"> Unit : </span><span class="mb-3">@Model.UNIT</span>
+                </div>
+                <div class="col-md-12 mb-3 ml-3">
+                    <span class="text-bold mb-3">RFQ Product Description : </span><span class="mb-3">@Model.TND_PRODUCTS_DESC</span>
+                </div>
+                <div class="col-md-12 mb-3 ml-3">
+                    <span class="text-bold mb-3">RFQ Documents : </span>
+                    @if (Model.RFQ_TNDR_DOCUMENTS.Count() > 0)
+                    {
+                        foreach (var item in Model.RFQ_TNDR_DOCUMENTS)
+                        {
+                            <span class="badge badge-success">@item.DOCUMENTS_NAME</span>
+                        }
+                    }
+                </div>
+
+            </div>
+
+            <div class="row" id="shipmentBody" style="display:none;">
+                <div class="col-md-12 mb-3 ml-3">
+                    <span class="text-bold mb-3">Partial Shipment  : </span><span class="mb-3">@Model.PARTIAL_SHIPMENT</span>
+                </div>
+                <div class="col-md-12 mb-3 ml-3">
+                    <span class="text-bold">Last Shipment Date  :</span><span>@Model.LAST_DELIVERY_DATE.ToString("dd-MMMM-yyyy") <small>(BD Standard Time)</small></span>
+                </div>
+                <div class="col-md-12 mb-3 ml-3">
+                    <span class="text-bold">Shipment Mode  :</span><span>@Model.TENDER_SHIPMENT_MODE</span>
+                </div>
+                <div class="col-md-12 mb-3 ml-3">
+                    <span class="text-bold">Port Name  :</span><span>@Model.TENDER_PORT_ID</span>
+                </div>
+                <div class="col-md-12 mb-3 ml-3">
+                    <span class="text-bold">Receiver Name  :</span><span>@Model.RECEIVER_NAME</span>
+                </div>
+                <div class="col-md-12 mb-3 ml-3">
+                    <span class="text-bold"> Receiver Details  :</span><span>@Model.RECEIVER_DETAILS</span>
+                </div>
+            </div>
+
+            <div class="row" id="paymentBody" style="display:none;">
+                <div class="col-md-6 mb-3 ml-3">
+                    <span class="text-bold mb-3">Loading Address  : </span><span class="mb-3">@Model.LOADING_ADDRESS</span>
+                </div>
+                <div class="col-md-4 mb-3 ml-3">
+                    <span class="text-bold mb-3">Source Name  : </span><span class="mb-3">@Model.SENDER_NAME</span>
+                </div>
+                <div class="col-md-4 mb-3 ml-3">
+                    <span class="text-bold mb-3">Source Details : </span><span class="mb-3">@Model.SENDER_DETAILS</span>
+                </div>
+                <div class="col-md-4 mb-3 ml-3">
+                    <span class="text-bold">Submit Date  :</span><span>@Model.SUBMIT_DATE.ToString("dd-MMMM-yyyy") <small>(BD Standard Time)</small></span>
+                </div>
+                <div class="col-md-4 mb-3 ml-3">
+                    <span class="text-bold">Submit Rate  :</span><span>@Model.PRODUCTS_RATE (@Model.CURRENCY_NAME)</span>
+                </div>
+                <div class="col-md-6 mb-3 ml-3">
+                    <span class="text-bold">Submit Quantity  :</span><span>@Model.PRODUCTS_QUANTITY  (@Model.UNIT)</span>
+                </div>
+                <div class="col-md-6 mb-3 ml-3">
+                    <span class="text-bold">Product Details  :</span><span>@Model.PRODUCTS_DESC</span>
+                </div>
+                @if (Model.QUOT_SHIPMENT_MODE != null)
+                {
+                    <div class="col-md-6 mb-3 ml-3">
+                        <span class="text-bold">Shipment Mode  :</span><span>@Model.QUOT_SHIPMENT_MODE</span>
+                    </div>
+                }
+                @if (Model.QUOT_PORT != null)
+                {
+                    <div class="col-md-6 mb-3 ml-3">
+                        <span class="text-bold">Port  :</span><span>@Model.QUOT_PORT</span>
+                    </div>
+                }
+                <div class="col-md-6 mb-3 ml-3">
+                    <span class="text-bold">Note  :</span><span>@Model.NOTE</span>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+@section scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/App_Asset/js/bid.js"></script>
+    <script>
+        $(document).ready(function () {
+            var shipmentMode =@Model.SHIPMENT_MODE;
+            $('#SHIPMENT_MODE').val(shipmentMode).attr("selected", "selected");
+            var portID =@Model.PORT_ID;
+            $('#PORT_ID').val(shipmentMode).attr("selected", "selected");
+
+            setInterval("dateimeFunction()", 1000);
+
+            //function preventBack() { window.history.forward(); }
+            //setTimeout("preventBack()", 0);
+            //window.onunload = function () { null };
+        })
+        function dateimeFunction() {
+            var endDateTime = $('.endDate').val();
+            var diffTime = Math.abs(new Date().valueOf() - new Date(endDateTime).valueOf());
+            var days = diffTime / (24 * 60 * 60 * 1000);
+            var hours = (days % 1) * 24;
+            var minutes = (hours % 1) * 60;
+            var secs = (minutes % 1) * 60;
+            [days, hours, minutes, secs] = [Math.floor(days), Math.floor(hours), Math.floor(minutes), Math.floor(secs)]
+            $('#auc_end').text("" + days + "d   " + hours + "h   " + minutes + "m   " + secs + "s");
+        }
+    </script>
+
+}
+

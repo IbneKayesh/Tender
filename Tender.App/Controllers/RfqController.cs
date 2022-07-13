@@ -93,7 +93,7 @@ namespace Tender.App.Controllers
 
             System.Net.Mail.MailMessage msg = new System.Net.Mail.MailMessage();
 
-            msg.From = new MailAddress("lsms@prangroup.com");
+            msg.From = new MailAddress("rfq@prangroup.com", "RFQ Notification");
             string[] toAddress = AllmailID.Split(',');
             foreach (string n in toAddress) {
                 msg.To.Add(new MailAddress(n));

@@ -308,7 +308,7 @@ namespace Tender.App.Controllers
 
             System.Net.Mail.MailMessage msg = new System.Net.Mail.MailMessage();
 
-            msg.From = new MailAddress("lsms@prangroup.com");
+            msg.From = new MailAddress("rfq@prangroup.com","RFQ Notification");
             msg.To.Add(new MailAddress(emailid));
 
             msg.Subject = subject;
@@ -343,7 +343,7 @@ namespace Tender.App.Controllers
 
             System.Net.Mail.MailMessage msg = new System.Net.Mail.MailMessage();
 
-            msg.From = new MailAddress("lsms@prangroup.com");
+            msg.From = new MailAddress("rfq@prangroup.com", "RFQ Notification");
             msg.To.Add(new MailAddress(emailid));
 
             msg.Subject = subject;
@@ -584,7 +584,7 @@ namespace Tender.App.Controllers
         }
 
         [UserSessionCheck]
-
+        //[HttpPost]
         public ActionResult ViewAllSupplier()
         {
             DropDownFor_Signup();          

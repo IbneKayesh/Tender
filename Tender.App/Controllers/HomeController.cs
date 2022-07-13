@@ -27,9 +27,12 @@ namespace Tender.App.Controllers
             List<RFQ_BIDDING> ttbid = HomeService.applyBids((string)Session["vendorId"]).Item1;
             ViewBag.ApplyBids = ttbid.Count();
             List<RFQ_TENDER> newBid = HomeService.newBids((string)Session["vendorId"]).Item1;
-            ViewBag.NewBids = newBid.Count();
+            
             List<RFQ_TENDER_APPROVAL> NotWinBid = HomeService.NotWinBids((string)Session["vendorId"]).Item1;
             ViewBag.NotWinBid = NotWinBid.Count();
+
+            List<RFQ_TenderView> supplierRFQ = QuotationService.getAllTenderForSupplier((string)Session["vendorId"]).Item1.Where(c => c.APPROVAL_ID == "0").ToList();
+            ViewBag.NewBids = supplierRFQ.Count();
 
 
             List<RFQ_TENDER> totalRFQ = HomeService.totalRFQ((string)Session["vendorId"],snPurcheserComObj.COMPANY_ID).Item1;

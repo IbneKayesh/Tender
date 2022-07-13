@@ -17,7 +17,7 @@ namespace Tender.App.Controllers
         { 
             List<RFQ_TenderView> obj = QuotationService.getAllTenderForSupplier((string)Session["vendorId"]).Item1.Where(c=>c.APPROVAL_ID =="0").ToList();
             if (obj.Count == 0) {
-                TempData["msg"] = AlertService.SaveWarningOK("No tender found");
+                TempData["msg"] = AlertService.SaveWarningOK("No RFQ found");
             }
            return View(obj.ToPagedList(page ??1, pageSize:8));
         }
@@ -70,7 +70,30 @@ namespace Tender.App.Controllers
             List<RFQ_BIDDING> obj = QuotationService.winingsBid((string)Session["vendorId"]).Item1;
             return View(obj);
         }
-      
+        [UserSessionCheck]
+        public ActionResult TotalApplyBids()
+        {
+            List<RFQ_BIDDING> obj = QuotationService.totalApplyBids((string)Session["vendorId"]).Item1;
+            return View(obj);
+        }
+
+        [UserSessionCheck]
+        public ActionResult QuotDetails(string quotId)
+        {
+            DropDownFor_Tender();
+            RFQ_BIDDING obj = new RFQ_BIDDING();
+
+            Tuple<RFQ_BIDDING, EQResult> _tpl = QuotationService.getQuotById(quotId);
+            if (_tpl.Item2.SUCCESS && _tpl.Item2.ROWS == 1)
+            {
+                List<RFQ_TNDR_DOCUMENTS> docList = QuotationService.getTenderDocumentList(_tpl.Item1.RFQ_NUMBER).Item1;
+                _tpl.Item1.RFQ_TNDR_DOCUMENTS = docList;
+                return View(_tpl.Item1);
+            }
+            return View(obj);
+
+        }
+
         public void DropDownFor_Tender()
         {
             ViewBag.SHIPMENT_MODE = new SelectList(TenderService.getShipmentMode().Item1.ToList(), "SHIPMENT_MODE_ID", "SHIPMENT_MODE_NAME");
@@ -78,31 +101,5 @@ namespace Tender.App.Controllers
 
         }
 
-        //Remove
-        public void a(int n)
-        {
-            int s = 0;
-            int sum = 0;
-            string series = "";
-            string symbol;
-            for (int i = 0; i < n; i++)
-            {
-                if (i % 2 == 0)
-                {
-                    if(s%2 == 0)
-                    {
-                        symbol = "+";
-                        sum = sum + 1 / i;
-                    }
-                    else
-                    {
-                        symbol = "-";
-                        sum = sum - 1 / i;
-                    }
-                    series +=""+symbol+""+ 1 / i;
-                    s++;
-                }
-            }
-        }
     }
 }

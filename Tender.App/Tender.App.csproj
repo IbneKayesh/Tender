@@ -2374,6 +2374,8 @@
     <Content Include="Views\Accounts\SupplierList.cshtml" />
     <Content Include="Views\Accounts\_supplierList.cshtml" />
     <Content Include="Views\Rfq\PublishRfq.cshtml" />
+    <Content Include="Views\Quotation\TotalApplyBids.cshtml" />
+    <Content Include="Views\Quotation\QuotDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

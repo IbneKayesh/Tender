@@ -138,6 +138,11 @@ namespace Tender.Models.Models
         public string COMPANY_ID { get; set; }
         public string COMPANY_NAME { get; set; }
 
+        [NotMapped]
+        public string QUOT_SHIPMENT_MODE { get; set; }
+        [NotMapped]
+        public string QUOT_PORT { get; set; }
+
         public virtual List<RFQ_TNDR_DOCUMENTS> RFQ_TNDR_DOCUMENTS { get; set; }
 
     }
