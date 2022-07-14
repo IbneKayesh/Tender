@@ -308,7 +308,7 @@ namespace Tender.App.Controllers
 
             System.Net.Mail.MailMessage msg = new System.Net.Mail.MailMessage();
 
-            msg.From = new MailAddress("rfq@prangroup.com","RFQ Notification");
+            msg.From = new MailAddress("lsms@prangroup.com", "RFQ Notification");
             msg.To.Add(new MailAddress(emailid));
 
             msg.Subject = subject;
@@ -343,7 +343,7 @@ namespace Tender.App.Controllers
 
             System.Net.Mail.MailMessage msg = new System.Net.Mail.MailMessage();
 
-            msg.From = new MailAddress("rfq@prangroup.com", "RFQ Notification");
+            msg.From = new MailAddress("lsms@prangroup.com", "RFQ Notification");
             msg.To.Add(new MailAddress(emailid));
 
             msg.Subject = subject;
@@ -638,7 +638,7 @@ namespace Tender.App.Controllers
             ViewBag.COUNTRY_NAME = DropDownList_All_Country();
             ViewBag.CERTIFICATE_ID = new SelectList(TenderService.getvendorDoc().Item1.ToList(), "CERTIFICATE_ID", "CERTIFICATE_NAME");
             ViewBag.COMPANY_ID = new SelectList(CommonService.GetCompany(null).Item1.ToList(), "COMPANY_ID", "COMPANY_NAME");
-            ViewBag.GROUP_ID = new SelectList(SetupService.getpProductGroup().Item1.ToList(), "ID", "NAME");
+            ViewBag.GROUP_ID = new SelectList(SetupService.getpProductGroup(snPurcheserComObj.COMPANY_ID).Item1.ToList(), "ID", "NAME");
             if (snPurcheserComObj != null) {
                 ViewBag.COM_ID_FOR_PUR = new SelectList(CommonService.GetCompany(snPurcheserComObj.COMPANY_ID).Item1.ToList(), "COMPANY_ID", "COMPANY_NAME");
             }

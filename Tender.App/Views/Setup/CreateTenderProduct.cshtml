@@ -28,7 +28,7 @@
         </div>
             <div class="form-group">
                 <label class="control-label">Select Catagory</label>
-                @Html.DropDownList("GROUP_ID", null, "-Select-", new { @class = "form-control form-control-sm select2", placeholder = "Catagory" })
+                @Html.DropDownList("GROUP_ID", null, "-Select-", new { @class = "form-control form-control-sm select2", placeholder = "Catagory",style="width:100%;" })
                 @Html.ValidationMessageFor(m => m.GROUP_ID, "", new { @class = "text-danger" })
             </div>
         <div class="form-group">

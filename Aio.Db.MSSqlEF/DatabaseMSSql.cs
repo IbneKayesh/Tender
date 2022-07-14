@@ -139,5 +139,34 @@ namespace Aio.Db.MSSqlEF
                 }
             }
         }
+        public static Tuple<T, EQResult> SqlProcedureSingle<T>(string sql, params object[] parameters) where T : new()
+        {
+            EQResult result = new EQResult();
+            using (AioDbContext db = new AioDbContext())
+            {
+                try
+                {
+                    var objList = db.Database.SqlQuery<T>(sql, parameters).ToList();
+                    if (objList.Count > 0)
+                    {
+                        result.ROWS = objList.Count;
+                        result.SUCCESS = true;
+                        result.MESSAGES = AppKeys.SUCCESS_MESSAGES;
+                        return new Tuple<T, EQResult>(objList.FirstOrDefault(), result);
+                    }
+                    result.ROWS = 0;
+                    result.SUCCESS = false;
+                    result.MESSAGES = AppKeys.NO_ROWS_FOUND;
+                    return new Tuple<T, EQResult>(new T(), result);
+                }
+                catch (Exception ex)
+                {
+                    result.SUCCESS = false;
+                    result.MESSAGES = ex.Message;
+                    result.ROWS = 0;
+                    return new Tuple<T, EQResult>(new T(), result);
+                }
+            }
+        }
     }
 }

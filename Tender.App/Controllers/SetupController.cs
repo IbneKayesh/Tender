@@ -34,7 +34,8 @@ namespace Tender.App.Controllers
         [UserSessionCheck]
         public ActionResult CreateTenderProduct()
         {
-            ViewBag.GROUP_ID = new SelectList(SetupService.getpProductGroup().Item1.ToList(), "ID", "NAME");
+            VENDOR_COMPANY snPurcheserComObj = (VENDOR_COMPANY)Session["ssPurcheserCompany"];
+            ViewBag.GROUP_ID = new SelectList(SetupService.getpProductGroup(snPurcheserComObj.COMPANY_ID).Item1.ToList(), "ID", "NAME");
             TNDR_PRODUCTS obj = new TNDR_PRODUCTS();
             return View(obj);
         }
@@ -42,7 +43,8 @@ namespace Tender.App.Controllers
         [UserSessionCheck]
         public ActionResult CreateTenderProduct(TNDR_PRODUCTS obj)
         {
-            ViewBag.GROUP_ID = new SelectList(SetupService.getpProductGroup().Item1.ToList(), "ID", "NAME");
+            VENDOR_COMPANY snPurcheserComObj = (VENDOR_COMPANY)Session["ssPurcheserCompany"];
+            ViewBag.GROUP_ID = new SelectList(SetupService.getpProductGroup(snPurcheserComObj.COMPANY_ID).Item1.ToList(), "ID", "NAME");
             if (ModelState.IsValid)
             {
                 if (SetupService.checkItem(obj.PRODUCTS_NAME).Item1.PRODUCTS_NAME != null)
@@ -114,10 +116,11 @@ namespace Tender.App.Controllers
             return View(obj);
         }
 
-
+        [UserSessionCheck]
         public ActionResult GetAll()
         {
-            List<TNDR_PRODUCTS> obj = SetupService.getAllproduct().Item1;
+            VENDOR_COMPANY snPurcheserComObj = (VENDOR_COMPANY)Session["ssPurcheserCompany"];
+            List<TNDR_PRODUCTS> obj = SetupService.getAllproduct(snPurcheserComObj.COMPANY_ID).Item1;
             if (obj.Count() > 0)
             {
                 return Json(new { data = obj }, JsonRequestBehavior.AllowGet);

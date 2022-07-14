@@ -27,7 +27,7 @@ namespace Tender.App.Service
             return _tpl;
         }
 
-        public static Tuple<List<TNDR_PRODUCTS>, EQResult> getAllproduct()
+        public static Tuple<List<TNDR_PRODUCTS>, EQResult> getAllproduct(string companyId)
         {
             string sql = $@" SELECT   P.PRODUCTS_ID,
          P.UNIT,
@@ -36,13 +36,13 @@ namespace Tender.App.Service
          PG.NAME GROUP_ID
         FROM      TNDR_PRODUCTS P
           JOIN TNDR_PRODUCT_GROUP
-        PG ON PG.ID = P.GROUP_ID";
+        PG ON PG.ID = P.GROUP_ID WHERE PG.COMPANY_ID='{companyId}'";
             var objList = DatabaseMSSql.SqlQuery<TNDR_PRODUCTS>(sql);
             return objList;
         }
-        public static Tuple<List<TNDR_PRODUCT_GROUP>, EQResult> getpProductGroup()
+        public static Tuple<List<TNDR_PRODUCT_GROUP>, EQResult> getpProductGroup(string companyId)
         {
-            string sql = $"SELECT * FROM TNDR_PRODUCT_GROUP";
+            string sql = $"SELECT * FROM TNDR_PRODUCT_GROUP WHERE COMPANY_ID='{companyId}'";
             return DatabaseMSSql.SqlQuery<TNDR_PRODUCT_GROUP>(sql);
         }
     }
