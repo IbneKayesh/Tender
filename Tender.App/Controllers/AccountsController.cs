@@ -580,7 +580,7 @@ namespace Tender.App.Controllers
                     ModelState.AddModelError("", "Something went wrong, try again");
                 }
             }
-            return View("UserProfile", new VENDOR_DETAILS().getAll());
+            return View("UserProfile", new VENDOR_DETAILS());
         }
 
         [UserSessionCheck]
@@ -637,9 +637,9 @@ namespace Tender.App.Controllers
             VENDOR_COMPANY snPurcheserComObj = (VENDOR_COMPANY)Session["ssPurcheserCompany"];
             ViewBag.COUNTRY_NAME = DropDownList_All_Country();
             ViewBag.CERTIFICATE_ID = new SelectList(TenderService.getvendorDoc().Item1.ToList(), "CERTIFICATE_ID", "CERTIFICATE_NAME");
-            ViewBag.COMPANY_ID = new SelectList(CommonService.GetCompany(null).Item1.ToList(), "COMPANY_ID", "COMPANY_NAME");
-            ViewBag.GROUP_ID = new SelectList(SetupService.getpProductGroup(snPurcheserComObj.COMPANY_ID).Item1.ToList(), "ID", "NAME");
+            ViewBag.COMPANY_ID = new SelectList(CommonService.GetCompany(null).Item1.ToList(), "COMPANY_ID", "COMPANY_NAME");          
             if (snPurcheserComObj != null) {
+                ViewBag.GROUP_ID = new SelectList(SetupService.getpProductGroup(snPurcheserComObj.COMPANY_ID).Item1.ToList(), "ID", "NAME");
                 ViewBag.COM_ID_FOR_PUR = new SelectList(CommonService.GetCompany(snPurcheserComObj.COMPANY_ID).Item1.ToList(), "COMPANY_ID", "COMPANY_NAME");
             }
             

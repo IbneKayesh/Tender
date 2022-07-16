@@ -7,8 +7,13 @@
 }
 <style>
 
-  
-    @@media screen and (max-width: 767px) {
+    .profile-user-img {
+        border: 0px solid #adb5bd !important;
+        margin: 0 auto;
+        padding: 3px;
+        width: 100px;
+    }
+    /*@@media screen and (max-width: 767px) {
         .profile {
             position: absolute;
             top: 10%;
@@ -44,7 +49,7 @@
             left: 25%;
             z-index: 1;
         }
-    }
+    }*/
     
 </style>
 <div class="container">
@@ -78,23 +83,21 @@
                                     <img src="~/@Model.PROFILE_IMAGE" class="profile profile-user-img img-fluid img-circle" alt="User profile picture" />
                                 }
                                 else
-                                {
-                                    <img src="~/App_Asset/img/yourcompanylogo.jpg" class="profile-user-img img-fluid img-circle" alt="User profile picture" />
+                                { 
+                                    <img src="~/App_Asset/img/yourcompanylogo.jpg" class="profile-user-img img-fluid img-circle" alt="User profile picture" style=" border: 0px;" />
                                 }
-                                <br /> <br />
                                 @if (Model.LOCK_UNLOCK == 1)
                                 {
-
-                                    <img src="~/App_Asset/img/lockIconPng.png" class="lock" alt="Lock Profile" style="height:50px;width:50px;" />
-                                    <br /><br />
+                                    
+                                    @*<img src="~/App_Asset/img/lockIconPng.png" class="lock" alt="Lock Profile" style="height:50px;width:50px;" />
+                                    <br /><br />*@
                                 }
-                                <br /><br />
                             </div>
                             <h3 class="profile-username text-center">@Model.ORGANIZATION_NAME</h3>
                             <p class="text-muted text-center mb-0 pd-0">@Model.VENDOR_EMAIL</p>
                             <p class="text-muted text-center">@Model.CONTACT_NUMBER</p>
                             @if (Model.LOCK_UNLOCK == 1) { 
-                            
+                                <a class="btn btn-sm btn-block btn-danger">Your Profile is Lock</a>
                                 <span class="text-bold text-primary">**For unlock profile, please contact with your following company**</span>
                             }
             
