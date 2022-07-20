@@ -243,7 +243,7 @@ namespace Tender.App.Service
                     AND T2.VENDOR_ID='{id}'";
             return DatabaseMSSql.SqlQuery<VENDOR_CATEGORY>(sql);
         }
-        public static Tuple<List<VENDOR_CERTIFICATE>, EQResult> getVENDOR_CERTIFICATE(string id)
+        public static Tuple<List<VENDOR_CERTIFICATE>, EQResult> getVENDOR_CERTIFICATE(string id,string comId)
         {
             sql = $@"SELECT T1.CERTIFICATE_ID,T1.CERTIFICATE_NAME,
                     CASE WHEN T2.IS_ACTIVE IS NULL
@@ -253,7 +253,7 @@ namespace Tender.App.Service
                     END IS_ACTIVE
                     FROM TNDR_CERTIFICATE T1
                     LEFT JOIN VENDOR_CERTIFICATE T2 ON T1.CERTIFICATE_ID = T2.CERTIFICATE_ID
-                    AND T2.VENDOR_ID='{id}'";
+                    AND T2.VENDOR_ID='{id}' WHERE T1.COMPANY_ID='{comId}' ";
             return DatabaseMSSql.SqlQuery<VENDOR_CERTIFICATE>(sql);
         }
 

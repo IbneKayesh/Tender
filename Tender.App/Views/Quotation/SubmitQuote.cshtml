@@ -37,7 +37,7 @@
 
                     <div class="btn-default py-2 px-0 mt-4">
                         <h5 class="mb-0">
-                            Purposed Rate :   @Model.TND_PRODUCTS_RATE @Model.CURRENCY_NAME, Quantity : @Model.TND_PRODUCTS_QTY @Model.UNIT
+                            Currency :  @Model.CURRENCY_NAME, Quantity : @Model.TND_PRODUCTS_QTY @Model.UNIT
                         </h5>
                     </div>
                 </div>
@@ -95,9 +95,9 @@
                 <div class="col-md-12 mb-3 ml-3">
                     <span class="text-bold mb-3">Product Name  : </span><span class="mb-3">@Model.TND_PRODUCTS_NAME</span>
                 </div>
-                <div class="col-md-12 mb-3 ml-3">
+                @*<div class="col-md-12 mb-3 ml-3">
                     <span class="text-bold mb-3">RFQ Rate  : </span><span class="mb-3">@Model.TND_PRODUCTS_RATE</span>
-                </div>
+                </div>*@
                 <div class="col-md-12 mb-3 ml-3">
                     <span class="text-bold mb-3">Product Quantity : </span><span class="mb-3">@Model.TND_PRODUCTS_QTY</span>
                 </div>
@@ -177,14 +177,14 @@
                                 <div class="col-md-3 col-lg-2 col-sm-6">
                                     <div class="form-group">
                                         <label class="control-label">Submit Rate</label> <span class="text-danger">*</span>
-                                        @Html.EditorFor(model => model.PRODUCTS_RATE, new { htmlAttributes = new { @class = "form-control form-control-sm", required = "required", placeholder = "Product Rate" } })
+                                        @Html.EditorFor(model => model.PRODUCTS_RATE, new { htmlAttributes = new { type="number", @class = "form-control form-control-sm", required = "required", placeholder = "Product Rate" } })
                                         @Html.ValidationMessageFor(m => m.PRODUCTS_RATE, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
                                 <div class="col-md-3 col-lg-2 col-sm-6">
                                     <div class="form-group">
                                         <label class="control-label">Quantity</label> <span class="text-danger">*</span><span class="text-ge"> ( @Model.TND_PRODUCTS_QTY @Model.UNIT)</span>
-                                        @Html.EditorFor(model => model.PRODUCTS_QUANTITY, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "Quantity" } })
+                                        @Html.EditorFor(model => model.PRODUCTS_QUANTITY, new { htmlAttributes = new { type = "number", @class = "form-control form-control-sm", placeholder = "Quantity" } })
                                         @Html.ValidationMessageFor(m => m.PRODUCTS_QUANTITY, "", new { @class = "text-danger" })
                                     </div>
                                 </div>

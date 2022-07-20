@@ -18,7 +18,7 @@ namespace Tender.App.Service
             var sql = "";
             if (searchType == "1") {
                 sql = $@" SELECT R.RFQ_NUMBER, R.VENDOR_ID TND_VENDOR_ID,
-                            CASE WHEN  R.SELL_BUY=0 THEN 'Buyer' ELSE 'Seller ' END SELL_BUY, 
+                           CASE WHEN  R.SELL_BUY=1 THEN 'Buy' ELSE 'Sale ' END SELL_BUY, 
                             CASE WHEN    R.LOCAL_IMPORT=1 THEN 'Local' ELSE 'Importer' END  LOCAL_IMPORT,
                             CASE WHEN     R.RE_BID=1 THEN 'Submit Once' ELSE 'Submit Multiple' END RE_BID,
                             CASE WHEN  R.LOWER_RATE=1 THEN 'Lower Rate Only' ELSE 'Any Rate' END LOWER_RATE, 
@@ -53,7 +53,7 @@ namespace Tender.App.Service
         public static Tuple<List<RFQ_TenderView>, EQResult> getAllTender(string vendorId,string companyId)
         {
             string sql = $@"SELECT R.RFQ_NUMBER, R.VENDOR_ID TND_VENDOR_ID,
-                            CASE WHEN  R.SELL_BUY=0 THEN 'Buyer' ELSE 'Seller ' END SELL_BUY, 
+                            CASE WHEN  R.SELL_BUY=1 THEN 'Buy' ELSE 'Sale ' END SELL_BUY, 
                             CASE WHEN    R.LOCAL_IMPORT=1 THEN 'Local' ELSE 'Importer' END  LOCAL_IMPORT,
                             CASE WHEN     R.RE_BID=1 THEN 'Submit Once' ELSE 'Submit Multiple' END RE_BID,
                             CASE WHEN  R.LOWER_RATE=1 THEN 'Lower Rate Only' ELSE 'Any Rate' END LOWER_RATE, 
@@ -85,7 +85,7 @@ namespace Tender.App.Service
         public static Tuple<List<RFQ_TenderView>, EQResult> getAllTenderForSupplier(string vendorId)
         {
             string sql = $@"SELECT DISTINCT R.RFQ_NUMBER, R.VENDOR_ID TND_VENDOR_ID,
-                            CASE WHEN  R.SELL_BUY=0 THEN 'Buyer' ELSE 'Seller ' END SELL_BUY, 
+                           CASE WHEN  R.SELL_BUY=1 THEN 'Buy' ELSE 'Sale ' END SELL_BUY, 
                             CASE WHEN    R.LOCAL_IMPORT=1 THEN 'Local' ELSE 'Importer' END  LOCAL_IMPORT,
                             CASE WHEN     R.RE_BID=1 THEN 'Submit Once' ELSE 'Submit Multiple' END RE_BID,
                             CASE WHEN  R.LOWER_RATE=1 THEN 'Lower Rate Only' ELSE 'Any Rate' END LOWER_RATE, 
@@ -127,7 +127,7 @@ namespace Tender.App.Service
         public static Tuple<RFQ_BIDDING, EQResult> getTenderById(string rfqNumber)
         {
             string sql = $@"SELECT R.RFQ_NUMBER, R.VENDOR_ID TND_VENDOR_ID,
-                            CASE WHEN  R.SELL_BUY=0 THEN 'Buyer' ELSE 'Seller ' END SELL_BUY, 
+                            CASE WHEN  R.SELL_BUY=1 THEN 'Buy' ELSE 'Sale ' END SELL_BUY, 
                             CASE WHEN    R.LOCAL_IMPORT=1 THEN 'Local' ELSE 'Importer' END  LOCAL_IMPORT,
                             CASE WHEN     R.RE_BID=1 THEN 'Submit Once' ELSE 'Submit Multiple' END RE_BID,
                             CASE WHEN  R.LOWER_RATE=1 THEN 'Lower Rate Only' ELSE 'Any Rate' END LOWER_RATE, 
@@ -157,7 +157,7 @@ namespace Tender.App.Service
         public static Tuple<RFQ_BIDDING, EQResult> getQuotById(string quotNumber)
         {
             string sql = $@"SELECT R.RFQ_NUMBER, R.VENDOR_ID TND_VENDOR_ID,
-                            CASE WHEN  R.SELL_BUY=0 THEN 'Buyer' ELSE 'Seller ' END SELL_BUY, 
+                            CASE WHEN  R.SELL_BUY=1 THEN 'Buy' ELSE 'Sale ' END SELL_BUY, 
                             CASE WHEN    R.LOCAL_IMPORT=1 THEN 'Local' ELSE 'Importer' END  LOCAL_IMPORT,
                             CASE WHEN     R.RE_BID=1 THEN 'Submit Once' ELSE 'Submit Multiple' END RE_BID,
                             CASE WHEN  R.LOWER_RATE=1 THEN 'Lower Rate Only' ELSE 'Any Rate' END LOWER_RATE, 
@@ -199,7 +199,7 @@ namespace Tender.App.Service
         public static Tuple<List<RFQ_BIDDING>, EQResult> getTenderListForCompare(string rfqNumber)
         {
             string sql = $@"SELECT RB.QUOTE_NUMBER, R.RFQ_NUMBER, R.VENDOR_ID TND_VENDOR_ID, VN.ORGANIZATION_NAME VENDOR_NAME,RB.VENDOR_ID ,
-                            CASE WHEN  R.SELL_BUY=0 THEN 'Buyer' ELSE 'Seller ' END SELL_BUY, 
+                           CASE WHEN  R.SELL_BUY=1 THEN 'Buy' ELSE 'Sale ' END SELL_BUY, 
                             CASE WHEN    R.LOCAL_IMPORT=1 THEN 'Local' ELSE 'Importer' END  LOCAL_IMPORT,
                             CASE WHEN     R.RE_BID=1 THEN 'Submit Once' ELSE 'Submit Multiple' END RE_BID,
                             CASE WHEN  R.LOWER_RATE=1 THEN 'Lower Rate Only' ELSE 'Any Rate' END LOWER_RATE, 
@@ -235,7 +235,7 @@ namespace Tender.App.Service
         public static Tuple<List<RFQ_BIDDING>, EQResult> winingsBid(string vendorId)
         {
             string sql = $@"SELECT RB.QUOTE_NUMBER, R.RFQ_NUMBER, R.VENDOR_ID TND_VENDOR_ID, VN.ORGANIZATION_NAME VENDOR_NAME,RB.VENDOR_ID ,RB.SUBMIT_DATE, APP.APPROVAL_DATE, APP.APPROVAL_NOTE,
-                            CASE WHEN  R.SELL_BUY=0 THEN 'Buyer' ELSE 'Seller ' END SELL_BUY, 
+                            CASE WHEN  R.SELL_BUY=1 THEN 'Buy' ELSE 'Sale ' END SELL_BUY, 
                             CASE WHEN    R.LOCAL_IMPORT=1 THEN 'Local' ELSE 'Importer' END  LOCAL_IMPORT,
                             CASE WHEN     R.RE_BID=1 THEN 'Submit Once' ELSE 'Submit Multiple' END RE_BID,
                             CASE WHEN  R.LOWER_RATE=1 THEN 'Lower Rate Only' ELSE 'Any Rate' END LOWER_RATE, 
@@ -282,7 +282,7 @@ namespace Tender.App.Service
         public static Tuple<List<RFQ_BIDDING>, EQResult> winingsBidforNftn(string vendorId)
         {
             string sql = $@"SELECT RB.QUOTE_NUMBER, R.RFQ_NUMBER, R.VENDOR_ID TND_VENDOR_ID, VN.ORGANIZATION_NAME VENDOR_NAME,RB.VENDOR_ID ,RB.SUBMIT_DATE, APP.APPROVAL_DATE, APP.APPROVAL_NOTE,
-                            CASE WHEN  R.SELL_BUY=0 THEN 'Buyer' ELSE 'Seller ' END SELL_BUY, 
+                           CASE WHEN  R.SELL_BUY=1 THEN 'Buy' ELSE 'Sale ' END SELL_BUY, 
                             CASE WHEN    R.LOCAL_IMPORT=1 THEN 'Local' ELSE 'Importer' END  LOCAL_IMPORT,
                             CASE WHEN     R.RE_BID=1 THEN 'Submit Once' ELSE 'Submit Multiple' END RE_BID,
                             CASE WHEN  R.LOWER_RATE=1 THEN 'Lower Rate Only' ELSE 'Any Rate' END LOWER_RATE, 
@@ -375,7 +375,7 @@ namespace Tender.App.Service
         public static Tuple<List<RFQ_TENDER_APPROVAL_VIEW>, EQResult> ApproveTenderList()
         {
             string sql = $@"SELECT RB.QUOTE_NUMBER, R.RFQ_NUMBER, R.VENDOR_ID TND_VENDOR_ID, VN.ORGANIZATION_NAME VENDOR_NAME,RB.VENDOR_ID ,
-                            CASE WHEN  R.SELL_BUY=0 THEN 'Buyer' ELSE 'Seller ' END SELL_BUY, 
+                            CASE WHEN  R.SELL_BUY=1 THEN 'Buy' ELSE 'Sale ' END SELL_BUY, 
                             CASE WHEN    R.LOCAL_IMPORT=1 THEN 'Local' ELSE 'Importer' END  LOCAL_IMPORT,
                             CASE WHEN     R.RE_BID=1 THEN 'Submit Once' ELSE 'Submit Multiple' END RE_BID,
                             CASE WHEN  R.LOWER_RATE=1 THEN 'Lower Rate Only' ELSE 'Any Rate' END LOWER_RATE, 

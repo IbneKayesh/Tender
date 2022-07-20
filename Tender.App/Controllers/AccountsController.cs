@@ -377,7 +377,7 @@ namespace Tender.App.Controllers
             if (_tpl.Item2.SUCCESS && _tpl.Item2.ROWS == 1)
             {
                 _tpl.Item1.VENDOR_CATEGORY = AccountsService.getVENDOR_CATEGORY(snObj.VENDOR_ID).Item1;
-                _tpl.Item1.VENDOR_CERTIFICATE = AccountsService.getVENDOR_CERTIFICATE(snObj.VENDOR_ID).Item1;
+                _tpl.Item1.VENDOR_CERTIFICATE = AccountsService.getVENDOR_CERTIFICATE(snObj.VENDOR_ID,"100").Item1;
                 _tpl.Item1.VENDOR_DOCUMENTS = AccountsService.getVENDOR_DOCUMENTS(snObj.VENDOR_ID).Item1;
                 _tpl.Item1.VENDOR_PRODUCTS = AccountsService.getVENDOR_PRODUCTS(snObj.VENDOR_ID).Item1;
                 _tpl.Item1.VENDOR_PRODUCTS_GROUP = AccountsService.getVENDOR_PRODUCTS_GROUP(snObj.VENDOR_ID).Item1;
@@ -413,9 +413,12 @@ namespace Tender.App.Controllers
                 {
                     if (ProfilePicture != null)
                     {
-                        if (ProfilePicture.ContentLength <= 102400)
+                        if (ProfilePicture.ContentLength <= 1024*500)
                         {
                             string pic = System.IO.Path.GetFileName(ProfilePicture.FileName);
+                            Random generator = new Random();
+                            String r = generator.Next(0, 1000000).ToString("D4");
+                            pic = r + pic;
                             string path = System.IO.Path.Combine(
                                                    Server.MapPath("~/App_Asset/dist/img/profileImage"), pic);
                             var extension = Path.GetExtension(ProfilePicture.FileName);
@@ -442,13 +445,15 @@ namespace Tender.App.Controllers
                             else
                             {
                                 TempData["msg"] = AlertService.SaveWarningOK("Image format must be jpg, jpeg,png");
-                                return View(obj);
+                                return RedirectToAction("UserProfile", "Accounts");
+                               // return View(obj);
                             }
                         }
                         else
                         {
-                            TempData["msg"] = AlertService.SaveWarningOK("Image size less then 100 KB");
-                            return View(obj);
+                            TempData["msg"] = AlertService.SaveWarningOK("Image size less then 500 KB");
+                            return RedirectToAction("UserProfile", "Accounts");
+                            //return View(obj);
                         }
 
                     }
@@ -481,6 +486,10 @@ namespace Tender.App.Controllers
                     if (Document.ContentLength <= 10240*1024*5)
                     {
                         string pic = System.IO.Path.GetFileName(Document.FileName);
+                        
+                        Random generator = new Random();
+                        String r = generator.Next(0, 1000000).ToString("D4");
+                        pic = r + pic;
                         string path = System.IO.Path.Combine(Server.MapPath("~/App_Asset/SDocument"), pic);
                         var extension = Path.GetExtension(Document.FileName);
                         if (extension.ToLower() == ".jpg" || extension.ToLower() == ".png" || extension.ToLower() == ".jpeg" ||extension.ToLower()==".pdf" || extension.ToLower() == ".docx")
@@ -544,7 +553,7 @@ namespace Tender.App.Controllers
             if (_tpl.Item2.SUCCESS && _tpl.Item2.ROWS == 1)
             {
                 _tpl.Item1.VENDOR_CATEGORY = AccountsService.getVENDOR_CATEGORY(id).Item1;
-                _tpl.Item1.VENDOR_CERTIFICATE = AccountsService.getVENDOR_CERTIFICATE(id).Item1;
+                _tpl.Item1.VENDOR_CERTIFICATE = AccountsService.getVENDOR_CERTIFICATE(id,"100").Item1;
                 _tpl.Item1.VENDOR_DOCUMENTS = AccountsService.getVENDOR_DOCUMENTS(id).Item1;
                 _tpl.Item1.VENDOR_PRODUCTS = AccountsService.getVENDOR_PRODUCTS(id).Item1;
                 _tpl.Item1.VENDOR_PRODUCTS_GROUP = AccountsService.getVENDOR_PRODUCTS_GROUP(id).Item1;
