@@ -151,39 +151,41 @@
                         @Html.HiddenFor(model => model.VENDOR_ID)
                         @Html.HiddenFor(model => model.PRODUCTS_ID)
                         @Html.HiddenFor(model => model.COMPANY_ID)
+                        @Html.HiddenFor(model => model.LOWER_RATE)
+                        @Html.HiddenFor(model => model.RE_BID)
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-md-4 col-lg-4 col-sm-6">
                                     <div class="form-group">
                                         <label class="control-label">Loading Address</label> <span class="text-danger">*</span>
-                                        @Html.TextAreaFor(m => m.LOADING_ADDRESS, new { @class = "form-control form-control-sm", rows = "1", required = "required", placeholder = "Enter Loding Address" })
+                                        @Html.TextAreaFor(m => m.LOADING_ADDRESS, new { @class = "form-control form-control-sm", rows = "1", required = "required", placeholder = "Enter Loding Address (maximum length 100 char)" })
                                         @Html.ValidationMessageFor(m => m.LOADING_ADDRESS, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
                                 <div class="col-md-4 col-lg-3 col-sm-6">
                                     <div class="form-group">
                                         <label class="control-label">Source Name</label> <span class="text-danger">*</span>
-                                        @Html.EditorFor(model => model.SENDER_NAME, new { htmlAttributes = new { @class = "form-control form-control-sm", required = "required", placeholder = "Sender Name" } })
+                                        @Html.EditorFor(model => model.SENDER_NAME, new { htmlAttributes = new { @class = "form-control form-control-sm", required = "required", placeholder = "Sender Name (maximum length 100 char)" } })
                                         @Html.ValidationMessageFor(m => m.SENDER_NAME, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
                                 <div class="col-md-4 col-lg-3 col-sm-6">
                                     <div class="form-group">
                                         <label class="control-label">Source Details</label> <span class="text-danger">*</span>
-                                        @Html.TextAreaFor(m => m.SENDER_DETAILS, new { @class = "form-control form-control-sm", rows = "1", required = "required", placeholder = "Sender Details" })
+                                        @Html.TextAreaFor(m => m.SENDER_DETAILS, new { @class = "form-control form-control-sm", rows = "1", required = "required", placeholder = "Sender Details (maximum length 100 char)" })
                                         @Html.ValidationMessageFor(m => m.SENDER_DETAILS, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
                                 <div class="col-md-3 col-lg-2 col-sm-6">
                                     <div class="form-group">
                                         <label class="control-label">Submit Rate</label> <span class="text-danger">*</span>
-                                        @Html.EditorFor(model => model.PRODUCTS_RATE, new { htmlAttributes = new { type="number", @class = "form-control form-control-sm", required = "required", placeholder = "Product Rate" } })
+                                        @Html.EditorFor(model => model.PRODUCTS_RATE, new { htmlAttributes = new { type="number", @class = "form-control form-control-sm", required = "required", placeholder = "Product Rate", @onchange = "lowerRateCheck(this)" } })
                                         @Html.ValidationMessageFor(m => m.PRODUCTS_RATE, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
                                 <div class="col-md-3 col-lg-2 col-sm-6">
                                     <div class="form-group">
-                                        <label class="control-label">Quantity</label> <span class="text-danger">*</span><span class="text-ge"> ( @Model.TND_PRODUCTS_QTY @Model.UNIT)</span>
+                                        <label class="control-label">Submit Quantity</label> <span class="text-danger">*</span><span class="text-ge"> ( @Model.TND_PRODUCTS_QTY @Model.UNIT)</span>
                                         @Html.EditorFor(model => model.PRODUCTS_QUANTITY, new { htmlAttributes = new { type = "number", @class = "form-control form-control-sm", placeholder = "Quantity" } })
                                         @Html.ValidationMessageFor(m => m.PRODUCTS_QUANTITY, "", new { @class = "text-danger" })
                                     </div>
@@ -250,10 +252,22 @@
 
             setInterval("dateimeFunction()", 1000);
 
-            //function preventBack() { window.history.forward(); }
-            //setTimeout("preventBack()", 0);
-            //window.onunload = function () { null };
         })
+        function lowerRateCheck() {
+            debugger
+            var LOWER_RATE = "@Model.LOWER_RATE";
+            if (LOWER_RATE == "Lower Rate Only") {
+                var submitRate = $("#PRODUCTS_RATE").val();
+                var previouRate = @ViewBag.MINIMUM_BID_RATE;
+                if (parseFloat(submitRate) >= parseFloat(previouRate) && previouRate!=0) {
+                    Swal.fire('error', 'Submit rate must be less then your prvious rate', 'error');
+                    $("#PRODUCTS_RATE").val("");
+                    return false;
+                }
+                //console.log(submitRate);
+               // console.log(previouRate);
+            }
+        }
         function dateimeFunction() {
             var endDateTime = $('.endDate').val();
             var diffTime = Math.abs(new Date().valueOf() - new Date(endDateTime).valueOf());

@@ -76,5 +76,18 @@ namespace Tender.App.Service
             string sql = $"SELECT V.COMPANY_ID,COMPANY_NAME FROM COMPANY V WHERE V.COMPANY_ID=NVL('{_companyId}',V.COMPANY_ID)";
             return DatabaseMSSql.SqlQuery<COMPANY>(sql);
         }
+        public static decimal getQuotMinimumBidRate(string rfqNumber, string vendorId)
+        {
+            string sql = $"SELECT MIN(PRODUCTS_RATE)PRODUCTS_RATE FROM RFQ_BIDDING WHERE RFQ_NUMBER = '{rfqNumber}' AND VENDOR_ID = '{vendorId}'";
+            Tuple<RFQ_BIDDING, EQResult> _tpl = DatabaseMSSql.SqlQuerySingle<RFQ_BIDDING>(sql);
+            if (_tpl.Item2.ROWS == 0)
+            {
+                return 0;
+            }
+            else
+            {
+                return _tpl.Item1.PRODUCTS_RATE;
+            }
+        }
     }
 }

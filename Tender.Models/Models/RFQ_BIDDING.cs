@@ -44,6 +44,8 @@ namespace Tender.Models.Models
 
         [Required(ErrorMessage = "{0} is required")]
         [Display(Name = "Loading Address")]
+        [StringLength(maximumLength: 100, ErrorMessage = "{0} length is between {2} and {1}", MinimumLength = 0)]
+
         public string LOADING_ADDRESS { get; set; }
 
         [Required(ErrorMessage = "{0} is required")]

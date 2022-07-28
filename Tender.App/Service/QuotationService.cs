@@ -405,5 +405,11 @@ namespace Tender.App.Service
             var objList = DatabaseMSSql.SqlQuery<RFQ_TENDER_APPROVAL_VIEW>(sql);
             return objList;
         }
+        public static Tuple<List<RFQ_BIDDING>, EQResult> submitOnceCheck(string rfqNumber,string vendorId)
+        {
+            string sql = $@"SELECT * FROM RFQ_BIDDING WHERE RFQ_NUMBER = '{rfqNumber}' AND VENDOR_ID = '{vendorId}'";
+            var objList = DatabaseMSSql.SqlQuery<RFQ_BIDDING>(sql);
+            return objList;
+        }
     }
 }
